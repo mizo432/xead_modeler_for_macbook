@@ -8454,19 +8454,19 @@ public class Modeler extends JFrame {
 			String lang = Locale.getDefault().getLanguage();
 			if (lang.equals("ja")) {
 				osw.write("<?xml version=\"1.0\" encoding=\"UTF-8\" ?>\n");
-				osw.write("<System Descriptions=\"\" Name=\"V‹KƒVƒXƒeƒ€\" Version=\"0.0.1\" FormatVersion=\"" + DialogAbout.FORMAT_VERSION + " \">\n");
-				osw.write("<Department Descriptions=\"\" ID=\"1\" Name=\"–¢Žw’è\" SortKey=\"000\" />\n");
-				osw.write("<Department Descriptions=\"à–¾‚P\" ID=\"2\" Name=\"•”‚P\" SortKey=\"001\" />\n");
-				osw.write("<TableType Descriptions=\"\" ID=\"1\" Name=\"–¢Žw’è\" SortKey=\"000\" />\n");
-				osw.write("<TableType Descriptions=\"à–¾‚P\" ID=\"2\" Name=\"ƒe[ƒuƒ‹ƒ^ƒCƒv‚P\" SortKey=\"001\" />\n");
-				osw.write("<DataType BasicType=\"String\" Decimal=\"0\" ID=\"1\" Length=\"0\" Name=\"–¢Žw’è\" SortKey=\"000\" />\n");
-				osw.write("<DataType BasicType=\"SignedNumber\" Decimal=\"0\" ID=\"2\" Length=\"9\" Name=\"•„†•t‚XŒ…®”\" SortKey=\"NR09.0-\" SQLExpression=\"NUMBER(9)\" />\n");
-				osw.write("<DataType BasicType=\"UnsignedNumber\" Decimal=\"0\" ID=\"3\" Length=\"9\" Name=\"³‚Ì‚XŒ…®”\" SortKey=\"NR09.0\" SQLExpression=\"NUMBER(9)\" />\n");
-				osw.write("<DataType BasicType=\"String\" Decimal=\"0\" ID=\"4\" Length=\"50\" Name=\"‚T‚OŒ…•¶Žš\" SortKey=\"TX050\" SQLExpression=\"VARCHAR(50)\" />\n");
-				osw.write("<DataType BasicType=\"String\" Decimal=\"0\" ID=\"5\" Length=\"1\" Name=\"‹æ•ª\" SortKey=\"KB1\" SQLExpression=\"CHAR(1)\" />\n");
-				osw.write("<FunctionType Descriptions=\"\" ID=\"1\" Name=\"–¢Žw’è\" SortKey=\"000\" />\n");
-				osw.write("<FunctionType Descriptions=\"à–¾‚P\" ID=\"2\" Name=\"‹@”\ƒ^ƒCƒv‚P\" SortKey=\"001\" />\n");
-				osw.write("<MaintenanceLog Descriptions=\"V‹K’Ç‰Á\" Headder=\"0.0.1\" ID=\"0001\" SortKey=\"" + getStringValueOfDateTime("withoutTime") + "\" />\n");
+				osw.write("<System Descriptions=\"\" Name=\"æ–°è¦ã‚·ã‚¹ãƒ†ãƒ \" Version=\"0.0.1\" FormatVersion=\"" + DialogAbout.FORMAT_VERSION + " \">\n");
+				osw.write("<Department Descriptions=\"\" ID=\"1\" Name=\"æœªæŒ‡å®š\" SortKey=\"000\" />\n");
+				osw.write("<Department Descriptions=\"èª¬æ˜Žï¼‘\" ID=\"2\" Name=\"éƒ¨ç½²ï¼‘\" SortKey=\"001\" />\n");
+				osw.write("<TableType Descriptions=\"\" ID=\"1\" Name=\"æœªæŒ‡å®š\" SortKey=\"000\" />\n");
+				osw.write("<TableType Descriptions=\"èª¬æ˜Žï¼‘\" ID=\"2\" Name=\"ãƒ†ãƒ¼ãƒ–ãƒ«ã‚¿ã‚¤ãƒ—ï¼‘\" SortKey=\"001\" />\n");
+				osw.write("<DataType BasicType=\"String\" Decimal=\"0\" ID=\"1\" Length=\"0\" Name=\"æœªæŒ‡å®š\" SortKey=\"000\" />\n");
+				osw.write("<DataType BasicType=\"SignedNumber\" Decimal=\"0\" ID=\"2\" Length=\"9\" Name=\"ç¬¦å·ä»˜ï¼™æ¡æ•´æ•°\" SortKey=\"NR09.0-\" SQLExpression=\"NUMBER(9)\" />\n");
+				osw.write("<DataType BasicType=\"UnsignedNumber\" Decimal=\"0\" ID=\"3\" Length=\"9\" Name=\"æ­£ã®ï¼™æ¡æ•´æ•°\" SortKey=\"NR09.0\" SQLExpression=\"NUMBER(9)\" />\n");
+				osw.write("<DataType BasicType=\"String\" Decimal=\"0\" ID=\"4\" Length=\"50\" Name=\"ï¼•ï¼æ¡æ–‡å­—\" SortKey=\"TX050\" SQLExpression=\"VARCHAR(50)\" />\n");
+				osw.write("<DataType BasicType=\"String\" Decimal=\"0\" ID=\"5\" Length=\"1\" Name=\"åŒºåˆ†\" SortKey=\"KB1\" SQLExpression=\"CHAR(1)\" />\n");
+				osw.write("<FunctionType Descriptions=\"\" ID=\"1\" Name=\"æœªæŒ‡å®š\" SortKey=\"000\" />\n");
+				osw.write("<FunctionType Descriptions=\"èª¬æ˜Žï¼‘\" ID=\"2\" Name=\"æ©Ÿèƒ½ã‚¿ã‚¤ãƒ—ï¼‘\" SortKey=\"001\" />\n");
+				osw.write("<MaintenanceLog Descriptions=\"æ–°è¦è¿½åŠ \" Headder=\"0.0.1\" ID=\"0001\" SortKey=\"" + getStringValueOfDateTime("withoutTime") + "\" />\n");
 				osw.write("</System>\n");
 			} else {
 				osw.write("<?xml version=\"1.0\" encoding=\"UTF-8\" ?>\n");
@@ -18237,7 +18237,7 @@ public class Modeler extends JFrame {
 			if (nodeType_.equals("TaskActionFirst") || nodeType_.equals("TaskAction")) {
 				String workStr = "";
 				if (!domNode_.getAttribute("ExecuteIf").equals("")) {
-					workStr = domNode_.getAttribute("ExecuteIf") + "A";
+					workStr = domNode_.getAttribute("ExecuteIf") + "ã€";
 				}
 				NodeList list = domNode_.getElementsByTagName("TaskFunctionIO");
 				if (list.getLength() > 0) {
@@ -22885,7 +22885,7 @@ public class Modeler extends JFrame {
 							j = j + 1;
 							Object[] Cell = new Object[6];
 							Cell[0] =  new TableRowNumber(j, element1, element2, element3);
-							Cell[1] = "‹@”\’è‹`ƒŒƒxƒ‹";
+							Cell[1] = "æ©Ÿèƒ½å®šç¾©ãƒ¬ãƒ™ãƒ«";
 							Cell[2] = roleNode.getElement().getAttribute("Name");
 							Cell[3] = element1.getAttribute("SortKey");
 							Cell[4] = element1.getAttribute("Name");
@@ -28034,8 +28034,8 @@ public class Modeler extends JFrame {
 					count = 0;
 				} else {
 					if (count > length
-						&& !originalString.substring(i+1,i+2).equals("B")
-						&& !originalString.substring(i+1,i+2).equals("A")
+						&& !originalString.substring(i+1,i+2).equals("ã€‚")
+						&& !originalString.substring(i+1,i+2).equals("ã€")
 						&& !originalString.substring(i+1,i+3).equals(". ")
 						&& !originalString.substring(i+1,i+3).equals(", ")) {
 						processedString.append(originalString.substring(lastEnd, i+1));
@@ -28064,7 +28064,7 @@ public class Modeler extends JFrame {
 		if (originalString.length() >= 2) {
 			for (int i = 0; i < originalString.length(); i++) {
 				if (i+2 <= originalString.length()) {
-					if (originalString.substring(i,i+1).equals("B")) {
+					if (originalString.substring(i,i+1).equals("ã€‚")) {
 						sentence = originalString.substring(0, i) + "...";
 						break;
 					}
@@ -28077,7 +28077,7 @@ public class Modeler extends JFrame {
 						break;
 					}
 				} else {
-					if (originalString.substring(originalString.length()-1,originalString.length()).equals("B")) {
+					if (originalString.substring(originalString.length()-1,originalString.length()).equals("ã€‚")) {
 						sentence = originalString.substring(0, originalString.length()-1);
 						break;
 					} else {
@@ -28115,7 +28115,7 @@ public class Modeler extends JFrame {
 	 * @return String :string value of processed string
 	 */
 	static String convertSingleByteCharsToDoubleByteChars(String originalString) {
-		int diff = '‚`' - 'A';
+		int diff = 'ï¼¡' - 'A';
 		String signs = "!#$%&()*+,-./:;<=>?@[]^_{|}";;
 		char[] cc = originalString.toCharArray();
 		StringBuilder sb = new StringBuilder();
