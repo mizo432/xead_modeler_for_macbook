@@ -74,7 +74,7 @@ public class DialogImportXEAF extends JDialog {
 	private int createFunctionCounter, cancelFunctionCounter;
 	private int missingTableCounter, missingFunctionCounter;
 	private String defaultTableTypeID = "";
-	private HashMap<String, String> functionTypeMap = new HashMap<String, String>();
+	private HashMap<String, String> functionTypeMap = new HashMap<>();
 	
 	private static String[] typeIDArray = {"XF000","XF100","XF110","XF200","XF290","XF300","XF310","XF390"};
 	private static String[] typeNameArray = {res.getString("XF000Name"),res.getString("XF100Name"),res.getString("XF110Name"),res.getString("XF200Name"),
@@ -193,11 +193,10 @@ public class DialogImportXEAF extends JDialog {
 			DOMParser parser = new DOMParser();
 			parser.parse(new InputSource(new FileInputStream(fileName)));
 			domDocumentFrom = parser.getDocument();
-		} catch (IOException ex) {
-		} catch (SAXException ex) {
+		} catch (IOException | SAXException ignored) {
 		}
 
-		elementList = domDocumentFrom.getElementsByTagName("System");
+    elementList = domDocumentFrom.getElementsByTagName("System");
 		element = (org.w3c.dom.Element)elementList.item(0);
 		float importFileFormat = Float.parseFloat(element.getAttribute("FormatVersion"));
 		float appliFormat = Float.parseFloat(DialogAbout.FORMAT_VERSION);
@@ -215,7 +214,7 @@ public class DialogImportXEAF extends JDialog {
 			elementList = domDocumentFrom.getElementsByTagName("Subsystem");
 			for (int i = 0; i < elementList.getLength(); i++) {
 				node = new XeadNode((org.w3c.dom.Element)elementList.item(i));
-				comboBoxModelBlockFrom.addElement((Object)node);
+				comboBoxModelBlockFrom.addElement(node);
 			}
 			comboBoxModelBlockFrom.sortElements();
 			comboBoxModelBlockFrom.insertElementAt(res.getString("DialogImportXEAF12"), 0);
@@ -224,7 +223,7 @@ public class DialogImportXEAF extends JDialog {
 			elementList = frame_.domDocument.getElementsByTagName("Subsystem");
 			for (int i = 0; i < elementList.getLength(); i++) {
 				node = new XeadNode((org.w3c.dom.Element)elementList.item(i));
-				comboBoxModelBlockInto.addElement((Object)node);
+				comboBoxModelBlockInto.addElement(node);
 			}
 			comboBoxModelBlockInto.sortElements();
 			comboBoxModelBlockInto.insertElementAt(res.getString("DialogImportXEAF12"), 0);
@@ -319,7 +318,7 @@ public class DialogImportXEAF extends JDialog {
 		} catch (Exception ex1) {
 			try {
 				bufferedWriter.close();
-			} catch (Exception ex2) {}
+			} catch (Exception ignored) {}
 		} finally {
 			jProgressBar.setVisible(false);
 			jButtonStart.setVisible(true);
@@ -332,14 +331,14 @@ public class DialogImportXEAF extends JDialog {
 		} catch (Exception ex3) {
 			try {
 				bufferedWriter.close();
-			} catch (Exception ex4) {}
+			} catch (Exception ignored) {}
 		}
 	}
 
 	void importTables() {
 		org.w3c.dom.Element workElement;
 		NodeList workElementList, targetElementList;
-		ArrayList<org.w3c.dom.Element> tableElementListFrom = new ArrayList<org.w3c.dom.Element>(); 
+		ArrayList<org.w3c.dom.Element> tableElementListFrom = new ArrayList<>();
 		boolean isAlreadyExisting;
 		String idOfDefinition;
 
@@ -366,7 +365,7 @@ public class DialogImportXEAF extends JDialog {
 
 		try {
 			bufferedWriter.write("\n");
-		} catch (IOException ex) {}
+		} catch (IOException ignored) {}
 
 		/////////////////////////////////////////////////
 		//Import Table definitions into target document//
@@ -388,7 +387,7 @@ public class DialogImportXEAF extends JDialog {
 						bufferedWriter.write(tableElementListFrom.get(i).getAttribute("Name") +
 								"(" + tableElementListFrom.get(i).getAttribute("ID") +
 								"):" + res.getString("DialogImportXEAF48") + "\n");
-					} catch (IOException ex1) {}
+					} catch (IOException ignored) {}
 					cancelTableCounter++;
 					break;
 				}
@@ -404,7 +403,7 @@ public class DialogImportXEAF extends JDialog {
 				org.w3c.dom.Element newElement = frame_.domDocument.createElement("SubsystemTable");
 				newElement.setAttribute("TableID", tableID);
 				int pos = 50 + 10 * i;
-				newElement.setAttribute("BoxPosition", Integer.toString(pos) + "," + Integer.toString(pos));
+				newElement.setAttribute("BoxPosition", pos + "," + pos);
 				newElement.setAttribute("ExtDivLoc", "500");
 				newElement.setAttribute("IntDivLoc", "0");
 				newElement.setAttribute("ShowOnModel", "true");
@@ -416,19 +415,19 @@ public class DialogImportXEAF extends JDialog {
 					bufferedWriter.write(tableElementListFrom.get(i).getAttribute("Name") + "(" +
 							tableElementListFrom.get(i).getAttribute("ID") +
 							"):" + res.getString("DialogImportXEAF34") + "\n");
-				} catch (IOException ex2) {}
+				} catch (IOException ignored) {}
 			}
 		}
 
 		try {
 			bufferedWriter.write("\n");
-		} catch (IOException ex3) {}
+		} catch (IOException ignored) {}
 	}
 
 	void importFunctions() {
 		org.w3c.dom.Element workElement, fromFunctionElement, newFunctionElement;
 		NodeList functionElementListInto;
-		ArrayList<org.w3c.dom.Element> functionElementListFrom = new ArrayList<org.w3c.dom.Element>(); 
+		ArrayList<org.w3c.dom.Element> functionElementListFrom = new ArrayList<>();
 		boolean isAlreadyExisting;
 		String idOfDefinition;
 
@@ -458,10 +457,10 @@ public class DialogImportXEAF extends JDialog {
 		jProgressBar.setValue(0);
 		jProgressBar.setMaximum(functionElementListFrom.size());
 		
-		ArrayList<org.w3c.dom.Element> fromFunctionArray = new ArrayList<org.w3c.dom.Element>();
-		ArrayList<org.w3c.dom.Element> newFunctionArray = new ArrayList<org.w3c.dom.Element>();
+		ArrayList<org.w3c.dom.Element> fromFunctionArray = new ArrayList<>();
+		ArrayList<org.w3c.dom.Element> newFunctionArray = new ArrayList<>();
 
-		ArrayList<org.w3c.dom.Element> targetFunctionArray = new ArrayList<org.w3c.dom.Element>(); 
+		ArrayList<org.w3c.dom.Element> targetFunctionArray = new ArrayList<>();
 		functionElementListInto = frame_.domDocument.getElementsByTagName("Function");
 		for (int i = 0; i < functionElementListInto.getLength(); i++) {
 			workElement = (org.w3c.dom.Element)functionElementListInto.item(i);
@@ -478,26 +477,27 @@ public class DialogImportXEAF extends JDialog {
 			isAlreadyExisting = false;
 			idOfDefinition = functionElementListFrom.get(i).getAttribute("ID");
 
-			for (int j = 0; j < targetFunctionArray.size(); j++) {
-				workElement = targetFunctionArray.get(j);
-				if (workElement.getAttribute("SortKey").equals(idOfDefinition)) {
-					isAlreadyExisting = true;
-					try {
-						bufferedWriter.write(functionElementListFrom.get(i).getAttribute("Name") +
-								"(" + functionElementListFrom.get(i).getAttribute("ID") +
-								"):" + res.getString("DialogImportXEAF48") + "\n");
-					} catch (IOException ex1) {}
-					cancelFunctionCounter++;
-					break;
-				}
-			}
+      for (Element element : targetFunctionArray) {
+        workElement = element;
+        if (workElement.getAttribute("SortKey").equals(idOfDefinition)) {
+          isAlreadyExisting = true;
+          try {
+            bufferedWriter.write(functionElementListFrom.get(i).getAttribute("Name") +
+                "(" + functionElementListFrom.get(i).getAttribute("ID") +
+                "):" + res.getString("DialogImportXEAF48") + "\n");
+          } catch (IOException ignored) {
+          }
+          cancelFunctionCounter++;
+          break;
+        }
+      }
 
 			if (!isAlreadyExisting) {
 				try {
 					bufferedWriter.write(functionElementListFrom.get(i).getAttribute("Name") + "(" +
 							functionElementListFrom.get(i).getAttribute("ID") + "):" +
 							res.getString("DialogImportXEAF34") + "\n");
-				} catch (IOException ex2) {}
+				} catch (IOException ignored) {}
 
 				org.w3c.dom.Element newElement = createFunctionDefinition(functionElementListFrom.get(i), blockIDInto);
 				fromFunctionArray.add(functionElementListFrom.get(i));
@@ -508,7 +508,7 @@ public class DialogImportXEAF extends JDialog {
 		}
 		try {
 			bufferedWriter.write("\n");
-		} catch (IOException ex3) {}
+		} catch (IOException ignored) {}
 		
 
 		////////////////////////////////////////////////////////////
@@ -522,8 +522,8 @@ public class DialogImportXEAF extends JDialog {
 			jProgressBar.setString("Checking functions called...");
 			jProgressBar.paintImmediately(0,0,jProgressBar.getWidth(),jProgressBar.getHeight());
 
-			fromFunctionElement = (org.w3c.dom.Element)fromFunctionArray.get(i);
-			newFunctionElement = (org.w3c.dom.Element)newFunctionArray.get(i);
+			fromFunctionElement = fromFunctionArray.get(i);
+			newFunctionElement = newFunctionArray.get(i);
 			updateFunctionsCalledOfNewFunction(fromFunctionElement, newFunctionElement, functionElementListInto);
 		}
 	}
@@ -542,7 +542,7 @@ public class DialogImportXEAF extends JDialog {
 					try {
 						bufferedWriter.write(elementFrom.getAttribute("DetailFunction")
 								+ res.getString("DialogImportXEAF38") + "\n");
-					} catch (IOException ex1) {}
+					} catch (IOException ignored) {}
 				} else {
 					org.w3c.dom.Element childElement = frame_.domDocument.createElement("FunctionUsedByThis");
 					childElement.setAttribute("FunctionID", convertedID);
@@ -561,7 +561,7 @@ public class DialogImportXEAF extends JDialog {
 					try {
 						bufferedWriter.write(elementFrom.getAttribute("BatchRecordFunction")
 								+ res.getString("DialogImportXEAF38") + "\n");
-					} catch (IOException ex1) {}
+					} catch (IOException ignored) {}
 				} else {
 					org.w3c.dom.Element childElement = frame_.domDocument.createElement("FunctionUsedByThis");
 					childElement.setAttribute("FunctionID", convertedID);
@@ -580,7 +580,7 @@ public class DialogImportXEAF extends JDialog {
 					try {
 						bufferedWriter.write(elementFrom.getAttribute("FunctionAfterInsert")
 								+ res.getString("DialogImportXEAF38") + "\n");
-					} catch (IOException ex1) {}
+					} catch (IOException ignored) {}
 				} else {
 					org.w3c.dom.Element childElement = frame_.domDocument.createElement("FunctionUsedByThis");
 					childElement.setAttribute("FunctionID", convertedID);
@@ -599,7 +599,7 @@ public class DialogImportXEAF extends JDialog {
 					try {
 						bufferedWriter.write(elementFrom.getAttribute("HeaderFunction")
 								+ res.getString("DialogImportXEAF38") + "\n");
-					} catch (IOException ex1) {}
+					} catch (IOException ignored) {}
 				} else {
 					org.w3c.dom.Element childElement = frame_.domDocument.createElement("FunctionUsedByThis");
 					childElement.setAttribute("FunctionID", convertedID);
@@ -628,7 +628,7 @@ public class DialogImportXEAF extends JDialog {
 						try {
 							bufferedWriter.write(action.substring(pos1+5, pos2)
 									+ res.getString("DialogImportXEAF38") + "\n");
-						} catch (IOException ex1) {}
+						} catch (IOException ignored) {}
 					} else {
 						org.w3c.dom.Element childElement = frame_.domDocument.createElement("FunctionUsedByThis");
 						childElement.setAttribute("FunctionID", convertedID);
@@ -663,39 +663,39 @@ public class DialogImportXEAF extends JDialog {
 		int month = calendar.get(Calendar.MONTH) + 1;
 		String monthStr = "";
 		if (month < 10) {
-			monthStr = "0" + Integer.toString(month);
+			monthStr = "0" + month;
 		} else {
 			monthStr = Integer.toString(month);
 		}
 		int day = calendar.get(Calendar.DAY_OF_MONTH);
 		String dayStr = "";
 		if (day < 10) {
-			dayStr = "0" + Integer.toString(day);
+			dayStr = "0" + day;
 		} else {
 			dayStr = Integer.toString(day);
 		}
 		int hour = calendar.get(Calendar.HOUR_OF_DAY);
 		String hourStr = "";
 		if (hour < 10) {
-			hourStr = "0" + Integer.toString(hour);
+			hourStr = "0" + hour;
 		} else {
 			hourStr = Integer.toString(hour);
 		}
 		int minute = calendar.get(Calendar.MINUTE);
 		String minStr = "";
 		if (minute < 10) {
-			minStr = "0" + Integer.toString(minute);
+			minStr = "0" + minute;
 		} else {
 			minStr = Integer.toString(minute);
 		}
 		int second = calendar.get(Calendar.SECOND);
 		String secStr = "";
 		if (second < 10) {
-			secStr = "0" + Integer.toString(second);
+			secStr = "0" + second;
 		} else {
 			secStr = Integer.toString(second);
 		}
-		returnValue = Integer.toString(year) + monthStr + dayStr + hourStr + minStr + secStr;
+		returnValue = year + monthStr + dayStr + hourStr + minStr + secStr;
 		return returnValue;
 	}
 
@@ -729,7 +729,7 @@ public class DialogImportXEAF extends JDialog {
 		/////////////////////
 		//Create TableField//
 		/////////////////////
-		HashMap<String, String> fieldIDMap = new HashMap<String, String>();
+		HashMap<String, String> fieldIDMap = new HashMap<>();
 		elementList1 = elementFrom.getElementsByTagName("Field");
 		for (int i = 0; i < elementList1.getLength(); i++) {
 			workElement1 = (org.w3c.dom.Element)elementList1.item(i);
@@ -959,7 +959,7 @@ public class DialogImportXEAF extends JDialog {
 			try {
 				bufferedWriter.write(elementFrom.getAttribute("PrimaryTable")
 						+ res.getString("DialogImportXEAF37") + "\n");
-			} catch (IOException ex1) {}
+			} catch (IOException ignored) {}
 		} else {
 			org.w3c.dom.Element childElement = frame_.domDocument.createElement("IOTable");
 			childElement.setAttribute("ID", "1");
@@ -983,7 +983,7 @@ public class DialogImportXEAF extends JDialog {
 			try {
 				bufferedWriter.write(elementFrom.getAttribute("PrimaryTable")
 						+ res.getString("DialogImportXEAF37") + "\n");
-			} catch (IOException ex1) {}
+			} catch (IOException ignored) {}
 		} else {
 			org.w3c.dom.Element childElement = frame_.domDocument.createElement("IOTable");
 			childElement.setAttribute("ID", "1");
@@ -1005,7 +1005,7 @@ public class DialogImportXEAF extends JDialog {
 				try {
 					bufferedWriter.write(elementFrom.getAttribute("BatchTable")
 							+ res.getString("DialogImportXEAF37") + "\n");
-				} catch (IOException ex1) {}
+				} catch (IOException ignored) {}
 			} else {
 				org.w3c.dom.Element childElement = frame_.domDocument.createElement("IOTable");
 				childElement.setAttribute("ID", "2");
@@ -1030,7 +1030,7 @@ public class DialogImportXEAF extends JDialog {
 			try {
 				bufferedWriter.write(elementFrom.getAttribute("PrimaryTable")
 						+ res.getString("DialogImportXEAF37") + "\n");
-			} catch (IOException ex1) {}
+			} catch (IOException ignored) {}
 		} else {
 			org.w3c.dom.Element childElement = frame_.domDocument.createElement("IOTable");
 			childElement.setAttribute("ID", "1");
@@ -1055,7 +1055,7 @@ public class DialogImportXEAF extends JDialog {
 			try {
 				bufferedWriter.write(elementFrom.getAttribute("PrimaryTable")
 						+ res.getString("DialogImportXEAF37") + "\n");
-			} catch (IOException ex1) {}
+			} catch (IOException ignored) {}
 		} else {
 			org.w3c.dom.Element childElement = frame_.domDocument.createElement("IOTable");
 			childElement.setAttribute("ID", "1");
@@ -1080,7 +1080,7 @@ public class DialogImportXEAF extends JDialog {
 			try {
 				bufferedWriter.write(elementFrom.getAttribute("HeaderTable")
 						+ res.getString("DialogImportXEAF37") + "\n");
-			} catch (IOException ex1) {}
+			} catch (IOException ignored) {}
 		} else {
 			org.w3c.dom.Element childElement = frame_.domDocument.createElement("IOTable");
 			childElement.setAttribute("ID", "1");
@@ -1106,7 +1106,7 @@ public class DialogImportXEAF extends JDialog {
 				try {
 					bufferedWriter.write(workElement.getAttribute("Table")
 							+ res.getString("DialogImportXEAF37") + "\n");
-				} catch (IOException ex1) {}
+				} catch (IOException ignored) {}
 			} else {
 				org.w3c.dom.Element childElement = frame_.domDocument.createElement("IOTable");
 				childElement.setAttribute("ID", "2");
@@ -1131,7 +1131,7 @@ public class DialogImportXEAF extends JDialog {
 			try {
 				bufferedWriter.write(elementFrom.getAttribute("HeaderTable")
 						+ res.getString("DialogImportXEAF37") + "\n");
-			} catch (IOException ex1) {}
+			} catch (IOException ignored) {}
 		} else {
 			org.w3c.dom.Element childElement = frame_.domDocument.createElement("IOTable");
 			childElement.setAttribute("ID", "1");
@@ -1153,7 +1153,7 @@ public class DialogImportXEAF extends JDialog {
 			try {
 				bufferedWriter.write(elementFrom.getAttribute("DetailTable")
 						+ res.getString("DialogImportXEAF37") + "\n");
-			} catch (IOException ex1) {}
+			} catch (IOException ignored) {}
 		} else {
 			org.w3c.dom.Element childElement = frame_.domDocument.createElement("IOTable");
 			childElement.setAttribute("ID", "2");
@@ -1177,7 +1177,7 @@ public class DialogImportXEAF extends JDialog {
 			try {
 				bufferedWriter.write(elementFrom.getAttribute("HeaderTable")
 						+ res.getString("DialogImportXEAF37") + "\n");
-			} catch (IOException ex1) {}
+			} catch (IOException ignored) {}
 		} else {
 			org.w3c.dom.Element childElement = frame_.domDocument.createElement("IOTable");
 			childElement.setAttribute("ID", "1");
@@ -1199,7 +1199,7 @@ public class DialogImportXEAF extends JDialog {
 			try {
 				bufferedWriter.write(elementFrom.getAttribute("DetailTable")
 						+ res.getString("DialogImportXEAF37") + "\n");
-			} catch (IOException ex1) {}
+			} catch (IOException ignored) {}
 		} else {
 			org.w3c.dom.Element childElement = frame_.domDocument.createElement("IOTable");
 			childElement.setAttribute("ID", "2");
@@ -1224,26 +1224,26 @@ public class DialogImportXEAF extends JDialog {
 		for (int i = 0; i < keyList.getLength(); i++) {
 			element = (org.w3c.dom.Element)keyList.item(i);
 			if (element.getAttribute("Type").equals("PK")) {
-				ArrayList<String> keyFieldIDList = new ArrayList<String>();
+				ArrayList<String> keyFieldIDList = new ArrayList<>();
 				NodeList tableKeyFieldList = element.getElementsByTagName("TableKeyField");
 				for (int j = 0; j < tableKeyFieldList.getLength(); j++) {
 					element = (org.w3c.dom.Element)tableKeyFieldList.item(j);
 					keyFieldIDList.add(element.getAttribute("FieldID"));
 				}
-				StringBuffer bf = new StringBuffer();
+				StringBuilder bf = new StringBuilder();
 				NodeList fieldList = tableElement.getElementsByTagName("TableField");
-				for (int j = 0; j < keyFieldIDList.size(); j++) {
-					for (int k = 0; k < fieldList.getLength(); k++) {
-						element = (org.w3c.dom.Element)fieldList.item(k);
-						if (element.getAttribute("ID").equals(keyFieldIDList.get(j))) {
-							if (!bf.toString().equals("")) {
-								bf.append(", ");
-							}
-							bf.append(element.getAttribute("Name"));
-							break;
-						}
-					}
-				}
+        for (String s : keyFieldIDList) {
+          for (int k = 0; k < fieldList.getLength(); k++) {
+            element = (Element) fieldList.item(k);
+            if (element.getAttribute("ID").equals(s)) {
+              if (!bf.toString().equals("")) {
+                bf.append(", ");
+              }
+              bf.append(element.getAttribute("Name"));
+              break;
+            }
+          }
+        }
 				keyFieldName = bf.toString();
 				break;
 			}
@@ -1393,16 +1393,15 @@ public class DialogImportXEAF extends JDialog {
 //				node = (XeadNode)it.next();
 //				this.addElement(node);
 //			}
-			ArrayList<XeadNode> list = new ArrayList<XeadNode>();
+			ArrayList<XeadNode> list = new ArrayList<>();
 			for (int i = 0; i < this.getSize(); i++) {
 				list.add((XeadNode)this.getElementAt(i));
 			}
 			this.removeAllElements();
 			Collections.sort(list);
-			Iterator<XeadNode> it = list.iterator();
-			while(it.hasNext()){
-				this.addElement(it.next());
-			}
+      for (XeadNode xeadNode : list) {
+        this.addElement(xeadNode);
+      }
 		}
 	}
 

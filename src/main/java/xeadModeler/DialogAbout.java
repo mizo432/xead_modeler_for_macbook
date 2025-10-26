@@ -312,21 +312,21 @@ public class DialogAbout extends JDialog implements ActionListener {
 	/**
 	 * Components on the panel
 	 */
-	private JPanel panel1 = new JPanel();
-	private JPanel panel2 = new JPanel();
-	private JPanel insetsPanel1 = new JPanel();
-	private JPanel insetsPanel2 = new JPanel();
-	private JPanel insetsPanel3 = new JPanel();
-	private JButton button1 = new JButton();
-	private JLabel imageLabel = new JLabel();
-	private JLabel labelName = new JLabel();
-	private JLabel labelVersion = new JLabel();
-	private JLabel labelCopyright = new JLabel();
-	private JLabel labelURL = new JLabel();
+	private final JPanel panel1 = new JPanel();
+	private final JPanel panel2 = new JPanel();
+	private final JPanel insetsPanel1 = new JPanel();
+	private final JPanel insetsPanel2 = new JPanel();
+	private final JPanel insetsPanel3 = new JPanel();
+	private final JButton button1 = new JButton();
+	private final JLabel imageLabel = new JLabel();
+	private final JLabel labelName = new JLabel();
+	private final JLabel labelVersion = new JLabel();
+	private final JLabel labelCopyright = new JLabel();
+	private final JLabel labelURL = new JLabel();
 	private ImageIcon imageXead = new ImageIcon();
-	private HTMLEditorKit htmlEditorKit = new HTMLEditorKit();
-	private Desktop desktop = Desktop.getDesktop();
-	private Modeler modeler;
+	private final HTMLEditorKit htmlEditorKit = new HTMLEditorKit();
+	private final Desktop desktop = Desktop.getDesktop();
+	private final Modeler modeler;
 
 	public DialogAbout(Modeler parent) {
 		super(parent);

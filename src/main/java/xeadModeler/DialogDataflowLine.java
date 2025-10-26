@@ -47,7 +47,13 @@ public class DialogDataflowLine extends JDialog {
 	private static ResourceBundle res = ResourceBundle.getBundle("xeadModeler.Res");
 	private JPanel panelMain = new JPanel();
 	private JLabel jLabel1 = new JLabel();
-	private JComboBox jComboBoxNode1 = new JComboBox();
+	private
+
+
+
+
+
+  JComboBox jComboBoxNode1 = new JComboBox();
 	private ButtonGroup buttonGroupArrowStyle = new ButtonGroup();
 	private JLabel jLabel2 = new JLabel();
 	private JPanel jPanel1 = new JPanel();
@@ -374,33 +380,39 @@ public class DialogDataflowLine extends JDialog {
 		int selectedIndex1 = 0;
 		String selectedItemName1 = "";
 		jComboBoxNode1.removeAllItems();
-		for (int i = 0; i < nodeArray.size(); i++) {
-			if (!nodeArray.get(i).getElement().getAttribute("ID").equals(element.getAttribute("NodeID2"))) {
-				if (nodeArray.get(i).getElement().getAttribute("Type").equals("Process")) {
-					Modeler.XeadTreeNode node = frame_.getSpecificXeadTreeNode("Task", nodeArray.get(i).getElement().getAttribute("TaskID"), null);
-					jComboBoxNode1.addItem(node.getElement().getAttribute("Name"));
-					numberOfStorageArray1 = numberOfStorageArray1 + 1;
-					storageArray1[numberOfStorageArray1] = nodeArray.get(i);
-					if (nodeArray.get(i).getElement().getAttribute("ID").equals(element.getAttribute("NodeID1"))) {
-						selectedIndex1 = numberOfStorageArray1;
-					}
-				} else {
-					if (nodeArray.get(i).getElement().getAttribute("Type").equals("Subject")) {
-						if (nodeArray.get(i).getElement().getAttribute("RoleID").equals("")) {
-							jComboBoxNode1.addItem(nodeArray.get(i).getElement().getAttribute("Name") + nodeArray.get(i).getElement().getAttribute("NameExt"));
-						} else {
-							Modeler.XeadTreeNode node = frame_.getSpecificXeadTreeNode("Role", nodeArray.get(i).getElement().getAttribute("RoleID"), null);
-							jComboBoxNode1.addItem(node.getElement().getAttribute("Name"));
-						}
-						numberOfStorageArray1 = numberOfStorageArray1 + 1;
-						storageArray1[numberOfStorageArray1] = nodeArray.get(i);
-						if (nodeArray.get(i).getElement().getAttribute("ID").equals(element.getAttribute("NodeID1"))) {
-							selectedIndex1 = numberOfStorageArray1;
-						}
-					}
-				}
-			}
-		}
+    for (DataflowNode dataflowNode : nodeArray) {
+      if (!dataflowNode.getElement().getAttribute("ID").equals(element.getAttribute("NodeID2"))) {
+        if (dataflowNode.getElement().getAttribute("Type").equals("Process")) {
+          XeadTreeNode node = frame_.getSpecificXeadTreeNode("Task",
+              dataflowNode.getElement().getAttribute("TaskID"), null);
+          jComboBoxNode1.addItem(node.getElement().getAttribute("Name"));
+          numberOfStorageArray1 = numberOfStorageArray1 + 1;
+          storageArray1[numberOfStorageArray1] = dataflowNode;
+          if (dataflowNode.getElement().getAttribute("ID")
+              .equals(element.getAttribute("NodeID1"))) {
+            selectedIndex1 = numberOfStorageArray1;
+          }
+        } else {
+          if (dataflowNode.getElement().getAttribute("Type").equals("Subject")) {
+            if (dataflowNode.getElement().getAttribute("RoleID").equals("")) {
+              jComboBoxNode1.addItem(
+                  dataflowNode.getElement().getAttribute("Name") + dataflowNode.getElement()
+                      .getAttribute("NameExt"));
+            } else {
+              XeadTreeNode node = frame_.getSpecificXeadTreeNode("Role",
+                  dataflowNode.getElement().getAttribute("RoleID"), null);
+              jComboBoxNode1.addItem(node.getElement().getAttribute("Name"));
+            }
+            numberOfStorageArray1 = numberOfStorageArray1 + 1;
+            storageArray1[numberOfStorageArray1] = dataflowNode;
+            if (dataflowNode.getElement().getAttribute("ID")
+                .equals(element.getAttribute("NodeID1"))) {
+              selectedIndex1 = numberOfStorageArray1;
+            }
+          }
+        }
+      }
+    }
 		jComboBoxNode1.setSelectedIndex(selectedIndex1);
 		selectedItemName1 = jComboBoxNode1.getSelectedItem().toString();
 
@@ -424,26 +436,32 @@ public class DialogDataflowLine extends JDialog {
 		int selectedIndex2 = 0;
 		String selectedItemName2 = "";
 		jComboBoxNode2.removeAllItems();
-		for (int i = 0; i < nodeArray.size(); i++) {
-			if (!nodeArray.get(i).getElement().getAttribute("ID").equals(element.getAttribute("NodeID1"))) {
-				if (nodeArray.get(i).getElement().getAttribute("Type").equals("Process")) {
-					Modeler.XeadTreeNode node = frame_.getSpecificXeadTreeNode("Task", nodeArray.get(i).getElement().getAttribute("TaskID"), null);
-					jComboBoxNode2.addItem(node.getElement().getAttribute("Name"));
-				} else {
-					if (nodeArray.get(i).getElement().getAttribute("Type").equals("Subject") && !nodeArray.get(i).getElement().getAttribute("RoleID").equals("")) {
-						Modeler.XeadTreeNode node = frame_.getSpecificXeadTreeNode("Role", nodeArray.get(i).getElement().getAttribute("RoleID"), null);
-						jComboBoxNode2.addItem(node.getElement().getAttribute("Name"));
-					} else {
-						jComboBoxNode2.addItem(nodeArray.get(i).getElement().getAttribute("Name") + " "+ nodeArray.get(i).getElement().getAttribute("NameExt"));
-					}
-				}
-				numberOfStorageArray2 = numberOfStorageArray2 + 1;
-				storageArray2[numberOfStorageArray2] = nodeArray.get(i);
-				if (nodeArray.get(i).getElement().getAttribute("ID").equals(element.getAttribute("NodeID2")) && !action.equals("Add")) {
-					selectedIndex2 = numberOfStorageArray2;
-				}
-			}
-		}
+    for (DataflowNode dataflowNode : nodeArray) {
+      if (!dataflowNode.getElement().getAttribute("ID").equals(element.getAttribute("NodeID1"))) {
+        if (dataflowNode.getElement().getAttribute("Type").equals("Process")) {
+          XeadTreeNode node = frame_.getSpecificXeadTreeNode("Task",
+              dataflowNode.getElement().getAttribute("TaskID"), null);
+          jComboBoxNode2.addItem(node.getElement().getAttribute("Name"));
+        } else {
+          if (dataflowNode.getElement().getAttribute("Type").equals("Subject")
+              && !dataflowNode.getElement().getAttribute("RoleID").equals("")) {
+            XeadTreeNode node = frame_.getSpecificXeadTreeNode("Role",
+                dataflowNode.getElement().getAttribute("RoleID"), null);
+            jComboBoxNode2.addItem(node.getElement().getAttribute("Name"));
+          } else {
+            jComboBoxNode2.addItem(
+                dataflowNode.getElement().getAttribute("Name") + " " + dataflowNode.getElement()
+                    .getAttribute("NameExt"));
+          }
+        }
+        numberOfStorageArray2 = numberOfStorageArray2 + 1;
+        storageArray2[numberOfStorageArray2] = dataflowNode;
+        if (dataflowNode.getElement().getAttribute("ID").equals(element.getAttribute("NodeID2"))
+            && !action.equals("Add")) {
+          selectedIndex2 = numberOfStorageArray2;
+        }
+      }
+    }
 		jComboBoxNode2.setSelectedIndex(selectedIndex2);
 		selectedItemName2 = jComboBoxNode2.getSelectedItem().toString();
 
@@ -486,46 +504,46 @@ public class DialogDataflowLine extends JDialog {
 				int diff = newSlideNumber - oldSlideNumber;
 				int wrkInt;
 				boolean isToCheck = false;
-				for (int i = 0; i < nodeArray.size(); i++) {
-					if (nodeArray.get(i).getElement() != null
-							&& !nodeArray.get(i).getElement().getAttribute("SlideNumber").equals("")) {
-						wrkInt = Integer.parseInt(nodeArray.get(i).getElement().getAttribute("SlideNumber"));
-						if (wrkInt > oldSlideNumber) {
-							isToCheck = true;
-							break;
-						}
-					}
-				}
+        for (DataflowNode dataflowNode : nodeArray) {
+          if (dataflowNode.getElement() != null
+              && !dataflowNode.getElement().getAttribute("SlideNumber").equals("")) {
+            wrkInt = Integer.parseInt(dataflowNode.getElement().getAttribute("SlideNumber"));
+            if (wrkInt > oldSlideNumber) {
+              isToCheck = true;
+              break;
+            }
+          }
+        }
 				if (!isToCheck) {
-					for (int i = 0; i < lineArray.size(); i++) {
-						wrkInt = Integer.parseInt(lineArray.get(i).getElement().getAttribute("SlideNumber"));
-						if (wrkInt > oldSlideNumber) {
-							isToCheck = true;
-							break;
-						}
-					}
+          for (DataflowLine dataflowLine : lineArray) {
+            wrkInt = Integer.parseInt(dataflowLine.getElement().getAttribute("SlideNumber"));
+            if (wrkInt > oldSlideNumber) {
+              isToCheck = true;
+              break;
+            }
+          }
 				}
 				if (isToCheck) {
 					int rtn = JOptionPane.showOptionDialog(this, res.getString("DialogDataflowLine34"),
 							res.getString("DialogDataflowLine35"), JOptionPane.YES_NO_OPTION, JOptionPane.INFORMATION_MESSAGE, null, null, JOptionPane.YES_OPTION);
 					if (rtn == JOptionPane.YES_OPTION) {
-						for (int i = 0; i < nodeArray.size(); i++) {
-							if (nodeArray.get(i).getElement() != null
-									&& !nodeArray.get(i).getElement().getAttribute("SlideNumber").equals("")) {
-								wrkInt = Integer.parseInt(nodeArray.get(i).getElement().getAttribute("SlideNumber"));
-								if (wrkInt > oldSlideNumber) {
-									wrkInt = wrkInt + diff;
-									nodeArray.get(i).getElement().setAttribute("SlideNumber", Integer.toString(wrkInt));
-								}
-							}
-						}
-						for (int i = 0; i < lineArray.size(); i++) {
-							wrkInt = Integer.parseInt(lineArray.get(i).getElement().getAttribute("SlideNumber"));
-							if (wrkInt > oldSlideNumber) {
-								wrkInt = wrkInt + diff;
-								lineArray.get(i).getElement().setAttribute("SlideNumber", Integer.toString(wrkInt));
-							}
-						}
+            for (DataflowNode dataflowNode : nodeArray) {
+              if (dataflowNode.getElement() != null
+                  && !dataflowNode.getElement().getAttribute("SlideNumber").equals("")) {
+                wrkInt = Integer.parseInt(dataflowNode.getElement().getAttribute("SlideNumber"));
+                if (wrkInt > oldSlideNumber) {
+                  wrkInt = wrkInt + diff;
+                  dataflowNode.getElement().setAttribute("SlideNumber", Integer.toString(wrkInt));
+                }
+              }
+            }
+            for (DataflowLine dataflowLine : lineArray) {
+              wrkInt = Integer.parseInt(dataflowLine.getElement().getAttribute("SlideNumber"));
+              if (wrkInt > oldSlideNumber) {
+                wrkInt = wrkInt + diff;
+                dataflowLine.getElement().setAttribute("SlideNumber", Integer.toString(wrkInt));
+              }
+            }
 					}
 				}
 				element.setAttribute("SlideNumber", jSpinnerSlideNumber.getValue().toString());

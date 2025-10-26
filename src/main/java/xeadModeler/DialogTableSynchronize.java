@@ -193,23 +193,23 @@ public class DialogTableSynchronize extends JDialog {
 		org.w3c.dom.Element targetKeyElement = null;
 		org.w3c.dom.Element synchFileKeyElement = null;
 		countOfErrors = 0;
-		StringBuffer bf = new StringBuffer();
+		StringBuilder bf = new StringBuilder();
 
 		if (!targetElement.getAttribute("Name").equals(synchFileElement.getAttribute("Name"))) {
 			countOfErrors++;
-			bf.append("\n" + countOfErrors+ res.getString("DialogTableSynchronize09"));
+			bf.append("\n").append(countOfErrors).append(res.getString("DialogTableSynchronize09"));
 		}
 		if (!targetElement.getAttribute("Alias").equals(synchFileElement.getAttribute("Alias"))) {
 			countOfErrors++;
-			bf.append("\n" + countOfErrors+ res.getString("DialogTableSynchronize30"));
+			bf.append("\n").append(countOfErrors).append(res.getString("DialogTableSynchronize30"));
 		}
 		if (isDifferentTableType(targetElement, synchFileElement)) {
 			countOfErrors++;
-			bf.append("\n" + countOfErrors+ res.getString("DialogTableSynchronize31"));
+			bf.append("\n").append(countOfErrors).append(res.getString("DialogTableSynchronize31"));
 		}
 		if (!targetElement.getAttribute("Descriptions").equals(synchFileElement.getAttribute("Descriptions"))) {
 			countOfErrors++;
-			bf.append("\n" + countOfErrors+ res.getString("DialogTableSynchronize10"));
+			bf.append("\n").append(countOfErrors).append(res.getString("DialogTableSynchronize10"));
 		}
 
 		NodeList targetFieldList = targetElement.getElementsByTagName("TableField");
@@ -228,36 +228,52 @@ public class DialogTableSynchronize extends JDialog {
 			if (isFound) {
 				if (!targetFieldElement.getAttribute("Name").equals(synchFileFieldElement.getAttribute("Name"))) {
 					countOfErrors++;
-					bf.append("\n" + countOfErrors+ res.getString("DialogTableSynchronize11") + targetFieldElement.getAttribute("Alias") + res.getString("DialogTableSynchronize12"));
+					bf.append("\n").append(countOfErrors).append(res.getString("DialogTableSynchronize11"))
+              .append(targetFieldElement.getAttribute("Alias"))
+              .append(res.getString("DialogTableSynchronize12"));
 				}
 				if (isDifferentDataType(targetFieldElement, synchFileFieldElement)) {
 					countOfErrors++;
-					bf.append("\n" + countOfErrors+ res.getString("DialogTableSynchronize11") + targetFieldElement.getAttribute("Alias") + res.getString("DialogTableSynchronize13"));
+					bf.append("\n").append(countOfErrors).append(res.getString("DialogTableSynchronize11"))
+              .append(targetFieldElement.getAttribute("Alias"))
+              .append(res.getString("DialogTableSynchronize13"));
 				}
 				if (!targetFieldElement.getAttribute("Descriptions").equals(synchFileFieldElement.getAttribute("Descriptions"))) {
 					countOfErrors++;
-					bf.append("\n" + countOfErrors+ res.getString("DialogTableSynchronize11") + targetFieldElement.getAttribute("Alias") + res.getString("DialogTableSynchronize14"));
+					bf.append("\n").append(countOfErrors).append(res.getString("DialogTableSynchronize11"))
+              .append(targetFieldElement.getAttribute("Alias"))
+              .append(res.getString("DialogTableSynchronize14"));
 				}
 				if (!targetFieldElement.getAttribute("AttributeType").equals(synchFileFieldElement.getAttribute("AttributeType"))) {
 					countOfErrors++;
-					bf.append("\n" + countOfErrors+ res.getString("DialogTableSynchronize11") + targetFieldElement.getAttribute("Alias") + res.getString("DialogTableSynchronize26"));
+					bf.append("\n").append(countOfErrors).append(res.getString("DialogTableSynchronize11"))
+              .append(targetFieldElement.getAttribute("Alias"))
+              .append(res.getString("DialogTableSynchronize26"));
 				}
 				if (!targetFieldElement.getAttribute("NotNull").equals(synchFileFieldElement.getAttribute("NotNull"))) {
 					countOfErrors++;
-					bf.append("\n" + countOfErrors+ res.getString("DialogTableSynchronize11") + targetFieldElement.getAttribute("Alias") + res.getString("DialogTableSynchronize27"));
+					bf.append("\n").append(countOfErrors).append(res.getString("DialogTableSynchronize11"))
+              .append(targetFieldElement.getAttribute("Alias"))
+              .append(res.getString("DialogTableSynchronize27"));
 				}
 				if (!targetFieldElement.getAttribute("Default").equals(synchFileFieldElement.getAttribute("Default"))) {
 					countOfErrors++;
-					bf.append("\n" + countOfErrors+ res.getString("DialogTableSynchronize11") + targetFieldElement.getAttribute("Alias") + res.getString("DialogTableSynchronize28"));
+					bf.append("\n").append(countOfErrors).append(res.getString("DialogTableSynchronize11"))
+              .append(targetFieldElement.getAttribute("Alias"))
+              .append(res.getString("DialogTableSynchronize28"));
 				}
 				if (!targetFieldElement.getAttribute("NoUpdate").equals("") && !synchFileFieldElement.getAttribute("NoUpdate").equals("")
 						&& !targetFieldElement.getAttribute("NoUpdate").equals(synchFileFieldElement.getAttribute("NoUpdate"))) {
 					countOfErrors++;
-					bf.append("\n" + countOfErrors+ res.getString("DialogTableSynchronize11") + targetFieldElement.getAttribute("Alias") + res.getString("DialogTableSynchronize29"));
+					bf.append("\n").append(countOfErrors).append(res.getString("DialogTableSynchronize11"))
+              .append(targetFieldElement.getAttribute("Alias"))
+              .append(res.getString("DialogTableSynchronize29"));
 				}
 			} else {
 				countOfErrors++;
-				bf.append("\n" + countOfErrors+ res.getString("DialogTableSynchronize11") + targetFieldElement.getAttribute("Alias") + res.getString("DialogTableSynchronize15"));
+				bf.append("\n").append(countOfErrors).append(res.getString("DialogTableSynchronize11"))
+            .append(targetFieldElement.getAttribute("Alias"))
+            .append(res.getString("DialogTableSynchronize15"));
 			}
 		}
 
@@ -273,7 +289,9 @@ public class DialogTableSynchronize extends JDialog {
 			}
 			if (!isFound) {
 				countOfErrors++;
-				bf.append("\n" + countOfErrors+ res.getString("DialogTableSynchronize16") + synchFileFieldElement.getAttribute("Alias") + res.getString("DialogTableSynchronize17"));
+				bf.append("\n").append(countOfErrors).append(res.getString("DialogTableSynchronize16"))
+            .append(synchFileFieldElement.getAttribute("Alias"))
+            .append(res.getString("DialogTableSynchronize17"));
 			}
 		}
 
@@ -288,7 +306,8 @@ public class DialogTableSynchronize extends JDialog {
 					if (synchFileKeyElement.getAttribute("Type").equals(targetKeyElement.getAttribute("Type"))) {
 						if (!isEquivalentKey(targetKeyElement, synchFileKeyElement, targetFieldList, synchFileFieldList)) {
 							countOfErrors++;
-							bf.append("\n" + countOfErrors+ res.getString("DialogTableSynchronize18"));
+							bf.append("\n").append(countOfErrors)
+                  .append(res.getString("DialogTableSynchronize18"));
 						}
 						break;
 					}
@@ -306,7 +325,7 @@ public class DialogTableSynchronize extends JDialog {
 				}
 				if (!isFound) {
 					countOfErrors++;
-					bf.append("\n" + countOfErrors+ res.getString("DialogTableSynchronize20"));
+					bf.append("\n").append(countOfErrors).append(res.getString("DialogTableSynchronize20"));
 				}
 			}
 		}
@@ -326,7 +345,7 @@ public class DialogTableSynchronize extends JDialog {
 				}
 				if (!isFound) {
 					countOfErrors++;
-					bf.append("\n" + countOfErrors+ res.getString("DialogTableSynchronize22"));
+					bf.append("\n").append(countOfErrors).append(res.getString("DialogTableSynchronize22"));
 				}
 			}
 		}
@@ -334,7 +353,7 @@ public class DialogTableSynchronize extends JDialog {
 		if (countOfErrors == 0) {
 			return false;
 		} else {
-			errorMessage_ = res.getString("DialogTableSynchronize23") + countOfErrors + res.getString("DialogTableSynchronize24") + bf.toString();
+			errorMessage_ = res.getString("DialogTableSynchronize23") + countOfErrors + res.getString("DialogTableSynchronize24") + bf;
 			return true;
 		}
 	}

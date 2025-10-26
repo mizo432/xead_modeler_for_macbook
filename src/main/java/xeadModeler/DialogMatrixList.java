@@ -74,8 +74,8 @@ public class DialogMatrixList extends JDialog {
 	private xeadModeler.Modeler.SortableDomElementListModel sortableDomElementListModel1 = null;
 	private xeadModeler.Modeler.SortableDomElementListModel sortableDomElementListModel2 = null;
 	private xeadModeler.Modeler.SortableDomElementListModel sortableDomElementListModel3 = null;
-	private ArrayList<String> keyList = new ArrayList<String>();
-	private HashMap<String, String> hashKeyList = new HashMap<String, String>();
+	private ArrayList<String> keyList = new ArrayList<>();
+	private HashMap<String, String> hashKeyList = new HashMap<>();
 
 	private XSSFFont fontTitle = null;
 	private XSSFFont fontHeader1 = null;
@@ -260,7 +260,7 @@ public class DialogMatrixList extends JDialog {
 				try {
 					setCursor(new Cursor(Cursor.WAIT_CURSOR));
 					frame_.desktop.open(workXlsFile);
-				} catch (Exception ex) {
+				} catch (Exception ignored) {
 				} finally {
 					setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
 				}
@@ -458,7 +458,7 @@ public class DialogMatrixList extends JDialog {
 
 		sortableDomElementListModel0.removeAllElements();
 		for (int i = 0; i < subjectAreaList.getLength(); i++) {
-			sortableDomElementListModel0.addElement((Object)subjectAreaList.item(i));
+			sortableDomElementListModel0.addElement(subjectAreaList.item(i));
 		}
 		sortableDomElementListModel0.sortElements();
 		for (int i = 0; i < sortableDomElementListModel0.getSize(); i++) {
@@ -484,7 +484,7 @@ public class DialogMatrixList extends JDialog {
 		keyList.clear();
 		sortableDomElementListModel0.removeAllElements();
 		for (int i = 0; i < subjectAreaList.getLength(); i++) {
-			sortableDomElementListModel0.addElement((Object)subjectAreaList.item(i));
+			sortableDomElementListModel0.addElement(subjectAreaList.item(i));
 		}
 		sortableDomElementListModel0.sortElements();
 		for (int i = 0; i < sortableDomElementListModel0.getSize(); i++) {
@@ -534,7 +534,7 @@ public class DialogMatrixList extends JDialog {
 		keyList.clear();
 		sortableDomElementListModel0.removeAllElements();
 		for (int i = 0; i < taskList.getLength(); i++) {
-			sortableDomElementListModel0.addElement((Object)taskList.item(i));
+			sortableDomElementListModel0.addElement(taskList.item(i));
 		}
 		sortableDomElementListModel0.sortElements();
 		for (int i = 0; i < sortableDomElementListModel0.getSize(); i++) {
@@ -573,7 +573,7 @@ public class DialogMatrixList extends JDialog {
 		hashKeyList.clear();
 		sortableDomElementListModel0.removeAllElements();
 		for (int i = 0; i < taskList.getLength(); i++) {
-			sortableDomElementListModel0.addElement((Object)taskList.item(i));
+			sortableDomElementListModel0.addElement(taskList.item(i));
 		}
 		sortableDomElementListModel0.sortElements();
 		for (int i = 0; i < sortableDomElementListModel0.getSize(); i++) {
@@ -634,7 +634,7 @@ public class DialogMatrixList extends JDialog {
 		hashKeyList.clear();
 		sortableDomElementListModel0.removeAllElements();
 		for (int i = 0; i < tableList.getLength(); i++) {
-			sortableDomElementListModel0.addElement((Object)tableList.item(i));
+			sortableDomElementListModel0.addElement(tableList.item(i));
 		}
 		sortableDomElementListModel0.sortElements();
 		
@@ -666,13 +666,13 @@ public class DialogMatrixList extends JDialog {
 		sortableDomElementListModel2.removeAllElements();
 		sortableDomElementListModel3.removeAllElements();
 		for (int i = 0; i < taskTypeList.getLength(); i++) {
-			sortableDomElementListModel1.addElement((Object)taskTypeList.item(i));
+			sortableDomElementListModel1.addElement(taskTypeList.item(i));
 		}
 		for (int i = 0; i < roleList.getLength(); i++) {
-			sortableDomElementListModel2.addElement((Object)roleList.item(i));
+			sortableDomElementListModel2.addElement(roleList.item(i));
 		}
 		for (int i = 0; i < taskList.getLength(); i++) {
-			sortableDomElementListModel3.addElement((Object)taskList.item(i));
+			sortableDomElementListModel3.addElement(taskList.item(i));
 		}
 		sortableDomElementListModel1.sortElements();
 		sortableDomElementListModel2.sortElements();
@@ -789,10 +789,10 @@ public class DialogMatrixList extends JDialog {
 		sortableDomElementListModel1.removeAllElements();
 		sortableDomElementListModel2.removeAllElements();
 		for (int i = 0; i < subsystemList.getLength(); i++) {
-			sortableDomElementListModel1.addElement((Object)subsystemList.item(i));
+			sortableDomElementListModel1.addElement(subsystemList.item(i));
 		}
 		for (int i = 0; i < functionList.getLength(); i++) {
-			sortableDomElementListModel2.addElement((Object)functionList.item(i));
+			sortableDomElementListModel2.addElement(functionList.item(i));
 		}
 		sortableDomElementListModel1.sortElements();
 		sortableDomElementListModel2.sortElements();
@@ -854,10 +854,10 @@ public class DialogMatrixList extends JDialog {
 		sortableDomElementListModel1.removeAllElements();
 		sortableDomElementListModel2.removeAllElements();
 		for (int i = 0; i < subsystemList.getLength(); i++) {
-			sortableDomElementListModel1.addElement((Object)subsystemList.item(i));
+			sortableDomElementListModel1.addElement(subsystemList.item(i));
 		}
 		for (int i = 0; i < functionList.getLength(); i++) {
-			sortableDomElementListModel2.addElement((Object)functionList.item(i));
+			sortableDomElementListModel2.addElement(functionList.item(i));
 		}
 		sortableDomElementListModel1.sortElements();
 		sortableDomElementListModel2.sortElements();
@@ -921,10 +921,10 @@ public class DialogMatrixList extends JDialog {
 		sortableDomElementListModel1.removeAllElements();
 		sortableDomElementListModel2.removeAllElements();
 		for (int i = 0; i < subsystemList.getLength(); i++) {
-			sortableDomElementListModel1.addElement((Object)subsystemList.item(i));
+			sortableDomElementListModel1.addElement(subsystemList.item(i));
 		}
 		for (int i = 0; i < tableList.getLength(); i++) {
-			sortableDomElementListModel2.addElement((Object)tableList.item(i));
+			sortableDomElementListModel2.addElement(tableList.item(i));
 		}
 		sortableDomElementListModel1.sortElements();
 		sortableDomElementListModel2.sortElements();
@@ -996,17 +996,17 @@ public class DialogMatrixList extends JDialog {
 	void setupFunctionRowsForTable(XSSFSheet sheet) {
 		org.w3c.dom.Element workElement0, workElement1, workElement2, workElement3;
 		String workString = "";
-		String crudMark = "";
+		StringBuilder crudMark = new StringBuilder();
 		String crudCheck = "";
 		NodeList nodeList1;
 
 		sortableDomElementListModel1.removeAllElements();
 		sortableDomElementListModel2.removeAllElements();
 		for (int i = 0; i < subsystemList.getLength(); i++) {
-			sortableDomElementListModel1.addElement((Object)subsystemList.item(i));
+			sortableDomElementListModel1.addElement(subsystemList.item(i));
 		}
 		for (int i = 0; i < functionList.getLength(); i++) {
-			sortableDomElementListModel2.addElement((Object)functionList.item(i));
+			sortableDomElementListModel2.addElement(functionList.item(i));
 		}
 		sortableDomElementListModel1.sortElements();
 		sortableDomElementListModel2.sortElements();
@@ -1049,35 +1049,35 @@ public class DialogMatrixList extends JDialog {
 						workElement0 = (org.w3c.dom.Element)sortableDomElementListModel0.getElementAt(m);
 						XSSFCell cellMatrix = row.createCell(m+4);
 						cellMatrix.setCellStyle(styleCheck);
-						crudMark = "";
+						crudMark = new StringBuilder();
 						for (int p = 0; p < nodeList1.getLength(); p++) {
 							workElement3 = (org.w3c.dom.Element)nodeList1.item(p);
 							if (workElement3.getAttribute("TableID").equals(workElement0.getAttribute("ID"))) {
-								if (workElement3.getAttribute("OpC").equals("+") && !crudMark.contains("C")) {
-									crudMark = crudMark + "C";
+								if (workElement3.getAttribute("OpC").equals("+") && !crudMark.toString().contains("C")) {
+									crudMark.append("C");
 								}
-								if (workElement3.getAttribute("OpR").equals("+") && !crudMark.contains("R")) {
-									crudMark = crudMark + "R";
+								if (workElement3.getAttribute("OpR").equals("+") && !crudMark.toString().contains("R")) {
+									crudMark.append("R");
 								}
-								if (workElement3.getAttribute("OpU").equals("+") && !crudMark.contains("U")) {
-									crudMark = crudMark + "U";
+								if (workElement3.getAttribute("OpU").equals("+") && !crudMark.toString().contains("U")) {
+									crudMark.append("U");
 								}
-								if (workElement3.getAttribute("OpD").equals("+") && !crudMark.contains("D")) {
-									crudMark = crudMark + "D";
+								if (workElement3.getAttribute("OpD").equals("+") && !crudMark.toString().contains("D")) {
+									crudMark.append("D");
 								}
 							}
 						}
 						crudCheck = "";
-						if (crudMark.contains("C")) {
+						if (crudMark.toString().contains("C")) {
 							crudCheck = crudCheck + "C";
 						}
-						if (crudMark.contains("R")) {
+						if (crudMark.toString().contains("R")) {
 							crudCheck = crudCheck + "R";
 						}
-						if (crudMark.contains("U")) {
+						if (crudMark.toString().contains("U")) {
 							crudCheck = crudCheck + "U";
 						}
-						if (crudMark.contains("D")) {
+						if (crudMark.toString().contains("D")) {
 							crudCheck = crudCheck + "D";
 						}
 						cellMatrix.setCellValue(new XSSFRichTextString(crudCheck));
@@ -1196,7 +1196,7 @@ public class DialogMatrixList extends JDialog {
 		int month = calendar.get(Calendar.MONTH) + 1;
 		String monthStr = "";
 		if (month < 10) {
-			monthStr = "0" + Integer.toString(month);
+			monthStr = "0" + month;
 		} else {
 			monthStr = Integer.toString(month);
 		}
@@ -1204,7 +1204,7 @@ public class DialogMatrixList extends JDialog {
 		int day = calendar.get(Calendar.DAY_OF_MONTH);
 		String dayStr = "";
 		if (day < 10) {
-			dayStr = "0" + Integer.toString(day);
+			dayStr = "0" + day;
 		} else {
 			dayStr = Integer.toString(day);
 		}
@@ -1212,7 +1212,7 @@ public class DialogMatrixList extends JDialog {
 		int hour = calendar.get(Calendar.HOUR_OF_DAY);
 		String hourStr = "";
 		if (hour < 10) {
-			hourStr = "0" + Integer.toString(hour);
+			hourStr = "0" + hour;
 		} else {
 			hourStr = Integer.toString(hour);
 		}
@@ -1220,7 +1220,7 @@ public class DialogMatrixList extends JDialog {
 		int minute = calendar.get(Calendar.MINUTE);
 		String minStr = "";
 		if (minute < 10) {
-			minStr = "0" + Integer.toString(minute);
+			minStr = "0" + minute;
 		} else {
 			minStr = Integer.toString(minute);
 		}
@@ -1228,12 +1228,12 @@ public class DialogMatrixList extends JDialog {
 		int second = calendar.get(Calendar.SECOND);
 		String secStr = "";
 		if (second < 10) {
-			secStr = "0" + Integer.toString(second);
+			secStr = "0" + second;
 		} else {
 			secStr = Integer.toString(second);
 		}
 		//
-		returnValue = Integer.toString(year) + monthStr + dayStr + hourStr + minStr + secStr;
+		returnValue = year + monthStr + dayStr + hourStr + minStr + secStr;
 		return returnValue;
 	}
 

@@ -386,7 +386,7 @@ public class DialogScan extends JDialog {
 		elementList = frame_.domDocument.getElementsByTagName("Role");
 		for (int i = 0; i < elementList.getLength(); i++) {
 			node = new XeadNode("Role",(org.w3c.dom.Element)elementList.item(i));
-			comboBoxModelRoles.addElement((Object)node);
+			comboBoxModelRoles.addElement(node);
 		}
 		comboBoxModelRoles.sortElements();
 		comboBoxModelRoles.insertElementAt(res.getString("DialogScan30"), 0);
@@ -396,7 +396,7 @@ public class DialogScan extends JDialog {
 		elementList = frame_.domDocument.getElementsByTagName("Subsystem");
 		for (int i = 0; i < elementList.getLength(); i++) {
 			node = new XeadNode("Subsystem",(org.w3c.dom.Element)elementList.item(i));
-			comboBoxModelSubsystems.addElement((Object)node);
+			comboBoxModelSubsystems.addElement(node);
 		}
 		comboBoxModelSubsystems.sortElements();
 		comboBoxModelSubsystems.insertElementAt(res.getString("DialogScan31"), 0);
@@ -1499,27 +1499,26 @@ public class DialogScan extends JDialog {
 		if (originalString.length() >= 2) {
 			for (int i = 0; i < originalString.length(); i++) {
 				if (i+2 <= originalString.length()) {
-					if (originalString.substring(i,i+1).equals("。")) {
+					if (originalString.charAt(i) == '。') {
 						sentence = originalString.substring(0, i) + "...";
 						break;
 					}
-					if (originalString.substring(i,i+2).equals(". ")) {
+					if (originalString.startsWith(". ", i)) {
 						sentence = originalString.substring(0, i+1) + "...";
 						break;
 					}
-					if (originalString.substring(i,i+2).equals("  ")) {
+					if (originalString.startsWith("  ", i)) {
 						sentence = originalString.substring(0, i+1) + "...";
 						break;
 					}
 				} else {
-					if (originalString.substring(originalString.length()-1,originalString.length()).equals("。")) {
+					if (originalString.charAt(originalString.length() - 1) == '。') {
 						sentence = originalString.substring(0, originalString.length()-1);
-						break;
-					} else {
+          } else {
 						sentence = originalString;
-						break;
-					}
-				}
+          }
+          break;
+        }
 			}
 		} else {
 			sentence = originalString;
@@ -1528,18 +1527,18 @@ public class DialogScan extends JDialog {
 	}
 
 	static String substringLinesWithTokenOfEOL(String originalString, String stringToBeInserted) {
-		StringBuffer processedString = new StringBuffer();
+		StringBuilder processedString = new StringBuilder();
 		int lastEnd = 0;
 		for (int i = 0; i <= originalString.length(); i++) {
 			if (i+5 <= originalString.length()) {
-				if (originalString.substring(i,i+5).equals("#EOL#")) {
-					processedString.append(originalString.substring(lastEnd, i));
+				if (originalString.startsWith("#EOL#", i)) {
+					processedString.append(originalString, lastEnd, i);
 					processedString.append(stringToBeInserted);
 					lastEnd = i+5;
 				}
 			} else {
 				if (i == originalString.length()) {
-					processedString.append(originalString.substring(lastEnd, i));
+					processedString.append(originalString, lastEnd, i);
 				}
 			}
 		}
@@ -1547,17 +1546,17 @@ public class DialogScan extends JDialog {
 	}
 
 	static String concatLinesWithTokenOfEOL(String originalString) {
-		StringBuffer processedString = new StringBuffer();
+		StringBuilder processedString = new StringBuilder();
 		int lastEnd = 0;
 		for (int i = 0; i <= originalString.length(); i++) {
 			if (i < originalString.length()) {
-				if (originalString.substring(i,i+1).equals("\n")) {
-					processedString.append(originalString.substring(lastEnd, i));
+				if (originalString.charAt(i) == '\n') {
+					processedString.append(originalString, lastEnd, i);
 					processedString.append("#EOL#");
 					lastEnd = i+1;
 				}
 			} else {
-				processedString.append(originalString.substring(lastEnd, i));
+				processedString.append(originalString, lastEnd, i);
 			}
 		}
 		return processedString.toString();
@@ -1584,7 +1583,7 @@ public class DialogScan extends JDialog {
 		stringToBeReplaced = jTextFieldReplace.getText();
 		//
 		for (int i = 0; i < tableModelScanResult.getRowCount(); i++) {
-			if (((Boolean)tableModelScanResult.getValueAt(i, 1)).booleanValue()) {
+			if ((Boolean) tableModelScanResult.getValueAt(i, 1)) {
 				//
 				countOfHits = Integer.parseInt((String)tableModelScanResult.getValueAt(i, 6));
 				if (countOfHits > 0) {
@@ -1840,7 +1839,7 @@ public class DialogScan extends JDialog {
 					cell.setCellStyle(styleDataString);
 					if (j == 1) {
 						selectFlag = (Boolean)tableModelScanResult.getValueAt(i,j);
-						if (selectFlag.booleanValue()) {
+						if (selectFlag) {
 							cell.setCellValue(new HSSFRichTextString("v"));
 						} else {
 							cell.setCellValue(new HSSFRichTextString(""));
@@ -1862,7 +1861,7 @@ public class DialogScan extends JDialog {
 			JOptionPane.showMessageDialog(null, "Exception : "+ ex1.getMessage());
 			try {
 				fileOutputStream.close();
-			} catch (Exception ex2) {
+			} catch (Exception ignored) {
 			}
 		}
 		//
@@ -1940,7 +1939,7 @@ public class DialogScan extends JDialog {
 		jButtonReplaceAllSelected.setEnabled(false);
 		if (!stringToBeScanned.equals(jTextFieldReplace.getText())) {
 			for (int i = 0; i < tableModelScanResult.getRowCount(); i++) {
-				if (((Boolean)tableModelScanResult.getValueAt(i, 1)).booleanValue()) {
+				if ((Boolean) tableModelScanResult.getValueAt(i, 1)) {
 					jButtonReplaceAllSelected.setEnabled(true);
 					break;
 				}
@@ -1952,7 +1951,7 @@ public class DialogScan extends JDialog {
 		jButtonReplaceAllSelected.setEnabled(false);
 		if (!stringToBeScanned.equals(jTextFieldReplace.getText())) {
 			for (int i = 0; i < tableModelScanResult.getRowCount(); i++) {
-				if (((Boolean)tableModelScanResult.getValueAt(i, 1)).booleanValue()) {
+				if ((Boolean) tableModelScanResult.getValueAt(i, 1)) {
 					jButtonReplaceAllSelected.setEnabled(true);
 					break;
 				}
@@ -2056,7 +2055,7 @@ public class DialogScan extends JDialog {
 				setForeground(table.getForeground());
 				setBackground(table.getBackground());
 			}
-			setSelected((value != null && ((Boolean)value).booleanValue()));
+			setSelected((value != null && (Boolean) value));
 			return this;
 		}
 	}
@@ -2104,16 +2103,15 @@ public class DialogScan extends JDialog {
 //				node = (XeadNode)it.next();
 //				this.addElement(node);
 //			}
-			ArrayList<XeadNode> list = new ArrayList<XeadNode>();
+			ArrayList<XeadNode> list = new ArrayList<>();
 			for (int i = 0; i < this.getSize(); i++) {
 				list.add((XeadNode)this.getElementAt(i));
 			}
 			this.removeAllElements();
 			Collections.sort(list);
-			Iterator<XeadNode> it = list.iterator();
-			while(it.hasNext()){
-				this.addElement(it.next());
-			}
+      for (XeadNode xeadNode : list) {
+        this.addElement(xeadNode);
+      }
 		}
 	}
 
@@ -2323,4 +2321,3 @@ class DialogScan_jTableScanResult_mouseAdapter extends java.awt.event.MouseAdapt
 		adaptee.jTableScanResult_mouseClicked(e);
 	}
 }
-

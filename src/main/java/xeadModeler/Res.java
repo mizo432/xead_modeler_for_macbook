@@ -927,9 +927,9 @@ public class Res extends java.util.ListResourceBundle {
 		{ "S1999", "You can not edit items on this list." },
 		{ "S2001", "are listed according to definition of functions" },
 		{ "S2003", "which you can edit as required." },
-		{ "S2005", "Job flow consists of various elements. They are categorized by \'System " +
-		"boundary\'," },
-		{ "S2007", "\'Process node\', \'Flow\' and \'Storage node\'. You can change size and " +
+		{ "S2005", "Job flow consists of various elements. They are categorized by 'System " +
+        "boundary',"},
+		{ "S2007", "'Process node', 'Flow' and 'Storage node'. You can change size and " +
 		"position of" },
 		{ "S2009", "System boundary(indicated as white blurred rectangler) by dragging " +
 		"its sides. You" },

@@ -40,10 +40,10 @@ import javax.swing.*;
 import java.util.ResourceBundle;
 
 public class Application {
-	private static ResourceBundle res = ResourceBundle.getBundle("xeadModeler.Res");
-	private boolean packFrame = false;
+	private static final ResourceBundle res = ResourceBundle.getBundle("xeadModeler.Res");
+	private final boolean packFrame = false;
 	private JWindow splashScreen;
-	private JLabel  splashIcon;
+	private final JLabel  splashIcon;
 	private JLabel  splashLabel;
 
 	public Application(String[] args) {
@@ -60,11 +60,7 @@ public class Application {
 		splashScreen.getContentPane().add(splashIcon);
 		splashScreen.pack();
 		splashScreen.setLocationRelativeTo(null);
-		EventQueue.invokeLater(new Runnable() {
-			@Override public void run() {
-				showSplash();
-			}
-		});
+		EventQueue.invokeLater(this::showSplash);
 		//
 		Modeler frame = new Modeler(args, this);
 		if (packFrame) {

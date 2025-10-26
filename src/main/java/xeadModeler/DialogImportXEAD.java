@@ -228,11 +228,10 @@ public class DialogImportXEAD extends JDialog {
 			DOMParser parser = new DOMParser();
 			parser.parse(new InputSource(new FileInputStream(fileName)));
 			domDocumentFrom = parser.getDocument();
-		} catch (IOException ex) {
-		} catch (SAXException ex) {
+		} catch (IOException | SAXException ignored) {
 		}
 
-		elementList = domDocumentFrom.getElementsByTagName("System");
+    elementList = domDocumentFrom.getElementsByTagName("System");
 		element = (org.w3c.dom.Element)elementList.item(0);
 		float importFileFormat = Float.parseFloat(element.getAttribute("FormatVersion"));
 		float appliFormat = Float.parseFloat(DialogAbout.FORMAT_VERSION);
@@ -278,7 +277,7 @@ public class DialogImportXEAD extends JDialog {
 					elementList = domDocumentFrom.getElementsByTagName("Subsystem");
 					for (int i = 0; i < elementList.getLength(); i++) {
 						node = new XeadNode("Subsystem",(org.w3c.dom.Element)elementList.item(i));
-						comboBoxModelBlockFrom.addElement((Object)node);
+						comboBoxModelBlockFrom.addElement(node);
 					}
 					comboBoxModelBlockFrom.sortElements();
 					comboBoxModelBlockFrom.insertElementAt(res.getString("DialogImportXEAD12"), 0);
@@ -291,7 +290,7 @@ public class DialogImportXEAD extends JDialog {
 					elementList = frame_.domDocument.getElementsByTagName("Subsystem");
 					for (int i = 0; i < elementList.getLength(); i++) {
 						node = new XeadNode("Subsystem",(org.w3c.dom.Element)elementList.item(i));
-						comboBoxModelBlockInto.addElement((Object)node);
+						comboBoxModelBlockInto.addElement(node);
 					}
 					comboBoxModelBlockInto.sortElements();
 					//comboBoxModelBlockInto.insertElementAt(res.getString("DialogImportXEAD12"), 0);
@@ -312,7 +311,7 @@ public class DialogImportXEAD extends JDialog {
 					elementList = domDocumentFrom.getElementsByTagName("Role");
 					for (int i = 0; i < elementList.getLength(); i++) {
 						node = new XeadNode("Role",(org.w3c.dom.Element)elementList.item(i));
-						comboBoxModelBlockFrom.addElement((Object)node);
+						comboBoxModelBlockFrom.addElement(node);
 					}
 					comboBoxModelBlockFrom.sortElements();
 					comboBoxModelBlockFrom.insertElementAt(res.getString("DialogImportXEAD12"), 0);
@@ -325,7 +324,7 @@ public class DialogImportXEAD extends JDialog {
 					elementList = frame_.domDocument.getElementsByTagName("Role");
 					for (int i = 0; i < elementList.getLength(); i++) {
 						node = new XeadNode("Role",(org.w3c.dom.Element)elementList.item(i));
-						comboBoxModelBlockInto.addElement((Object)node);
+						comboBoxModelBlockInto.addElement(node);
 					}
 					comboBoxModelBlockInto.sortElements();
 					//comboBoxModelBlockInto.insertElementAt(res.getString("DialogImportXEAD12"), 0);
@@ -346,7 +345,7 @@ public class DialogImportXEAD extends JDialog {
 					elementList = domDocumentFrom.getElementsByTagName("SubjectArea");
 					for (int i = 0; i < elementList.getLength(); i++) {
 						node = new XeadNode("SubjectArea",(org.w3c.dom.Element)elementList.item(i));
-						comboBoxModelBlockFrom.addElement((Object)node);
+						comboBoxModelBlockFrom.addElement(node);
 					}
 					comboBoxModelBlockFrom.sortElements();
 					comboBoxModelBlockFrom.insertElementAt(res.getString("DialogImportXEAD12"), 0);
@@ -359,7 +358,7 @@ public class DialogImportXEAD extends JDialog {
 					elementList = frame_.domDocument.getElementsByTagName("SubjectArea");
 					for (int i = 0; i < elementList.getLength(); i++) {
 						node = new XeadNode("SubjectArea",(org.w3c.dom.Element)elementList.item(i));
-						comboBoxModelBlockInto.addElement((Object)node);
+						comboBoxModelBlockInto.addElement(node);
 					}
 					comboBoxModelBlockInto.sortElements();
 					//comboBoxModelBlockInto.insertElementAt(res.getString("DialogImportXEAD12"), 0);
@@ -587,7 +586,7 @@ public class DialogImportXEAD extends JDialog {
 		catch (Exception ex1) {
 			try {
 				bufferedWriter.close();
-			} catch (Exception ex2) {}
+			} catch (Exception ignored) {}
 		} finally {
 			jProgressBar.setVisible(false);
 			jButtonStart.setVisible(true);
@@ -600,7 +599,7 @@ public class DialogImportXEAD extends JDialog {
 		} catch (Exception ex3) {
 			try {
 				bufferedWriter.close();
-			} catch (Exception ex4) {}
+			} catch (Exception ignored) {}
 		}
 	}
 
@@ -635,7 +634,7 @@ public class DialogImportXEAD extends JDialog {
 
 		try {
 			bufferedWriter.write("\n");
-		} catch (IOException ex) {}
+		} catch (IOException ignored) {}
 
 		/////////////////////////////////////////////////
 		//Import Table definitions into target document//
@@ -657,7 +656,7 @@ public class DialogImportXEAD extends JDialog {
 							bufferedWriter.write(elementListFrom[i].getAttribute("Name") +
 									"(" + elementListFrom[i].getAttribute("SortKey") +
 									"):" + res.getString("DialogImportXEAD33") + "\n");
-						} catch (IOException ex1) {}
+						} catch (IOException ignored) {}
 						updateTableDefinition(elementListFrom[i], workElement);
 						updateTableCounter++;
 					} else {
@@ -665,7 +664,7 @@ public class DialogImportXEAD extends JDialog {
 							bufferedWriter.write(elementListFrom[i].getAttribute("Name") +
 									"(" + elementListFrom[i].getAttribute("SortKey") +
 									"):" + res.getString("DialogImportXEAD48") + "\n");
-						} catch (IOException ex1) {}
+						} catch (IOException ignored) {}
 						cancelTableCounter++;
 					}
 					break;
@@ -679,13 +678,13 @@ public class DialogImportXEAD extends JDialog {
 					bufferedWriter.write(elementListFrom[i].getAttribute("Name") + "(" +
 							elementListFrom[i].getAttribute("SortKey") +
 							"):" + res.getString("DialogImportXEAD34") + "\n");
-				} catch (IOException ex2) {}
+				} catch (IOException ignored) {}
 			}
 		}
 
 		try {
 			bufferedWriter.write("\n");
-		} catch (IOException ex3) {}
+		} catch (IOException ignored) {}
 
 		//////////////////////////////////////////////////
 		//Import Table Relationship into target document//
@@ -747,7 +746,7 @@ public class DialogImportXEAD extends JDialog {
 
 		try {
 			bufferedWriter.write("\n");
-		} catch (IOException ex) {}
+		} catch (IOException ignored) {}
 
 		////////////////////////////////////////////////////
 		//Import Function definitions into target document//
@@ -755,7 +754,7 @@ public class DialogImportXEAD extends JDialog {
 		jProgressBar.setValue(0);
 		jProgressBar.setMaximum(itemsOfElementListFrom);
 
-		ArrayList<org.w3c.dom.Element> targetFunctionArray = new ArrayList<org.w3c.dom.Element>(); 
+		ArrayList<org.w3c.dom.Element> targetFunctionArray = new ArrayList<>();
 		workElementList = frame_.domDocument.getElementsByTagName("Function");
 		for (int i = 0; i < workElementList.getLength(); i++) {
 			workElement = (org.w3c.dom.Element)workElementList.item(i);
@@ -772,28 +771,29 @@ public class DialogImportXEAD extends JDialog {
 			checkCounter = 0;
 			sortKeyOfDefinition = elementListFrom[i].getAttribute("SortKey");
 
-			for (int n = 0; n < targetFunctionArray.size(); n++) {
-				workElement = targetFunctionArray.get(n);
-				if (workElement.getAttribute("SortKey").equals(sortKeyOfDefinition)) {
-					checkCounter++;
-					try {
-						bufferedWriter.write(elementListFrom[i].getAttribute("Name") +
-								"(" + sortKeyOfDefinition +
-								"):" + res.getString("DialogImportXEAD33") + "\n");
-					} catch (IOException ex1) {}
+      for (Element element : targetFunctionArray) {
+        workElement = element;
+        if (workElement.getAttribute("SortKey").equals(sortKeyOfDefinition)) {
+          checkCounter++;
+          try {
+            bufferedWriter.write(elementListFrom[i].getAttribute("Name") +
+                "(" + sortKeyOfDefinition +
+                "):" + res.getString("DialogImportXEAD33") + "\n");
+          } catch (IOException ignored) {
+          }
 
-					updateFunctionDefinition(elementListFrom[i], workElement);
-					updateFunctionCounter++;
-					break;
-				}
-			}
+          updateFunctionDefinition(elementListFrom[i], workElement);
+          updateFunctionCounter++;
+          break;
+        }
+      }
 
 			if (checkCounter == 0) {
 				try {
 					bufferedWriter.write(elementListFrom[i].getAttribute("Name") + "(" +
 							elementListFrom[i].getAttribute("SortKey") + "):" +
 							res.getString("DialogImportXEAD34") + "\n");
-				} catch (IOException ex2) {}
+				} catch (IOException ignored) {}
 
 				createFunctionDefinition(elementListFrom[i], blockIDInto);
 				createFunctionCounter++;
@@ -801,7 +801,7 @@ public class DialogImportXEAD extends JDialog {
 		}
 		try {
 			bufferedWriter.write("\n");
-		} catch (IOException ex3) {}
+		} catch (IOException ignored) {}
 
 		////////////////////////////////////////////////
 		//Import Functions-called into target document//
@@ -815,13 +815,13 @@ public class DialogImportXEAD extends JDialog {
 			jProgressBar.paintImmediately(0,0,jProgressBar.getWidth(),jProgressBar.getHeight());
 
 			sortKeyOfDefinition = elementListFrom[i].getAttribute("SortKey");
-			for (int n = 0; n < targetFunctionArray.size(); n++) {
-				workElement = (org.w3c.dom.Element)targetFunctionArray.get(n);
-				if (workElement.getAttribute("SortKey").equals(sortKeyOfDefinition)) {
-					adjustFunctionsCalled(elementListFrom[i], workElement);
-					break;
-				}
-			}
+      for (Element element : targetFunctionArray) {
+        workElement = element;
+        if (workElement.getAttribute("SortKey").equals(sortKeyOfDefinition)) {
+          adjustFunctionsCalled(elementListFrom[i], workElement);
+          break;
+        }
+      }
 		}
 	}
 
@@ -867,7 +867,7 @@ public class DialogImportXEAD extends JDialog {
 
 		try {
 			bufferedWriter.write("\n");
-		} catch (IOException ex) {}
+		} catch (IOException ignored) {}
 
 		////////////////////////////////////////////////
 		//Import Task definitions into target document//
@@ -884,7 +884,7 @@ public class DialogImportXEAD extends JDialog {
 			try {
 				bufferedWriter.write(elementListFrom[i].getAttribute("Name") + "(" +
 						elementListFrom[i].getAttribute("SortKey") + "):");
-			} catch (IOException ex1) {}
+			} catch (IOException ignored) {}
 
 			checkCounter = 0;
 			sortKeyOfDefinition = elementListFrom[i].getAttribute("SortKey");
@@ -895,14 +895,14 @@ public class DialogImportXEAD extends JDialog {
 					if (workElement.getAttribute("RoleID").equals(blockIDInto)) {
 						try {
 							bufferedWriter.write(res.getString("DialogImportXEAD33") + "\n");
-						} catch (IOException ex2) {}
+						} catch (IOException ignored) {}
 
 						updateTaskDefinition(elementListFrom[i], workElement);
 						updateTaskCounter++;
 					} else {
 						try {
 							bufferedWriter.write(res.getString("DialogImportXEAD49") + "\n");
-						} catch (IOException ex2) {}
+						} catch (IOException ignored) {}
 
 						cancelTaskCounter++;
 					}
@@ -913,7 +913,7 @@ public class DialogImportXEAD extends JDialog {
 			if (checkCounter == 0) {
 				try {
 					bufferedWriter.write(res.getString("DialogImportXEAD34") + "\n");
-				} catch (IOException ex3) {}
+				} catch (IOException ignored) {}
 
 				createTaskDefinition(elementListFrom[i], blockIDInto);
 				createTaskCounter++;
@@ -970,8 +970,8 @@ public class DialogImportXEAD extends JDialog {
 		NodeList workElementList;
 		int lastID;
 		String taskIDInto, roleIDInto;
-		ArrayList<String> nodeIDListFrom = new ArrayList<String>();
-		ArrayList<String> nodeIDListInto = new ArrayList<String>();
+		ArrayList<String> nodeIDListFrom = new ArrayList<>();
+		ArrayList<String> nodeIDListInto = new ArrayList<>();
 		
 		workElementList = blockElementFrom.getElementsByTagName("DataflowNode");
 		int countOfElements = workElementList.getLength() * 2;
@@ -1004,7 +1004,7 @@ public class DialogImportXEAD extends JDialog {
 							}
 						}
 					}
-					catch (IOException ex1) {}
+					catch (IOException ignored) {}
 					break;
 				}
 			}
@@ -1024,7 +1024,7 @@ public class DialogImportXEAD extends JDialog {
 							}
 						}
 					}
-					catch (IOException ex1) {}
+					catch (IOException ignored) {}
 					break;
 				}
 			}
@@ -1115,7 +1115,7 @@ public class DialogImportXEAD extends JDialog {
 			}
 			try {
 				bufferedWriter.write(res.getString("DialogImportXEAD33") + "\n");
-			} catch (IOException ex3) {
+			} catch (IOException ignored) {
 			}
 		}
 	}
@@ -1381,7 +1381,7 @@ public class DialogImportXEAD extends JDialog {
 				}
 				try {
 					bufferedWriter.write("  " + tableName + "(" + tableSortKey + ")" + res.getString("DialogImportXEAD37") + "\n");
-				} catch (IOException ex) {}
+				} catch (IOException ignored) {}
 			} else {
 				org.w3c.dom.Element childElement = frame_.domDocument.createElement("IOTable");
 
@@ -1532,7 +1532,7 @@ public class DialogImportXEAD extends JDialog {
 		int lastID = 0;
 		int checkCounter = 0;
 		String workStr = "";
-		ArrayList<org.w3c.dom.Element> ioTableList = new ArrayList<org.w3c.dom.Element>();
+		ArrayList<org.w3c.dom.Element> ioTableList = new ArrayList<>();
 		String fieldID = "";
 
 		String tableIDFrom = elementFrom.getAttribute("ID");
@@ -1611,12 +1611,12 @@ public class DialogImportXEAD extends JDialog {
 //					ioTableFieldElement.setAttribute("Descriptions", "");
 //					ioTableList[j].appendChild(ioTableFieldElement);
 //				}
-				for (int j = 0; j < ioTableList.size(); j++) {
-					org.w3c.dom.Element ioTableFieldElement = frame_.domDocument.createElement("IOTableField");
-					ioTableFieldElement.setAttribute("FieldID", fieldID);
-					ioTableFieldElement.setAttribute("Descriptions", "");
-					ioTableList.get(j).appendChild(ioTableFieldElement);
-				}
+        for (Element element : ioTableList) {
+          Element ioTableFieldElement = frame_.domDocument.createElement("IOTableField");
+          ioTableFieldElement.setAttribute("FieldID", fieldID);
+          ioTableFieldElement.setAttribute("Descriptions", "");
+          element.appendChild(ioTableFieldElement);
+        }
 			}
 		}
 
@@ -1651,7 +1651,7 @@ public class DialogImportXEAD extends JDialog {
 							try {
 								bufferedWriter.write("  " + res.getString("DialogImportXEAD43") + "\n");
 							}
-							catch (IOException ex) {
+							catch (IOException ignored) {
 							}
 						} else {
 							purgeChildElements(workElement2, "TableKeyField");
@@ -1805,7 +1805,7 @@ public class DialogImportXEAD extends JDialog {
 				missingTableKeyCounter++;
 				try {
 					bufferedWriter.write(tableName1From + "(" + tableSortKey1From + ")," + tableName2From + "(" + tableSortKey2From + ")" + res.getString("DialogImportXEAD35") + "\n");
-				} catch (IOException ex) {}
+				} catch (IOException ignored) {}
 			} else {
 				org.w3c.dom.Element newElement = frame_.domDocument.createElement("Relationship");
 				org.w3c.dom.Element lastElement = getLastDomElementOfTheType("Relationship");
@@ -1832,7 +1832,7 @@ public class DialogImportXEAD extends JDialog {
 
 				try {
 					bufferedWriter.write(tableName1From + "(" + tableSortKey1From + ")," + tableName2From + "(" + tableSortKey2From + ")" + res.getString("DialogImportXEAD36") + "\n");
-				} catch (IOException ex) {}
+				} catch (IOException ignored) {}
 			}
 		} else {
 			for (int i = 0; i < relationshipListInto.getLength(); i++) {
@@ -1881,7 +1881,7 @@ public class DialogImportXEAD extends JDialog {
 							bufferedWriter.write(workElement2.getAttribute("Name") + "(" + workElement2.getAttribute("SortKey") + ")" + res.getString("DialogImportXEAD42") + "\n");
 						}
 					}
-				} catch (IOException ex) {}
+				} catch (IOException ignored) {}
 			} else {
 				checkCounter = 0;
 				for (int j = 0; j < elementListInto.getLength(); j++) {
@@ -2219,7 +2219,7 @@ public class DialogImportXEAD extends JDialog {
 				}
 				try {
 					bufferedWriter.write("  " + tableName + "(" + tableSortKey + ")" + res.getString("DialogImportXEAD37") + "\n");
-				} catch (IOException ex) {}
+				} catch (IOException ignored) {}
 			} else {
 				org.w3c.dom.Element childElement = frame_.domDocument.createElement("IOTable");
 				childElement.setAttribute("ID", workElement1.getAttribute("ID"));
@@ -2439,7 +2439,7 @@ public class DialogImportXEAD extends JDialog {
 					missingFunctionIOCounter++;
 					try {
 						bufferedWriter.write("  " + functionName + "(" + functionSortKey + ")/" + ioName + "(" + ioSortKey + ")" + res.getString("DialogImportXEAD40") + "\n");
-					} catch (IOException ex) {}
+					} catch (IOException ignored) {}
 				} else {
 					org.w3c.dom.Element grandChildElement = frame_.domDocument.createElement("TaskFunctionIO");
 					grandChildElement.setAttribute("FunctionID", targetFunctionID);
@@ -2490,7 +2490,7 @@ public class DialogImportXEAD extends JDialog {
 				}
 				try {
 					bufferedWriter.write(functionName + "(" + functionSortKey + ")" + res.getString("DialogImportXEAD38") + functionNameCalling + "(" + functionSortKeyCalling + ")" + res.getString("DialogImportXEAD39") +"\n");
-				} catch (IOException ex) {}
+				} catch (IOException ignored) {}
 			} else {
 				countEquals = 0;
 				for (int j = 0; j < elementList2.getLength(); j++) {
@@ -2955,16 +2955,15 @@ public class DialogImportXEAD extends JDialog {
 //				node = (XeadNode)it.next();
 //				this.addElement(node);
 //			}
-			ArrayList<XeadNode> list = new ArrayList<XeadNode>();
+			ArrayList<XeadNode> list = new ArrayList<>();
 			for (int i = 0; i < this.getSize(); i++) {
 				list.add((XeadNode)this.getElementAt(i));
 			}
 			this.removeAllElements();
 			Collections.sort(list);
-			Iterator<XeadNode> it = list.iterator();
-			while(it.hasNext()){
-				this.addElement(it.next());
-			}
+      for (XeadNode xeadNode : list) {
+        this.addElement(xeadNode);
+      }
 		}
 	}
 

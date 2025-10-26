@@ -263,9 +263,9 @@ public class DialogToListChangesOfFiles extends JDialog {
 	void listChangesOfBasicInfo() {
 		NodeList newElementList, oldElementList;
 		String tagName;
-		ArrayList<String> attrList = new ArrayList<String>();
+		ArrayList<String> attrList = new ArrayList<>();
 		int workCount = countOfChanges;
-		buffer.append("\n\n<" + res.getString("DialogToListChangesOfFiles8") + ">");
+		buffer.append("\n\n<").append(res.getString("DialogToListChangesOfFiles8")).append(">");
 
 		/////////////////////////
 		// System Descriptions //
@@ -367,16 +367,16 @@ public class DialogToListChangesOfFiles extends JDialog {
 		// Set message if with no differences //
 		////////////////////////////////////////
 		if (countOfChanges == workCount) {
-			buffer.append("\n" + res.getString("DialogToListChangesOfFiles7"));
+			buffer.append("\n").append(res.getString("DialogToListChangesOfFiles7"));
 		}
 	}
 
 	void listChangesOfDataflow() {
 		NodeList newElementList, oldElementList;
 		String tagName;
-		ArrayList<String> attrList = new ArrayList<String>();
+		ArrayList<String> attrList = new ArrayList<>();
 		int workCount = countOfChanges;
-		buffer.append("\n\n<" + res.getString("S3385") + ">");
+		buffer.append("\n\n<").append(res.getString("S3385")).append(">");
 
 		///////////////////
 		// Subject Areas //
@@ -394,16 +394,16 @@ public class DialogToListChangesOfFiles extends JDialog {
 		// Set message if with no differences //
 		////////////////////////////////////////
 		if (countOfChanges == workCount) {
-			buffer.append("\n" + res.getString("DialogToListChangesOfFiles7"));
+			buffer.append("\n").append(res.getString("DialogToListChangesOfFiles7"));
 		}
 	}
 
 	void listChangesOfRoleAndTask() {
 		NodeList newElementList, oldElementList;
 		String tagName;
-		ArrayList<String> attrList = new ArrayList<String>();
+		ArrayList<String> attrList = new ArrayList<>();
 		int workCount = countOfChanges;
-		buffer.append("\n\n<" + res.getString("S3391") + ">");
+		buffer.append("\n\n<").append(res.getString("S3391")).append(">");
 
 		///////////
 		// Roles //
@@ -437,16 +437,16 @@ public class DialogToListChangesOfFiles extends JDialog {
 		// Set message if with no differences //
 		////////////////////////////////////////
 		if (countOfChanges == workCount) {
-			buffer.append("\n" + res.getString("DialogToListChangesOfFiles7"));
+			buffer.append("\n").append(res.getString("DialogToListChangesOfFiles7"));
 		}
 	}
 
 	void listChangesOfSubsystem() {
 		NodeList newElementList, oldElementList;
 		String tagName;
-		ArrayList<String> attrList = new ArrayList<String>();
+		ArrayList<String> attrList = new ArrayList<>();
 		int workCount = countOfChanges;
-		buffer.append("\n\n<" + res.getString("S413") + ">");
+		buffer.append("\n\n<").append(res.getString("S413")).append(">");
 
 		////////////////
 		// Subsystems //
@@ -465,16 +465,16 @@ public class DialogToListChangesOfFiles extends JDialog {
 		// Set message if with no differences //
 		////////////////////////////////////////
 		if (countOfChanges == workCount) {
-			buffer.append("\n" + res.getString("DialogToListChangesOfFiles7"));
+			buffer.append("\n").append(res.getString("DialogToListChangesOfFiles7"));
 		}
 	}
 
 	void listChangesOfTable() {
 		NodeList newElementList, oldElementList;
 		String tagName;
-		ArrayList<String> attrList = new ArrayList<String>();
+		ArrayList<String> attrList = new ArrayList<>();
 		int workCount = countOfChanges;
-		buffer.append("\n\n<" + res.getString("DialogToListChangesOfFiles10") + ">");
+		buffer.append("\n\n<").append(res.getString("DialogToListChangesOfFiles10")).append(">");
 
 		////////////
 		// Tables //
@@ -496,16 +496,16 @@ public class DialogToListChangesOfFiles extends JDialog {
 		// Set message if with no differences //
 		////////////////////////////////////////
 		if (countOfChanges == workCount) {
-			buffer.append("\n" + res.getString("DialogToListChangesOfFiles7"));
+			buffer.append("\n").append(res.getString("DialogToListChangesOfFiles7"));
 		}
 	}
 
 	void listChangesOfFunction() {
 		NodeList newElementList, oldElementList;
 		String tagName;
-		ArrayList<String> attrList = new ArrayList<String>();
+		ArrayList<String> attrList = new ArrayList<>();
 		int workCount = countOfChanges;
-		buffer.append("\n\n<" + res.getString("DialogToListChangesOfFiles14") + ">");
+		buffer.append("\n\n<").append(res.getString("DialogToListChangesOfFiles14")).append(">");
 
 		///////////////
 		// Functions //
@@ -528,7 +528,7 @@ public class DialogToListChangesOfFiles extends JDialog {
 		// Set message if with no differences //
 		////////////////////////////////////////
 		if (countOfChanges == workCount) {
-			buffer.append("\n" + res.getString("DialogToListChangesOfFiles7"));
+			buffer.append("\n").append(res.getString("DialogToListChangesOfFiles7"));
 		}
 	}
 
@@ -539,38 +539,43 @@ public class DialogToListChangesOfFiles extends JDialog {
 			sortKeyNew = getSortKeyAccordingToID(attribute, elementNew.getAttribute(attribute), systemElementNew);
 			if (!sortKeyNew.equals(sortKeyOld)) {
 				countOfChanges++;
-				buffer.append("\n" + countOfChanges + "."
-							+ elementLabel + res.getString("DialogToListChangesOfFiles20")
-							+ attribute.replace("ID", "") + res.getString("DialogToListChangesOfFiles21")
-							+ sortKeyOld + res.getString("DialogToListChangesOfFiles22")
-							+ sortKeyNew + res.getString("DialogToListChangesOfFiles23"));
+				buffer.append("\n").append(countOfChanges).append(".").append(elementLabel)
+            .append(res.getString("DialogToListChangesOfFiles20"))
+            .append(attribute.replace("ID", ""))
+            .append(res.getString("DialogToListChangesOfFiles21")).append(sortKeyOld)
+            .append(res.getString("DialogToListChangesOfFiles22")).append(sortKeyNew)
+            .append(res.getString("DialogToListChangesOfFiles23"));
 			}
 		} else {
 			if (!elementNew.getAttribute(attribute).equals(elementOld.getAttribute(attribute))) {
 				countOfChanges++;
 				if (attribute.equals("ImageText")) {
-					buffer.append("\n" + countOfChanges + "."
-								+ elementLabel + res.getString("DialogToListChangesOfFiles24"));
+					buffer.append("\n").append(countOfChanges).append(".").append(elementLabel)
+              .append(res.getString("DialogToListChangesOfFiles24"));
 				} else {
 					if (attribute.equals("Descriptions")) {
-						buffer.append("\n" + countOfChanges + "."
-									+ elementLabel + res.getString("DialogToListChangesOfFiles25"));
+						buffer.append("\n").append(countOfChanges).append(".").append(elementLabel)
+                .append(res.getString("DialogToListChangesOfFiles25"));
 					} else {
 						if (attribute.equals("DatamodelDescriptions")) {
-							buffer.append("\n" + countOfChanges + "."
-										+ elementLabel + res.getString("DialogToListChangesOfFiles26"));
+							buffer.append("\n").append(countOfChanges).append(".").append(elementLabel)
+                  .append(res.getString("DialogToListChangesOfFiles26"));
 						} else {
 							if (attribute.equals("Name")) {
-								buffer.append("\n" + countOfChanges + "."
-											+ elementLabel + res.getString("DialogToListChangesOfFiles27")
-											+ elementOld.getAttribute(attribute) + res.getString("DialogToListChangesOfFiles22")
-											+ elementNew.getAttribute(attribute) + res.getString("DialogToListChangesOfFiles23"));
+								buffer.append("\n").append(countOfChanges).append(".").append(elementLabel)
+                    .append(res.getString("DialogToListChangesOfFiles27"))
+                    .append(elementOld.getAttribute(attribute))
+                    .append(res.getString("DialogToListChangesOfFiles22"))
+                    .append(elementNew.getAttribute(attribute))
+                    .append(res.getString("DialogToListChangesOfFiles23"));
 							} else {
-								buffer.append("\n" + countOfChanges + "."
-											+ elementLabel + res.getString("DialogToListChangesOfFiles20")
-											+ attribute + res.getString("DialogToListChangesOfFiles21")
-											+ elementOld.getAttribute(attribute) + res.getString("DialogToListChangesOfFiles22")
-											+ elementNew.getAttribute(attribute) + res.getString("DialogToListChangesOfFiles23"));
+								buffer.append("\n").append(countOfChanges).append(".").append(elementLabel)
+                    .append(res.getString("DialogToListChangesOfFiles20")).append(attribute)
+                    .append(res.getString("DialogToListChangesOfFiles21"))
+                    .append(elementOld.getAttribute(attribute))
+                    .append(res.getString("DialogToListChangesOfFiles22"))
+                    .append(elementNew.getAttribute(attribute))
+                    .append(res.getString("DialogToListChangesOfFiles23"));
 							}
 						}
 					}
@@ -636,12 +641,12 @@ public class DialogToListChangesOfFiles extends JDialog {
 			for (int j = 0; j < oldElementList.getLength(); j++) {
 				oldElement = (org.w3c.dom.Element)oldElementList.item(j);
 				if (oldElement.getAttribute("SortKey").equals(newElement.getAttribute("SortKey"))) {
-					for (int k = 0; k < attrList.size(); k++) {
-						elementLabel = elementName + res.getString("DialogToListChangesOfFiles28")
-										+ newElement.getAttribute("SortKey") + " " + newElement.getAttribute(nameAttr)
-										+ res.getString("DialogToListChangesOfFiles29");
-						compareNewAndOldElements(newElement, oldElement, attrList.get(k), elementLabel);
-					}
+          for (String s : attrList) {
+            elementLabel = elementName + res.getString("DialogToListChangesOfFiles28")
+                + newElement.getAttribute("SortKey") + " " + newElement.getAttribute(nameAttr)
+                + res.getString("DialogToListChangesOfFiles29");
+            compareNewAndOldElements(newElement, oldElement, s, elementLabel);
+          }
 					isNotFound = false;
 					if (tagName.equals("SubjectArea")) {
 						checkSubjectAreaDetails(oldElement, newElement, elementName);
@@ -663,11 +668,12 @@ public class DialogToListChangesOfFiles extends JDialog {
 			}
 			if (isNotFound) {
 				countOfChanges++;
-				buffer.append("\n" + countOfChanges + "."
-						+ elementName + res.getString("DialogToListChangesOfFiles28")
-						+ newElement.getAttribute("SortKey") + " " + newElement.getAttribute(nameAttr)
-						+ res.getString("DialogToListChangesOfFiles29")
-						+ res.getString("DialogToListChangesOfFiles30"));
+				buffer.append("\n").append(countOfChanges).append(".").append(elementName)
+            .append(res.getString("DialogToListChangesOfFiles28"))
+            .append(newElement.getAttribute("SortKey")).append(" ")
+            .append(newElement.getAttribute(nameAttr))
+            .append(res.getString("DialogToListChangesOfFiles29"))
+            .append(res.getString("DialogToListChangesOfFiles30"));
 			}
 		}
 	}
@@ -690,11 +696,12 @@ public class DialogToListChangesOfFiles extends JDialog {
 			}
 			if (isNotFound) {
 				countOfChanges++;
-				buffer.append("\n" + countOfChanges + "."
-						+ elementName + res.getString("DialogToListChangesOfFiles28")
-						+ oldElement.getAttribute("SortKey") + " " + oldElement.getAttribute(nameAttr)
-						+ res.getString("DialogToListChangesOfFiles29")
-						+ res.getString("DialogToListChangesOfFiles31"));
+				buffer.append("\n").append(countOfChanges).append(".").append(elementName)
+            .append(res.getString("DialogToListChangesOfFiles28"))
+            .append(oldElement.getAttribute("SortKey")).append(" ")
+            .append(oldElement.getAttribute(nameAttr))
+            .append(res.getString("DialogToListChangesOfFiles29"))
+            .append(res.getString("DialogToListChangesOfFiles31"));
 			}
 		}
 	}
@@ -703,11 +710,12 @@ public class DialogToListChangesOfFiles extends JDialog {
 		if (!oldElement.getAttribute("BoundaryPosition").equals(newElement.getAttribute("BoundaryPosition"))
 				|| !oldElement.getAttribute("BoundarySize").equals(newElement.getAttribute("BoundarySize"))) {
 			countOfChanges++;
-			buffer.append("\n" + countOfChanges + "."
-					+ elementName + res.getString("DialogToListChangesOfFiles28")
-					+ newElement.getAttribute("SortKey") + " " + newElement.getAttribute("Name")
-					+ res.getString("DialogToListChangesOfFiles29")
-					+ res.getString("DialogToListChangesOfFiles24"));
+			buffer.append("\n").append(countOfChanges).append(".").append(elementName)
+          .append(res.getString("DialogToListChangesOfFiles28"))
+          .append(newElement.getAttribute("SortKey")).append(" ")
+          .append(newElement.getAttribute("Name"))
+          .append(res.getString("DialogToListChangesOfFiles29"))
+          .append(res.getString("DialogToListChangesOfFiles24"));
 		} else {
 			NodeList oldNodeList = oldElement.getElementsByTagName("DataflowNode");
 			NodeList newNodeList = newElement.getElementsByTagName("DataflowNode");
@@ -716,19 +724,21 @@ public class DialogToListChangesOfFiles extends JDialog {
 			if (oldNodeList.getLength() != newNodeList.getLength()
 					|| oldLineList.getLength() != newLineList.getLength()) {
 				countOfChanges++;
-				buffer.append("\n" + countOfChanges + "."
-						+ elementName + res.getString("DialogToListChangesOfFiles28")
-						+ newElement.getAttribute("SortKey") + " " + newElement.getAttribute("Name")
-						+ res.getString("DialogToListChangesOfFiles29")
-						+ res.getString("DialogToListChangesOfFiles24"));
+				buffer.append("\n").append(countOfChanges).append(".").append(elementName)
+            .append(res.getString("DialogToListChangesOfFiles28"))
+            .append(newElement.getAttribute("SortKey")).append(" ")
+            .append(newElement.getAttribute("Name"))
+            .append(res.getString("DialogToListChangesOfFiles29"))
+            .append(res.getString("DialogToListChangesOfFiles24"));
 			} else {
 				if (!oldElement.isEqualNode(newElement)) {
 					countOfChanges++;
-					buffer.append("\n" + countOfChanges + "."
-							+ elementName + res.getString("DialogToListChangesOfFiles28")
-							+ newElement.getAttribute("SortKey") + " " + newElement.getAttribute("Name")
-							+ res.getString("DialogToListChangesOfFiles29")
-							+ res.getString("DialogToListChangesOfFiles24"));
+					buffer.append("\n").append(countOfChanges).append(".").append(elementName)
+              .append(res.getString("DialogToListChangesOfFiles28"))
+              .append(newElement.getAttribute("SortKey")).append(" ")
+              .append(newElement.getAttribute("Name"))
+              .append(res.getString("DialogToListChangesOfFiles29"))
+              .append(res.getString("DialogToListChangesOfFiles24"));
 				}
 			}
 		}
@@ -739,19 +749,21 @@ public class DialogToListChangesOfFiles extends JDialog {
 		NodeList newActionList = newElement.getElementsByTagName("TaskAction");
 		if (oldActionList.getLength() != newActionList.getLength()) {
 			countOfChanges++;
-			buffer.append("\n" + countOfChanges + "."
-					+ elementName + res.getString("DialogToListChangesOfFiles28")
-					+ newElement.getAttribute("SortKey") + " " + newElement.getAttribute("Name")
-					+ res.getString("DialogToListChangesOfFiles29")
-					+ res.getString("DialogToListChangesOfFiles32"));
+			buffer.append("\n").append(countOfChanges).append(".").append(elementName)
+          .append(res.getString("DialogToListChangesOfFiles28"))
+          .append(newElement.getAttribute("SortKey")).append(" ")
+          .append(newElement.getAttribute("Name"))
+          .append(res.getString("DialogToListChangesOfFiles29"))
+          .append(res.getString("DialogToListChangesOfFiles32"));
 		} else {
 			if (!oldElement.isEqualNode(newElement)) {
 				countOfChanges++;
-				buffer.append("\n" + countOfChanges + "."
-						+ elementName + res.getString("DialogToListChangesOfFiles28")
-						+ newElement.getAttribute("SortKey") + " " + newElement.getAttribute("Name")
-						+ res.getString("DialogToListChangesOfFiles29")
-						+ res.getString("DialogToListChangesOfFiles32"));
+				buffer.append("\n").append(countOfChanges).append(".").append(elementName)
+            .append(res.getString("DialogToListChangesOfFiles28"))
+            .append(newElement.getAttribute("SortKey")).append(" ")
+            .append(newElement.getAttribute("Name"))
+            .append(res.getString("DialogToListChangesOfFiles29"))
+            .append(res.getString("DialogToListChangesOfFiles32"));
 			}
 		}
 	}
@@ -764,28 +776,30 @@ public class DialogToListChangesOfFiles extends JDialog {
 		if (oldTableBoxList.getLength() != newTableBoxList.getLength()
 				|| oldTableRelList.getLength() != newTableRelList.getLength()) {
 			countOfChanges++;
-			buffer.append("\n" + countOfChanges + "."
-					+ elementName + res.getString("DialogToListChangesOfFiles28")
-					+ newElement.getAttribute("SortKey") + " " + newElement.getAttribute("Name")
-					+ res.getString("DialogToListChangesOfFiles29")
-					+ res.getString("DialogToListChangesOfFiles33"));
+			buffer.append("\n").append(countOfChanges).append(".").append(elementName)
+          .append(res.getString("DialogToListChangesOfFiles28"))
+          .append(newElement.getAttribute("SortKey")).append(" ")
+          .append(newElement.getAttribute("Name"))
+          .append(res.getString("DialogToListChangesOfFiles29"))
+          .append(res.getString("DialogToListChangesOfFiles33"));
 		} else {
 			if (!oldElement.isEqualNode(newElement)) {
 				countOfChanges++;
-				buffer.append("\n" + countOfChanges + "."
-						+ elementName + res.getString("DialogToListChangesOfFiles28")
-						+ newElement.getAttribute("SortKey") + " " + newElement.getAttribute("Name")
-						+ res.getString("DialogToListChangesOfFiles29")
-						+ res.getString("DialogToListChangesOfFiles33"));
+				buffer.append("\n").append(countOfChanges).append(".").append(elementName)
+            .append(res.getString("DialogToListChangesOfFiles28"))
+            .append(newElement.getAttribute("SortKey")).append(" ")
+            .append(newElement.getAttribute("Name"))
+            .append(res.getString("DialogToListChangesOfFiles29"))
+            .append(res.getString("DialogToListChangesOfFiles33"));
 			}
 		}
 	}
 
 	void checkTableDetails(org.w3c.dom.Element oldElement, org.w3c.dom.Element newElement) {
 		NodeList oldElementList, newElementList;
-		ArrayList<org.w3c.dom.Element> newRelList = new ArrayList<org.w3c.dom.Element>();
-		ArrayList<org.w3c.dom.Element> oldRelList = new ArrayList<org.w3c.dom.Element>();
-		ArrayList<String> attrList = new ArrayList<String>();
+		ArrayList<org.w3c.dom.Element> newRelList = new ArrayList<>();
+		ArrayList<org.w3c.dom.Element> oldRelList = new ArrayList<>();
+		ArrayList<String> attrList = new ArrayList<>();
 		org.w3c.dom.Element newElementWork, oldElementWork;
 		boolean isNotFound;
 		String tagName, elementName, elementLabel;
@@ -823,21 +837,22 @@ public class DialogToListChangesOfFiles extends JDialog {
 							+ newElementWork.getAttribute("Alias")
 							+ " " + newElementWork.getAttribute("Name")
 							+ res.getString("DialogToListChangesOfFiles29");
-					for (int k = 0; k < attrList.size(); k++) {
-						compareNewAndOldElements(newElementWork, oldElementWork, attrList.get(k), elementLabel);
-					}
+          for (String s : attrList) {
+            compareNewAndOldElements(newElementWork, oldElementWork, s, elementLabel);
+          }
 					isNotFound = false;
 					break;
 				}
 			}
 			if (isNotFound) {
 				countOfChanges++;
-				buffer.append("\n" + countOfChanges + "."
-						+ tableLabel+ res.getString("DialogToListChangesOfFiles20")
-						+ elementName + res.getString("DialogToListChangesOfFiles28")
-						+ newElementWork.getAttribute("Alias") + " " + newElementWork.getAttribute("Name")
-						+ res.getString("DialogToListChangesOfFiles29")
-						+ res.getString("DialogToListChangesOfFiles30"));
+				buffer.append("\n").append(countOfChanges).append(".").append(tableLabel)
+            .append(res.getString("DialogToListChangesOfFiles20")).append(elementName)
+            .append(res.getString("DialogToListChangesOfFiles28"))
+            .append(newElementWork.getAttribute("Alias")).append(" ")
+            .append(newElementWork.getAttribute("Name"))
+            .append(res.getString("DialogToListChangesOfFiles29"))
+            .append(res.getString("DialogToListChangesOfFiles30"));
 			}
 		}
 		for (int i = 0; i < oldElementList.getLength(); i++) {
@@ -852,12 +867,13 @@ public class DialogToListChangesOfFiles extends JDialog {
 			}
 			if (isNotFound) {
 				countOfChanges++;
-				buffer.append("\n" + countOfChanges + "."
-						+ tableLabel+ res.getString("DialogToListChangesOfFiles20")
-						+ elementName + res.getString("DialogToListChangesOfFiles28")
-						+ oldElementWork.getAttribute("Alias") + " " + oldElementWork.getAttribute("Name")
-						+ res.getString("DialogToListChangesOfFiles29")
-						+ res.getString("DialogToListChangesOfFiles31"));
+				buffer.append("\n").append(countOfChanges).append(".").append(tableLabel)
+            .append(res.getString("DialogToListChangesOfFiles20")).append(elementName)
+            .append(res.getString("DialogToListChangesOfFiles28"))
+            .append(oldElementWork.getAttribute("Alias")).append(" ")
+            .append(oldElementWork.getAttribute("Name"))
+            .append(res.getString("DialogToListChangesOfFiles29"))
+            .append(res.getString("DialogToListChangesOfFiles31"));
 			}
 		}
 
@@ -882,10 +898,10 @@ public class DialogToListChangesOfFiles extends JDialog {
 			}
 			if (isNotFound) {
 				countOfChanges++;
-				buffer.append("\n" + countOfChanges + "."
-						+ tableLabel + res.getString("DialogToListChangesOfFiles20")
-						+ elementName + "(" + newElementWork.getAttribute("Type") + ")"
-						+ res.getString("DialogToListChangesOfFiles34"));
+				buffer.append("\n").append(countOfChanges).append(".").append(tableLabel)
+            .append(res.getString("DialogToListChangesOfFiles20")).append(elementName).append("(")
+            .append(newElementWork.getAttribute("Type")).append(")")
+            .append(res.getString("DialogToListChangesOfFiles34"));
 			}
 		}
 		for (int i = 0; i < oldElementList.getLength(); i++) {
@@ -900,10 +916,10 @@ public class DialogToListChangesOfFiles extends JDialog {
 			}
 			if (isNotFound) {
 				countOfChanges++;
-				buffer.append("\n" + countOfChanges + "."
-						+ tableLabel + res.getString("DialogToListChangesOfFiles20")
-						+ elementName + "(" + oldElementWork.getAttribute("Type") + ")"
-						+ res.getString("DialogToListChangesOfFiles31"));
+				buffer.append("\n").append(countOfChanges).append(".").append(tableLabel)
+            .append(res.getString("DialogToListChangesOfFiles20")).append(elementName).append("(")
+            .append(oldElementWork.getAttribute("Type")).append(")")
+            .append(res.getString("DialogToListChangesOfFiles31"));
 			}
 		}
 
@@ -930,9 +946,9 @@ public class DialogToListChangesOfFiles extends JDialog {
 		}
 		if (newRelList.size() != oldRelList.size()) {
 			countOfChanges++;
-			buffer.append("\n" + countOfChanges + "."
-					+ tableLabel + res.getString("DialogToListChangesOfFiles20")
-					+ elementName + res.getString("DialogToListChangesOfFiles34"));
+			buffer.append("\n").append(countOfChanges).append(".").append(tableLabel)
+          .append(res.getString("DialogToListChangesOfFiles20")).append(elementName)
+          .append(res.getString("DialogToListChangesOfFiles34"));
 		} else {
 			isNotFound = true;
 			for (int i = 0; i < newRelList.size(); i++) {
@@ -946,9 +962,9 @@ public class DialogToListChangesOfFiles extends JDialog {
 				}
 				if (isNotFound) {
 					countOfChanges++;
-					buffer.append("\n" + countOfChanges + "."
-							+ tableLabel + res.getString("DialogToListChangesOfFiles20")
-							+ elementName + res.getString("DialogToListChangesOfFiles34"));
+					buffer.append("\n").append(countOfChanges).append(".").append(tableLabel)
+              .append(res.getString("DialogToListChangesOfFiles20")).append(elementName)
+              .append(res.getString("DialogToListChangesOfFiles34"));
 					break;
 				}
 			}
@@ -959,7 +975,7 @@ public class DialogToListChangesOfFiles extends JDialog {
 		NodeList oldElementList, newElementList, oldElementList2, newElementList2;
 		String tagName, elementName, wrkStr1, wrkStr2, tableID1, tableID2, fieldName1, fieldName2, tableCRUD1, tableCRUD2, elementLabel;
 		org.w3c.dom.Element newElementWork, oldElementWork, newElementWork2, oldElementWork2;
-		ArrayList<String> attrList = new ArrayList<String>();
+		ArrayList<String> attrList = new ArrayList<>();
 		String functionLabel = res.getString("DialogToListChangesOfFiles14")
 				+ res.getString("DialogToListChangesOfFiles28")
 				+ newElement.getAttribute("SortKey") + " " + newElement.getAttribute("Name")
@@ -990,9 +1006,9 @@ public class DialogToListChangesOfFiles extends JDialog {
 			}
 			if (isNotFound) {
 				countOfChanges++;
-				buffer.append("\n" + countOfChanges + "."
-						+ functionLabel + res.getString("DialogToListChangesOfFiles20")
-						+ elementName + res.getString("DialogToListChangesOfFiles34"));
+				buffer.append("\n").append(countOfChanges).append(".").append(functionLabel)
+            .append(res.getString("DialogToListChangesOfFiles20")).append(elementName)
+            .append(res.getString("DialogToListChangesOfFiles34"));
 				break;
 			}
 		}
@@ -1013,9 +1029,9 @@ public class DialogToListChangesOfFiles extends JDialog {
 			}
 			if (isNotFound) {
 				countOfChanges++;
-				buffer.append("\n" + countOfChanges + "."
-						+ functionLabel + res.getString("DialogToListChangesOfFiles20")
-						+ elementName + res.getString("DialogToListChangesOfFiles34"));
+				buffer.append("\n").append(countOfChanges).append(".").append(functionLabel)
+            .append(res.getString("DialogToListChangesOfFiles20")).append(elementName)
+            .append(res.getString("DialogToListChangesOfFiles34"));
 			}
 		}
 
@@ -1043,9 +1059,9 @@ public class DialogToListChangesOfFiles extends JDialog {
 					elementLabel = functionLabel + res.getString("DialogToListChangesOfFiles20")
 							+ elementName + res.getString("DialogToListChangesOfFiles28")
 							+ newElementWork.getAttribute("Name") + res.getString("DialogToListChangesOfFiles29");
-					for (int k = 0; k < attrList.size(); k++) {
-						compareNewAndOldElements(newElementWork, oldElementWork, attrList.get(k), elementLabel);
-					}
+          for (String s : attrList) {
+            compareNewAndOldElements(newElementWork, oldElementWork, s, elementLabel);
+          }
 	
 					/////////////////////
 					// IO Panel Styles //
@@ -1085,9 +1101,9 @@ public class DialogToListChangesOfFiles extends JDialog {
 					}
 					if (isAnyChanged) {
 						countOfChanges++;
-						buffer.append("\n" + countOfChanges + "."
-								+ elementLabel + res.getString("DialogToListChangesOfFiles20")
-								+ "Style" + res.getString("DialogToListChangesOfFiles34"));
+						buffer.append("\n").append(countOfChanges).append(".").append(elementLabel)
+                .append(res.getString("DialogToListChangesOfFiles20")).append("Style")
+                .append(res.getString("DialogToListChangesOfFiles34"));
 					}
 
 					/////////////////////
@@ -1136,9 +1152,9 @@ public class DialogToListChangesOfFiles extends JDialog {
 					}
 					if (isAnyChanged) {
 						countOfChanges++;
-						buffer.append("\n" + countOfChanges + "."
-								+ elementLabel + res.getString("DialogToListChangesOfFiles20")
-								+ "Field" + res.getString("DialogToListChangesOfFiles34"));
+						buffer.append("\n").append(countOfChanges).append(".").append(elementLabel)
+                .append(res.getString("DialogToListChangesOfFiles20")).append("Field")
+                .append(res.getString("DialogToListChangesOfFiles34"));
 					}
 
 					isNotFound = false;
@@ -1147,11 +1163,12 @@ public class DialogToListChangesOfFiles extends JDialog {
 			}
 			if (isNotFound) {
 				countOfChanges++;
-				buffer.append("\n" + countOfChanges + "."
-						+ functionLabel + res.getString("DialogToListChangesOfFiles20")
-						+ elementName + res.getString("DialogToListChangesOfFiles28")
-						+ newElementWork.getAttribute("Name") + res.getString("DialogToListChangesOfFiles29")
-						+ res.getString("DialogToListChangesOfFiles30"));
+				buffer.append("\n").append(countOfChanges).append(".").append(functionLabel)
+            .append(res.getString("DialogToListChangesOfFiles20")).append(elementName)
+            .append(res.getString("DialogToListChangesOfFiles28"))
+            .append(newElementWork.getAttribute("Name"))
+            .append(res.getString("DialogToListChangesOfFiles29"))
+            .append(res.getString("DialogToListChangesOfFiles30"));
 			}
 		}
 		for (int i = 0; i < oldElementList.getLength(); i++) {
@@ -1166,11 +1183,12 @@ public class DialogToListChangesOfFiles extends JDialog {
 			}
 			if (isNotFound) {
 				countOfChanges++;
-				buffer.append("\n" + countOfChanges + "."
-						+ functionLabel + res.getString("DialogToListChangesOfFiles20")
-						+ elementName + res.getString("DialogToListChangesOfFiles28")
-						+ oldElementWork.getAttribute("Name") + res.getString("DialogToListChangesOfFiles29")
-						+ res.getString("DialogToListChangesOfFiles31"));
+				buffer.append("\n").append(countOfChanges).append(".").append(functionLabel)
+            .append(res.getString("DialogToListChangesOfFiles20")).append(elementName)
+            .append(res.getString("DialogToListChangesOfFiles28"))
+            .append(oldElementWork.getAttribute("Name"))
+            .append(res.getString("DialogToListChangesOfFiles29"))
+            .append(res.getString("DialogToListChangesOfFiles31"));
 			}
 		}
 
@@ -1198,9 +1216,9 @@ public class DialogToListChangesOfFiles extends JDialog {
 					elementLabel = functionLabel + res.getString("DialogToListChangesOfFiles20")
 							+ elementName + res.getString("DialogToListChangesOfFiles28")
 							+ newElementWork.getAttribute("Name") + res.getString("DialogToListChangesOfFiles29");
-					for (int k = 0; k < attrList.size(); k++) {
-						compareNewAndOldElements(newElementWork, oldElementWork, attrList.get(k), elementLabel);
-					}
+          for (String s : attrList) {
+            compareNewAndOldElements(newElementWork, oldElementWork, s, elementLabel);
+          }
 					
 					/////////////////////
 					// IO Spool Styles //
@@ -1240,9 +1258,9 @@ public class DialogToListChangesOfFiles extends JDialog {
 					}
 					if (isAnyChanged) {
 						countOfChanges++;
-						buffer.append("\n" + countOfChanges + "."
-								+ elementLabel + res.getString("DialogToListChangesOfFiles20")
-								+ "Style" + res.getString("DialogToListChangesOfFiles34"));
+						buffer.append("\n").append(countOfChanges).append(".").append(elementLabel)
+                .append(res.getString("DialogToListChangesOfFiles20")).append("Style")
+                .append(res.getString("DialogToListChangesOfFiles34"));
 					}
 					
 					/////////////////////
@@ -1289,9 +1307,9 @@ public class DialogToListChangesOfFiles extends JDialog {
 					}
 					if (isAnyChanged) {
 						countOfChanges++;
-						buffer.append("\n" + countOfChanges + "."
-								+ elementLabel + res.getString("DialogToListChangesOfFiles20")
-								+ "Field" + res.getString("DialogToListChangesOfFiles34"));
+						buffer.append("\n").append(countOfChanges).append(".").append(elementLabel)
+                .append(res.getString("DialogToListChangesOfFiles20")).append("Field")
+                .append(res.getString("DialogToListChangesOfFiles34"));
 					}
 
 					isNotFound = false;
@@ -1300,11 +1318,12 @@ public class DialogToListChangesOfFiles extends JDialog {
 			}
 			if (isNotFound) {
 				countOfChanges++;
-				buffer.append("\n" + countOfChanges + "."
-						+ functionLabel + res.getString("DialogToListChangesOfFiles20")
-						+ elementName + res.getString("DialogToListChangesOfFiles28")
-						+ newElementWork.getAttribute("Name") + res.getString("DialogToListChangesOfFiles29")
-						+ res.getString("DialogToListChangesOfFiles30"));
+				buffer.append("\n").append(countOfChanges).append(".").append(functionLabel)
+            .append(res.getString("DialogToListChangesOfFiles20")).append(elementName)
+            .append(res.getString("DialogToListChangesOfFiles28"))
+            .append(newElementWork.getAttribute("Name"))
+            .append(res.getString("DialogToListChangesOfFiles29"))
+            .append(res.getString("DialogToListChangesOfFiles30"));
 			}
 		}
 		for (int i = 0; i < oldElementList.getLength(); i++) {
@@ -1319,11 +1338,12 @@ public class DialogToListChangesOfFiles extends JDialog {
 			}
 			if (isNotFound) {
 				countOfChanges++;
-				buffer.append("\n" + countOfChanges + "."
-						+ functionLabel + res.getString("DialogToListChangesOfFiles20")
-						+ elementName + res.getString("DialogToListChangesOfFiles28")
-						+ oldElementWork.getAttribute("Name") + res.getString("DialogToListChangesOfFiles29")
-						+ res.getString("DialogToListChangesOfFiles31"));
+				buffer.append("\n").append(countOfChanges).append(".").append(functionLabel)
+            .append(res.getString("DialogToListChangesOfFiles20")).append(elementName)
+            .append(res.getString("DialogToListChangesOfFiles28"))
+            .append(oldElementWork.getAttribute("Name"))
+            .append(res.getString("DialogToListChangesOfFiles29"))
+            .append(res.getString("DialogToListChangesOfFiles31"));
 			}
 		}
 
@@ -1348,9 +1368,9 @@ public class DialogToListChangesOfFiles extends JDialog {
 					elementLabel = functionLabel + res.getString("DialogToListChangesOfFiles20")
 							+ elementName + res.getString("DialogToListChangesOfFiles28")
 							+ newElementWork.getAttribute("Name") + res.getString("DialogToListChangesOfFiles29");
-					for (int k = 0; k < attrList.size(); k++) {
-						compareNewAndOldElements(newElementWork, oldElementWork, attrList.get(k), elementLabel);
-					}
+          for (String s : attrList) {
+            compareNewAndOldElements(newElementWork, oldElementWork, s, elementLabel);
+          }
 					
 					////////////////////////
 					// IO Web Page Fields //
@@ -1398,9 +1418,9 @@ public class DialogToListChangesOfFiles extends JDialog {
 					}
 					if (isAnyChanged) {
 						countOfChanges++;
-						buffer.append("\n" + countOfChanges + "."
-								+ elementLabel + res.getString("DialogToListChangesOfFiles20")
-								+ "Field" + res.getString("DialogToListChangesOfFiles34"));
+						buffer.append("\n").append(countOfChanges).append(".").append(elementLabel)
+                .append(res.getString("DialogToListChangesOfFiles20")).append("Field")
+                .append(res.getString("DialogToListChangesOfFiles34"));
 					}
 
 					isNotFound = false;
@@ -1409,11 +1429,12 @@ public class DialogToListChangesOfFiles extends JDialog {
 			}
 			if (isNotFound) {
 				countOfChanges++;
-				buffer.append("\n" + countOfChanges + "."
-						+ functionLabel + res.getString("DialogToListChangesOfFiles20")
-						+ elementName + res.getString("DialogToListChangesOfFiles28")
-						+ newElementWork.getAttribute("Name") + res.getString("DialogToListChangesOfFiles29")
-						+ res.getString("DialogToListChangesOfFiles30"));
+				buffer.append("\n").append(countOfChanges).append(".").append(functionLabel)
+            .append(res.getString("DialogToListChangesOfFiles20")).append(elementName)
+            .append(res.getString("DialogToListChangesOfFiles28"))
+            .append(newElementWork.getAttribute("Name"))
+            .append(res.getString("DialogToListChangesOfFiles29"))
+            .append(res.getString("DialogToListChangesOfFiles30"));
 			}
 		}
 		for (int i = 0; i < oldElementList.getLength(); i++) {
@@ -1428,11 +1449,12 @@ public class DialogToListChangesOfFiles extends JDialog {
 			}
 			if (isNotFound) {
 				countOfChanges++;
-				buffer.append("\n" + countOfChanges + "."
-						+ functionLabel + res.getString("DialogToListChangesOfFiles20")
-						+ elementName + res.getString("DialogToListChangesOfFiles28")
-						+ oldElementWork.getAttribute("Name") + res.getString("DialogToListChangesOfFiles29")
-						+ res.getString("DialogToListChangesOfFiles31"));
+				buffer.append("\n").append(countOfChanges).append(".").append(functionLabel)
+            .append(res.getString("DialogToListChangesOfFiles20")).append(elementName)
+            .append(res.getString("DialogToListChangesOfFiles28"))
+            .append(oldElementWork.getAttribute("Name"))
+            .append(res.getString("DialogToListChangesOfFiles29"))
+            .append(res.getString("DialogToListChangesOfFiles31"));
 			}
 		}
 
@@ -1461,9 +1483,9 @@ public class DialogToListChangesOfFiles extends JDialog {
 
 					elementLabel = functionLabel + res.getString("DialogToListChangesOfFiles20")
 							+ elementName + " " + tableID1 + "(" + tableCRUD1 + ")";
-					for (int k = 0; k < attrList.size(); k++) {
-						compareNewAndOldElements(newElementWork, oldElementWork, attrList.get(k), elementLabel);
-					}
+          for (String s : attrList) {
+            compareNewAndOldElements(newElementWork, oldElementWork, s, elementLabel);
+          }
 
 					/////////////////////
 					// IO Table Fields //
@@ -1479,11 +1501,11 @@ public class DialogToListChangesOfFiles extends JDialog {
 							fieldName2 = getSortKeyAccordingToID("FieldID", oldElementWork2.getAttribute("FieldID"), systemElementOld);
 							if (fieldName1.equals(fieldName2)) {
 								if (newElementWork2.getAttribute("Descriptions").equals(oldElementWork2.getAttribute("Descriptions"))) {
-									buffer.append("\n" + countOfChanges + "."
-											+ elementLabel + res.getString("DialogToListChangesOfFiles20")
-											+ res.getString("DialogToListChangesOfFiles28")
-											+ fieldName1 + res.getString("DialogToListChangesOfFiles29")
-											+ res.getString("DialogToListChangesOfFiles34"));
+									buffer.append("\n").append(countOfChanges).append(".").append(elementLabel)
+                      .append(res.getString("DialogToListChangesOfFiles20"))
+                      .append(res.getString("DialogToListChangesOfFiles28")).append(fieldName1)
+                      .append(res.getString("DialogToListChangesOfFiles29"))
+                      .append(res.getString("DialogToListChangesOfFiles34"));
 								}
 								isNotFound2 = false;
 								break;
@@ -1491,11 +1513,11 @@ public class DialogToListChangesOfFiles extends JDialog {
 						}
 						if (isNotFound2) {
 							countOfChanges++;
-							buffer.append("\n" + countOfChanges + "."
-									+ elementLabel + res.getString("DialogToListChangesOfFiles20")
-									+ res.getString("DialogToListChangesOfFiles28")
-									+ fieldName1 + res.getString("DialogToListChangesOfFiles29")
-									+ res.getString("DialogToListChangesOfFiles34"));
+							buffer.append("\n").append(countOfChanges).append(".").append(elementLabel)
+                  .append(res.getString("DialogToListChangesOfFiles20"))
+                  .append(res.getString("DialogToListChangesOfFiles28")).append(fieldName1)
+                  .append(res.getString("DialogToListChangesOfFiles29"))
+                  .append(res.getString("DialogToListChangesOfFiles34"));
 							break;
 						}
 					}
@@ -1513,11 +1535,11 @@ public class DialogToListChangesOfFiles extends JDialog {
 						}
 						if (isNotFound2) {
 							countOfChanges++;
-							buffer.append("\n" + countOfChanges + "."
-									+ elementLabel + res.getString("DialogToListChangesOfFiles20")
-									+ res.getString("DialogToListChangesOfFiles28")
-									+ fieldName2 + res.getString("DialogToListChangesOfFiles29")
-									+ res.getString("DialogToListChangesOfFiles31"));
+							buffer.append("\n").append(countOfChanges).append(".").append(elementLabel)
+                  .append(res.getString("DialogToListChangesOfFiles20"))
+                  .append(res.getString("DialogToListChangesOfFiles28")).append(fieldName2)
+                  .append(res.getString("DialogToListChangesOfFiles29"))
+                  .append(res.getString("DialogToListChangesOfFiles31"));
 							break;
 						}
 					}
@@ -1527,11 +1549,11 @@ public class DialogToListChangesOfFiles extends JDialog {
 			}
 			if (isNotFound) {
 				countOfChanges++;
-				buffer.append("\n" + countOfChanges + "."
-						+ functionLabel + res.getString("DialogToListChangesOfFiles20")
-						+ elementName + res.getString("DialogToListChangesOfFiles28")
-						+ tableID1 + "(" + tableCRUD1 + ")" + res.getString("DialogToListChangesOfFiles29")
-						+ res.getString("DialogToListChangesOfFiles30"));
+				buffer.append("\n").append(countOfChanges).append(".").append(functionLabel)
+            .append(res.getString("DialogToListChangesOfFiles20")).append(elementName)
+            .append(res.getString("DialogToListChangesOfFiles28")).append(tableID1).append("(")
+            .append(tableCRUD1).append(")").append(res.getString("DialogToListChangesOfFiles29"))
+            .append(res.getString("DialogToListChangesOfFiles30"));
 			}
 		}
 		for (int i = 0; i < oldElementList.getLength(); i++) {
@@ -1550,11 +1572,11 @@ public class DialogToListChangesOfFiles extends JDialog {
 			}
 			if (isNotFound) {
 				countOfChanges++;
-				buffer.append("\n" + countOfChanges + "."
-						+ functionLabel + res.getString("DialogToListChangesOfFiles20")
-						+ elementName + res.getString("DialogToListChangesOfFiles28")
-						+ tableID2 + "(" + tableCRUD2 + ")" + res.getString("DialogToListChangesOfFiles29")
-						+ res.getString("DialogToListChangesOfFiles31"));
+				buffer.append("\n").append(countOfChanges).append(".").append(functionLabel)
+            .append(res.getString("DialogToListChangesOfFiles20")).append(elementName)
+            .append(res.getString("DialogToListChangesOfFiles28")).append(tableID2).append("(")
+            .append(tableCRUD2).append(")").append(res.getString("DialogToListChangesOfFiles29"))
+            .append(res.getString("DialogToListChangesOfFiles31"));
 			}
 		}
 	}

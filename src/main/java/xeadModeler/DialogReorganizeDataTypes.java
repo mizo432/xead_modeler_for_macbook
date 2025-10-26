@@ -268,7 +268,7 @@ public class DialogReorganizeDataTypes extends JDialog {
 			NodeList fieldList = frame_.domDocument.getElementsByTagName("TableField");
 			sortableDomElementFieldListModel.removeAllElements();
 			for (int j = 0; j < fieldList.getLength(); j++) {
-				sortableDomElementFieldListModel.addElement((Object)fieldList.item(j));
+				sortableDomElementFieldListModel.addElement(fieldList.item(j));
 			}
 			sortableDomElementFieldListModel.sortElements();
 
@@ -283,7 +283,7 @@ public class DialogReorganizeDataTypes extends JDialog {
 			dataTypePopupMenu.initializeMenuItem(dataTypeList);
 			frame_.sortableDomElementListModel.removeAllElements();
 			for (int i = 0; i < dataTypeList.getLength(); i++) {
-				frame_.sortableDomElementListModel.addElement((Object)dataTypeList.item(i));
+				frame_.sortableDomElementListModel.addElement(dataTypeList.item(i));
 			}
 			frame_.sortableDomElementListModel.sortElements();
 			for (int i = 0; i < frame_.sortableDomElementListModel.getSize(); i++) {
@@ -293,9 +293,9 @@ public class DialogReorganizeDataTypes extends JDialog {
 				Cell[1] = element.getAttribute("SortKey");
 				Cell[2] = element.getAttribute("Name");
 				Cell[3] = element.getAttribute("BasicType");
-				Integer length = new Integer(element.getAttribute("Length"));
+				Integer length = Integer.valueOf(element.getAttribute("Length"));
 				Cell[4] = length;
-				Integer decimal = new Integer(element.getAttribute("Decimal"));
+				Integer decimal = Integer.valueOf(element.getAttribute("Decimal"));
 				Cell[5] = decimal;
 				Cell[6] = element.getAttribute("SQLExpression");
 				tableModelDataTypeList.addRow(Cell);
@@ -311,18 +311,18 @@ public class DialogReorganizeDataTypes extends JDialog {
 	}
 
 	static String substringLinesWithTokenOfEOL(String originalString, String stringToBeInserted) {
-		StringBuffer processedString = new StringBuffer();
+		StringBuilder processedString = new StringBuilder();
 		int lastEnd = 0;
 		for (int i = 0; i <= originalString.length(); i++) {
 			if (i+5 <= originalString.length()) {
-				if (originalString.substring(i,i+5).equals("#EOL#")) {
-					processedString.append(originalString.substring(lastEnd, i));
+				if (originalString.startsWith("#EOL#", i)) {
+					processedString.append(originalString, lastEnd, i);
 					processedString.append(stringToBeInserted);
 					lastEnd = i+5;
 				}
 			} else {
 				if (i == originalString.length()) {
-					processedString.append(originalString.substring(lastEnd, i));
+					processedString.append(originalString, lastEnd, i);
 				}
 			}
 		}
@@ -330,17 +330,17 @@ public class DialogReorganizeDataTypes extends JDialog {
 	}
 
 	static String concatLinesWithTokenOfEOL(String originalString) {
-		StringBuffer processedString = new StringBuffer();
+		StringBuilder processedString = new StringBuilder();
 		int lastEnd = 0;
 		for (int i = 0; i <= originalString.length(); i++) {
 			if (i < originalString.length()) {
-				if (originalString.substring(i,i+1).equals("\n")) {
-					processedString.append(originalString.substring(lastEnd, i));
+				if (originalString.charAt(i) == '\n') {
+					processedString.append(originalString, lastEnd, i);
 					processedString.append("#EOL#");
 					lastEnd = i+1;
 				}
 			} else {
-				processedString.append(originalString.substring(lastEnd, i));
+				processedString.append(originalString, lastEnd, i);
 			}
 		}
 		return processedString.toString();
@@ -350,7 +350,7 @@ public class DialogReorganizeDataTypes extends JDialog {
 		jButtonTransfer.setEnabled(false);
 		if (!targetDataTypeID.equals("")) {
 			for (int i = 0; i < tableModelFieldList.getRowCount(); i++) {
-				if (((Boolean)tableModelFieldList.getValueAt(i, 1)).booleanValue()) {
+				if ((Boolean) tableModelFieldList.getValueAt(i, 1)) {
 					jButtonTransfer.setEnabled(true);
 					break;
 				}
@@ -423,7 +423,7 @@ public class DialogReorganizeDataTypes extends JDialog {
 	void jButtonTransfer_actionPerformed(ActionEvent e) {
 		if (!targetDataTypeID.equals("")) {
 			for (int i = 0; i < tableModelFieldList.getRowCount(); i++) {
-				if (((Boolean)tableModelFieldList.getValueAt(i, 1)).booleanValue()) {
+				if ((Boolean) tableModelFieldList.getValueAt(i, 1)) {
 					TableRowNumber tableRowNumber = (TableRowNumber)tableModelFieldList.getValueAt(i, 0);
 					org.w3c.dom.Element element = tableRowNumber.getElement();
 					element.setAttribute("DataTypeID", targetDataTypeID);
@@ -553,7 +553,7 @@ public class DialogReorganizeDataTypes extends JDialog {
 				setForeground(table.getForeground());
 				setBackground(table.getBackground());
 			}
-			setSelected((value != null && ((Boolean)value).booleanValue()));
+			setSelected((value != null && (Boolean) value));
 			return this;
 		}
 	}
@@ -570,7 +570,7 @@ public class DialogReorganizeDataTypes extends JDialog {
 		}
 	}
 
-	class TableRowNumber extends Object {
+	class TableRowNumber {
 		private org.w3c.dom.Element element_;
 		private int number_;
 		public TableRowNumber(int num, org.w3c.dom.Element elm) {
@@ -601,16 +601,15 @@ public class DialogReorganizeDataTypes extends JDialog {
 //				node = (XeadNode)it.next();
 //				this.addElement(node);
 //			}
-			ArrayList<XeadNode> list = new ArrayList<XeadNode>();
+			ArrayList<XeadNode> list = new ArrayList<>();
 			for (int i = 0; i < this.getSize(); i++) {
 				list.add((XeadNode)this.getElementAt(i));
 			}
 			this.removeAllElements();
 			Collections.sort(list);
-			Iterator<XeadNode> it = list.iterator();
-			while(it.hasNext()){
-				this.addElement(it.next());
-			}
+      for (XeadNode xeadNode : list) {
+        this.addElement(xeadNode);
+      }
 		}
 	}
 
@@ -681,16 +680,15 @@ public class DialogReorganizeDataTypes extends JDialog {
 //				domElement = (org.w3c.dom.Element)it.next();
 //				this.addElement(domElement);
 //			}
-			ArrayList<XeadFieldElement> list = new ArrayList<XeadFieldElement>();
+			ArrayList<XeadFieldElement> list = new ArrayList<>();
 			for (int i = 0; i < this.getSize(); i++) {
 				list.add((XeadFieldElement)super.getElementAt(i));
 			}
 			this.removeAllElements();
 			Collections.sort(list);
-			Iterator<XeadFieldElement> it = list.iterator();
-			while(it.hasNext()){
-				super.addElement((XeadFieldElement)it.next());
-			}
+      for (XeadFieldElement xeadFieldElement : list) {
+        super.addElement(xeadFieldElement);
+      }
 		}
 		public Object getElementAt(int index) {
 			XeadFieldElement element = (XeadFieldElement)super.getElementAt(index);
@@ -744,13 +742,13 @@ public class DialogReorganizeDataTypes extends JDialog {
 			this.removeAll();
 			frame_.sortableDomElementListModel.removeAllElements();
 			for (int i = 0; i < nodeList.getLength(); i++) {
-				frame_.sortableDomElementListModel.addElement((Object)nodeList.item(i));
+				frame_.sortableDomElementListModel.addElement(nodeList.item(i));
 			}
 			frame_.sortableDomElementListModel.sortElements();
 			for (int i = 0; i < frame_.sortableDomElementListModel.getSize(); i++) {
 				element = (org.w3c.dom.Element)frame_.sortableDomElementListModel.getElementAt(i);
 				sortKeyOfDataType = element.getAttribute("SortKey") + "  ";
-				if (!first2BytesOfsortKey.equals(sortKeyOfDataType.substring(0,2)) || i==0) {
+				if (!first2BytesOfsortKey.equals(sortKeyOfDataType.substring(0,2))) {
 					first2BytesOfsortKey = sortKeyOfDataType.substring(0,2);
 					currentMenu = new JMenu(first2BytesOfsortKey);
 					this.add(currentMenu);
@@ -865,4 +863,3 @@ class DialogReorganizeDataTypes_jTableFieldList_mouseAdapter extends java.awt.ev
 		adaptee.jTableFieldList_mouseClicked(e);
 	}
 }
-
