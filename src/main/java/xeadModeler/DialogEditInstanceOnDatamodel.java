@@ -55,8 +55,8 @@ public class DialogEditInstanceOnDatamodel extends JDialog {
 	private JMenuItem jMenuItemSetSequence = new JMenuItem(res.getString("DialogEditInstanceOnDatamodel2"));
 	private JMenuItem jMenuItemAddSlide = new JMenuItem(res.getString("DialogEditInstanceOnDatamodel3"));
 	private JMenuItem jMenuItemRemoveSlide = new JMenuItem(res.getString("DialogEditInstanceOnDatamodel4"));
-	private ArrayList<JTextArea> textAreaList = new ArrayList<JTextArea>(); 
-	private ArrayList<String> sortKeyList = new ArrayList<String>();
+	private ArrayList<JTextArea> textAreaList = new ArrayList<>();
+	private ArrayList<String> sortKeyList = new ArrayList<>();
 	private boolean isEdited = false;
 
 	public DialogEditInstanceOnDatamodel(Modeler frame) {
@@ -96,7 +96,7 @@ public class DialogEditInstanceOnDatamodel extends JDialog {
 		} else {
 			SortableDomElementListModel sortableDomElementListModel = frame_.new SortableDomElementListModel();
 			for (int i = 0; i < nodeList.getLength(); i++) {
-				sortableDomElementListModel.addElement((Object)nodeList.item(i));
+				sortableDomElementListModel.addElement(nodeList.item(i));
 			}
 			sortableDomElementListModel.sortElements();
 			for (int i = 0; i < sortableDomElementListModel.getSize(); i++) {
@@ -228,10 +228,7 @@ class DialogEditInstanceOnDatamodel_mouseAdapter extends java.awt.event.MouseAda
 	public void mousePressed(MouseEvent e) {
 		adaptee.jTextArea_mousePressed(e);
 	}
-	public void mouseClicked(MouseEvent e) {
-	}
-	public void mouseReleased(MouseEvent e) {
-	}
+
 }
 
 class DialogEditInstanceOnDatamodel_keyAdapter extends java.awt.event.KeyAdapter {

@@ -63,11 +63,11 @@ public class DialogAddRelationshipOnDatamodel extends JDialog {
 	private XeadTreeNode sourceTableNode_;
 	private org.w3c.dom.Element sourceKeyElement_;
 	private XeadTreeNode targetTableNode_;
-	private ArrayList<String> keyFieldNameList = new ArrayList<String>();
-	private ArrayList<String> keyFieldAliasList = new ArrayList<String>();
-	private ArrayList<String> keyFieldDataTypeIDList = new ArrayList<String>();
-	private ArrayList<String> keyFieldNameListChanged = new ArrayList<String>();
-	private ArrayList<String> keyFieldAliasListChanged = new ArrayList<String>();
+	private ArrayList<String> keyFieldNameList = new ArrayList<>();
+	private ArrayList<String> keyFieldAliasList = new ArrayList<>();
+	private ArrayList<String> keyFieldDataTypeIDList = new ArrayList<>();
+	private ArrayList<String> keyFieldNameListChanged = new ArrayList<>();
+	private ArrayList<String> keyFieldAliasListChanged = new ArrayList<>();
 
 	public DialogAddRelationshipOnDatamodel(Modeler frame) {
 		super(frame, res.getString("DialogAddRelationshipOnDatamodel1"), true);
@@ -157,12 +157,12 @@ public class DialogAddRelationshipOnDatamodel extends JDialog {
 		SortableDomElementListModel sortableDomElementListModel = frame_.new SortableDomElementListModel();
 		sortableDomElementListModel.removeAllElements();
 		for (int i = 0; i < keyFieldList.getLength(); i++) {
-			sortableDomElementListModel.addElement((Object)keyFieldList.item(i));
+			sortableDomElementListModel.addElement(keyFieldList.item(i));
 		}
 		sortableDomElementListModel.sortElements();
-		StringBuffer bfName = new StringBuffer();
-		StringBuffer bfAlias = new StringBuffer();
-		StringBuffer bfWork = new StringBuffer();
+		StringBuilder bfName = new StringBuilder();
+		StringBuilder bfAlias = new StringBuilder();
+		StringBuilder bfWork = new StringBuilder();
 		for (int i = 0; i < sortableDomElementListModel.getSize(); i++) {
 			if (i > 0) {
 				bfName.append(";");
@@ -173,13 +173,12 @@ public class DialogAddRelationshipOnDatamodel extends JDialog {
 			fieldNode = frame_.getSpecificXeadTreeNode("TableField", sourceTableNode_.getElement().getAttribute("ID"), element.getAttribute("FieldID"));
 			bfName.append(fieldNode.getElement().getAttribute("Name"));
 			bfAlias.append(fieldNode.getElement().getAttribute("Alias"));
-			bfWork.append("");
-			keyFieldDataTypeIDList.add(fieldNode.getElement().getAttribute("DataTypeID"));
+      keyFieldDataTypeIDList.add(fieldNode.getElement().getAttribute("DataTypeID"));
 			keyFieldNameList.add(fieldNode.getElement().getAttribute("Name"));
 			keyFieldAliasList.add(fieldNode.getElement().getAttribute("Alias"));
 		}
 		jTextFieldName.setText(bfName.toString());
-		if (bfAlias.toString().equals(bfWork.toString())) {
+		if (bfAlias.toString().contentEquals(bfWork)) {
 			jTextFieldAlias.setText("");
 		} else {
 			jTextFieldAlias.setText(bfAlias.toString());
@@ -199,39 +198,40 @@ public class DialogAddRelationshipOnDatamodel extends JDialog {
 			NodeList targetTableKeyList = targetTableNode_.getElement().getElementsByTagName("TableKey");
 			element = (org.w3c.dom.Element)targetTableKeyList.item(0);
 			NodeList targetTablePKFieldList = element.getElementsByTagName("TableKeyField");
-			for (int i = 0; i < keyFieldDataTypeIDList.size(); i++) {
-				hasNone = true;
-				for (int j = 0; j < targetTablePKFieldList.getLength(); j++) {
-					element = (org.w3c.dom.Element)targetTablePKFieldList.item(j);
-					fieldNode = frame_.getSpecificXeadTreeNode("TableField", targetTableNode_.getElement().getAttribute("ID"), element.getAttribute("FieldID"));
-					if (fieldNode.getElement().getAttribute("DataTypeID").equals(keyFieldDataTypeIDList.get(i)) ) {
-						hasNone = false;
-						break;
-					}
-				}
-				if (hasNone) {
-					break;
-				}
-			}
+      for (String s : keyFieldDataTypeIDList) {
+        hasNone = true;
+        for (int j = 0; j < targetTablePKFieldList.getLength(); j++) {
+          element = (org.w3c.dom.Element) targetTablePKFieldList.item(j);
+          fieldNode = frame_.getSpecificXeadTreeNode("TableField",
+              targetTableNode_.getElement().getAttribute("ID"), element.getAttribute("FieldID"));
+          if (fieldNode.getElement().getAttribute("DataTypeID").equals(s)) {
+            hasNone = false;
+            break;
+          }
+        }
+        if (hasNone) {
+          break;
+        }
+      }
 			if (hasNone) {
 				statusOfTarget = 1;
 			}
 			//
 			if (statusOfTarget == 1) {
 				NodeList targetTableFieldList = targetTableNode_.getElement().getElementsByTagName("TableField");
-				for (int i = 0; i < keyFieldDataTypeIDList.size(); i++) {
-					hasNone = true;
-					for (int j = 0; j < targetTableFieldList.getLength(); j++) {
-						element = (org.w3c.dom.Element)targetTableFieldList.item(j);
-						if (element.getAttribute("DataTypeID").equals(keyFieldDataTypeIDList.get(i)) ) {
-							hasNone = false;
-							break;
-						}
-					}
-					if (hasNone) {
-						break;
-					}
-				}
+        for (String s : keyFieldDataTypeIDList) {
+          hasNone = true;
+          for (int j = 0; j < targetTableFieldList.getLength(); j++) {
+            element = (org.w3c.dom.Element) targetTableFieldList.item(j);
+            if (element.getAttribute("DataTypeID").equals(s)) {
+              hasNone = false;
+              break;
+            }
+          }
+          if (hasNone) {
+            break;
+          }
+        }
 				if (hasNone) {
 					statusOfTarget = 2;
 				}
@@ -333,7 +333,7 @@ public class DialogAddRelationshipOnDatamodel extends JDialog {
 		org.w3c.dom.Element lastElement = null;
 		int intFieldID = 0;
 		int lastID = 0;
-		ArrayList<String> keyFieldIDList = new ArrayList<String>();
+		ArrayList<String> keyFieldIDList = new ArrayList<>();
 		//
 		frame_.getCurrentMainTreenode().updateFields();
 		//
@@ -422,12 +422,12 @@ public class DialogAddRelationshipOnDatamodel extends JDialog {
 		newElement.setAttribute("Type", "FK");
 		newElement.setAttribute("SortKey", "010");
 		lastSortKey = 0;
-		for (int k = 0; k < keyFieldIDList.size(); k++) {
-			newElementChild = frame_.getDomDocument().createElement("TableKeyField");
-			newElementChild.setAttribute("FieldID", keyFieldIDList.get(k));
-			newElementChild.setAttribute("SortKey", Modeler.getFormatted4ByteString(lastSortKey + 10));
-			newElement.appendChild(newElementChild);
-		}
+    for (String s : keyFieldIDList) {
+      newElementChild = frame_.getDomDocument().createElement("TableKeyField");
+      newElementChild.setAttribute("FieldID", s);
+      newElementChild.setAttribute("SortKey", Modeler.getFormatted4ByteString(lastSortKey + 10));
+      newElement.appendChild(newElementChild);
+    }
 		targetTableNode_.getElement().appendChild(newElement);
 		newTableKeyNode = frame_.new XeadTreeNode("TableKey", newElement);
 		((XeadTreeNode)targetTableNode_.getChildAt(1)).add(newTableKeyNode);
@@ -463,7 +463,7 @@ public class DialogAddRelationshipOnDatamodel extends JDialog {
 		int lastID = 0;
 		int wrkCnt;
 		boolean eachFieldSpecified;
-		ArrayList<String> keyFieldIDList = new ArrayList<String>();
+		ArrayList<String> keyFieldIDList = new ArrayList<>();
 		NodeList fieldListOnTargetTable = targetTableNode_.getElement().getElementsByTagName("TableField");
 		NodeList keyListOnTargetTable = targetTableNode_.getElement().getElementsByTagName("TableKey");
 		XeadTreeNode availableTableKeyNode = null;
@@ -473,19 +473,19 @@ public class DialogAddRelationshipOnDatamodel extends JDialog {
 		// Search and specify corresponding field //
 		keyFieldIDList.clear();
 		eachFieldSpecified = true;
-		for (int i = 0; i < keyFieldDataTypeIDList.size(); i++) {
-			wrkCnt = 0;
-			for (int j = 0; j < fieldListOnTargetTable.getLength(); j++) {
-				element1 = (org.w3c.dom.Element)fieldListOnTargetTable.item(j);
-				if (element1.getAttribute("DataTypeID").equals(keyFieldDataTypeIDList.get(i))) {
-					wrkCnt++;
-					keyFieldIDList.add(element1.getAttribute("ID"));
-				}
-			}
-			if (wrkCnt != 1) {
-				eachFieldSpecified = false;
-			}
-		}
+    for (String s : keyFieldDataTypeIDList) {
+      wrkCnt = 0;
+      for (int j = 0; j < fieldListOnTargetTable.getLength(); j++) {
+        element1 = (org.w3c.dom.Element) fieldListOnTargetTable.item(j);
+        if (element1.getAttribute("DataTypeID").equals(s)) {
+          wrkCnt++;
+          keyFieldIDList.add(element1.getAttribute("ID"));
+        }
+      }
+      if (wrkCnt != 1) {
+        eachFieldSpecified = false;
+      }
+    }
 		//
 		if (!eachFieldSpecified) {
 			keyFieldIDList.clear();
@@ -598,44 +598,43 @@ public class DialogAddRelationshipOnDatamodel extends JDialog {
 				newElement.setAttribute("Type", "FK");
 				newElement.setAttribute("SortKey", "010");
 				lastSortKey = 0;
-				for (int k = 0; k < keyFieldIDList.size(); k++) {
-					newElementChild = frame_.getDomDocument().createElement("TableKeyField");
-					newElementChild.setAttribute("FieldID", keyFieldIDList.get(k));
-					newElementChild.setAttribute("SortKey", Modeler.getFormatted4ByteString(lastSortKey + 10));
-					newElement.appendChild(newElementChild);
-				}
+        for (String s : keyFieldIDList) {
+          newElementChild = frame_.getDomDocument().createElement("TableKeyField");
+          newElementChild.setAttribute("FieldID", s);
+          newElementChild.setAttribute("SortKey",
+              Modeler.getFormatted4ByteString(lastSortKey + 10));
+          newElement.appendChild(newElementChild);
+        }
 				targetTableNode_.getElement().appendChild(newElement);
 				availableTableKeyNode = frame_.new XeadTreeNode("TableKey", newElement);
 				((XeadTreeNode)targetTableNode_.getChildAt(1)).add(availableTableKeyNode);
 				frame_.getXeadUndoManager().addLogOfAdd(availableTableKeyNode);
 			}
 			//
-			if (availableTableKeyNode != null && !relationshipType.equals("")) {
-				//
-				// Add a relationship //
-				frame_.getXeadUndoManager().saveNodeBeforeModified(availableTableKeyNode);
-				newElement = frame_.getDomDocument().createElement("Relationship");
-				newElement.setAttribute("ID", Integer.toString(frame_.incrementLastIDOfRelationship()));
-				newElement.setAttribute("Table1ID", sourceTableNode_.getElement().getAttribute("ID"));
-				newElement.setAttribute("TableKey1ID", sourceKeyElement_.getAttribute("ID"));
-				newElement.setAttribute("Table2ID", targetTableNode_.getElement().getAttribute("ID"));
-				newElement.setAttribute("TableKey2ID", availableTableKeyNode.getElement().getAttribute("ID"));
-				newElement.setAttribute("Type", relationshipType);
-				newElement.setAttribute("ExistWhen1", "");
-				newElement.setAttribute("ExistWhen2", "");
-				frame_.getSystemElement().appendChild(newElement);
-				frame_.getXeadUndoManager().addLogAfterModified(availableTableKeyNode);
-				//
-				// Add Relationship attributes to each Subsystem if necessary//
-				NodeList subsystemNodeList = frame_.getDomDocument().getElementsByTagName("Subsystem");
-				for (int i = 0; i < subsystemNodeList.getLength(); i++) {
-					//sourceTableNode_.createSubsystemAttributesForRelationship(newElement, (org.w3c.dom.Element)subsystemNodeList.item(i));
-					frame_.createSubsystemAttributesForRelationship(newElement, (org.w3c.dom.Element)subsystemNodeList.item(i));
-				}
-				//
-				frame_.getXeadUndoManager().saveNodeBeforeModified(frame_.getCurrentMainTreenode());
-			}
-		} else {
+      //
+      // Add a relationship //
+      frame_.getXeadUndoManager().saveNodeBeforeModified(availableTableKeyNode);
+      newElement = frame_.getDomDocument().createElement("Relationship");
+      newElement.setAttribute("ID", Integer.toString(frame_.incrementLastIDOfRelationship()));
+      newElement.setAttribute("Table1ID", sourceTableNode_.getElement().getAttribute("ID"));
+      newElement.setAttribute("TableKey1ID", sourceKeyElement_.getAttribute("ID"));
+      newElement.setAttribute("Table2ID", targetTableNode_.getElement().getAttribute("ID"));
+      newElement.setAttribute("TableKey2ID", availableTableKeyNode.getElement().getAttribute("ID"));
+      newElement.setAttribute("Type", relationshipType);
+      newElement.setAttribute("ExistWhen1", "");
+      newElement.setAttribute("ExistWhen2", "");
+      frame_.getSystemElement().appendChild(newElement);
+      frame_.getXeadUndoManager().addLogAfterModified(availableTableKeyNode);
+      //
+      // Add Relationship attributes to each Subsystem if necessary//
+      NodeList subsystemNodeList = frame_.getDomDocument().getElementsByTagName("Subsystem");
+      for (int i = 0; i < subsystemNodeList.getLength(); i++) {
+        //sourceTableNode_.createSubsystemAttributesForRelationship(newElement, (org.w3c.dom.Element)subsystemNodeList.item(i));
+        frame_.createSubsystemAttributesForRelationship(newElement, (org.w3c.dom.Element)subsystemNodeList.item(i));
+      }
+      //
+      frame_.getXeadUndoManager().saveNodeBeforeModified(frame_.getCurrentMainTreenode());
+    } else {
 			JOptionPane.showMessageDialog(this, res.getString("DialogAddRelationshipOnDatamodel9"));
 		}
 	}

@@ -330,7 +330,7 @@ public class DialogImportSQL extends JDialog {
 		elementList = frame_.domDocument.getElementsByTagName("Subsystem");
 		for (int i = 0; i < elementList.getLength(); i++) {
 			node = new XeadNode("Subsystem",(org.w3c.dom.Element)elementList.item(i));
-			comboBoxModelSubsystem.addElement((Object)node);
+			comboBoxModelSubsystem.addElement(node);
 		}
 		comboBoxModelSubsystem.sortElements();
 		comboBoxModelSubsystem.insertElementAt(res.getString("DialogImportSQL07"), 0);
@@ -355,7 +355,7 @@ public class DialogImportSQL extends JDialog {
 		XeadNode workNode;
 		org.w3c.dom.Element workElement;
 		NodeList elementList;
-		StringBuffer buffer = new StringBuffer();
+		StringBuilder buffer = new StringBuilder();
 		String wrkStr = "";
 
 		numberOfTablesCreated = 0;
@@ -422,7 +422,7 @@ public class DialogImportSQL extends JDialog {
 					buffer.append(line);
 				}
 				br.close();
-			} catch (IOException ex) {}
+			} catch (IOException ignored) {}
 			String statements = buffer.toString().toUpperCase();
 
 			if (jCheckBoxShowControl.isSelected()) {
@@ -591,7 +591,7 @@ public class DialogImportSQL extends JDialog {
 		tableAttributes = tableAttributes.replaceAll(",", " ,");
 		int posStartFrom = 0;
 		for (int pos = 0; pos < tableAttributes.length(); pos++) {
-			if (tableAttributes.substring(pos, pos+1).equals(",") || pos+1 == tableAttributes.length()) {
+			if (tableAttributes.charAt(pos) == ',' || pos+1 == tableAttributes.length()) {
 				if (bracketOpen == bracketClose || pos+1 == tableAttributes.length()) {
 					itemsOfArray++;
 					fieldArray[itemsOfArray] = tableAttributes.substring(posStartFrom, pos);
@@ -600,10 +600,10 @@ public class DialogImportSQL extends JDialog {
 					bracketClose = 0;
 				}
 			}
-			if (tableAttributes.substring(pos, pos+1).equals("(")) {
+			if (tableAttributes.charAt(pos) == '(') {
 				bracketOpen++;
 			}
-			if (tableAttributes.substring(pos, pos+1).equals(")")) {
+			if (tableAttributes.charAt(pos) == ')') {
 				bracketClose++;
 			}
 		}
@@ -614,7 +614,7 @@ public class DialogImportSQL extends JDialog {
 		int sortKey = 0;
 		for (i = 0; i <= itemsOfArray; i++) {
 			for (j = 0; j < sqlDataTypeArray.length; j++) {
-				if (fieldArray[i].indexOf(sqlDataTypeArray[j], 0) > 0) {
+				if (fieldArray[i].indexOf(sqlDataTypeArray[j]) > 0) {
 					sortKey++;
 					createFieldDefinition(tableElement, sortKey, fieldArray[i]);
 					break;
@@ -627,7 +627,7 @@ public class DialogImportSQL extends JDialog {
 		////////////////////////////
 		if (primaryKeyFieldID.equals("")) {
 			for (i = 0; i <= itemsOfArray; i++) {
-				if (fieldArray[i].indexOf("PRIMARY KEY", 0) >= 0) {
+				if (fieldArray[i].contains("PRIMARY KEY")) {
 					setKeyFieldOfTheKey(primaryKeyElement, tableElement, fieldArray[i]);
 					break;
 				}
@@ -643,7 +643,7 @@ public class DialogImportSQL extends JDialog {
 		//Create SK and FK //
 		/////////////////////
 		for (i = 0; i <= itemsOfArray; i++) {
-			if (fieldArray[i].indexOf("UNIQUE", 0) >= 0 && fieldArray[i].indexOf("PRIMARY KEY", 0) == -1) {
+			if (fieldArray[i].contains("UNIQUE") && !fieldArray[i].contains("PRIMARY KEY")) {
 				createSecondaryKeyDefinition(tableElement, fieldArray[i]);
 			}
 		}
@@ -669,7 +669,7 @@ public class DialogImportSQL extends JDialog {
 		////////////////
 		//Get NOT NULL//
 		////////////////
-		if (fieldAttrString.indexOf("NOT NULL", 0) > 0) {
+		if (fieldAttrString.indexOf("NOT NULL") > 0) {
 			notNullValue = "true";
 		}
 
@@ -679,14 +679,14 @@ public class DialogImportSQL extends JDialog {
 		defaultValue = "";
 		int posStart = 0;
 		int posEnd = 0;
-		int i = fieldAttrString.indexOf(" DEFAULT ", 0);
+		int i = fieldAttrString.indexOf(" DEFAULT ");
 		if (i > 0) {
 			for (int j=i+8; j < fieldAttrString.length(); j++) {
-				if (posStart == 0 && !fieldAttrString.substring(j,j+1).equals(" ")) {
+				if (posStart == 0 && fieldAttrString.charAt(j) != ' ') {
 					posStart = j;
 				}
 				posEnd = j;
-				if (posStart > 0 && (fieldAttrString.substring(j,j+1).equals(" ") || fieldAttrString.substring(j,j+1).equals(","))) {
+				if (posStart > 0 && (fieldAttrString.charAt(j) == ' ' || fieldAttrString.charAt(j) == ',')) {
 					break;
 				}
 			}
@@ -701,14 +701,14 @@ public class DialogImportSQL extends JDialog {
 		commentValue = "";
 		posStart = 0;
 		posEnd = 0;
-		i = fieldAttrString.indexOf(" COMMENT ", 0);
+		i = fieldAttrString.indexOf(" COMMENT ");
 		if (i > 0) {
 			for (int j=i+9; j < fieldAttrString.length(); j++) {
-				if (posStart == 0 && !fieldAttrString.substring(j,j+1).equals("'")) {
+				if (posStart == 0 && fieldAttrString.charAt(j) != '\'') {
 					posStart = j;
 				}
 				posEnd = j;
-				if (posStart > 0 && fieldAttrString.substring(j,j+1).equals("'")) {
+				if (posStart > 0 && fieldAttrString.charAt(j) == '\'') {
 					break;
 				}
 			}
@@ -756,7 +756,7 @@ public class DialogImportSQL extends JDialog {
 		fieldElement.setAttribute("Default", defaultValue);
 		tableElement.appendChild(fieldElement);
 
-		if (fieldAttrString.indexOf("PRIMARY KEY", 0) > 0) {
+		if (fieldAttrString.indexOf("PRIMARY KEY") > 0) {
 			primaryKeyFieldID = fieldElement.getAttribute("ID");
 		}
 	}
@@ -781,101 +781,105 @@ public class DialogImportSQL extends JDialog {
 		String dataTypeID = defaultDataTypeID;
 
 		if (jCheckBoxDataTypeControl.isSelected()) {
-			for (int i = 0; i < sqlDataTypeArray.length; i++) {
-				j = fieldAttrString.indexOf(sqlDataTypeArray[i], 0);
-				if (j >= 0) {
-					//Get start position of value//
-					validPosFrom = j+1;
-					//Get end position of value//
-					validPosThru = j+1;
-					for (int k = j+1; k < fieldAttrString.length(); k++) {
-						wrkStr = fieldAttrString.substring(k, k+1);
-						if (wrkStr.equals(" ")) {
-							wrkStr = fieldAttrString.substring(k-1, k);
-							if (!wrkStr.equals(",")) {
-								validPosThru = k;
-								break;
-							}
-						}
-						if (wrkStr.equals(")")) {
-							validPosThru = k+1;
-							break;
-						}
-						validPosThru = k;
-					}
-					//
-					if (validPosFrom < validPosThru) {
-						sqlExpression = fieldAttrString.substring(validPosFrom, validPosThru).replaceAll(" ", "");
-						elementList = frame_.domDocument.getElementsByTagName("DataType");
-						checkCounter = 0;
-						for (int k = 0; k < elementList.getLength(); k++) {
-							workElement = (org.w3c.dom.Element)elementList.item(k);
-							if (workElement.getAttribute("SortKey").equals(sqlExpression)) {
-								dataTypeID = workElement.getAttribute("ID");
-								checkCounter++;
-								break;
-							}
-						}
-						if (checkCounter == 0) {
-							//Setup length and decimal//
-							length = "5";
-							decimal = "0";
-							typeName = sqlExpression;
-							m = sqlExpression.indexOf("(", 0);
-							if (m >= 0) {
-								n = sqlExpression.indexOf(")", 0);
-								if (n >= 0) {
-									typeName = sqlExpression.substring(0, m);
-									lengthAndDecimal = sqlExpression.substring(m+1, n);
-									StringTokenizer workTokenizer = new StringTokenizer(lengthAndDecimal, "," );
-									length = workTokenizer.nextToken();
-									if (workTokenizer.countTokens() > 0) {
-										decimal = workTokenizer.nextToken();
-									}
-								}
-							}
+      for (String s : sqlDataTypeArray) {
+        j = fieldAttrString.indexOf(s);
+        if (j >= 0) {
+          //Get start position of value//
+          validPosFrom = j + 1;
+          //Get end position of value//
+          validPosThru = j + 1;
+          for (int k = j + 1; k < fieldAttrString.length(); k++) {
+            wrkStr = fieldAttrString.substring(k, k + 1);
+            if (wrkStr.equals(" ")) {
+              wrkStr = fieldAttrString.substring(k - 1, k);
+              if (!wrkStr.equals(",")) {
+                validPosThru = k;
+                break;
+              }
+            }
+            if (wrkStr.equals(")")) {
+              validPosThru = k + 1;
+              break;
+            }
+            validPosThru = k;
+          }
+          //
+          if (validPosFrom < validPosThru) {
+            sqlExpression = fieldAttrString.substring(validPosFrom, validPosThru)
+                .replaceAll(" ", "");
+            elementList = frame_.domDocument.getElementsByTagName("DataType");
+            checkCounter = 0;
+            for (int k = 0; k < elementList.getLength(); k++) {
+              workElement = (Element) elementList.item(k);
+              if (workElement.getAttribute("SortKey").equals(sqlExpression)) {
+                dataTypeID = workElement.getAttribute("ID");
+                checkCounter++;
+                break;
+              }
+            }
+            if (checkCounter == 0) {
+              //Setup length and decimal//
+              length = "5";
+              decimal = "0";
+              typeName = sqlExpression;
+              m = sqlExpression.indexOf("(");
+              if (m >= 0) {
+                n = sqlExpression.indexOf(")");
+                if (n >= 0) {
+                  typeName = sqlExpression.substring(0, m);
+                  lengthAndDecimal = sqlExpression.substring(m + 1, n);
+                  StringTokenizer workTokenizer = new StringTokenizer(lengthAndDecimal, ",");
+                  length = workTokenizer.nextToken();
+                  if (workTokenizer.countTokens() > 0) {
+                    decimal = workTokenizer.nextToken();
+                  }
+                }
+              }
 
-							org.w3c.dom.Element newElement = frame_.domDocument.createElement("DataType");
-							lastElement = getLastDomElementOfTheType("DataType");
-							if (lastElement == null) {
-								lastID = 0;
-							} else {
-								lastID = Integer.parseInt(lastElement.getAttribute("ID"));
-							}
-							newElement.setAttribute("ID", Integer.toString(lastID + 1));
-							newElement.setAttribute("Name", typeName);
-							newElement.setAttribute("BasicType", getBasicTypeFromTypeName(typeName));
-							newElement.setAttribute("SortKey", sqlExpression);
-							newElement.setAttribute("Length", length);
-							newElement.setAttribute("Decimal", decimal);
-							if (newElement.getAttribute("BasicType").equals("Date")) {
-								newElement.setAttribute("Length", "8");
-								if (newElement.getAttribute("Name").equals("TIME") || newElement.getAttribute("Name").equals("time")) {
-									newElement.setAttribute("Length", "6");
-								}
-								if (newElement.getAttribute("Name").equals("DATETIME") || newElement.getAttribute("Name").equals("datetime")) {
-									newElement.setAttribute("Length", "12");
-								}
-								if (newElement.getAttribute("Name").equals("TIMESTAMP") || newElement.getAttribute("Name").equals("timestamp")) {
-									newElement.setAttribute("Length", "14");
-								}
-							}
-							if (newElement.getAttribute("BasicType").equals("Boolean")) {
-								newElement.setAttribute("Length", "1");
-							}
-							if (newElement.getAttribute("BasicType").equals("Object")) {
-								newElement.setAttribute("Length", "256");
-							}
-							newElement.setAttribute("SQLExpression", sqlExpression);
-							nextSiblingNode = lastElement.getNextSibling();
-							systemElement.insertBefore(newElement, nextSiblingNode);
-							dataTypeID = newElement.getAttribute("ID");
-						}
-					}
+              Element newElement = frame_.domDocument.createElement("DataType");
+              lastElement = getLastDomElementOfTheType("DataType");
+              if (lastElement == null) {
+                lastID = 0;
+              } else {
+                lastID = Integer.parseInt(lastElement.getAttribute("ID"));
+              }
+              newElement.setAttribute("ID", Integer.toString(lastID + 1));
+              newElement.setAttribute("Name", typeName);
+              newElement.setAttribute("BasicType", getBasicTypeFromTypeName(typeName));
+              newElement.setAttribute("SortKey", sqlExpression);
+              newElement.setAttribute("Length", length);
+              newElement.setAttribute("Decimal", decimal);
+              if (newElement.getAttribute("BasicType").equals("Date")) {
+                newElement.setAttribute("Length", "8");
+                if (newElement.getAttribute("Name").equals("TIME") || newElement.getAttribute(
+                    "Name").equals("time")) {
+                  newElement.setAttribute("Length", "6");
+                }
+                if (newElement.getAttribute("Name").equals("DATETIME") || newElement.getAttribute(
+                    "Name").equals("datetime")) {
+                  newElement.setAttribute("Length", "12");
+                }
+                if (newElement.getAttribute("Name").equals("TIMESTAMP") || newElement.getAttribute(
+                    "Name").equals("timestamp")) {
+                  newElement.setAttribute("Length", "14");
+                }
+              }
+              if (newElement.getAttribute("BasicType").equals("Boolean")) {
+                newElement.setAttribute("Length", "1");
+              }
+              if (newElement.getAttribute("BasicType").equals("Object")) {
+                newElement.setAttribute("Length", "256");
+              }
+              newElement.setAttribute("SQLExpression", sqlExpression);
+              nextSiblingNode = lastElement.getNextSibling();
+              systemElement.insertBefore(newElement, nextSiblingNode);
+              dataTypeID = newElement.getAttribute("ID");
+            }
+          }
 
-					break;
-				}
-			}
+          break;
+        }
+      }
 		}
 
 		return dataTypeID;
@@ -884,8 +888,8 @@ public class DialogImportSQL extends JDialog {
 	String getBasicTypeFromTypeName(String typeName) {
 		String basicType = "String";
 		for (int j = 0; j < sqlDataTypeArray2.length; j++) {
-			if (typeName.indexOf(sqlDataTypeArray2[j], 0) >= 0) {
-				if (j >= 0 &&  j <= 15) {basicType = "SignedNumber";}
+			if (typeName.contains(sqlDataTypeArray2[j])) {
+				if (j <= 15) {basicType = "SignedNumber";}
 				if (j >= 20 &&  j <= 23) {basicType = "Date";}
 				if (j >= 24 &&  j <= 25) {basicType = "Object";}
 				if (j >= 30 &&  j <= 33) {basicType = "Boolean";}
@@ -907,11 +911,11 @@ public class DialogImportSQL extends JDialog {
 	void setKeyFieldOfTheKey(org.w3c.dom.Element keyElement, org.w3c.dom.Element tableElement, String fieldNames) {
 		org.w3c.dom.Element element;
 
-		int i = fieldNames.indexOf("(", 0);
+		int i = fieldNames.indexOf("(");
 		if (i >= 0) {
 			int j = fieldNames.indexOf(")", i);
 			if (j < 0) {
-				fieldNames = fieldNames.substring(i+1, fieldNames.length());
+				fieldNames = fieldNames.substring(i+1);
 			} else {
 				fieldNames = fieldNames.substring(i+1, j);
 			}
@@ -943,7 +947,7 @@ public class DialogImportSQL extends JDialog {
 		String[] fieldArray = new String[1000];
 		int lastID = 0;
 		String wrkStr1 = "";
-		String wrkStr2 = "";
+		StringBuilder wrkStr2 = new StringBuilder();
 
 		///////////////////////////////////
 		//Substring attributes into array//
@@ -956,7 +960,7 @@ public class DialogImportSQL extends JDialog {
 		while (j >= 0) {
 			j = tableAttributes.indexOf(",", i);
 			if (j >= 0) {
-				wrkStr2 = wrkStr2 + tableAttributes.substring(i, j+1);
+				wrkStr2.append(tableAttributes.substring(i, j + 1));
 				//
 				bracketOpen = 0;
 				bracketClose = 0;
@@ -971,13 +975,13 @@ public class DialogImportSQL extends JDialog {
 				}
 				if (bracketOpen == bracketClose) {
 					itemsOfArray++;
-					fieldArray[itemsOfArray] = wrkStr2;
-					wrkStr2 = "";
+					fieldArray[itemsOfArray] = wrkStr2.toString();
+					wrkStr2 = new StringBuilder();
 				}
 				i = j+1;
 			} else {
 				itemsOfArray++;
-				fieldArray[itemsOfArray] = wrkStr2 + tableAttributes.substring(i, tableAttributes.length());
+				fieldArray[itemsOfArray] = wrkStr2 + tableAttributes.substring(i);
 			}
 		}
 
@@ -1002,7 +1006,7 @@ public class DialogImportSQL extends JDialog {
 
 		for (i = 0; i <= itemsOfArray; i++) {
 			try {
-				pos1 = fieldArray[i].indexOf("FOREIGN KEY", 0);
+				pos1 = fieldArray[i].indexOf("FOREIGN KEY");
 				pos2 = fieldArray[i].indexOf("(", pos1 + 10);
 				pos3 = fieldArray[i].indexOf(")", pos2 + 1);
 				pos4 = fieldArray[i].indexOf("REFERENCES", pos3 + 1);
@@ -1085,7 +1089,7 @@ public class DialogImportSQL extends JDialog {
 					}
 				}
 			}
-			catch (Exception ex) {
+			catch (Exception ignored) {
 			}
 		}
 	}
@@ -1100,7 +1104,7 @@ public class DialogImportSQL extends JDialog {
 		//////////////////////////
 		//trim brackets of string//
 		//////////////////////////
-		int i = fieldNames.indexOf("(", 0);
+		int i = fieldNames.indexOf("(");
 		if (i >= 0) {
 			int j = fieldNames.indexOf(")", i);
 			fieldNames = fieldNames.substring(i+1, j);
@@ -1174,7 +1178,7 @@ public class DialogImportSQL extends JDialog {
 		///////////////////////////////////
 		//trim brackets of fieldAttrString//
 		///////////////////////////////////
-		int i = fieldNames.indexOf("(", 0);
+		int i = fieldNames.indexOf("(");
 		if (i >= 0) {
 			int j = fieldNames.indexOf(")", i);
 			fieldNames = fieldNames.substring(i+1, j);
@@ -1251,7 +1255,7 @@ public class DialogImportSQL extends JDialog {
 			if (!wrkStr.equals(" ") && namePosFrom == -1) {
 				namePosFrom = i;
 			}
-			if (wrkStr.equals(" ") && namePosFrom != -1 && namePosThru == -1) {
+			if (wrkStr.equals(" ") && namePosFrom != -1) {
 				namePosThru = i;
 				break;
 			}
@@ -1367,16 +1371,15 @@ public class DialogImportSQL extends JDialog {
 //				node = (XeadNode)it.next();
 //				this.addElement(node);
 //			}
-			ArrayList<XeadNode> list = new ArrayList<XeadNode>();
+			ArrayList<XeadNode> list = new ArrayList<>();
 			for (int i = 0; i < this.getSize(); i++) {
 				list.add((XeadNode)this.getElementAt(i));
 			}
 			this.removeAllElements();
 			Collections.sort(list);
-			Iterator<XeadNode> it = list.iterator();
-			while(it.hasNext()){
-				this.addElement(it.next());
-			}
+      for (XeadNode xeadNode : list) {
+        this.addElement(xeadNode);
+      }
 		}
 	}
 

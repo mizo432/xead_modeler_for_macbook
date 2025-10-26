@@ -225,7 +225,7 @@ public class DialogDocuments extends JDialog {
 		subsystemList = frame_.domDocument.getElementsByTagName("Subsystem");
 		for (int i = 0; i < subsystemList.getLength(); i++) {
 			node = new XeadNode("Subsystem",(org.w3c.dom.Element)subsystemList.item(i));
-			comboBoxModelSubsystems.addElement((Object)node);
+			comboBoxModelSubsystems.addElement(node);
 		}
 		comboBoxModelSubsystems.sortElements();
 		comboBoxModelSubsystems.insertElementAt(res.getString("DialogDocuments10"), 0);
@@ -321,7 +321,7 @@ public class DialogDocuments extends JDialog {
 
 				if (jRadioButtonTable.isSelected()) {
 					for (int m = 0; m < countOfDefinitions; m++) {
-						workElement = (org.w3c.dom.Element)definitionArray[m].getElement();
+						workElement = definitionArray[m].getElement();
 						if (workElement.getAttribute("SubsystemID").equals(subsystemID)) {
 							if (workElement.getAttribute("ID").equals(tableID) || tableID.equals("")) {
 								jProgressBar.setValue(jProgressBar.getValue() + 1);
@@ -335,7 +335,7 @@ public class DialogDocuments extends JDialog {
 
 				if (jRadioButtonFunction.isSelected()) {
 					for (int m = 0; m < countOfDefinitions; m++) {
-						workElement = (org.w3c.dom.Element)definitionArray[m].getElement();
+						workElement = definitionArray[m].getElement();
 						if (workElement.getAttribute("SubsystemID").equals(subsystemID)) {
 							if (workElement.getAttribute("ID").equals(functionID) || functionID.equals("")) {
 								jProgressBar.setValue(jProgressBar.getValue() + 1);
@@ -362,7 +362,7 @@ public class DialogDocuments extends JDialog {
 				try {
 					setCursor(new Cursor(Cursor.WAIT_CURSOR));
 					frame_.desktop.open(workXlsFile);
-				} catch (Exception ex) {
+				} catch (Exception ignored) {
 				} finally {
 					setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
 				}
@@ -899,7 +899,7 @@ public class DialogDocuments extends JDialog {
 		for (int i = 0; i <= countOfElementArray1; i++) {
 			currentRowNumber++;
 			XSSFRow nextRow = sheet.createRow(currentRowNumber);
-			workElement1 = (org.w3c.dom.Element)elementArray1[i].getElement();
+			workElement1 = elementArray1[i].getElement();
 			rowSequence++;
 			XSSFCell cellA = nextRow.createCell(0);
 			cellA.setCellStyle(styleValueNumber);
@@ -1406,7 +1406,7 @@ public class DialogDocuments extends JDialog {
 		int end = 0;
 
 		for (int i = 0; i <= countOfElementArray1; i++) {
-			workElement1 = (org.w3c.dom.Element)elementArray1[i].getElement();
+			workElement1 = elementArray1[i].getElement();
 			sectionNumber++;
 
 			currentRowNumber++;
@@ -1663,34 +1663,28 @@ public class DialogDocuments extends JDialog {
 					}
 
 					if (imageFile.exists()) {
-						FileInputStream fis = null;
-						try {
-							fis = new FileInputStream(imageFile);
-							byte[] bytes = IOUtils.toByteArray(fis);
-							int pictureIndex = workBook.addPicture(bytes, imageType);
+            try (FileInputStream fis = new FileInputStream(imageFile)) {
+              try {
+                byte[] bytes = IOUtils.toByteArray(fis);
+                int pictureIndex = workBook.addPicture(bytes, imageType);
 
-							CreationHelper helper = workBook.getCreationHelper();
-							Drawing drawing = sheet.createDrawingPatriarch();
-							ClientAnchor anchor = helper.createClientAnchor();
-							anchor.setCol1((short)0);
-							anchor.setRow1(cellA6.getRowIndex());
-							anchor.setCol2((short)9);
-							anchor.setRow2(cellA6.getRowIndex()+1);
-							anchor.setDx1(0);
-							anchor.setDy1(0);
-							anchor.setDx2(0);
-							anchor.setDy2(0);
-							drawing.createPicture(anchor, pictureIndex);
-						} catch(Exception ex) {
-							ex.printStackTrace();
-						} finally {
-							try {
-								if (fis != null) {
-									fis.close();
-								}
-							} catch (IOException ex1) {
-							}
-						}
+                CreationHelper helper = workBook.getCreationHelper();
+                Drawing drawing = sheet.createDrawingPatriarch();
+                ClientAnchor anchor = helper.createClientAnchor();
+                anchor.setCol1((short) 0);
+                anchor.setRow1(cellA6.getRowIndex());
+                anchor.setCol2((short) 9);
+                anchor.setRow2(cellA6.getRowIndex() + 1);
+                anchor.setDx1(0);
+                anchor.setDy1(0);
+                anchor.setDx2(0);
+                anchor.setDy2(0);
+                drawing.createPicture(anchor, pictureIndex);
+              } catch (Exception ex) {
+                ex.printStackTrace();
+              }
+            } catch (IOException ex1) {
+            }
 					} else {
 						workString1 = substringLinesWithTokenOfEOL(workElement1.
 								getAttribute("ImageText"), "\n");
@@ -1709,10 +1703,10 @@ public class DialogDocuments extends JDialog {
 							end = Integer.parseInt(workTokenizer.nextToken());
 							if (workTokenizer.nextToken().equals("UL")) {
 								for (int k = start; k <= end; k++) {
-									if (workString1.substring(k, k + 1).equals(" ")) {
+									if (workString1.charAt(k) == ' ') {
 										workString2 = workString1.substring(0, k);
-										workString3 = workString1.substring(k + 1,
-												workString1.length());
+										workString3 = workString1.substring(k + 1
+                    );
 										workString1 = workString2 + "." + workString3;
 									}
 								}
@@ -1790,7 +1784,7 @@ public class DialogDocuments extends JDialog {
 						Arrays.sort(elementArray2, 0, countOfElementArray2 + 1);
 					}
 					for (int j = 0; j <= countOfElementArray2; j++) {
-						workElement2 = (org.w3c.dom.Element)elementArray2[j].getElement();
+						workElement2 = elementArray2[j].getElement();
 						currentRowNumber++;
 						XSSFRow rowValue2 = sheet.createRow(currentRowNumber);
 						XSSFCell cellA = rowValue2.createCell(0);
@@ -1903,7 +1897,7 @@ public class DialogDocuments extends JDialog {
 						Arrays.sort(elementArray2, 0, countOfElementArray2 + 1);
 					}
 					for (int j = 0; j <= countOfElementArray2; j++) {
-						workElement2 = (org.w3c.dom.Element)elementArray2[j].getElement();
+						workElement2 = elementArray2[j].getElement();
 						currentRowNumber++;
 						XSSFRow rowValue2 = sheet.createRow(currentRowNumber);
 						XSSFCell cellA = rowValue2.createCell(0);
@@ -2016,7 +2010,7 @@ public class DialogDocuments extends JDialog {
 							Arrays.sort(elementArray2, 0, countOfElementArray2 + 1);
 						}
 						for (int k = 0; k <= countOfElementArray2; k++) {
-							workElement3 = (org.w3c.dom.Element)elementArray2[k].getElement();
+							workElement3 = elementArray2[k].getElement();
 							currentRowNumber++;
 							XSSFRow rowValue2 = sheet.createRow(currentRowNumber);
 							XSSFCell cellA = rowValue2.createCell(0);
@@ -2346,7 +2340,7 @@ public class DialogDocuments extends JDialog {
 			Arrays.sort(elementArray1, 0, countOfElementArray1 + 1);
 		}
 		for (int i = 0; i <= countOfElementArray1; i++) {
-			workElement1 = (org.w3c.dom.Element)elementArray1[i].getElement();
+			workElement1 = elementArray1[i].getElement();
 			currentRowNumber++;
 			XSSFRow nextRow = sheet.createRow(currentRowNumber);
 			XSSFCell cellA = nextRow.createCell(0);
@@ -2472,7 +2466,7 @@ public class DialogDocuments extends JDialog {
 		org.w3c.dom.Element workElement1 = null;
 		org.w3c.dom.Element workElement2 = null;
 		org.w3c.dom.Element workElement3 = null;
-		String workString1 = "";
+		StringBuilder workString1 = new StringBuilder();
 		int rowSequence = 0;
 		XeadNode node = null;
 
@@ -2540,18 +2534,18 @@ public class DialogDocuments extends JDialog {
 			XSSFCell cellB = nextRow.createCell(1);
 			cellB.setCellStyle(styleValue);
 			if (workElement1.getAttribute("Type").equals("PK")) {
-				workString1 = res.getString("DialogDocuments63");
+				workString1 = new StringBuilder(res.getString("DialogDocuments63"));
 			}
 			if (workElement1.getAttribute("Type").equals("FK")) {
-				workString1 = res.getString("DialogDocuments64");
+				workString1 = new StringBuilder(res.getString("DialogDocuments64"));
 			}
 			if (workElement1.getAttribute("Type").equals("SK")) {
-				workString1 = res.getString("DialogDocuments65");
+				workString1 = new StringBuilder(res.getString("DialogDocuments65"));
 			}
 			if (workElement1.getAttribute("Type").equals("XK")) {
-				workString1 = res.getString("DialogDocuments74");
+				workString1 = new StringBuilder(res.getString("DialogDocuments74"));
 			}
-			cellB.setCellValue(new XSSFRichTextString(workString1));
+			cellB.setCellValue(new XSSFRichTextString(workString1.toString()));
 			XSSFCell cellC = nextRow.createCell(2);
 			cellC.setCellStyle(styleValue);
 			XSSFCell cellD = nextRow.createCell(3);
@@ -2566,7 +2560,7 @@ public class DialogDocuments extends JDialog {
 			cellH.setCellStyle(styleValue);
 			XSSFCell cellI = nextRow.createCell(8);
 			cellI.setCellStyle(styleValue);
-			workString1 = "";
+			workString1 = new StringBuilder();
 			countOfElementArray1 = -1;
 			workList2 = workElement1.getElementsByTagName("TableKeyField");
 			for (int j = 0; j < workList2.getLength(); j++) {
@@ -2578,30 +2572,30 @@ public class DialogDocuments extends JDialog {
 				Arrays.sort(elementArray1, 0, countOfElementArray1 + 1);
 			}
 			for (int j = 0; j <= countOfElementArray1; j++) {
-				workElement2 = (org.w3c.dom.Element)elementArray1[j].getElement();
+				workElement2 = elementArray1[j].getElement();
 				for (int k = 0; k < fieldList.getLength(); k++) {
 					workElement3 = (org.w3c.dom.Element)fieldList.item(k);
 					if (workElement2.getAttribute("FieldID").equals(workElement3.getAttribute("ID"))) {
-						if (workString1.equals("")) {
-							workString1 = workElement3.getAttribute("Name");
+						if (workString1.toString().equals("")) {
+							workString1 = new StringBuilder(workElement3.getAttribute("Name"));
 						} else {
 							if (workElement1.getAttribute("Type").equals("XK")) {
-								workString1 = workString1 + " > " + workElement3.getAttribute("Name");
+								workString1.append(" > ").append(workElement3.getAttribute("Name"));
 								if (workElement2.getAttribute("AscDesc").equals("D")) {
-									workString1 = workString1 + "(D)";
+									workString1.append("(D)");
 								}
 							} else {
-								workString1 = workString1 + " + " + workElement3.getAttribute("Name");
+								workString1.append(" + ").append(workElement3.getAttribute("Name"));
 							}
 						}
 						break;
 					}
 				}
 			}
-			if (workString1.equals("")) {
-				workString1 = "*None";
+			if (workString1.toString().equals("")) {
+				workString1 = new StringBuilder("*None");
 			}
-			cellC.setCellValue(new XSSFRichTextString(workString1));
+			cellC.setCellValue(new XSSFRichTextString(workString1.toString()));
 			sheet.addMergedRegion(new CellRangeAddress(currentRowNumber, currentRowNumber, 2, 8));
 		}
 	}
@@ -2681,7 +2675,7 @@ public class DialogDocuments extends JDialog {
 			Arrays.sort(elementArray1, 0, countOfElementArray1 + 1);
 		}
 		for (int i = 0; i <= countOfElementArray1; i++) {
-			workElement1 = (org.w3c.dom.Element)elementArray1[i].getElement();
+			workElement1 = elementArray1[i].getElement();
 			workList1 = workElement1.getElementsByTagName("IOTable");
 			for (int j = 0; j < workList1.getLength(); j++) {
 				workElement2 = (org.w3c.dom.Element)workList1.item(j);
@@ -2777,7 +2771,7 @@ public class DialogDocuments extends JDialog {
 		org.w3c.dom.Element workElement4 = null;
 		org.w3c.dom.Element workElement5 = null;
 		org.w3c.dom.Element relationshipTableElement = null;
-		String workString = "";
+		StringBuilder workString = new StringBuilder();
 		String relationshipKeyID = "";
 		int rowSequence = 0;
 		int sectionNumber = 0;
@@ -2855,15 +2849,15 @@ public class DialogDocuments extends JDialog {
 				XSSFCell cellB2 = next2.createCell(1);
 				cellB2.setCellStyle(styleValue);
 				if (workElement1.getAttribute("Type").equals("PK")) {
-					workString = res.getString("DialogDocuments63");
+					workString = new StringBuilder(res.getString("DialogDocuments63"));
 				}
 				if (workElement1.getAttribute("Type").equals("FK")) {
-					workString = res.getString("DialogDocuments64");
+					workString = new StringBuilder(res.getString("DialogDocuments64"));
 				}
 				if (workElement1.getAttribute("Type").equals("SK")) {
-					workString = res.getString("DialogDocuments65");
+					workString = new StringBuilder(res.getString("DialogDocuments65"));
 				}
-				cellA2.setCellValue(new XSSFRichTextString(workString));
+				cellA2.setCellValue(new XSSFRichTextString(workString.toString()));
 				sheet.addMergedRegion(new CellRangeAddress(currentRowNumber, currentRowNumber, 0, 1));
 				XSSFCell cellC2 = next2.createCell(2);
 				cellC2.setCellStyle(styleValue);
@@ -2879,7 +2873,7 @@ public class DialogDocuments extends JDialog {
 				cellH2.setCellStyle(styleValue);
 				XSSFCell cellI2 = next2.createCell(8);
 				cellI2.setCellStyle(styleValue);
-				workString = "";
+				workString = new StringBuilder();
 				countOfElementArray1 = -1;
 				workList2 = workElement1.getElementsByTagName("TableKeyField");
 				for (int j = 0; j < workList2.getLength(); j++) {
@@ -2891,23 +2885,23 @@ public class DialogDocuments extends JDialog {
 					Arrays.sort(elementArray1, 0, countOfElementArray1 + 1);
 				}
 				for (int j = 0; j <= countOfElementArray1; j++) {
-					workElement2 = (org.w3c.dom.Element)elementArray1[j].getElement();
+					workElement2 = elementArray1[j].getElement();
 					for (int k = 0; k < fieldList1.getLength(); k++) {
 						workElement3 = (org.w3c.dom.Element)fieldList1.item(k);
 						if (workElement2.getAttribute("FieldID").equals(workElement3.getAttribute("ID"))) {
-							if (workString.equals("")) {
-								workString = workElement3.getAttribute("Name");
+							if (workString.toString().equals("")) {
+								workString = new StringBuilder(workElement3.getAttribute("Name"));
 							} else {
-								workString = workString + " + " + workElement3.getAttribute("Name");
+								workString.append(" + ").append(workElement3.getAttribute("Name"));
 							}
 							break;
 						}
 					}
 				}
-				if (workString.equals("")) {
-					workString = "*None";
+				if (workString.toString().equals("")) {
+					workString = new StringBuilder("*None");
 				}
-				cellC2.setCellValue(new XSSFRichTextString(workString));
+				cellC2.setCellValue(new XSSFRichTextString(workString.toString()));
 				sheet.addMergedRegion(new CellRangeAddress(currentRowNumber, currentRowNumber, 2, 8));
 
 				//Header RelationshipList
@@ -2950,42 +2944,46 @@ public class DialogDocuments extends JDialog {
 						cellA.setCellValue(rowSequence);
 						XSSFCell cellB = nextRow.createCell(1);
 						cellB.setCellStyle(styleValue);
-						workString = "";
+						workString = new StringBuilder();
 						if (workElement2.getAttribute("Type").equals("FAMILY")) {
-							workString = res.getString("DialogDocuments71");
+							workString = new StringBuilder(res.getString("DialogDocuments71"));
 						}
 						if (workElement2.getAttribute("Type").equals("REFFER")) {
-							workString = res.getString("DialogDocuments72");
+							workString = new StringBuilder(res.getString("DialogDocuments72"));
 						}
 						if (workElement2.getAttribute("Type").equals("SUBTYPE")) {
-							workString = res.getString("DialogDocuments73");
+							workString = new StringBuilder(res.getString("DialogDocuments73"));
 						}
-						cellB.setCellValue(new XSSFRichTextString(workString));
+						cellB.setCellValue(new XSSFRichTextString(workString.toString()));
 						XSSFCell cellC = nextRow.createCell(2);
 						cellC.setCellStyle(styleValue);
 						XSSFCell cellD = nextRow.createCell(3);
 						cellD.setCellStyle(styleValue);
 						XSSFCell cellE = nextRow.createCell(4);
 						cellE.setCellStyle(styleValue);
-						workString = "";
+						workString = new StringBuilder();
 						for (int m = 0; m < tableList.getLength(); m++) {
 							workElement3 = (org.w3c.dom.Element)tableList.item(m);
 							if (workElement2.getAttribute("Table1ID").equals(element.getAttribute("ID")) && (workElement2.getAttribute("TableKey1ID").equals(workElement1.getAttribute("ID")))) {
 								if (workElement3.getAttribute("ID").equals(workElement2.getAttribute("Table2ID"))) {
-									workString = workElement3.getAttribute("SortKey") + " / " + workElement3.getAttribute("Name");
+									workString = new StringBuilder(
+                      workElement3.getAttribute("SortKey") + " / " + workElement3.getAttribute(
+                          "Name"));
 									relationshipTableElement = workElement3;
 									break;
 								}
 							}
 							if (workElement2.getAttribute("Table2ID").equals(element.getAttribute("ID")) && (workElement2.getAttribute("TableKey2ID").equals(workElement1.getAttribute("ID")))) {
 								if (workElement3.getAttribute("ID").equals(workElement2.getAttribute("Table1ID"))) {
-									workString = workElement3.getAttribute("SortKey") + " / " + workElement3.getAttribute("Name");
+									workString = new StringBuilder(
+                      workElement3.getAttribute("SortKey") + " / " + workElement3.getAttribute(
+                          "Name"));
 									relationshipTableElement = workElement3;
 									break;
 								}
 							}
 						}
-						cellC.setCellValue(new XSSFRichTextString(workString));
+						cellC.setCellValue(new XSSFRichTextString(workString.toString()));
 						sheet.addMergedRegion(new CellRangeAddress(currentRowNumber, currentRowNumber, 2, 4));
 						XSSFCell cellF = nextRow.createCell(5);
 						cellF.setCellStyle(styleValue);
@@ -2995,7 +2993,7 @@ public class DialogDocuments extends JDialog {
 						cellH.setCellStyle(styleValue);
 						XSSFCell cellI = nextRow.createCell(8);
 						cellI.setCellStyle(styleValue);
-						workString = "";
+						workString = new StringBuilder();
 						if (workElement2.getAttribute("Table1ID").equals(element.getAttribute("ID")) && (workElement2.getAttribute("TableKey1ID").equals(workElement1.getAttribute("ID")))) {
 							relationshipKeyID = workElement2.getAttribute("TableKey2ID");
 						}
@@ -3019,14 +3017,16 @@ public class DialogDocuments extends JDialog {
 									Arrays.sort(elementArray1, 0, countOfElementArray1 + 1);
 								}
 								for (int n = 0; n <= countOfElementArray1; n++) {
-									workElement4 = (org.w3c.dom.Element)elementArray1[n].getElement();
+									workElement4 = elementArray1[n].getElement();
 									for (int p = 0; p < fieldList2.getLength(); p++) {
 										workElement5 = (org.w3c.dom.Element)fieldList2.item(p);
 										if (workElement4.getAttribute("FieldID").equals(workElement5.getAttribute("ID"))) {
-											if (workString.equals("")) {
-												workString = "[" + workElement3.getAttribute("Type") + "] " + workElement5.getAttribute("Name");
+											if (workString.toString().equals("")) {
+												workString = new StringBuilder(
+                            "[" + workElement3.getAttribute("Type") + "] "
+                                + workElement5.getAttribute("Name"));
 											} else {
-												workString = workString + " + " + workElement5.getAttribute("Name");
+												workString.append(" + ").append(workElement5.getAttribute("Name"));
 											}
 											break;
 										}
@@ -3035,7 +3035,7 @@ public class DialogDocuments extends JDialog {
 								break;
 							}
 						}
-						cellF.setCellValue(new XSSFRichTextString(workString));
+						cellF.setCellValue(new XSSFRichTextString(workString.toString()));
 						sheet.addMergedRegion(new CellRangeAddress(currentRowNumber, currentRowNumber, 5, 8));
 					}
 				}
@@ -3074,18 +3074,18 @@ public class DialogDocuments extends JDialog {
 	}
 
 	static String substringLinesWithTokenOfEOL(String originalString, String stringToBeInserted) {
-		StringBuffer processedString = new StringBuffer();
+		StringBuilder processedString = new StringBuilder();
 		int lastEnd = 0;
 		for (int i = 0; i <= originalString.length(); i++) {
 			if (i+5 <= originalString.length()) {
-				if (originalString.substring(i,i+5).equals("#EOL#")) {
-					processedString.append(originalString.substring(lastEnd, i));
+				if (originalString.startsWith("#EOL#", i)) {
+					processedString.append(originalString, lastEnd, i);
 					processedString.append(stringToBeInserted);
 					lastEnd = i+5;
 				}
 			} else {
 				if (i == originalString.length()) {
-					processedString.append(originalString.substring(lastEnd, i));
+					processedString.append(originalString, lastEnd, i);
 				}
 			}
 		}
@@ -3152,7 +3152,7 @@ public class DialogDocuments extends JDialog {
 				workElement = (org.w3c.dom.Element)tableList.item(m);
 				if (workElement.getAttribute("SubsystemID").equals(subsystemID)) {
 					workNode = new XeadNode("Table", (org.w3c.dom.Element)tableList.item(m));
-					comboBoxModelTables.addElement((Object)workNode);
+					comboBoxModelTables.addElement(workNode);
 				}
 			}
 			comboBoxModelTables.sortElements();
@@ -3165,7 +3165,7 @@ public class DialogDocuments extends JDialog {
 				workElement = (org.w3c.dom.Element)functionList.item(m);
 				if (workElement.getAttribute("SubsystemID").equals(subsystemID)) {
 					workNode = new XeadNode("Function",(org.w3c.dom.Element)functionList.item(m));
-					comboBoxModelFunctions.addElement((Object)workNode);
+					comboBoxModelFunctions.addElement(workNode);
 				}
 			}
 			comboBoxModelFunctions.sortElements();
@@ -3202,16 +3202,15 @@ public class DialogDocuments extends JDialog {
 	class SortableXeadNodeComboBoxModel extends DefaultComboBoxModel {
 		private static final long serialVersionUID = 1L;
 		public void sortElements() {
-			ArrayList<XeadNode> list = new ArrayList<XeadNode>();
+			ArrayList<XeadNode> list = new ArrayList<>();
 			for (int i = 0; i < this.getSize(); i++) {
 				list.add((XeadNode)this.getElementAt(i));
 			}
 			this.removeAllElements();
 			Collections.sort(list);
-			Iterator<XeadNode> it = list.iterator();
-			while(it.hasNext()){
-				this.addElement(it.next());
-			}
+      for (XeadNode xeadNode : list) {
+        this.addElement(xeadNode);
+      }
 		}
 	}
 
