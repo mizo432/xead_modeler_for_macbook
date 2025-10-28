@@ -75,11 +75,15 @@ public class Modeler extends JFrame {
   public static final Color INACTIVE_COLOR = new Color(219, 219, 219);
   public static final Color SELECT_COLOR = Color.magenta;
   private static final long serialVersionUID = 1L;
+
   /** Static constants */
   private static final ResourceBundle res = ResourceBundle.getBundle("xeadModeler.Res");
+
   public String currentFileName, currentFileFolder, systemName;
+
   /** parsed XML Document for this application */
   public DOMParser domParser = new DOMParser();
+
   public org.w3c.dom.Document domDocument;
   public org.w3c.dom.Document domDocumentSaved = null;
   public String mainFontName = "SansSerif";
@@ -97,24 +101,32 @@ public class Modeler extends JFrame {
   public boolean setCommentToFieldsWithAlias = true;
   public boolean ignoreForeignKeyConstraints = false;
   public boolean ignoreKeyDefinitionWarnings = true;
+
   /** Desktop Launcher */
   public Desktop desktop = Desktop.getDesktop();
+
   public XeadTreeNode currentMainTreeNode;
   public boolean isToShowGridsOnSubjectArea = true;
   public boolean isNormalColorConfigOnSubjectArea = true;
   public String datamodelSize = "M";
   public boolean isToShowGridsOnDataModel = true;
   public boolean isNormalColorConfigOnDataModel = true;
+
   /** status controller related to setup field definition list */
   boolean isRequiredToSetupSortableFieldList = true;
+
   /** status controller related to deleted table definitions */
   boolean isRequiredToPurgeInvalidSubsystemTable = false;
+
   /** status controller related to deleted relationship definitions */
   boolean isRequiredToPurgeInvalidSubsystemRelationship = false;
+
   /** change status controller for general use */
   boolean informationOnThisPageChanged;
+
   /** Main panels and labels */
   private JPanel jPanelMain;
+
   private JPanel jPanelJumpButtons = new JPanel();
   private GridLayout gridLayoutJumpButtons = new GridLayout();
   private NodeJumpButton[] nodeJumpButton = new NodeJumpButton[8];
@@ -132,8 +144,10 @@ public class Modeler extends JFrame {
   private String urlString = "";
   private int screenWidth = 800;
   private int screenHeight = 600;
+
   /** Main Menu */
   private JMenuBar jMenuBar = new JMenuBar();
+
   private JMenu jMenuFile = new JMenu();
   private JMenuItem jMenuItemFileNew = new JMenuItem();
   private JMenuItem jMenuItemFileOpen = new JMenuItem();
@@ -184,6 +198,7 @@ public class Modeler extends JFrame {
   /** status controller to reorganize IOTables */
   // boolean isRequiredToReorganizeIOTable = false;
   private JMenuItem jMenuItemToolCreateTableStatement = new JMenuItem();
+
   private JMenuItem jMenuItemToolDocuments = new JMenuItem();
   private JMenuItem jMenuItemToolReorganizeDataTypes = new JMenuItem();
   private JMenuItem jMenuItemToolJumpToURLPage = new JMenuItem();
@@ -195,31 +210,42 @@ public class Modeler extends JFrame {
   private ArrayList<String> referringFileNameList = new ArrayList<String>();
   private ArrayList<org.w3c.dom.Document> referringFileDocList =
       new ArrayList<org.w3c.dom.Document>();
+
   /** Variants for Properties */
   private Properties properties = new Properties();
+
   /** Main undo manager */
   private XeadUndoManager xeadUndoManager = new XeadUndoManager();
+
   /** sorter for general use */
   private SortableXeadTreeNodeListModel sortableXeadTreeNodeListModel =
       new SortableXeadTreeNodeListModel();
+
   private SortableDomElementFieldListModel sortableDomElementFieldListModel =
       new SortableDomElementFieldListModel();
+
   /** fields for style processing for JTextpane */
   private ArrayList<String> styledDocumentCopiedTextList = new ArrayList<String>();
+
   private ArrayList<DefaultStyledDocument> styledDocumentCopiedSegmentList =
       new ArrayList<DefaultStyledDocument>();
   private ChangeState changeState = new ChangeState();
+
   /** Dialog box and fileChooser for general use */
   private JFileChooser jFileChooser = new JFileChooser();
+
   /** common used storage for copy/paste operation */
   private boolean inBlockSelectMode = false;
+
   private Point blockSelectPointFrom = new Point();
   private Point blockSelectPointThru = new Point();
   private Rectangle blockSelectRec = new Rectangle(0, 0, 0, 0);
   private Graphics savedImage = null;
   private org.w3c.dom.Element pastingDomElement = null;
+
   /** Dialogs and related variants */
   private DialogDataflowNode dialogDataflowNode;
+
   private DialogDataflowLine dialogDataflowLine;
   private DialogScan dialogScan;
   private DialogReorganizeDataTypes dialogReorganizeDataTypes;
@@ -232,15 +258,20 @@ public class Modeler extends JFrame {
   private DialogConfigColors dialogConfigColors;
   private DialogTableSynchronize dialogTableSynchronize;
   private DialogToListChangesOfFiles dialogToListChangesOfFiles;
+
   /** Print Controller */
   private XeadPagePainter painter = new XeadPagePainter();
+
   private PrinterJob printerJob;
   private PageFormat pageFormat;
   private boolean printFormatSpecified = false;
+
   /** Last focused KanjiTextArea */
   private KanjiTextArea lastFocusedTextArea = null;
+
   /** Icons */
   private Image imageTitle;
+
   private ImageIcon imageIconSystem;
   private ImageIcon imageIconSubjectAreaList;
   private ImageIcon imageIconSubjectArea;
@@ -275,8 +306,10 @@ public class Modeler extends JFrame {
   private ImageIcon imageIconModel;
   private ImageIcon imageIconText;
   private ImageIcon imageIconBook;
+
   /** Main TreeView */
   private JScrollPane jScrollPaneTreeView = new JScrollPane();
+
   private CustomTreeRenderer customTreeRenderer = new CustomTreeRenderer();
   private JTree jTreeMain = new JTree();
   private DefaultTreeModel treeModel;
@@ -292,8 +325,10 @@ public class Modeler extends JFrame {
   private int dragStartPointY = 0;
   private XeadTreeNode systemNode, SubjectAreaListNode, roleListNode, subsystemListNode;
   private XeadTreeNode currentTaskActionTreeNode, previousTaskActionTreeNode;
+
   /** PopupMenu for editing XeadTreeNode */
   private JPopupMenu jPopupMenuXeadTreeNode = new JPopupMenu();
+
   private JMenuItem jMenuItemXeadTreeNodeAdd = new JMenuItem();
   private JMenuItem jMenuItemXeadTreeNodeAddList = new JMenuItem();
   private JMenuItem jMenuItemXeadTreeNodeCopy = new JMenuItem();
@@ -307,8 +342,10 @@ public class Modeler extends JFrame {
   private JMenuItem jMenuItemXeadTreeNodeAddFK = new JMenuItem();
   private JMenuItem jMenuItemXeadTreeNodeAddSK = new JMenuItem();
   private JMenuItem jMenuItemXeadTreeNodeAddIndex = new JMenuItem();
+
   /** PopupMenu for Contents Pane Components */
   private JPopupMenu jPopupMenuComponent = new JPopupMenu();
+
   private JMenuItem jMenuItemComponentToAdd = new JMenuItem();
   private JMenuItem jMenuItemComponentToAddIOPanel = new JMenuItem();
   private JMenuItem jMenuItemComponentToAddIOSpool = new JMenuItem();
@@ -337,8 +374,10 @@ public class Modeler extends JFrame {
   private JMenuItem jMenuItemComponentToPrintImage = new JMenuItem();
   private JMenuItem jMenuItemComponentToSetIOWebPage = new JMenuItem();
   private String componentType_jPopupMenuComponent = "";
+
   /** components for JTables */
   private DefaultTableCellRenderer rendererAlignmentCenter = new DefaultTableCellRenderer();
+
   private DefaultTableCellRenderer rendererAlignmentRight = new DefaultTableCellRenderer();
   private DefaultTableCellRenderer rendererAlignmentLeft = new DefaultTableCellRenderer();
   private DefaultTableCellRenderer rendererAlignmentCenterControlColor =
@@ -363,6 +402,7 @@ public class Modeler extends JFrame {
       columnC,
       columnD,
       columnE;
+
   /** customized key-map for text component */
   private JTextComponent.KeyBinding[] customBindings = {
     new JTextComponent.KeyBinding(
@@ -376,11 +416,15 @@ public class Modeler extends JFrame {
     new JTextComponent.KeyBinding(
         KeyStroke.getKeyStroke("ctrl X"), DefaultEditorKit.defaultKeyTypedAction)
   };
+
   /** Definition components for selection of elements of ERD and DFD */
   private JPanel jPanelSelectionGuide = new JPanel();
+
   private Point pointOfSelecterFrom = new Point();
+
   /** Definition components on jPanelSystem */
   private JPanel jPanelSystem = new JPanel();
+
   private JPanel jPanelSystem6 = new JPanel();
   private JLabel jLabelSystemName = new JLabel();
   private KanjiTextField jTextFieldSystemName = new KanjiTextField();
@@ -547,14 +591,18 @@ public class Modeler extends JFrame {
   private JLabel jLabelSystemMaintenanceLogDescriptions = new JLabel();
   private JScrollPane jScrollPaneSystemMaintenanceLogDescriptions = new JScrollPane();
   private KanjiTextArea jTextAreaSystemMaintenanceLogDescriptions = new KanjiTextArea();
+
   /** Definition components on jPanelSubjectAreaList */
   private JPanel jPanelSubjectAreaList = new JPanel();
+
   private JScrollPane jScrollPaneSubjectAreaList = new JScrollPane();
   private TableModelReadOnlyList tableModelSubjectAreaList = new TableModelReadOnlyList();
   private JTable jTableSubjectAreaList = new JTable(tableModelSubjectAreaList);
   private int selectedRow_jTableSubjectAreaList;
+
   /** Definition components on jPanelSubjectArea */
   private JPanel jPanelSubjectArea = new JPanel();
+
   private JSplitPane jSplitPaneSubjectArea = new JSplitPane();
   private JScrollPane jScrollPaneSubjectArea = new JScrollPane();
   private JPanel jPanelSubjectArea1 = new JPanel();
@@ -610,8 +658,8 @@ public class Modeler extends JFrame {
           g.setColor(Color.white);
           Graphics2D g2 = (Graphics2D) g;
           g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-          for (int i = 0; i < dataflowLineEditorArray.size(); i++) {
-            dataflowLineEditorArray.get(i).drawLine(g2);
+          for (DataflowLine dataflowLine : dataflowLineEditorArray) {
+            dataflowLine.drawLine(g2);
           }
           g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_OFF);
         }
@@ -631,9 +679,9 @@ public class Modeler extends JFrame {
           g.setColor(Color.white);
           Graphics2D g2 = (Graphics2D) g;
           g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-          for (int i = 0; i < dataflowLineSlideShowArray.size(); i++) {
-            if (dataflowLineSlideShowArray.get(i).getSlideNumber() <= dataflowSlideNumber) {
-              dataflowLineSlideShowArray.get(i).drawLine(g2);
+          for (DataflowLine dataflowLine : dataflowLineSlideShowArray) {
+            if (dataflowLine.getSlideNumber() <= dataflowSlideNumber) {
+              dataflowLine.drawLine(g2);
             }
           }
           g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_OFF);
@@ -647,14 +695,18 @@ public class Modeler extends JFrame {
   private String boundaryResizeMode = "";
   private Point boundaryResizeStartPoint;
   private Rectangle boundaryResizeGuideRec;
+
   /** Definition components on jPanelRoleList */
   private JPanel jPanelRoleList = new JPanel();
+
   private JScrollPane jScrollPaneRoleList = new JScrollPane();
   private TableModelReadOnlyList tableModelRoleList = new TableModelReadOnlyList();
   private JTable jTableRoleList = new JTable(tableModelRoleList);
   private int selectedRow_jTableRoleList;
+
   /** Definition components on jPanelRole(with Task List) */
   private JPanel jPanelRole = new JPanel();
+
   private JSplitPane jSplitPaneRole = new JSplitPane();
   private JScrollPane jScrollPaneTaskList = new JScrollPane();
   private JViewport jViewportTaskList = new JViewport();
@@ -677,8 +729,10 @@ public class Modeler extends JFrame {
   private KanjiTextArea jTextAreaRoleDescriptions = new KanjiTextArea();
   private JLabel jLabelDepartment = new JLabel();
   private JLabel jLabelTaskSortKey = new JLabel();
+
   /** Definition components on jPanelTask */
   private JPanel jPanelTask = new JPanel();
+
   private JSplitPane jSplitPaneTask = new JSplitPane();
   private JScrollPane jScrollPaneTask1 = new JScrollPane();
   private JPanel jPanelTask1 = new JPanel();
@@ -764,8 +818,10 @@ public class Modeler extends JFrame {
   private JScrollPane jScrollPaneFunctionIOImageIOList = new JScrollPane();
   private TableModelReadOnlyList tableModelFunctionIOImageIOList = new TableModelReadOnlyList();
   private JTable jTableFunctionIOImageIOList = new JTable(tableModelFunctionIOImageIOList);
+
   /** Definition components on jPanelSubsystemList */
   private JPanel jPanelSubsystemList = new JPanel();
+
   private JTabbedPane jTabbedPaneSubsystemList = new JTabbedPane();
   private JScrollPane jScrollPaneSubsystemList = new JScrollPane();
   private TableModelReadOnlyList tableModelSubsystemList = new TableModelReadOnlyList();
@@ -855,8 +911,10 @@ public class Modeler extends JFrame {
   private JTable jTableFunctionsStructureTableIOList =
       new JTable(tableModelFunctionsStructureTableIOList);
   private boolean taskFunctionIOTabSelectChangeActivated = true;
+
   /** Definition components on jPanelSubsystem */
   private JPanel jPanelSubsystem = new JPanel();
+
   private JPanel jPanelSubsystem1 = new JPanel();
   private JPanel jPanelSubsystem2 = new JPanel();
   private JPanel jPanelSubsystem3 = new JPanel();
@@ -867,8 +925,10 @@ public class Modeler extends JFrame {
   private JTextField jTextFieldSubsystemSortKey = new JTextField();
   private JScrollPane jScrollPaneSubsystemDescriptions = new JScrollPane();
   private KanjiTextArea jTextAreaSubsystemDescriptions = new KanjiTextArea();
+
   /** Definition components on jPanelTableList */
   private JPanel jPanelTableList = new JPanel();
+
   private JScrollPane jScrollPaneNativeTableList = new JScrollPane();
   private JViewport jViewportNativeTableList = new JViewport();
   private JTabbedPane jTabbedPaneTableList = new JTabbedPane();
@@ -987,8 +1047,8 @@ public class Modeler extends JFrame {
           g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_OFF);
 
           if (!isNormalColorConfigOnDataModel) {
-            for (int i = 0; i < datamodelEntityBoxArray.size(); i++) {
-              datamodelEntityBoxArray.get(i).drawShade(g2);
+            for (DatamodelEntityBox datamodelEntityBox : datamodelEntityBoxArray) {
+              datamodelEntityBox.drawShade(g2);
             }
           }
         }
@@ -1035,14 +1095,15 @@ public class Modeler extends JFrame {
           g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_OFF);
 
           if (!isNormalColorConfigOnDataModel) {
-            for (int i = 0; i < datamodelEntityBoxSlideShowArray.size(); i++) {
-              datamodelEntityBoxSlideShowArray.get(i).drawShade(g2);
+            for (DatamodelEntityBox datamodelEntityBox : datamodelEntityBoxSlideShowArray) {
+              datamodelEntityBox.drawShade(g2);
             }
           }
         }
       };
   private JLabel jLabelDatamodelSlideShowPageGuide = new JLabel();
   private String datamodelPageTitle;
+
   /** Definition components on jPanelTable */
   private JScrollPane jScrollPaneTable1 = new JScrollPane();
 
@@ -1280,8 +1341,10 @@ public class Modeler extends JFrame {
   private JLabel jLabelIOPanelImage = new JLabel();
   private JLabel jLabelIOPanelCaretPosition = new JLabel();
   private int iOPanelCharLengthX, iOPanelCharLengthY;
+
   /** Definition components on jPanelIOSpool */
   private JPanel jPanelIOSpool = new JPanel();
+
   private JSplitPane jSplitPaneIOSpool1 = new JSplitPane();
   private JSplitPane jSplitPaneIOSpool2 = new JSplitPane();
   private JLabel jLabelIOSpoolName = new JLabel();
@@ -1333,8 +1396,10 @@ public class Modeler extends JFrame {
   private JLabel jLabelIOSpoolCaretPosition = new JLabel();
   private JPanel jPanelIOSpoolImage = new JPanel();
   private int iOSpoolCharLengthX, iOSpoolCharLengthY;
+
   /** Definition components on jPanelIOTable */
   private JPanel jPanelIOTable = new JPanel();
+
   private JSplitPane jSplitPaneIOTable = new JSplitPane();
   private JScrollPane jScrollPaneIOTableDescriptions = new JScrollPane();
   private JPanel jPanelIOTable2 = new JPanel();
@@ -1366,8 +1431,10 @@ public class Modeler extends JFrame {
   private JCheckBox jCheckBoxIOTableD = new JCheckBox();
   private JButton jButtonIOTableJump = new JButton();
   private int selectedRow_jTableIOTableFieldList;
+
   /** PopUp-Menu for editing IO Image(IOPanel and IOSpool) */
   private JPopupMenu jPopupMenuIOImage = new JPopupMenu();
+
   private JMenuItem jMenuItemIOImageUndo = new JMenuItem();
   private JMenuItem jMenuItemIOImageRedo = new JMenuItem();
   private JMenuItem jMenuItemIOImageCut = new JMenuItem();
@@ -1428,8 +1495,10 @@ public class Modeler extends JFrame {
   private JCheckBoxMenuItem jMenuItemIOImageSearchImageFile = new JCheckBoxMenuItem();
   private JMenuItem jMenuItemIOImageCaptureImage = new JMenuItem();
   private JMenuItem jMenuItemIOImagePrintImage = new JMenuItem();
+
   /** Definition components on jPanelIOWebPage */
   private JPanel jPanelIOWebPage = new JPanel();
+
   private JSplitPane jSplitPaneIOWebPage1 = new JSplitPane();
   private JSplitPane jSplitPaneIOWebPage2 = new JSplitPane();
   private JLabel jLabelIOWebPageName = new JLabel();
@@ -1455,8 +1524,10 @@ public class Modeler extends JFrame {
   private JPanel jPanelIOWebPage6 = new JPanel();
   private JLabel jLabelIOWebPageImage = new JLabel();
   private String htmlFileName = "";
+
   /** undo handler for JTextPane */
   private UndoableEditListener textPaneUndoableEditListener = new CustomUndoableEditListener();
+
   private UndoManager textPaneUndoManager = new UndoManager();
   private TextPaneUndoAction undoAction = new TextPaneUndoAction();
   private TextPaneRedoAction redoAction = new TextPaneRedoAction();
@@ -1492,6 +1563,7 @@ public class Modeler extends JFrame {
           redoAction.actionPerformed(e);
         }
       };
+
   /** HTML Editor Kit */
   private HTMLEditorKit htmlEditorKit = new HTMLEditorKit();
 
@@ -6712,8 +6784,8 @@ public class Modeler extends JFrame {
       if (reply == JFileChooser.APPROVE_OPTION) {
         File file = new File(jFileChooser.getSelectedFile().getPath());
         if (getExtention(file) == null) {
-          for (int j = 0; j < extentionList.size(); j++) {
-            file = new File(jFileChooser.getSelectedFile().getPath() + "." + extentionList.get(j));
+          for (String s : extentionList) {
+            file = new File(jFileChooser.getSelectedFile().getPath() + "." + s);
             if (file.exists()) {
               name = file.getPath();
               break;
@@ -6723,8 +6795,8 @@ public class Modeler extends JFrame {
             JOptionPane.showMessageDialog(this, res.getString("S798"));
           }
         } else {
-          for (int j = 0; j < extentionList.size(); j++) {
-            if (getExtention(file).equals(extentionList.get(j))) {
+          for (String s : extentionList) {
+            if (getExtention(file).equals(s)) {
               name = file.getPath();
               break;
             }
@@ -7320,8 +7392,8 @@ public class Modeler extends JFrame {
       }
     }
 
-    for (int i = 0; i < imageFileExt.length; i++) {
-      imageFile = new File(imageFileName + imageFileExt[i]);
+    for (String s : imageFileExt) {
+      imageFile = new File(imageFileName + s);
       if (imageFile.exists()) {
         image = new ImageIcon(imageFile.getPath());
         break;
@@ -9791,8 +9863,8 @@ public class Modeler extends JFrame {
         elementListToBeRemoved.add(ioTableFieldElement);
       }
     }
-    for (int m = 0; m < elementListToBeRemoved.size(); m++) {
-      ioTableFieldElement = elementListToBeRemoved.get(m);
+    for (org.w3c.dom.Element element : elementListToBeRemoved) {
+      ioTableFieldElement = element;
       ioTableFieldElement.getParentNode().removeChild(ioTableFieldElement);
     }
   }
@@ -9803,13 +9875,13 @@ public class Modeler extends JFrame {
     org.w3c.dom.Element element;
     int workNumber;
     //
-    for (int i = 0; i < fieldListNodeToBeRenumbered.size(); i++) {
+    for (XeadTreeNode xeadTreeNode : fieldListNodeToBeRenumbered) {
       workNumber = 0;
       //
-      if (fieldListNodeToBeRenumbered.get(i).getType().equals("TableFieldList")) {
-        if (fieldListNodeToBeRenumbered.get(i).getParent().getParent() != null) {
-          for (int j = 0; j < fieldListNodeToBeRenumbered.get(i).getChildCount(); j++) {
-            node = (XeadTreeNode) fieldListNodeToBeRenumbered.get(i).getChildAt(j);
+      if (xeadTreeNode.getType().equals("TableFieldList")) {
+        if (xeadTreeNode.getParent().getParent() != null) {
+          for (int j = 0; j < xeadTreeNode.getChildCount(); j++) {
+            node = (XeadTreeNode) xeadTreeNode.getChildAt(j);
             element = (org.w3c.dom.Element) node.getElement();
             workNumber = workNumber + 10;
             element.setAttribute("SortKey", getFormatted4ByteString(workNumber));
@@ -9817,10 +9889,9 @@ public class Modeler extends JFrame {
         }
       }
       //
-      if (fieldListNodeToBeRenumbered.get(i).getType().equals("IOPanel")) {
-        if (fieldListNodeToBeRenumbered.get(i).getRoot().equals(systemNode)) {
-          NodeList fieldList =
-              fieldListNodeToBeRenumbered.get(i).getElement().getElementsByTagName("IOPanelField");
+      if (xeadTreeNode.getType().equals("IOPanel")) {
+        if (xeadTreeNode.getRoot().equals(systemNode)) {
+          NodeList fieldList = xeadTreeNode.getElement().getElementsByTagName("IOPanelField");
           sortableDomElementListModel.removeAllElements();
           for (int j = 0; j < fieldList.getLength(); j++) {
             sortableDomElementListModel.addElement((Object) fieldList.item(j));
@@ -9837,10 +9908,9 @@ public class Modeler extends JFrame {
         }
       }
       //
-      if (fieldListNodeToBeRenumbered.get(i).getType().equals("IOSpool")) {
-        if (fieldListNodeToBeRenumbered.get(i).getRoot().equals(systemNode)) {
-          NodeList fieldList =
-              fieldListNodeToBeRenumbered.get(i).getElement().getElementsByTagName("IOSpoolField");
+      if (xeadTreeNode.getType().equals("IOSpool")) {
+        if (xeadTreeNode.getRoot().equals(systemNode)) {
+          NodeList fieldList = xeadTreeNode.getElement().getElementsByTagName("IOSpoolField");
           sortableDomElementListModel.removeAllElements();
           for (int j = 0; j < fieldList.getLength(); j++) {
             sortableDomElementListModel.addElement((Object) fieldList.item(j));
@@ -9857,13 +9927,9 @@ public class Modeler extends JFrame {
         }
       }
       //
-      if (fieldListNodeToBeRenumbered.get(i).getType().equals("IOWebPage")) {
-        if (fieldListNodeToBeRenumbered.get(i).getRoot().equals(systemNode)) {
-          NodeList fieldList =
-              fieldListNodeToBeRenumbered
-                  .get(i)
-                  .getElement()
-                  .getElementsByTagName("IOWebPageField");
+      if (xeadTreeNode.getType().equals("IOWebPage")) {
+        if (xeadTreeNode.getRoot().equals(systemNode)) {
+          NodeList fieldList = xeadTreeNode.getElement().getElementsByTagName("IOWebPageField");
           sortableDomElementListModel.removeAllElements();
           for (int j = 0; j < fieldList.getLength(); j++) {
             sortableDomElementListModel.addElement((Object) fieldList.item(j));
@@ -10112,8 +10178,8 @@ public class Modeler extends JFrame {
    */
   void addNodeToTheArrayOfFieldListNodeToBeRenumbered(XeadTreeNode node) {
     boolean alreadyExist = false;
-    for (int i = 0; i < fieldListNodeToBeRenumbered.size(); i++) {
-      if (fieldListNodeToBeRenumbered.get(i) == node) {
+    for (XeadTreeNode xeadTreeNode : fieldListNodeToBeRenumbered) {
+      if (xeadTreeNode == node) {
         alreadyExist = true;
       }
     }
@@ -13427,8 +13493,8 @@ public class Modeler extends JFrame {
         pointOfSelecterFrom = e.getPoint();
         jPanelSelectionGuide.setBounds(pointOfSelecterFrom.x, pointOfSelecterFrom.y, 0, 0);
         jPanelSubjectAreaDataflowEditor2.add(jPanelSelectionGuide);
-        for (int i = 0; i < dataflowNodeEditorArray.size(); i++) {
-          dataflowNodeEditorArray.get(i).setSelected(false);
+        for (DataflowNode dataflowNode : dataflowNodeEditorArray) {
+          dataflowNode.setSelected(false);
         }
       } else {
         if (boundaryResizeMode.equals("MOVE")) {
@@ -13515,46 +13581,40 @@ public class Modeler extends JFrame {
           distanceY = posY - originalPosY;
           Point originalPosition;
           //
-          for (int i = 0; i < dataflowNodeEditorArray.size(); i++) {
+          for (DataflowNode dataflowNode : dataflowNodeEditorArray) {
             //
             // Change position of the specific DataflowNode//
-            originalPosition = dataflowNodeEditorArray.get(i).getLocation();
-            dataflowNodeEditorArray
-                .get(i)
-                .setBounds(
-                    new Rectangle(
-                        originalPosition.x + distanceX,
-                        originalPosition.y + distanceY,
-                        dataflowNodeEditorArray.get(i).NODE_WIDTH,
-                        dataflowNodeEditorArray.get(i).NODE_HEIGHT));
-            if (dataflowNodeEditorArray.get(i).getNodeRightEdgeLocation() > nodeRightEdgeLocation) {
-              nodeRightEdgeLocation = dataflowNodeEditorArray.get(i).getNodeRightEdgeLocation();
+            originalPosition = dataflowNode.getLocation();
+            dataflowNode.setBounds(
+                new Rectangle(
+                    originalPosition.x + distanceX,
+                    originalPosition.y + distanceY,
+                    dataflowNode.NODE_WIDTH,
+                    dataflowNode.NODE_HEIGHT));
+            if (dataflowNode.getNodeRightEdgeLocation() > nodeRightEdgeLocation) {
+              nodeRightEdgeLocation = dataflowNode.getNodeRightEdgeLocation();
             }
-            if (dataflowNodeEditorArray.get(i).getNodeBottomEdgeLocation()
-                > nodeBottomEdgeLocation) {
-              nodeBottomEdgeLocation = dataflowNodeEditorArray.get(i).getNodeBottomEdgeLocation();
+            if (dataflowNode.getNodeBottomEdgeLocation() > nodeBottomEdgeLocation) {
+              nodeBottomEdgeLocation = dataflowNode.getNodeBottomEdgeLocation();
             }
             //
             // Update DataflowLines//
-            for (int j = 0; j < dataflowLineEditorArray.size(); j++) {
-              if (dataflowLineEditorArray.get(j).getNode1().equals(dataflowNodeEditorArray.get(i))
-                  || dataflowLineEditorArray
-                      .get(j)
-                      .getNode2()
-                      .equals(dataflowNodeEditorArray.get(i))) {
-                dataflowLineEditorArray.get(j).addArrows();
+            for (DataflowLine dataflowLine : dataflowLineEditorArray) {
+              if (dataflowLine.getNode1().equals(dataflowNode)
+                  || dataflowLine.getNode2().equals(dataflowNode)) {
+                dataflowLine.addArrows();
               }
             }
           }
         }
       } else {
         jPanelSubjectAreaDataflowEditor2.remove(jPanelBoundaryResizeGuide);
-        for (int i = 0; i < dataflowNodeEditorArray.size(); i++) {
-          if (dataflowNodeEditorArray.get(i).getNodeRightEdgeLocation() > nodeRightEdgeLocation) {
-            nodeRightEdgeLocation = dataflowNodeEditorArray.get(i).getNodeRightEdgeLocation();
+        for (DataflowNode dataflowNode : dataflowNodeEditorArray) {
+          if (dataflowNode.getNodeRightEdgeLocation() > nodeRightEdgeLocation) {
+            nodeRightEdgeLocation = dataflowNode.getNodeRightEdgeLocation();
           }
-          if (dataflowNodeEditorArray.get(i).getNodeBottomEdgeLocation() > nodeBottomEdgeLocation) {
-            nodeBottomEdgeLocation = dataflowNodeEditorArray.get(i).getNodeBottomEdgeLocation();
+          if (dataflowNode.getNodeBottomEdgeLocation() > nodeBottomEdgeLocation) {
+            nodeBottomEdgeLocation = dataflowNode.getNodeBottomEdgeLocation();
           }
         }
       }
@@ -13598,14 +13658,9 @@ public class Modeler extends JFrame {
             pointOfSelecterFrom.y,
             e.getX() - pointOfSelecterFrom.x,
             e.getY() - pointOfSelecterFrom.y);
-        for (int i = 0; i < dataflowNodeEditorArray.size(); i++) {
-          dataflowNodeEditorArray
-              .get(i)
-              .setSelected(
-                  dataflowNodeEditorArray
-                      .get(i)
-                      .getBounds()
-                      .intersects(jPanelSelectionGuide.getBounds()));
+        for (DataflowNode dataflowNode : dataflowNodeEditorArray) {
+          dataflowNode.setSelected(
+              dataflowNode.getBounds().intersects(jPanelSelectionGuide.getBounds()));
         }
       } else {
         int posX = dataflowBoundaryEditor.boundaryPosX;
@@ -14455,8 +14510,8 @@ public class Modeler extends JFrame {
       wrkStr = styledDocumentCopiedTextList.get(0);
     }
     if (styledDocumentCopiedTextList.size() > 1) {
-      for (int k = 0; k < styledDocumentCopiedTextList.size(); k++) {
-        wrkStr = wrkStr + styledDocumentCopiedTextList.get(k) + "\n";
+      for (String s : styledDocumentCopiedTextList) {
+        wrkStr = wrkStr + s + "\n";
       }
     }
     if (clipboardData.equals(wrkStr)) {
@@ -15485,11 +15540,11 @@ public class Modeler extends JFrame {
         // Shift key pressed to restart//
         if ((e.getModifiers() & InputEvent.SHIFT_MASK) != 0) {
           dataflowSlideNumber = 0;
-          for (int i = 0; i < dataflowNodeSlideShowArray.size(); i++) {
-            dataflowNodeSlideShowArray.get(i).setVisible(false);
+          for (DataflowNode dataflowNode : dataflowNodeSlideShowArray) {
+            dataflowNode.setVisible(false);
           }
-          for (int i = 0; i < dataflowLineSlideShowArray.size(); i++) {
-            dataflowLineSlideShowArray.get(i).setVisible(false);
+          for (DataflowLine dataflowLine : dataflowLineSlideShowArray) {
+            dataflowLine.setVisible(false);
           }
 
           // Shift key not pressed to keep on//
@@ -15497,14 +15552,14 @@ public class Modeler extends JFrame {
           if (dataflowSlideNumber <= 0) {
             jDialogDataflowSlideShow.setVisible(false);
           } else {
-            for (int i = 0; i < dataflowNodeSlideShowArray.size(); i++) {
-              if (dataflowNodeSlideShowArray.get(i).getSlideNumber() == dataflowSlideNumber) {
-                dataflowNodeSlideShowArray.get(i).setVisible(false);
+            for (DataflowNode dataflowNode : dataflowNodeSlideShowArray) {
+              if (dataflowNode.getSlideNumber() == dataflowSlideNumber) {
+                dataflowNode.setVisible(false);
               }
             }
-            for (int i = 0; i < dataflowLineSlideShowArray.size(); i++) {
-              if (dataflowLineSlideShowArray.get(i).getSlideNumber() == dataflowSlideNumber) {
-                dataflowLineSlideShowArray.get(i).setVisible(false);
+            for (DataflowLine dataflowLine : dataflowLineSlideShowArray) {
+              if (dataflowLine.getSlideNumber() == dataflowSlideNumber) {
+                dataflowLine.setVisible(false);
               }
             }
             dataflowSlideNumber = dataflowSlideNumber - 1;
@@ -15519,11 +15574,11 @@ public class Modeler extends JFrame {
       // Shift key pressed to skip to the end//
       if (e != null && (e.getModifiers() & InputEvent.SHIFT_MASK) != 0) {
         dataflowSlideNumber = dataflowSlideTotalNumber;
-        for (int i = 0; i < dataflowNodeSlideShowArray.size(); i++) {
-          dataflowNodeSlideShowArray.get(i).setVisible(true);
+        for (DataflowNode dataflowNode : dataflowNodeSlideShowArray) {
+          dataflowNode.setVisible(true);
         }
-        for (int i = 0; i < dataflowLineSlideShowArray.size(); i++) {
-          dataflowLineSlideShowArray.get(i).setVisible(true);
+        for (DataflowLine dataflowLine : dataflowLineSlideShowArray) {
+          dataflowLine.setVisible(true);
         }
 
         // Shift key not pressed to keep on//
@@ -15545,14 +15600,14 @@ public class Modeler extends JFrame {
           }
         } else {
           dataflowSlideNumber = dataflowSlideNumber + 1;
-          for (int i = 0; i < dataflowNodeSlideShowArray.size(); i++) {
-            if (dataflowNodeSlideShowArray.get(i).getSlideNumber() == dataflowSlideNumber) {
-              dataflowNodeSlideShowArray.get(i).setVisible(true);
+          for (DataflowNode dataflowNode : dataflowNodeSlideShowArray) {
+            if (dataflowNode.getSlideNumber() == dataflowSlideNumber) {
+              dataflowNode.setVisible(true);
             }
           }
-          for (int i = 0; i < dataflowLineSlideShowArray.size(); i++) {
-            if (dataflowLineSlideShowArray.get(i).getSlideNumber() == dataflowSlideNumber) {
-              dataflowLineSlideShowArray.get(i).setVisible(true);
+          for (DataflowLine dataflowLine : dataflowLineSlideShowArray) {
+            if (dataflowLine.getSlideNumber() == dataflowSlideNumber) {
+              dataflowLine.setVisible(true);
             }
           }
         }
@@ -15643,10 +15698,8 @@ public class Modeler extends JFrame {
     }
 
     // Set instance of each table//
-    for (int i = 0; i < datamodelEntityBoxSlideShowArray.size(); i++) {
-      datamodelEntityBoxSlideShowArray
-          .get(i)
-          .setInstanceBySlideNumber(datamodelSlideNumber, isAscent);
+    for (DatamodelEntityBox datamodelEntityBox : datamodelEntityBoxSlideShowArray) {
+      datamodelEntityBox.setInstanceBySlideNumber(datamodelSlideNumber, isAscent);
     }
 
     // Escape key pressed//
@@ -18531,7 +18584,7 @@ public class Modeler extends JFrame {
       currentMainTreeNode.getElement().removeChild(tableRowNumber.getElement());
       currentMainTreeNode
           .updateFields(); // added instead of addLogAfterModified(currentMainTreeNode) expired
-                           // below//
+      // below//
       currentMainTreeNode.activateContentsPane();
     }
   }
@@ -18975,18 +19028,18 @@ public class Modeler extends JFrame {
    * @param e :Action Event
    */
   void jMenuItemComponentToShowSlideNumber_actionPerformed(ActionEvent e) {
-    for (int i = 0; i < dataflowNodeEditorArray.size(); i++) {
-      if (dataflowNodeEditorArray.get(i).hasSlideNumberShown()) {
-        dataflowNodeEditorArray.get(i).setHideSlideNumber();
+    for (DataflowNode dataflowNode : dataflowNodeEditorArray) {
+      if (dataflowNode.hasSlideNumberShown()) {
+        dataflowNode.setHideSlideNumber();
       } else {
-        dataflowNodeEditorArray.get(i).setShowSlideNumber();
+        dataflowNode.setShowSlideNumber();
       }
     }
-    for (int i = 0; i < dataflowLineEditorArray.size(); i++) {
-      if (dataflowLineEditorArray.get(i).hasSlideNumberShown()) {
-        dataflowLineEditorArray.get(i).setHideSlideNumber();
+    for (DataflowLine dataflowLine : dataflowLineEditorArray) {
+      if (dataflowLine.hasSlideNumberShown()) {
+        dataflowLine.setHideSlideNumber();
       } else {
-        dataflowLineEditorArray.get(i).setShowSlideNumber();
+        dataflowLine.setShowSlideNumber();
       }
     }
   }
@@ -18998,13 +19051,13 @@ public class Modeler extends JFrame {
     int panelHeight = 100;
     int moveDistance;
     Point point;
-    for (int i = 0; i < datamodelEntityBoxArray.size(); i++) {
-      datamodelEntityBoxArray.get(i).setSizeAndColors();
-      boxRightEdgeLocation = datamodelEntityBoxArray.get(i).getRightEdgeLocationOfArea();
+    for (DatamodelEntityBox entityBox : datamodelEntityBoxArray) {
+      entityBox.setSizeAndColors();
+      boxRightEdgeLocation = entityBox.getRightEdgeLocationOfArea();
       if (boxRightEdgeLocation > panelWidth) {
         panelWidth = boxRightEdgeLocation;
       }
-      boxBottomEdgeLocation = datamodelEntityBoxArray.get(i).getBottomEdgeLocationOfArea();
+      boxBottomEdgeLocation = entityBox.getBottomEdgeLocationOfArea();
       if (boxBottomEdgeLocation > panelHeight) {
         panelHeight = boxBottomEdgeLocation;
       }
@@ -19014,10 +19067,10 @@ public class Modeler extends JFrame {
         moveDistance =
             datamodelEntityBoxArray.get(i).calculateInstanceHeightToShowOnPanel(jPanelDatamodel);
         if (moveDistance != 0) {
-          for (int j = 0; j < datamodelEntityBoxArray.size(); j++) {
-            point = datamodelEntityBoxArray.get(j).getBoxPositionPoint();
+          for (DatamodelEntityBox datamodelEntityBox : datamodelEntityBoxArray) {
+            point = datamodelEntityBox.getBoxPositionPoint();
             if (point.y > datamodelEntityBoxArray.get(i).getBoxPositionPoint().y) {
-              datamodelEntityBoxArray.get(j).changePositionTo(point.x, point.y + moveDistance);
+              datamodelEntityBox.changePositionTo(point.x, point.y + moveDistance);
             }
           }
           datamodelEntityBoxArray
@@ -19033,9 +19086,9 @@ public class Modeler extends JFrame {
     }
     jPanelDatamodel.setPreferredSize(
         new Dimension((int) panelWidth * 120 / 100, (int) panelHeight * 150 / 100));
-    for (int i = 0; i < datamodelRelationshipLineArray.size(); i++) {
-      datamodelRelationshipLineArray.get(i).setupTerminalIcons();
-      datamodelRelationshipLineArray.get(i).setupRelationLine();
+    for (DatamodelRelationshipLine datamodelRelationshipLine : datamodelRelationshipLineArray) {
+      datamodelRelationshipLine.setupTerminalIcons();
+      datamodelRelationshipLine.setupRelationLine();
     }
     jProgressBar.setValue(0);
     jPanelDatamodel.updateUI();
@@ -19081,11 +19134,11 @@ public class Modeler extends JFrame {
           jPanelSubjectAreaDataflowSlideShow.setBackground(Color.WHITE);
           jPanelSubjectAreaDataflowSlideShow1.setBackground(Color.WHITE);
         }
-        for (int i = 0; i < dataflowLineEditorArray.size(); i++) {
-          dataflowLineEditorArray.get(i).updateColors();
+        for (DataflowLine dataflowLine : dataflowLineEditorArray) {
+          dataflowLine.updateColors();
         }
-        for (int i = 0; i < dataflowNodeEditorArray.size(); i++) {
-          dataflowNodeEditorArray.get(i).updateColors();
+        for (DataflowNode dataflowNode : dataflowNodeEditorArray) {
+          dataflowNode.updateColors();
         }
         dataflowBoundaryEditor.updateColors();
         jPanelSubjectAreaDataflowEditor1.updateUI();
@@ -19120,13 +19173,13 @@ public class Modeler extends JFrame {
             datamodelEntityBoxArray.get(i).calculateInstanceHeightToShowOnPanel(jPanelDatamodel);
         if (moveDistance != 0) {
 
-          for (int j = 0; j < datamodelEntityBoxArray.size(); j++) {
-            point = datamodelEntityBoxArray.get(j).getBoxPositionPoint();
+          for (DatamodelEntityBox datamodelEntityBox : datamodelEntityBoxArray) {
+            point = datamodelEntityBox.getBoxPositionPoint();
             if (point.y > datamodelEntityBoxArray.get(i).getBoxPositionPoint().y) {
               if (isShowingInstance) {
-                datamodelEntityBoxArray.get(j).changePositionTo(point.x, point.y + moveDistance);
+                datamodelEntityBox.changePositionTo(point.x, point.y + moveDistance);
               } else {
-                datamodelEntityBoxArray.get(j).changePositionTo(point.x, point.y - moveDistance);
+                datamodelEntityBox.changePositionTo(point.x, point.y - moveDistance);
               }
             }
           }
@@ -19202,11 +19255,11 @@ public class Modeler extends JFrame {
     // Set Process number according to slide number//
     int processNumber = 0;
     for (int i = 0; i <= dataflowSlideTotalNumber; i++) {
-      for (int j = 0; j < dataflowNodeSlideShowArray.size(); j++) {
-        if (dataflowNodeSlideShowArray.get(j).getType().equals("Process")) {
-          if (dataflowNodeSlideShowArray.get(j).getSlideNumber() == i) {
+      for (DataflowNode node : dataflowNodeSlideShowArray) {
+        if (node.getType().equals("Process")) {
+          if (node.getSlideNumber() == i) {
             processNumber = processNumber + 1;
-            dataflowNodeSlideShowArray.get(j).setNumber(processNumber);
+            node.setNumber(processNumber);
           }
         }
       }
@@ -19220,12 +19273,12 @@ public class Modeler extends JFrame {
     nodeList = currentMainTreeNode.getElement().getElementsByTagName("DataflowLine");
     for (int i = 0; i < nodeList.getLength(); i++) {
       org.w3c.dom.Element element = (org.w3c.dom.Element) nodeList.item(i);
-      for (int j = 0; j < dataflowNodeSlideShowArray.size(); j++) {
-        if (dataflowNodeSlideShowArray.get(j).getID().equals(element.getAttribute("NodeID1"))) {
-          dataflowNode1 = dataflowNodeSlideShowArray.get(j);
+      for (DataflowNode node : dataflowNodeSlideShowArray) {
+        if (node.getID().equals(element.getAttribute("NodeID1"))) {
+          dataflowNode1 = node;
         }
-        if (dataflowNodeSlideShowArray.get(j).getID().equals(element.getAttribute("NodeID2"))) {
-          dataflowNode2 = dataflowNodeSlideShowArray.get(j);
+        if (node.getID().equals(element.getAttribute("NodeID2"))) {
+          dataflowNode2 = node;
         }
       }
       dataflowLine =
@@ -19319,12 +19372,10 @@ public class Modeler extends JFrame {
               .get(i)
               .calculateInstanceHeightToShowOnPanel(jPanelDatamodelSlideShow2);
       if (moveDistance != 0) {
-        for (int j = 0; j < datamodelEntityBoxSlideShowArray.size(); j++) {
-          point = datamodelEntityBoxSlideShowArray.get(j).getBoxPositionPoint();
+        for (DatamodelEntityBox datamodelEntityBox : datamodelEntityBoxSlideShowArray) {
+          point = datamodelEntityBox.getBoxPositionPoint();
           if (point.y > datamodelEntityBoxSlideShowArray.get(i).getBoxPositionPoint().y) {
-            datamodelEntityBoxSlideShowArray
-                .get(j)
-                .changePositionTo(point.x, point.y + moveDistance);
+            datamodelEntityBox.changePositionTo(point.x, point.y + moveDistance);
           }
         }
       }
@@ -19335,12 +19386,12 @@ public class Modeler extends JFrame {
     int edgeLocation = 0;
     int pos = 0;
     while (pos <= panelHeight) {
-      for (int j = 0; j < datamodelEntityBoxSlideShowArray.size(); j++) {
-        if (datamodelEntityBoxSlideShowArray.get(j).isShowOnModel()) {
-          edgeLocation = datamodelEntityBoxSlideShowArray.get(j).getBottomEdgeLocationOfArea();
+      for (DatamodelEntityBox datamodelEntityBox : datamodelEntityBoxSlideShowArray) {
+        if (datamodelEntityBox.isShowOnModel()) {
+          edgeLocation = datamodelEntityBox.getBottomEdgeLocationOfArea();
           if ((pos <= edgeLocation) && (edgeLocation < pos + 10)) {
             tableNumber = tableNumber + 1;
-            datamodelEntityBoxSlideShowArray.get(j).setNumber(tableNumber);
+            datamodelEntityBox.setNumber(tableNumber);
           }
         }
       }
@@ -19356,12 +19407,9 @@ public class Modeler extends JFrame {
     for (int i = 0; i < subsystemRelationshipList.getLength(); i++) {
       element = (org.w3c.dom.Element) subsystemRelationshipList.item(i);
       relationshipElement = null;
-      for (int j = 0; j < relationshipElementArray.size(); j++) {
-        if (relationshipElementArray
-            .get(j)
-            .getAttribute("ID")
-            .equals(element.getAttribute("RelationshipID"))) {
-          relationshipElement = relationshipElementArray.get(j);
+      for (org.w3c.dom.Element value : relationshipElementArray) {
+        if (value.getAttribute("ID").equals(element.getAttribute("RelationshipID"))) {
+          relationshipElement = value;
           break;
         }
       }
@@ -19384,29 +19432,25 @@ public class Modeler extends JFrame {
     int leftEdge = 2000;
     int bottomEdge = 0;
     int rightEdge = 0;
-    for (int i = 0; i < datamodelEntityBoxSlideShowArray.size(); i++) {
-      datamodelEntityBoxSlideShowArray.get(i).setInstanceBySlideNumber(datamodelSlideNumber, true);
-      if (datamodelEntityBoxSlideShowArray.get(i).getBounds().y < topEdge) {
-        topEdge = datamodelEntityBoxSlideShowArray.get(i).getBounds().y;
+    for (DatamodelEntityBox datamodelEntityBox : datamodelEntityBoxSlideShowArray) {
+      datamodelEntityBox.setInstanceBySlideNumber(datamodelSlideNumber, true);
+      if (datamodelEntityBox.getBounds().y < topEdge) {
+        topEdge = datamodelEntityBox.getBounds().y;
       }
-      if (datamodelEntityBoxSlideShowArray.get(i).getBounds().y
-              + datamodelEntityBoxSlideShowArray.get(i).getBounds().height
-              + datamodelEntityBoxSlideShowArray.get(i).getInstanceHeight()
+      if (datamodelEntityBox.getBounds().y
+              + datamodelEntityBox.getBounds().height
+              + datamodelEntityBox.getInstanceHeight()
           > bottomEdge) {
         bottomEdge =
-            datamodelEntityBoxSlideShowArray.get(i).getBounds().y
-                + datamodelEntityBoxSlideShowArray.get(i).getBounds().height
-                + datamodelEntityBoxSlideShowArray.get(i).getInstanceHeight();
+            datamodelEntityBox.getBounds().y
+                + datamodelEntityBox.getBounds().height
+                + datamodelEntityBox.getInstanceHeight();
       }
-      if (datamodelEntityBoxSlideShowArray.get(i).getBounds().x < leftEdge) {
-        leftEdge = datamodelEntityBoxSlideShowArray.get(i).getBounds().x;
+      if (datamodelEntityBox.getBounds().x < leftEdge) {
+        leftEdge = datamodelEntityBox.getBounds().x;
       }
-      if (datamodelEntityBoxSlideShowArray.get(i).getBounds().x
-              + datamodelEntityBoxSlideShowArray.get(i).getBounds().width
-          > rightEdge) {
-        rightEdge =
-            datamodelEntityBoxSlideShowArray.get(i).getBounds().x
-                + datamodelEntityBoxSlideShowArray.get(i).getBounds().width;
+      if (datamodelEntityBox.getBounds().x + datamodelEntityBox.getBounds().width > rightEdge) {
+        rightEdge = datamodelEntityBox.getBounds().x + datamodelEntityBox.getBounds().width;
       }
     }
 
@@ -19579,8 +19623,8 @@ public class Modeler extends JFrame {
             wrkRec = dataflowBoundaryEditor.getBounds();
             imageSize.x = wrkRec.x + wrkRec.width + 30;
             imageSize.y = wrkRec.y + wrkRec.height + 30;
-            for (int i = 0; i < dataflowNodeEditorArray.size(); i++) {
-              wrkRec = dataflowNodeEditorArray.get(i).getBounds();
+            for (DataflowNode dataflowNode : dataflowNodeEditorArray) {
+              wrkRec = dataflowNode.getBounds();
               if (wrkRec.x + wrkRec.width + 30 > imageSize.x) {
                 imageSize.x = wrkRec.x + wrkRec.width + 30;
               }
@@ -19588,8 +19632,8 @@ public class Modeler extends JFrame {
                 imageSize.y = wrkRec.y + wrkRec.height + 30;
               }
             }
-            for (int i = 0; i < dataflowLineEditorArray.size(); i++) {
-              wrkRec = dataflowLineEditorArray.get(i).getLabelBounds();
+            for (DataflowLine dataflowLine : dataflowLineEditorArray) {
+              wrkRec = dataflowLine.getLabelBounds();
               if (wrkRec.x + wrkRec.width + 30 > imageSize.x) {
                 imageSize.x = wrkRec.x + wrkRec.width + 30;
               }
@@ -19646,11 +19690,10 @@ public class Modeler extends JFrame {
           if (currentMainTreeNode.getType().equals("TableList")) {
 
             if (jDialogDatamodelSlideShow.isVisible()) {
-              for (int i = 0; i < datamodelEntityBoxSlideShowArray.size(); i++) {
-                if (datamodelEntityBoxSlideShowArray.get(i).isShowOnModel()) {
-                  wrkRec = datamodelEntityBoxSlideShowArray.get(i).getBounds();
-                  wrkRec.height =
-                      wrkRec.height + datamodelEntityBoxSlideShowArray.get(i).getInstanceHeight();
+              for (DatamodelEntityBox datamodelEntityBox : datamodelEntityBoxSlideShowArray) {
+                if (datamodelEntityBox.isShowOnModel()) {
+                  wrkRec = datamodelEntityBox.getBounds();
+                  wrkRec.height = wrkRec.height + datamodelEntityBox.getInstanceHeight();
                   if (wrkRec.x + wrkRec.width + 50 > imageSize.x) {
                     imageSize.x = wrkRec.x + wrkRec.width + 50;
                   }
@@ -19660,12 +19703,11 @@ public class Modeler extends JFrame {
                 }
               }
             } else {
-              for (int i = 0; i < datamodelEntityBoxArray.size(); i++) {
-                if (datamodelEntityBoxArray.get(i).isShowOnModel()) {
-                  wrkRec = datamodelEntityBoxArray.get(i).getBounds();
+              for (DatamodelEntityBox datamodelEntityBox : datamodelEntityBoxArray) {
+                if (datamodelEntityBox.isShowOnModel()) {
+                  wrkRec = datamodelEntityBox.getBounds();
                   if (isShowingInstance) {
-                    wrkRec.height =
-                        wrkRec.height + datamodelEntityBoxArray.get(i).getInstanceHeight();
+                    wrkRec.height = wrkRec.height + datamodelEntityBox.getInstanceHeight();
                   }
                   if (wrkRec.x + wrkRec.width + 30 > imageSize.x) {
                     imageSize.x = wrkRec.x + wrkRec.width + 30;
@@ -21315,8 +21357,8 @@ public class Modeler extends JFrame {
       pointOfSelecterFrom = e.getPoint();
       jPanelSelectionGuide.setBounds(pointOfSelecterFrom.x, pointOfSelecterFrom.y, 0, 0);
       jPanelDatamodel.add(jPanelSelectionGuide);
-      for (int i = 0; i < datamodelEntityBoxArray.size(); i++) {
-        datamodelEntityBoxArray.get(i).setSelected(false);
+      for (DatamodelEntityBox datamodelEntityBox : datamodelEntityBoxArray) {
+        datamodelEntityBox.setSelected(false);
       }
     }
   }
@@ -21332,15 +21374,10 @@ public class Modeler extends JFrame {
         pointOfSelecterFrom.y,
         e.getX() - pointOfSelecterFrom.x,
         e.getY() - pointOfSelecterFrom.y);
-    for (int i = 0; i < datamodelEntityBoxArray.size(); i++) {
-      if (datamodelEntityBoxArray.get(i).isShowOnModel()) {
-        datamodelEntityBoxArray
-            .get(i)
-            .setSelected(
-                datamodelEntityBoxArray
-                    .get(i)
-                    .getBounds()
-                    .intersects(jPanelSelectionGuide.getBounds()));
+    for (DatamodelEntityBox datamodelEntityBox : datamodelEntityBoxArray) {
+      if (datamodelEntityBox.isShowOnModel()) {
+        datamodelEntityBox.setSelected(
+            datamodelEntityBox.getBounds().intersects(jPanelSelectionGuide.getBounds()));
       }
     }
   }
@@ -24511,10 +24548,9 @@ public class Modeler extends JFrame {
           Rectangle bounds;
           Point leftTopPointOfSelectedTables = new Point(0, 0);
           Point rightBottomPointOfSelectedTables = new Point(0, 0);
-          for (int i = 0; i < dataflowNodeEditorArray.size(); i++) {
-            if (dataflowNodeEditorArray.get(i).isSelected()
-                || dataflowNodeEditorArray.get(i) == this) {
-              bounds = dataflowNodeEditorArray.get(i).getBounds();
+          for (DataflowNode dataflowNode : dataflowNodeEditorArray) {
+            if (dataflowNode.isSelected() || dataflowNode == this) {
+              bounds = dataflowNode.getBounds();
               if (leftTopPointOfSelectedTables.x == 0
                   || bounds.x < leftTopPointOfSelectedTables.x) {
                 leftTopPointOfSelectedTables.x = bounds.x;
@@ -24567,43 +24603,30 @@ public class Modeler extends JFrame {
               distanceX = e.getX() - mousePosX;
               distanceY = e.getY() - mousePosY;
 
-              for (int i = 0; i < dataflowNodeEditorArray.size(); i++) {
-                if (dataflowNodeEditorArray.get(i).isSelected()
-                    || dataflowNodeEditorArray.get(i) == this) {
+              for (DataflowNode dataflowNode : dataflowNodeEditorArray) {
+                if (dataflowNode.isSelected() || dataflowNode == this) {
 
                   // Change position of the specific node//
-                  originalPosition = dataflowNodeEditorArray.get(i).getLocation();
-                  dataflowNodeEditorArray
-                      .get(i)
-                      .setBounds(
-                          new Rectangle(
-                              originalPosition.x + distanceX,
-                              originalPosition.y + distanceY,
-                              dataflowNodeEditorArray.get(i).NODE_WIDTH,
-                              dataflowNodeEditorArray.get(i).NODE_HEIGHT));
-                  if (dataflowNodeEditorArray.get(i).getNodeRightEdgeLocation()
-                      > nodeRightEdgeLocation) {
-                    nodeRightEdgeLocation =
-                        dataflowNodeEditorArray.get(i).getNodeRightEdgeLocation();
+                  originalPosition = dataflowNode.getLocation();
+                  dataflowNode.setBounds(
+                      new Rectangle(
+                          originalPosition.x + distanceX,
+                          originalPosition.y + distanceY,
+                          dataflowNode.NODE_WIDTH,
+                          dataflowNode.NODE_HEIGHT));
+                  if (dataflowNode.getNodeRightEdgeLocation() > nodeRightEdgeLocation) {
+                    nodeRightEdgeLocation = dataflowNode.getNodeRightEdgeLocation();
                   }
-                  if (dataflowNodeEditorArray.get(i).getNodeBottomEdgeLocation()
-                      > nodeBottomEdgeLocation) {
-                    nodeBottomEdgeLocation =
-                        dataflowNodeEditorArray.get(i).getNodeBottomEdgeLocation();
+                  if (dataflowNode.getNodeBottomEdgeLocation() > nodeBottomEdgeLocation) {
+                    nodeBottomEdgeLocation = dataflowNode.getNodeBottomEdgeLocation();
                   }
-                  dataflowNodeEditorArray.get(i).setSelected(false);
+                  dataflowNode.setSelected(false);
 
                   // Update DataflowLines//
-                  for (int j = 0; j < dataflowLineEditorArray.size(); j++) {
-                    if (dataflowLineEditorArray
-                            .get(j)
-                            .getNode1()
-                            .equals(dataflowNodeEditorArray.get(i))
-                        || dataflowLineEditorArray
-                            .get(j)
-                            .getNode2()
-                            .equals(dataflowNodeEditorArray.get(i))) {
-                      dataflowLineEditorArray.get(j).addArrows();
+                  for (DataflowLine dataflowLine : dataflowLineEditorArray) {
+                    if (dataflowLine.getNode1().equals(dataflowNode)
+                        || dataflowLine.getNode2().equals(dataflowNode)) {
+                      dataflowLine.addArrows();
                     }
                   }
                 }
@@ -24616,39 +24639,28 @@ public class Modeler extends JFrame {
               distanceX = e.getX() - mousePosX;
               distanceY = e.getY() - mousePosY;
 
-              for (int i = 0; i < dataflowNodeEditorArray.size(); i++) {
+              for (DataflowNode dataflowNode : dataflowNodeEditorArray) {
 
                 // Change position of the specific node//
-                originalPosition = dataflowNodeEditorArray.get(i).getLocation();
-                dataflowNodeEditorArray
-                    .get(i)
-                    .setBounds(
-                        new Rectangle(
-                            originalPosition.x + distanceX,
-                            originalPosition.y + distanceY,
-                            dataflowNodeEditorArray.get(i).NODE_WIDTH,
-                            dataflowNodeEditorArray.get(i).NODE_HEIGHT));
-                if (dataflowNodeEditorArray.get(i).getNodeRightEdgeLocation()
-                    > nodeRightEdgeLocation) {
-                  nodeRightEdgeLocation = dataflowNodeEditorArray.get(i).getNodeRightEdgeLocation();
+                originalPosition = dataflowNode.getLocation();
+                dataflowNode.setBounds(
+                    new Rectangle(
+                        originalPosition.x + distanceX,
+                        originalPosition.y + distanceY,
+                        dataflowNode.NODE_WIDTH,
+                        dataflowNode.NODE_HEIGHT));
+                if (dataflowNode.getNodeRightEdgeLocation() > nodeRightEdgeLocation) {
+                  nodeRightEdgeLocation = dataflowNode.getNodeRightEdgeLocation();
                 }
-                if (dataflowNodeEditorArray.get(i).getNodeBottomEdgeLocation()
-                    > nodeBottomEdgeLocation) {
-                  nodeBottomEdgeLocation =
-                      dataflowNodeEditorArray.get(i).getNodeBottomEdgeLocation();
+                if (dataflowNode.getNodeBottomEdgeLocation() > nodeBottomEdgeLocation) {
+                  nodeBottomEdgeLocation = dataflowNode.getNodeBottomEdgeLocation();
                 }
 
                 // Update DataflowLines//
-                for (int j = 0; j < dataflowLineEditorArray.size(); j++) {
-                  if (dataflowLineEditorArray
-                          .get(j)
-                          .getNode1()
-                          .equals(dataflowNodeEditorArray.get(i))
-                      || dataflowLineEditorArray
-                          .get(j)
-                          .getNode2()
-                          .equals(dataflowNodeEditorArray.get(i))) {
-                    dataflowLineEditorArray.get(j).addArrows();
+                for (DataflowLine dataflowLine : dataflowLineEditorArray) {
+                  if (dataflowLine.getNode1().equals(dataflowNode)
+                      || dataflowLine.getNode2().equals(dataflowNode)) {
+                    dataflowLine.addArrows();
                   }
                 }
               }
@@ -26492,34 +26504,30 @@ public class Modeler extends JFrame {
 
       // Retrieve entityBox1&2 and their position//
       if (jPanelCanvas == jPanelDatamodel) {
-        for (int i = 0; i < datamodelEntityBoxArray.size(); i++) {
-          if (datamodelEntityBoxArray
-              .get(i)
+        for (DatamodelEntityBox datamodelEntityBox : datamodelEntityBoxArray) {
+          if (datamodelEntityBox
               .getTableID()
               .equals(relationshipElement.getAttribute("Table1ID"))) {
-            entityBox1 = datamodelEntityBoxArray.get(i);
+            entityBox1 = datamodelEntityBox;
           }
-          if (datamodelEntityBoxArray
-              .get(i)
+          if (datamodelEntityBox
               .getTableID()
               .equals(relationshipElement.getAttribute("Table2ID"))) {
-            entityBox2 = datamodelEntityBoxArray.get(i);
+            entityBox2 = datamodelEntityBox;
           }
         }
       }
       if (jPanelCanvas == jPanelDatamodelSlideShow2) {
-        for (int i = 0; i < datamodelEntityBoxSlideShowArray.size(); i++) {
-          if (datamodelEntityBoxSlideShowArray
-              .get(i)
+        for (DatamodelEntityBox datamodelEntityBox : datamodelEntityBoxSlideShowArray) {
+          if (datamodelEntityBox
               .getTableID()
               .equals(relationshipElement.getAttribute("Table1ID"))) {
-            entityBox1 = datamodelEntityBoxSlideShowArray.get(i);
+            entityBox1 = datamodelEntityBox;
           }
-          if (datamodelEntityBoxSlideShowArray
-              .get(i)
+          if (datamodelEntityBox
               .getTableID()
               .equals(relationshipElement.getAttribute("Table2ID"))) {
-            entityBox2 = datamodelEntityBoxSlideShowArray.get(i);
+            entityBox2 = datamodelEntityBox;
           }
         }
       }
@@ -28503,8 +28511,8 @@ public class Modeler extends JFrame {
         org.w3c.dom.Document document;
         org.w3c.dom.Element tableElement;
         String synchFileName = "";
-        for (int i = 0; i < referringFileDocList.size(); i++) {
-          document = referringFileDocList.get(i);
+        for (org.w3c.dom.Document value : referringFileDocList) {
+          document = value;
           if (document != null) {
             NodeList tableList = document.getElementsByTagName("Table");
             for (int j = 0; j < tableList.getLength(); j++) {
@@ -28680,8 +28688,8 @@ public class Modeler extends JFrame {
       String wrkStr = "";
       int maxHeight = 0;
       int width = this.getWidth() - jPanel2.getWidth();
-      for (int i = 0; i < slideInstanceArray.size(); i++) {
-        wrkStr = substringLinesWithTokenOfEOL(slideInstanceArray.get(i), "\n");
+      for (String s : slideInstanceArray) {
+        wrkStr = substringLinesWithTokenOfEOL(s, "\n");
         if (wrkStr.endsWith("\n")) {
           wrkStr = wrkStr.substring(0, wrkStr.length() - 1);
         }
@@ -28717,9 +28725,9 @@ public class Modeler extends JFrame {
 
     public int getLastSlideNumber() {
       int lastNumber = -1;
-      for (int i = 0; i < slideNumberArray.size(); i++) {
-        if (slideNumberArray.get(i) > lastNumber) {
-          lastNumber = slideNumberArray.get(i);
+      for (Integer integer : slideNumberArray) {
+        if (integer > lastNumber) {
+          lastNumber = integer;
         }
       }
       return lastNumber;
@@ -28810,17 +28818,15 @@ public class Modeler extends JFrame {
       jTextAreaShowInstance.setFont(new java.awt.Font(ioImageFontName, 0, nameFontSize));
 
       int labelPosX = 0;
-      for (int i = 0; i < elementLabelArray.size(); i++) {
-        elementLabelArray.get(i).resetSize();
-        elementLabelArray
-            .get(i)
-            .setBounds(
-                new Rectangle(
-                    labelPosX,
-                    elementLabelPosY,
-                    elementLabelArray.get(i).getPreferredSize().width,
-                    elementLabelArray.get(i).getPreferredSize().height));
-        labelPosX = labelPosX + elementLabelArray.get(i).getPreferredSize().width;
+      for (ElementLabel elementLabel : elementLabelArray) {
+        elementLabel.resetSize();
+        elementLabel.setBounds(
+            new Rectangle(
+                labelPosX,
+                elementLabelPosY,
+                elementLabel.getPreferredSize().width,
+                elementLabel.getPreferredSize().height));
+        labelPosX = labelPosX + elementLabel.getPreferredSize().width;
       }
 
       if (isNormalColorConfigOnDataModel) {
@@ -29024,11 +29030,10 @@ public class Modeler extends JFrame {
         Rectangle bounds;
         Point leftTopPointOfSelectedTables = new Point(0, 0);
         Point rightBottomPointOfSelectedTables = new Point(0, 0);
-        for (int i = 0; i < datamodelEntityBoxArray.size(); i++) {
-          if (datamodelEntityBoxArray.get(i).isShowOnModel()
-              && (datamodelEntityBoxArray.get(i).isSelected()
-                  || datamodelEntityBoxArray.get(i) == this)) {
-            bounds = datamodelEntityBoxArray.get(i).getBounds();
+        for (DatamodelEntityBox datamodelEntityBox : datamodelEntityBoxArray) {
+          if (datamodelEntityBox.isShowOnModel()
+              && (datamodelEntityBox.isSelected() || datamodelEntityBox == this)) {
+            bounds = datamodelEntityBox.getBounds();
             if (leftTopPointOfSelectedTables.x == 0 || bounds.x < leftTopPointOfSelectedTables.x) {
               leftTopPointOfSelectedTables.x = bounds.x;
             }
@@ -29104,15 +29109,14 @@ public class Modeler extends JFrame {
           int distanceX = e.getX() - mousePosX;
           int distanceY = e.getY() - mousePosY;
           Point originalPosition;
-          for (int i = 0; i < datamodelEntityBoxArray.size(); i++) {
-            if (datamodelEntityBoxArray.get(i).isShowOnModel()
-                && (datamodelEntityBoxArray.get(i) == this
-                    || datamodelEntityBoxArray.get(i).isSelected()
+          for (DatamodelEntityBox datamodelEntityBox : datamodelEntityBoxArray) {
+            if (datamodelEntityBox.isShowOnModel()
+                && (datamodelEntityBox == this
+                    || datamodelEntityBox.isSelected()
                     || (e.getModifiers() & InputEvent.SHIFT_MASK) != 0)) {
-              originalPosition = datamodelEntityBoxArray.get(i).getBoxPositionPoint();
-              datamodelEntityBoxArray
-                  .get(i)
-                  .changePositionTo(originalPosition.x + distanceX, originalPosition.y + distanceY);
+              originalPosition = datamodelEntityBox.getBoxPositionPoint();
+              datamodelEntityBox.changePositionTo(
+                  originalPosition.x + distanceX, originalPosition.y + distanceY);
             }
           }
 
@@ -29146,10 +29150,10 @@ public class Modeler extends JFrame {
       boxPosY = posY;
 
       // Update relationship lines//
-      for (int i = 0; i < datamodelRelationshipLineArray.size(); i++) {
-        if (datamodelRelationshipLineArray.get(i).getEntityBox1().equals(this)
-            || datamodelRelationshipLineArray.get(i).getEntityBox2().equals(this)) {
-          datamodelRelationshipLineArray.get(i).setupRelationLine();
+      for (DatamodelRelationshipLine datamodelRelationshipLine : datamodelRelationshipLineArray) {
+        if (datamodelRelationshipLine.getEntityBox1().equals(this)
+            || datamodelRelationshipLine.getEntityBox2().equals(this)) {
+          datamodelRelationshipLine.setupRelationLine();
         }
       }
 
@@ -29312,10 +29316,10 @@ public class Modeler extends JFrame {
                     .get(i)
                     .calculateInstanceHeightToShowOnPanel(jPanelDatamodel);
             if (moveDistance != 0) {
-              for (int j = 0; j < datamodelEntityBoxArray.size(); j++) {
-                point = datamodelEntityBoxArray.get(j).getBoxPositionPoint();
+              for (DatamodelEntityBox datamodelEntityBox : datamodelEntityBoxArray) {
+                point = datamodelEntityBox.getBoxPositionPoint();
                 if (point.y > datamodelEntityBoxArray.get(i).getBoxPositionPoint().y) {
-                  datamodelEntityBoxArray.get(j).changePositionTo(point.x, point.y - moveDistance);
+                  datamodelEntityBox.changePositionTo(point.x, point.y - moveDistance);
                 }
               }
             }
@@ -29328,10 +29332,10 @@ public class Modeler extends JFrame {
                     .get(i)
                     .calculateInstanceHeightToShowOnPanel(jPanelDatamodel);
             if (moveDistance != 0) {
-              for (int j = 0; j < datamodelEntityBoxArray.size(); j++) {
-                point = datamodelEntityBoxArray.get(j).getBoxPositionPoint();
+              for (DatamodelEntityBox datamodelEntityBox : datamodelEntityBoxArray) {
+                point = datamodelEntityBox.getBoxPositionPoint();
                 if (point.y > datamodelEntityBoxArray.get(i).getBoxPositionPoint().y) {
-                  datamodelEntityBoxArray.get(j).changePositionTo(point.x, point.y + moveDistance);
+                  datamodelEntityBox.changePositionTo(point.x, point.y + moveDistance);
                 }
               }
               datamodelEntityBoxArray
@@ -29362,23 +29366,21 @@ public class Modeler extends JFrame {
     }
 
     void jMenuItemEntityBoxShowAllLines_actionPerformed(ActionEvent e) {
-      for (int i = 0; i < datamodelRelationshipLineArray.size(); i++) {
-        if (datamodelRelationshipLineArray
-            .get(i)
+      for (DatamodelRelationshipLine datamodelRelationshipLine : datamodelRelationshipLineArray) {
+        if (datamodelRelationshipLine
             .getEntityBox1()
             .getTableID()
             .equals(subsystemTableElement_.getAttribute("TableID"))) {
-          if (!datamodelRelationshipLineArray.get(i).isShowOnModel()) {
-            datamodelRelationshipLineArray.get(i).setShowOnModel(true);
+          if (!datamodelRelationshipLine.isShowOnModel()) {
+            datamodelRelationshipLine.setShowOnModel(true);
           }
         }
-        if (datamodelRelationshipLineArray
-            .get(i)
+        if (datamodelRelationshipLine
             .getEntityBox2()
             .getTableID()
             .equals(subsystemTableElement_.getAttribute("TableID"))) {
-          if (!datamodelRelationshipLineArray.get(i).isShowOnModel()) {
-            datamodelRelationshipLineArray.get(i).setShowOnModel(true);
+          if (!datamodelRelationshipLine.isShowOnModel()) {
+            datamodelRelationshipLine.setShowOnModel(true);
           }
         }
       }
@@ -29390,26 +29392,24 @@ public class Modeler extends JFrame {
     private void entityBox_mouseClicked(MouseEvent e) {
       if ((e.getModifiers() & InputEvent.BUTTON1_MASK) != InputEvent.BUTTON1_MASK) {
         jMenuItemEntityBoxShowAllLines.setEnabled(false);
-        for (int i = 0; i < datamodelRelationshipLineArray.size(); i++) {
-          if (datamodelRelationshipLineArray
-              .get(i)
+        for (DatamodelRelationshipLine datamodelRelationshipLine : datamodelRelationshipLineArray) {
+          if (datamodelRelationshipLine
               .getEntityBox1()
               .getTableID()
               .equals(subsystemTableElement_.getAttribute("TableID"))) {
-            if (!datamodelRelationshipLineArray.get(i).isShowOnModel()) {
-              if (datamodelRelationshipLineArray.get(i).getEntityBox2().isShowOnModel()) {
+            if (!datamodelRelationshipLine.isShowOnModel()) {
+              if (datamodelRelationshipLine.getEntityBox2().isShowOnModel()) {
                 jMenuItemEntityBoxShowAllLines.setEnabled(true);
                 break;
               }
             }
           }
-          if (datamodelRelationshipLineArray
-              .get(i)
+          if (datamodelRelationshipLine
               .getEntityBox2()
               .getTableID()
               .equals(subsystemTableElement_.getAttribute("TableID"))) {
-            if (!datamodelRelationshipLineArray.get(i).isShowOnModel()) {
-              if (datamodelRelationshipLineArray.get(i).getEntityBox1().isShowOnModel()) {
+            if (!datamodelRelationshipLine.isShowOnModel()) {
+              if (datamodelRelationshipLine.getEntityBox1().isShowOnModel()) {
                 jMenuItemEntityBoxShowAllLines.setEnabled(true);
                 break;
               }
@@ -29435,8 +29435,8 @@ public class Modeler extends JFrame {
     }
 
     public void resetColorOfKeyDragging() {
-      for (int i = 0; i < elementLabelArray.size(); i++) {
-        elementLabelArray.get(i).setColorToStartDragging(false);
+      for (ElementLabel elementLabel : elementLabelArray) {
+        elementLabel.setColorToStartDragging(false);
       }
       draggingKeyElement = null;
     }
@@ -32582,8 +32582,8 @@ public class Modeler extends JFrame {
       if (nodeType_.equals("TableField")) {
         org.w3c.dom.Element dataTypeElement;
         element = (org.w3c.dom.Element) domNode_.cloneNode(true);
-        for (int i = 0; i < newlyAddedDataTypeElementList.size(); i++) {
-          dataTypeElement = newlyAddedDataTypeElementList.get(i);
+        for (org.w3c.dom.Element value : newlyAddedDataTypeElementList) {
+          dataTypeElement = value;
           element.appendChild((org.w3c.dom.Element) dataTypeElement.cloneNode(true));
         }
       }
@@ -33225,11 +33225,11 @@ public class Modeler extends JFrame {
       // Set Process number according to slide number//
       int processNumber = 0;
       for (int i = 0; i <= maxSlideNumber; i++) {
-        for (int j = 0; j < dataflowNodeEditorArray.size(); j++) {
-          if (dataflowNodeEditorArray.get(j).getType().equals("Process")) {
-            if (dataflowNodeEditorArray.get(j).getSlideNumber() == i) {
+        for (DataflowNode node : dataflowNodeEditorArray) {
+          if (node.getType().equals("Process")) {
+            if (node.getSlideNumber() == i) {
               processNumber = processNumber + 1;
-              dataflowNodeEditorArray.get(j).setNumber(processNumber);
+              node.setNumber(processNumber);
             }
           }
         }
@@ -33242,12 +33242,12 @@ public class Modeler extends JFrame {
       dataflowLineEditorArray.clear();
       for (int i = 0; i < dataflowLineList.getLength(); i++) {
         org.w3c.dom.Element element = (org.w3c.dom.Element) dataflowLineList.item(i);
-        for (int j = 0; j < dataflowNodeEditorArray.size(); j++) {
-          if (dataflowNodeEditorArray.get(j).getID().equals(element.getAttribute("NodeID1"))) {
-            dataflowNode1 = dataflowNodeEditorArray.get(j);
+        for (DataflowNode node : dataflowNodeEditorArray) {
+          if (node.getID().equals(element.getAttribute("NodeID1"))) {
+            dataflowNode1 = node;
           }
-          if (dataflowNodeEditorArray.get(j).getID().equals(element.getAttribute("NodeID2"))) {
-            dataflowNode2 = dataflowNodeEditorArray.get(j);
+          if (node.getID().equals(element.getAttribute("NodeID2"))) {
+            dataflowNode2 = node;
           }
         }
         dataflowLine =
@@ -34342,12 +34342,12 @@ public class Modeler extends JFrame {
         int edgeLocation = 0;
         int pos = 0;
         while (pos <= panelHeight) {
-          for (int j = 0; j < datamodelEntityBoxArray.size(); j++) {
-            if (datamodelEntityBoxArray.get(j).isShowOnModel()) {
-              edgeLocation = datamodelEntityBoxArray.get(j).getBottomEdgeLocationOfArea();
+          for (DatamodelEntityBox datamodelEntityBox : datamodelEntityBoxArray) {
+            if (datamodelEntityBox.isShowOnModel()) {
+              edgeLocation = datamodelEntityBox.getBottomEdgeLocationOfArea();
               if ((pos <= edgeLocation) && (edgeLocation < pos + 10)) {
                 tableNumber = tableNumber + 1;
-                datamodelEntityBoxArray.get(j).setNumber(tableNumber);
+                datamodelEntityBox.setNumber(tableNumber);
               }
             }
           }
@@ -34389,9 +34389,9 @@ public class Modeler extends JFrame {
           relationshipID = subsystemRelationshipElement.getAttribute("RelationshipID");
 
           relationshipElement = null;
-          for (int j = 0; j < relationshipElementArray.size(); j++) {
-            if (relationshipElementArray.get(j).getAttribute("ID").equals(relationshipID)) {
-              relationshipElement = relationshipElementArray.get(j);
+          for (org.w3c.dom.Element value : relationshipElementArray) {
+            if (value.getAttribute("ID").equals(relationshipID)) {
+              relationshipElement = value;
               break;
             }
           }
@@ -34410,10 +34410,9 @@ public class Modeler extends JFrame {
             }
           }
         }
-        for (int i = 0; i < invalidSubsystemRelationshipList.size(); i++) {
-          subsystemRelationshipElement =
-              (org.w3c.dom.Element) invalidSubsystemRelationshipList.get(i);
-          org.w3c.dom.Node parentDomNode = subsystemRelationshipElement.getParentNode();
+        for (org.w3c.dom.Element value : invalidSubsystemRelationshipList) {
+          subsystemRelationshipElement = (org.w3c.dom.Element) value;
+          Node parentDomNode = subsystemRelationshipElement.getParentNode();
           parentDomNode.removeChild(subsystemRelationshipElement);
         }
 
@@ -37281,18 +37280,15 @@ public class Modeler extends JFrame {
               JOptionPane.showMessageDialog(dropTarget, res.getString("S5748"));
               refreshRequired = false;
             } else {
-              for (int i = 0; i < datamodelEntityBoxArray.size(); i++) {
-                if (datamodelEntityBoxArray
-                    .get(i)
-                    .getTableID()
-                    .equals(domNode_.getAttribute("ID"))) {
+              for (DatamodelEntityBox datamodelEntityBox : datamodelEntityBoxArray) {
+                if (datamodelEntityBox.getTableID().equals(domNode_.getAttribute("ID"))) {
                   Point viewPosition = jScrollPaneTreeView.getViewport().getViewPosition();
                   Point pointOfCanvas = jPanelDatamodel.getLocationOnScreen();
                   Point pointOfFrame = getModelerPosition();
                   int positionX = e.getX() - viewPosition.x - pointOfCanvas.x + pointOfFrame.x + 7;
                   int positionY = e.getY() - viewPosition.y - pointOfCanvas.y + pointOfFrame.y + 64;
-                  datamodelEntityBoxArray.get(i).changePositionTo(positionX, positionY);
-                  datamodelEntityBoxArray.get(i).setShowOnModel(true);
+                  datamodelEntityBox.changePositionTo(positionX, positionY);
+                  datamodelEntityBox.setShowOnModel(true);
                   break;
                 }
               }
@@ -39126,11 +39122,11 @@ public class Modeler extends JFrame {
         domNode_.setAttribute(
             "Descriptions", concatLinesWithTokenOfEOL(jTextAreaSubjectAreaDescriptions.getText()));
         //
-        for (int i = 0; i < dataflowNodeEditorArray.size(); i++) {
-          dataflowNodeEditorArray.get(i).updatePosition();
+        for (DataflowNode dataflowNode : dataflowNodeEditorArray) {
+          dataflowNode.updatePosition();
         }
-        for (int i = 0; i < dataflowLineEditorArray.size(); i++) {
-          dataflowLineEditorArray.get(i).updatePosition();
+        for (DataflowLine dataflowLine : dataflowLineEditorArray) {
+          dataflowLine.updatePosition();
         }
         //
         // Log node after modified//
@@ -39480,11 +39476,12 @@ public class Modeler extends JFrame {
           parentElement.setAttribute(
               "DatamodelDescriptions",
               concatLinesWithTokenOfEOL(jTextAreaDatamodelDescriptions.getText()));
-          for (int i = 0; i < datamodelEntityBoxArray.size(); i++) {
-            datamodelEntityBoxArray.get(i).updateElement(isShowingInstance);
+          for (DatamodelEntityBox datamodelEntityBox : datamodelEntityBoxArray) {
+            datamodelEntityBox.updateElement(isShowingInstance);
           }
-          for (int i = 0; i < datamodelRelationshipLineArray.size(); i++) {
-            datamodelRelationshipLineArray.get(i).updateElement();
+          for (DatamodelRelationshipLine datamodelRelationshipLine :
+              datamodelRelationshipLineArray) {
+            datamodelRelationshipLine.updateElement();
           }
           valueOfFieldsChanged = true;
         }
@@ -41222,8 +41219,8 @@ public class Modeler extends JFrame {
       }
 
       bf = new StringBuffer();
-      for (int i = 0; i < logList.size(); i++) {
-        bf.append(logList.get(i));
+      for (String s : logList) {
+        bf.append(s);
       }
       return bf.toString();
     }
