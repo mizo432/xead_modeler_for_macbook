@@ -40,6 +40,7 @@ import java.awt.image.*;
 import java.awt.print.*;
 import java.io.*;
 import java.net.URI;
+import java.nio.charset.StandardCharsets;
 import java.util.*;
 import javax.imageio.*;
 import javax.swing.*;
@@ -205,11 +206,9 @@ public class Modeler extends JFrame {
   private JMenu jMenuHelp = new JMenu();
   private JMenuItem jMenuItemHelpHelp = new JMenuItem();
   private JMenuItem jMenuItemHelpAbout = new JMenuItem();
-  private HashMap<String, org.w3c.dom.Document> synchFileMap =
-      new HashMap<String, org.w3c.dom.Document>();
-  private ArrayList<String> referringFileNameList = new ArrayList<String>();
-  private ArrayList<org.w3c.dom.Document> referringFileDocList =
-      new ArrayList<org.w3c.dom.Document>();
+  private HashMap<String, org.w3c.dom.Document> synchFileMap = new HashMap<>();
+  private ArrayList<String> referringFileNameList = new ArrayList<>();
+  private ArrayList<org.w3c.dom.Document> referringFileDocList = new ArrayList<>();
 
   /** Variants for Properties */
   private Properties properties = new Properties();
@@ -225,10 +224,9 @@ public class Modeler extends JFrame {
       new SortableDomElementFieldListModel();
 
   /** fields for style processing for JTextpane */
-  private ArrayList<String> styledDocumentCopiedTextList = new ArrayList<String>();
+  private ArrayList<String> styledDocumentCopiedTextList = new ArrayList<>();
 
-  private ArrayList<DefaultStyledDocument> styledDocumentCopiedSegmentList =
-      new ArrayList<DefaultStyledDocument>();
+  private ArrayList<DefaultStyledDocument> styledDocumentCopiedSegmentList = new ArrayList<>();
   private ChangeState changeState = new ChangeState();
 
   /** Dialog box and fileChooser for general use */
@@ -527,8 +525,7 @@ public class Modeler extends JFrame {
       new TableModelReadOnlyList();
   private JTable jTableSystemDataTypeWhereUsedList =
       new JTable(tableModelSystemDataTypeWhereUsedList);
-  private HashMap<String, org.w3c.dom.Element> dataTypeElementMap =
-      new HashMap<String, org.w3c.dom.Element>();
+  private HashMap<String, org.w3c.dom.Element> dataTypeElementMap = new HashMap<>();
   // (SystemFunctionTypeList)//
   private boolean tableSystemFunctionTypeListSelectChangeActivated = false;
   private int selectedRow_jTableSystemFunctionTypeList;
@@ -550,8 +547,7 @@ public class Modeler extends JFrame {
       new TableModelReadOnlyList();
   private JTable jTableSystemFunctionTypeWhereUsedList =
       new JTable(tableModelSystemFunctionTypeWhereUsedList);
-  private HashMap<String, org.w3c.dom.Element> functionTypeElementMap =
-      new HashMap<String, org.w3c.dom.Element>();
+  private HashMap<String, org.w3c.dom.Element> functionTypeElementMap = new HashMap<>();
   // (SystemTermsList)//
   private boolean tableSystemTermsListSelectChangeActivated = false;
   private int selectedRow_jTableSystemTermsList;
@@ -645,10 +641,10 @@ public class Modeler extends JFrame {
       };
   private DataflowBoundary dataflowBoundaryEditor = new DataflowBoundary();
   private DataflowBoundary dataflowBoundarySlideShow = new DataflowBoundary();
-  private ArrayList<DataflowLine> dataflowLineEditorArray = new ArrayList<DataflowLine>();
-  private ArrayList<DataflowLine> dataflowLineSlideShowArray = new ArrayList<DataflowLine>();
-  private ArrayList<DataflowNode> dataflowNodeEditorArray = new ArrayList<DataflowNode>();
-  private ArrayList<DataflowNode> dataflowNodeSlideShowArray = new ArrayList<DataflowNode>();
+  private ArrayList<DataflowLine> dataflowLineEditorArray = new ArrayList<>();
+  private ArrayList<DataflowLine> dataflowLineSlideShowArray = new ArrayList<>();
+  private ArrayList<DataflowNode> dataflowNodeEditorArray = new ArrayList<>();
+  private ArrayList<DataflowNode> dataflowNodeSlideShowArray = new ArrayList<>();
   private JPanel jPanelSubjectAreaDataflowEditor2 =
       new JPanel() {
         private static final long serialVersionUID = 1L;
@@ -755,7 +751,7 @@ public class Modeler extends JFrame {
   private DefaultListModel listModelSubjectAreaWithThisTask = new DefaultListModel();
   private JList jListSubjectAreaWithThisTask = new JList(listModelSubjectAreaWithThisTask);
   private JScrollPane jScrollPaneSubjectAreaWithThisTask = new JScrollPane();
-  private ArrayList<String> subjectAreaIDList = new ArrayList<String>();
+  private ArrayList<String> subjectAreaIDList = new ArrayList<>();
   private JScrollPane jScrollPaneTaskDescriptions = new JScrollPane();
   private KanjiTextArea jTextAreaTaskDescriptions = new KanjiTextArea();
   private JSplitPane jSplitPaneTask2 = new JSplitPane();
@@ -948,12 +944,9 @@ public class Modeler extends JFrame {
   private JScrollPane jScrollPaneDatamodelDescriptions = new JScrollPane();
   private KanjiTextArea jTextAreaDatamodelDescriptions = new KanjiTextArea();
   private JScrollPane jScrollPaneDatamodel = new JScrollPane();
-  private ArrayList<DatamodelEntityBox> datamodelEntityBoxArray =
-      new ArrayList<DatamodelEntityBox>();
-  private ArrayList<DatamodelRelationshipLine> datamodelRelationshipLineArray =
-      new ArrayList<DatamodelRelationshipLine>();
-  private ArrayList<org.w3c.dom.Element> relationshipElementArray =
-      new ArrayList<org.w3c.dom.Element>();
+  private ArrayList<DatamodelEntityBox> datamodelEntityBoxArray = new ArrayList<>();
+  private ArrayList<DatamodelRelationshipLine> datamodelRelationshipLineArray = new ArrayList<>();
+  private ArrayList<org.w3c.dom.Element> relationshipElementArray = new ArrayList<>();
   private JPanel jPanelDatamodel =
       new JPanel() {
         private static final long serialVersionUID = 1L;
@@ -1059,10 +1052,9 @@ public class Modeler extends JFrame {
       new DialogAddRelationshipOnDatamodel(this);
   private DialogEditInstanceOnDatamodel dialogEditInstanceOnDatamodel =
       new DialogEditInstanceOnDatamodel(this);
-  private ArrayList<DatamodelEntityBox> datamodelEntityBoxSlideShowArray =
-      new ArrayList<DatamodelEntityBox>();
+  private ArrayList<DatamodelEntityBox> datamodelEntityBoxSlideShowArray = new ArrayList<>();
   private ArrayList<DatamodelRelationshipLine> datamodelRelationshipLineSlideShowArray =
-      new ArrayList<DatamodelRelationshipLine>();
+      new ArrayList<>();
   private JDialog jDialogDatamodelSlideShow = new JDialog(this, true);
   private int datamodelSlideNumber = 0;
   private int datamodelSlideTotalNumber = 0;
@@ -1157,7 +1149,7 @@ public class Modeler extends JFrame {
   private int targetRow_jTableTableFieldList;
 
   /** Definition components on jPanelTableField */
-  private ArrayList<XeadTreeNode> fieldListNodeToBeRenumbered = new ArrayList<XeadTreeNode>();
+  private ArrayList<XeadTreeNode> fieldListNodeToBeRenumbered = new ArrayList<>();
 
   private JPanel jPanelTableField = new JPanel();
   private JSplitPane jSplitPaneTableField1 = new JSplitPane();
@@ -1202,8 +1194,7 @@ public class Modeler extends JFrame {
   private JTextField jTextFieldTableFieldDataType = new JTextField();
   private String tableFieldDataTypeID = "";
   private JMenuItem jMenuItemAddDataType = new JMenuItem();
-  private ArrayList<org.w3c.dom.Element> newlyAddedDataTypeElementList =
-      new ArrayList<org.w3c.dom.Element>();
+  private ArrayList<org.w3c.dom.Element> newlyAddedDataTypeElementList = new ArrayList<>();
 
   /** Definition components on jPanelTableKeyList */
   private JPanel jPanelTableKeyList = new JPanel();
@@ -1296,7 +1287,7 @@ public class Modeler extends JFrame {
   private JTextField jTextFieldFunctionSortKey = new JTextField();
   private JComboBox jComboBoxFunctionDocFile = new JComboBox();
   private String functionDocFile = "";
-  private ArrayList<String> functionDocFileList = new ArrayList<String>();
+  private ArrayList<String> functionDocFileList = new ArrayList<>();
   private JButton jButtonFunctionDocFile = new JButton();
   private SortableXeadTreeNodeComboBoxModel sortableComboBoxModelFunctionType =
       new SortableXeadTreeNodeComboBoxModel();
@@ -1658,7 +1649,7 @@ public class Modeler extends JFrame {
    * @return String :string value of processed string
    */
   static String concatLinesWithTokenOfEOL(String originalString) {
-    StringBuffer processedString = new StringBuffer();
+    StringBuilder processedString = new StringBuilder();
     int lastEnd = 0;
     for (int i = 0; i <= originalString.length(); i++) {
       if (i < originalString.length()) {
@@ -1682,7 +1673,7 @@ public class Modeler extends JFrame {
    * @return String :string value of processed string
    */
   static String substringLinesWithTokenOfEOL(String originalString, String stringToBeInserted) {
-    StringBuffer processedString = new StringBuffer();
+    StringBuilder processedString = new StringBuilder();
     int lastEnd = 0;
     for (int i = 0; i <= originalString.length(); i++) {
       if (i + 5 <= originalString.length()) {
@@ -1709,7 +1700,7 @@ public class Modeler extends JFrame {
    * @return String :string value of processed string
    */
   static String getLayoutedString(String originalString, int length, String stringToBeInserted) {
-    StringBuffer processedString = new StringBuffer();
+    StringBuilder processedString = new StringBuilder();
     int lastEnd = 0;
     int count = 0;
     for (int i = 0; i <= originalString.length(); i++) {
@@ -1749,7 +1740,7 @@ public class Modeler extends JFrame {
   public static String getZenkakuOfHankaku(String value) {
     StringBuilder sb = new StringBuilder(value);
     for (int i = 0; i < sb.length(); i++) {
-      int c = (int) sb.charAt(i);
+      int c = sb.charAt(i);
       if ((c >= 0x30 && c <= 0x39) || (c >= 0x41 && c <= 0x5A) || (c >= 0x61 && c <= 0x7A)) {
         sb.setCharAt(i, (char) (c + 0xFEE0));
       }
@@ -1767,7 +1758,6 @@ public class Modeler extends JFrame {
   static String convertSingleByteCharsToDoubleByteChars(String originalString) {
     int diff = 'Ａ' - 'A';
     String signs = "!#$%&()*+,-./:;<=>?@[]^_{|}";
-    ;
     char[] cc = originalString.toCharArray();
     StringBuilder sb = new StringBuilder();
     for (char c : cc) {
@@ -2077,7 +2067,6 @@ public class Modeler extends JFrame {
   /** Initialize main components and variants */
   void jbInitComponentsAndVariants() {
 
-    /** Read xteamdl.properties */
     InputStream inputStream = null;
     try {
       File file = new File("xteamdl.properties");
@@ -2103,7 +2092,7 @@ public class Modeler extends JFrame {
         }
         wrkStr = properties.getProperty("IOImageFontSize");
         if (wrkStr != null && !wrkStr.equals("")) {
-          ioImageFontSize = Integer.valueOf(wrkStr);
+          ioImageFontSize = Integer.parseInt(wrkStr);
         }
         wrkStr = properties.getProperty("IOImageFolder");
         if (wrkStr != null && !wrkStr.equals("")) {
@@ -2114,10 +2103,9 @@ public class Modeler extends JFrame {
           backupFolder = wrkStr;
         }
       }
-    } catch (Exception e) {
+    } catch (Exception ignored) {
     }
 
-    /** Construct Dialogs */
     dialogDataflowNode = new DialogDataflowNode(this);
     dialogDataflowLine = new DialogDataflowLine(this);
     dialogScan = new DialogScan(this);
@@ -2132,7 +2120,6 @@ public class Modeler extends JFrame {
     dialogTableSynchronize = new DialogTableSynchronize(this);
     dialogToListChangesOfFiles = new DialogToListChangesOfFiles(this);
 
-    /** table-cell property controller */
     rendererAlignmentCenter.setHorizontalAlignment(0); // CENTER//
     rendererAlignmentRight.setHorizontalAlignment(4); // RIGHT//
     rendererAlignmentLeft.setHorizontalAlignment(2); // LEFT//
@@ -2143,7 +2130,6 @@ public class Modeler extends JFrame {
     rendererAlignmentLeftControlColor.setHorizontalAlignment(2); // LEFT//
     rendererAlignmentLeftControlColor.setBackground(SystemColor.control);
 
-    /** set image resource to icons */
     imageIconSystem = new ImageIcon(xeadModeler.Modeler.class.getResource("isys.png"));
     imageIconSubjectAreaList = new ImageIcon(xeadModeler.Modeler.class.getResource("iblklist.png"));
     imageIconSubjectArea = new ImageIcon(xeadModeler.Modeler.class.getResource("iblk.png"));
@@ -2180,7 +2166,6 @@ public class Modeler extends JFrame {
     imageIconText = new ImageIcon(xeadModeler.Modeler.class.getResource("itext.png"));
     imageIconBook = new ImageIcon(xeadModeler.Modeler.class.getResource("ibook.png"));
 
-    /** Title Name and Title Icon */
     imageTitle =
         Toolkit.getDefaultToolkit()
             .createImage(xeadModeler.Modeler.class.getResource("title32.png"));
@@ -2192,7 +2177,6 @@ public class Modeler extends JFrame {
     this.setSize(new Dimension(screenWidth - 120, screenHeight - 80));
     this.setExtendedState(JFrame.MAXIMIZED_BOTH);
 
-    /** main panels */
     jPanelMain = (JPanel) this.getContentPane();
     jPanelMain.setLayout(new BorderLayout());
     jPanelJumpButtons.setPreferredSize(new Dimension(10, 25));
@@ -2233,7 +2217,6 @@ public class Modeler extends JFrame {
     jSplitPaneMain.add(jPanelContentsPane, JSplitPane.RIGHT);
     jSplitPaneMain.setDividerLocation(350);
 
-    /** main menu */
     jMenuFile.setText(res.getString("S50"));
     jMenuFile.addMenuListener(new Modeler_jMenuFile_menuAdapter(this));
     jMenuItemFileNew.setText(res.getString("S51"));
@@ -2478,7 +2461,6 @@ public class Modeler extends JFrame {
     jMenuBar.add(jMenuHelp);
     this.setJMenuBar(jMenuBar);
 
-    /** general purposed context menu */
     jMenuItemComponentToAdd.setText(res.getString("S860"));
     jMenuItemComponentToAddIOPanel.setText(res.getString("S861"));
     jMenuItemComponentToAddIOSpool.setText(res.getString("S862"));
@@ -2508,7 +2490,6 @@ public class Modeler extends JFrame {
     jMenuItemComponentToSetIOWebPage.setText(res.getString("S881"));
     jMenuItemComponentToPrintImage.setText(res.getString("S55"));
 
-    /** access key for MainMenu if Platform is not Mac OS */
     if (System.getProperty("mrj.version") == null) {
       jMenuFile.setText(res.getString("S94"));
       jMenuFile.setMnemonic('F');
@@ -2522,12 +2503,10 @@ public class Modeler extends JFrame {
       jMenuHelp.setMnemonic('H');
     }
 
-    /** Printer Controller */
     printerJob = PrinterJob.getPrinterJob();
     pageFormat = printerJob.defaultPage();
     pageFormat.setOrientation(PageFormat.LANDSCAPE);
 
-    /** components for TreeView */
     jScrollPaneTreeView.setMinimumSize(new Dimension(0, 0));
     jPanelContentsPane.setLayout(cardLayoutContentsPane);
     jTreeMain.setFont(new java.awt.Font(mainFontName, 0, MAIN_FONT_SIZE));
@@ -2539,7 +2518,6 @@ public class Modeler extends JFrame {
     jTreeMain.getSelectionModel().setSelectionMode(TreeSelectionModel.SINGLE_TREE_SELECTION);
     jScrollPaneTreeView.getViewport().add(jTreeMain, null);
 
-    /** PopupMenu for jTreeMain */
     jMenuItemXeadTreeNodeAdd.setText(res.getString("S100"));
     jMenuItemXeadTreeNodeAdd.addActionListener(
         new Modeler_jMenuItemXeadTreeNodeAdd_actionAdapter(this));
@@ -2578,7 +2556,6 @@ public class Modeler extends JFrame {
     jMenuItemXeadTreeNodeAddIndex.addActionListener(
         new Modeler_jMenuItemXeadTreeNodeAddIndex_actionAdapter(this));
 
-    /** PopupMenu for Contents Pane Processing */
     jMenuItemComponentToAdd.addActionListener(
         new Modeler_jMenuItemComponentToAdd_actionAdapter(this));
     jMenuItemComponentToAddIOPanel.addActionListener(
@@ -2634,7 +2611,6 @@ public class Modeler extends JFrame {
     jMenuItemComponentToSetIOWebPage.addActionListener(
         new Modeler_jMenuItemComponentToSetIOWebPage_actionAdapter(this));
 
-    /** components on Contents Pane */
     jPanelContentsPane.add(jPanelSystem, "jPanelSystem");
     jPanelContentsPane.add(jPanelSubjectAreaList, "jPanelSubjectAreaList");
     jPanelContentsPane.add(jPanelSubjectArea, "jPanelSubjectArea");
@@ -2656,7 +2632,6 @@ public class Modeler extends JFrame {
     jPanelContentsPane.add(jPanelIOTable, "jPanelIOTable");
     jPanelContentsPane.add(jPanelIOWebPage, "jPanelIOWebPage");
 
-    /** components on PopUp-Menu for editing IOImage */
     jMenuItemIOImageBlockSelect.addActionListener(
         new Modeler_jMenuItemIOImageBlockSelect_actionAdapter(this));
     jMenuItemIOImageCopy.addActionListener(new Modeler_jMenuItemIOImageCopy_actionAdapter(this));
@@ -6686,7 +6661,6 @@ public class Modeler extends JFrame {
    * Process specific file
    *
    * @param nameOfFile :name of file to be processed
-   * @throws Exception
    */
   void processContentsFile(String nameOfFile) throws Exception {
     currentFileName = nameOfFile;
@@ -6771,7 +6745,7 @@ public class Modeler extends JFrame {
     } else {
       jFileChooser.setDialogTitle("X-TEA Modeler - " + dialogTitle);
       jFileChooser.resetChoosableFileFilters();
-      ArrayList<String> extentionList = new ArrayList<String>();
+      ArrayList<String> extentionList = new ArrayList<>();
       if (!fileExtention.equals("")) {
         StringTokenizer workTokenizer = new StringTokenizer(fileExtention, ",");
         while (workTokenizer.hasMoreTokens()) {
@@ -7004,11 +6978,7 @@ public class Modeler extends JFrame {
     }
   }
 
-  /**
-   * Setup main tree model with selected file
-   *
-   * @throws Exception
-   */
+  /** Setup main tree model with selected file */
   void setupMainTreeModelWithCurrentFileName() throws Exception {
     NodeList xmlnodelist1, xmlnodelist2;
     org.w3c.dom.Element element1, element2;
@@ -7257,7 +7227,7 @@ public class Modeler extends JFrame {
       NodeList fieldList = domDocument.getElementsByTagName("TableField");
       sortableDomElementFieldListModel.removeAllElements();
       for (int j = 0; j < fieldList.getLength(); j++) {
-        sortableDomElementFieldListModel.addElement((Object) fieldList.item(j));
+        sortableDomElementFieldListModel.addElement(fieldList.item(j));
         if (this.isVisible()) {
           jProgressBar.setValue(jProgressBar.getValue() + 1);
           jProgressBar.paintImmediately(0, 0, jProgressBar.getWidth(), jProgressBar.getHeight());
@@ -7337,13 +7307,7 @@ public class Modeler extends JFrame {
       jProgressBar.setValue(0);
       //
       // Hide Splash Screen //
-      EventQueue.invokeLater(
-          new Runnable() {
-            @Override
-            public void run() {
-              application.hideSplash();
-            }
-          });
+      EventQueue.invokeLater(() -> application.hideSplash());
       //
       // Select top node(systemNode) and setup contents pane//
       jTreeMain.setModel(treeModel);
@@ -7352,13 +7316,7 @@ public class Modeler extends JFrame {
       TreePath tp = jTreeMain.getSelectionPath();
       setupContentsPaneForTreeNodeSelected((XeadTreeNode) tp.getLastPathComponent(), false);
     } catch (Exception e) {
-      EventQueue.invokeLater(
-          new Runnable() {
-            @Override
-            public void run() {
-              application.hideSplash();
-            }
-          });
+      EventQueue.invokeLater(() -> application.hideSplash());
       JOptionPane.showMessageDialog(
           this,
           "Failed to parse xml format of the file '" + currentFileName + "'.\n\n" + e.getMessage());
@@ -7503,7 +7461,7 @@ public class Modeler extends JFrame {
         currentTaskActionTreeNode.getElement().getElementsByTagName("TaskFunctionIO");
     sortableDomElementListModel.removeAllElements();
     for (int i = 0; i < taskFunctionIOList.getLength(); i++) {
-      sortableDomElementListModel.addElement((Object) taskFunctionIOList.item(i));
+      sortableDomElementListModel.addElement(taskFunctionIOList.item(i));
     }
     sortableDomElementListModel.sortElements();
     for (int i = 0; i < sortableDomElementListModel.getSize(); i++) {
@@ -9021,7 +8979,7 @@ public class Modeler extends JFrame {
     NodeList nodeList = domDocument.getElementsByTagName("TableType");
     for (int i = 0; i < nodeList.getLength(); i++) {
       node = new XeadTreeNode("TableType", (org.w3c.dom.Element) nodeList.item(i));
-      sortableComboBoxModelTableType.addElement((Object) node);
+      sortableComboBoxModelTableType.addElement(node);
     }
     sortableComboBoxModelTableType.sortElements();
     node = (XeadTreeNode) sortableComboBoxModelTableType.getElementAt(0);
@@ -9107,7 +9065,7 @@ public class Modeler extends JFrame {
         try {
           createtNewXeadFileWithCurrentFileName();
           setupMainTreeModelWithCurrentFileName();
-        } catch (Exception ex) {
+        } catch (Exception ignored) {
         }
       }
     }
@@ -9147,7 +9105,7 @@ public class Modeler extends JFrame {
         xeadUndoManager.resetLog();
         try {
           setupMainTreeModelWithCurrentFileName();
-        } catch (Exception ex) {
+        } catch (Exception ignored) {
         }
       }
     }
@@ -9499,7 +9457,7 @@ public class Modeler extends JFrame {
           sortableDomElementListModel.removeAllElements();
           NodeList dataTypeList = domDocument.getElementsByTagName("DataType");
           for (int i = 0; i < dataTypeList.getLength(); i++) {
-            sortableDomElementListModel.addElement((Object) dataTypeList.item(i));
+            sortableDomElementListModel.addElement(dataTypeList.item(i));
           }
           sortableDomElementListModel.sortElements();
           if (sortableDomElementListModel.getSize() > 0) {
@@ -9681,7 +9639,7 @@ public class Modeler extends JFrame {
     try {
       File file = new File(currentFileName);
       FileOutputStream fos = new FileOutputStream(file);
-      OutputStreamWriter osw = new OutputStreamWriter(fos, "UTF-8");
+      OutputStreamWriter osw = new OutputStreamWriter(fos, StandardCharsets.UTF_8);
       String lang = Locale.getDefault().getLanguage();
       if (lang.equals("ja")) {
         osw.write("<?xml version=\"1.0\" encoding=\"UTF-8\" ?>\n");
@@ -9803,7 +9761,7 @@ public class Modeler extends JFrame {
               backupFileName = backupFileName.replace(currentFileFolder, newFolder);
               FileOutputStream fileOutputStream = new FileOutputStream(backupFileName);
               OutputStreamWriter outputStreamWriter =
-                  new OutputStreamWriter(fileOutputStream, "UTF-8");
+                  new OutputStreamWriter(fileOutputStream, StandardCharsets.UTF_8);
               Writer writer = new BufferedWriter(outputStreamWriter);
               OutputFormat outputFormat = new OutputFormat(domDocumentSaved);
               outputFormat.setEncoding("UTF-8");
@@ -9834,7 +9792,8 @@ public class Modeler extends JFrame {
         OutputFormat outputFormat = new OutputFormat(domDocument);
         outputFormat.setEncoding("UTF-8");
         FileOutputStream fileOutStream = new FileOutputStream(currentFileName);
-        OutputStreamWriter outputStreamWriter = new OutputStreamWriter(fileOutStream, "UTF-8");
+        OutputStreamWriter outputStreamWriter =
+            new OutputStreamWriter(fileOutStream, StandardCharsets.UTF_8);
         Writer writer = new BufferedWriter(outputStreamWriter);
         XMLSerializer xmlSerializer = new XMLSerializer(writer, outputFormat);
         xmlSerializer.serialize(domDocument.getDocumentElement());
@@ -9855,7 +9814,7 @@ public class Modeler extends JFrame {
   void reorganizeIOTable() {
     org.w3c.dom.Element ioTableFieldElement;
     NodeList ioTableFieldList;
-    ArrayList<org.w3c.dom.Element> elementListToBeRemoved = new ArrayList<org.w3c.dom.Element>();
+    ArrayList<org.w3c.dom.Element> elementListToBeRemoved = new ArrayList<>();
     ioTableFieldList = domDocument.getElementsByTagName("IOTableField");
     for (int m = 0; m < ioTableFieldList.getLength(); m++) {
       ioTableFieldElement = (org.w3c.dom.Element) ioTableFieldList.item(m);
@@ -9882,7 +9841,7 @@ public class Modeler extends JFrame {
         if (xeadTreeNode.getParent().getParent() != null) {
           for (int j = 0; j < xeadTreeNode.getChildCount(); j++) {
             node = (XeadTreeNode) xeadTreeNode.getChildAt(j);
-            element = (org.w3c.dom.Element) node.getElement();
+            element = node.getElement();
             workNumber = workNumber + 10;
             element.setAttribute("SortKey", getFormatted4ByteString(workNumber));
           }
@@ -9894,7 +9853,7 @@ public class Modeler extends JFrame {
           NodeList fieldList = xeadTreeNode.getElement().getElementsByTagName("IOPanelField");
           sortableDomElementListModel.removeAllElements();
           for (int j = 0; j < fieldList.getLength(); j++) {
-            sortableDomElementListModel.addElement((Object) fieldList.item(j));
+            sortableDomElementListModel.addElement(fieldList.item(j));
           }
           sortableDomElementListModel.sortElements();
           for (int j = 0; j < sortableDomElementListModel.getSize(); j++) {
@@ -9913,7 +9872,7 @@ public class Modeler extends JFrame {
           NodeList fieldList = xeadTreeNode.getElement().getElementsByTagName("IOSpoolField");
           sortableDomElementListModel.removeAllElements();
           for (int j = 0; j < fieldList.getLength(); j++) {
-            sortableDomElementListModel.addElement((Object) fieldList.item(j));
+            sortableDomElementListModel.addElement(fieldList.item(j));
           }
           sortableDomElementListModel.sortElements();
           for (int j = 0; j < sortableDomElementListModel.getSize(); j++) {
@@ -9932,7 +9891,7 @@ public class Modeler extends JFrame {
           NodeList fieldList = xeadTreeNode.getElement().getElementsByTagName("IOWebPageField");
           sortableDomElementListModel.removeAllElements();
           for (int j = 0; j < fieldList.getLength(); j++) {
-            sortableDomElementListModel.addElement((Object) fieldList.item(j));
+            sortableDomElementListModel.addElement(fieldList.item(j));
           }
           sortableDomElementListModel.sortElements();
           for (int j = 0; j < sortableDomElementListModel.getSize(); j++) {
@@ -10424,7 +10383,7 @@ public class Modeler extends JFrame {
     //
     do {
       index++;
-      returnFileName = fileName + Integer.toString(index) + ".csv";
+      returnFileName = fileName + index + ".csv";
       File workCsvFile = new File(returnFileName);
       if (workCsvFile.exists()) {
         if (workCsvFile.canRead()) {
@@ -10458,14 +10417,14 @@ public class Modeler extends JFrame {
     //
     int month = calendar.get(Calendar.MONTH) + 1;
     if (month < 10) {
-      monthStr = "0" + Integer.toString(month);
+      monthStr = "0" + month;
     } else {
       monthStr = Integer.toString(month);
     }
     //
     int day = calendar.get(Calendar.DAY_OF_MONTH);
     if (day < 10) {
-      dayStr = "0" + Integer.toString(day);
+      dayStr = "0" + day;
     } else {
       dayStr = Integer.toString(day);
     }
@@ -10476,27 +10435,27 @@ public class Modeler extends JFrame {
     if (timeFormat.equals("withTime") || timeFormat.equals("withUnderbarAndTime")) {
       int hour = calendar.get(Calendar.HOUR_OF_DAY);
       if (hour < 10) {
-        hourStr = "0" + Integer.toString(hour);
+        hourStr = "0" + hour;
       } else {
         hourStr = Integer.toString(hour);
       }
       //
       int minute = calendar.get(Calendar.MINUTE);
       if (minute < 10) {
-        minStr = "0" + Integer.toString(minute);
+        minStr = "0" + minute;
       } else {
         minStr = Integer.toString(minute);
       }
       //
       int second = calendar.get(Calendar.SECOND);
       if (second < 10) {
-        secStr = "0" + Integer.toString(second);
+        secStr = "0" + second;
       } else {
         secStr = Integer.toString(second);
       }
     }
     //
-    returnValue = Integer.toString(year) + monthStr + dayStr + underbar + hourStr + minStr + secStr;
+    returnValue = year + monthStr + dayStr + underbar + hourStr + minStr + secStr;
     return returnValue;
   }
 
@@ -10528,7 +10487,7 @@ public class Modeler extends JFrame {
       // Set dataLine and output//
       for (int i = 0; i < roleListNode.getChildCount(); i++) {
         node1 = (XeadTreeNode) roleListNode.getChildAt(i);
-        element1 = (org.w3c.dom.Element) node1.getElement();
+        element1 = node1.getElement();
         dataLine = Integer.toString(seqNumber);
         dataLine = dataLine + "," + element1.getAttribute("SortKey");
         dataLine = dataLine + "," + element1.getAttribute("Name");
@@ -10539,7 +10498,7 @@ public class Modeler extends JFrame {
         //
         for (int j = 0; j < node1.getChildCount(); j++) {
           node2 = (XeadTreeNode) node1.getChildAt(j);
-          element2 = (org.w3c.dom.Element) node2.getElement();
+          element2 = node2.getElement();
           dataLine = dataLine + "," + element2.getAttribute("SortKey");
           dataLine = dataLine + "," + element2.getAttribute("Name");
           dataLine = dataLine + "," + element2.getAttribute("Event");
@@ -10572,7 +10531,7 @@ public class Modeler extends JFrame {
           seqNumber = seqNumber + 1;
           // dataLine = Integer.toString(seqNumber) + ",,,";
           dataLine =
-              Integer.toString(seqNumber)
+              seqNumber
                   + ","
                   + element1.getAttribute("SortKey")
                   + ","
@@ -10584,7 +10543,7 @@ public class Modeler extends JFrame {
     } catch (Exception ex1) {
       try {
         bufferedWriter.close();
-      } catch (Exception ex2) {
+      } catch (Exception ignored) {
       }
     } finally {
       setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
@@ -10601,7 +10560,7 @@ public class Modeler extends JFrame {
         try {
           setCursor(new Cursor(Cursor.WAIT_CURSOR));
           desktop.open(workCsvFile);
-        } catch (Exception ex) {
+        } catch (Exception ignored) {
         } finally {
           setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
         }
@@ -10609,7 +10568,7 @@ public class Modeler extends JFrame {
     } catch (Exception ex3) {
       try {
         bufferedWriter.close();
-      } catch (Exception ex4) {
+      } catch (Exception ignored) {
       }
     }
   }
@@ -10645,14 +10604,14 @@ public class Modeler extends JFrame {
       // Set dataLine and output//
       for (int i = 0; i < subsystemListNode.getChildCount(); i++) {
         node1 = (XeadTreeNode) subsystemListNode.getChildAt(i);
-        element1 = (org.w3c.dom.Element) node1.getElement();
+        element1 = node1.getElement();
         dataLine = Integer.toString(seqNumber);
         dataLine = dataLine + "," + element1.getAttribute("SortKey");
         dataLine = dataLine + "," + element1.getAttribute("Name");
         //
         for (int j = 0; j < node1.getChildAt(0).getChildCount(); j++) {
           node2 = (XeadTreeNode) node1.getChildAt(0).getChildAt(j);
-          element2 = (org.w3c.dom.Element) node2.getElement();
+          element2 = node2.getElement();
           dataLine = dataLine + "," + element2.getAttribute("SynchFile");
           dataLine = dataLine + "," + element2.getAttribute("SortKey");
           if (element2.getAttribute("Alias").equals("")) {
@@ -10749,13 +10708,13 @@ public class Modeler extends JFrame {
           bufferedWriter.write(dataLine);
           //
           seqNumber = seqNumber + 1;
-          dataLine = Integer.toString(seqNumber) + ",,";
+          dataLine = seqNumber + ",,";
         }
       }
     } catch (Exception ex1) {
       try {
         bufferedWriter.close();
-      } catch (Exception ex2) {
+      } catch (Exception ignored) {
       }
     } finally {
       setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
@@ -10772,7 +10731,7 @@ public class Modeler extends JFrame {
         try {
           setCursor(new Cursor(Cursor.WAIT_CURSOR));
           desktop.open(workCsvFile);
-        } catch (Exception ex) {
+        } catch (Exception ignored) {
         } finally {
           setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
         }
@@ -10780,7 +10739,7 @@ public class Modeler extends JFrame {
     } catch (Exception ex3) {
       try {
         bufferedWriter.close();
-      } catch (Exception ex4) {
+      } catch (Exception ignored) {
       }
     }
   }
@@ -10841,7 +10800,7 @@ public class Modeler extends JFrame {
     } catch (Exception ex1) {
       try {
         bufferedWriter.close();
-      } catch (Exception ex2) {
+      } catch (Exception ignored) {
       }
     } finally {
       setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
@@ -10859,7 +10818,7 @@ public class Modeler extends JFrame {
     } catch (Exception ex3) {
       try {
         bufferedWriter.close();
-      } catch (Exception ex4) {
+      } catch (Exception ignored) {
       }
     }
     jProgressBar.setValue(0);
@@ -10905,19 +10864,19 @@ public class Modeler extends JFrame {
       // Set dataLine and output//
       for (int i = 0; i < subsystemListNode.getChildCount(); i++) {
         node1 = (XeadTreeNode) subsystemListNode.getChildAt(i);
-        element1 = (org.w3c.dom.Element) node1.getElement();
+        element1 = node1.getElement();
         subsystemName = element1.getAttribute("SortKey") + "," + element1.getAttribute("Name");
         //
         for (int j = 0; j < node1.getChildAt(0).getChildCount(); j++) {
           node2 = (XeadTreeNode) node1.getChildAt(0).getChildAt(j);
-          element2 = (org.w3c.dom.Element) node2.getElement();
+          element2 = node2.getElement();
           tableName = element2.getAttribute("SortKey") + "," + element2.getAttribute("Name");
           //
           for (int k = 0; k < node2.getChildAt(0).getChildCount(); k++) {
             node3 = (XeadTreeNode) node2.getChildAt(0).getChildAt(k);
-            element3 = (org.w3c.dom.Element) node3.getElement();
+            element3 = node3.getElement();
             //
-            dataLine = Integer.toString(seqNumber) + "," + subsystemName + "," + tableName;
+            dataLine = seqNumber + "," + subsystemName + "," + tableName;
             if (node3.isPrimaryKeyField()) {
               dataLine =
                   dataLine
@@ -10931,7 +10890,6 @@ public class Modeler extends JFrame {
               dataLine =
                   dataLine
                       + ","
-                      + ""
                       + ","
                       + element3.getAttribute("Alias")
                       + ","
@@ -11006,7 +10964,7 @@ public class Modeler extends JFrame {
             bufferedWriter.write(dataLine);
             //
             seqNumber = seqNumber + 1;
-            dataLine = Integer.toString(seqNumber) + ",,";
+            dataLine = seqNumber + ",,";
           }
           //
           jProgressBar.setValue(jProgressBar.getValue() + 1);
@@ -11016,7 +10974,7 @@ public class Modeler extends JFrame {
     } catch (Exception ex1) {
       try {
         bufferedWriter.close();
-      } catch (Exception ex2) {
+      } catch (Exception ignored) {
       }
     } finally {
       setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
@@ -11034,7 +10992,7 @@ public class Modeler extends JFrame {
         try {
           setCursor(new Cursor(Cursor.WAIT_CURSOR));
           desktop.open(workCsvFile);
-        } catch (Exception ex) {
+        } catch (Exception ignored) {
         } finally {
           setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
         }
@@ -11042,7 +11000,7 @@ public class Modeler extends JFrame {
     } catch (Exception ex3) {
       try {
         bufferedWriter.close();
-      } catch (Exception ex4) {
+      } catch (Exception ignored) {
       }
     }
   }
@@ -11081,14 +11039,14 @@ public class Modeler extends JFrame {
       // Set DataLine and output//
       for (int i = 0; i < subsystemListNode.getChildCount(); i++) {
         node1 = (XeadTreeNode) subsystemListNode.getChildAt(i);
-        element1 = (org.w3c.dom.Element) node1.getElement();
+        element1 = node1.getElement();
         dataLine = Integer.toString(seqNumber);
         dataLine = dataLine + "," + element1.getAttribute("SortKey");
         dataLine = dataLine + "," + element1.getAttribute("Name");
         //
         for (int j = 0; j < node1.getChildAt(1).getChildCount(); j++) {
           node2 = (XeadTreeNode) node1.getChildAt(1).getChildAt(j);
-          element2 = (org.w3c.dom.Element) node2.getElement();
+          element2 = node2.getElement();
           dataLine = dataLine + "," + element2.getAttribute("SortKey");
           dataLine = dataLine + "," + element2.getAttribute("Name");
           XeadTreeNode functionTypeNode =
@@ -11148,7 +11106,7 @@ public class Modeler extends JFrame {
           bufferedWriter.write(dataLine);
           //
           seqNumber = seqNumber + 1;
-          dataLine = Integer.toString(seqNumber) + ",,";
+          dataLine = seqNumber + ",,";
           //
           jProgressBar.setValue(jProgressBar.getValue() + 1);
           jProgressBar.paintImmediately(0, 0, jProgressBar.getWidth(), jProgressBar.getHeight());
@@ -11157,7 +11115,7 @@ public class Modeler extends JFrame {
     } catch (Exception ex1) {
       try {
         bufferedWriter.close();
-      } catch (Exception ex2) {
+      } catch (Exception ignored) {
       }
     } finally {
       setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
@@ -11175,7 +11133,7 @@ public class Modeler extends JFrame {
         try {
           setCursor(new Cursor(Cursor.WAIT_CURSOR));
           desktop.open(workCsvFile);
-        } catch (Exception ex) {
+        } catch (Exception ignored) {
         } finally {
           setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
         }
@@ -11183,7 +11141,7 @@ public class Modeler extends JFrame {
     } catch (Exception ex3) {
       try {
         bufferedWriter.close();
-      } catch (Exception ex4) {
+      } catch (Exception ignored) {
       }
     }
   }
@@ -11200,7 +11158,7 @@ public class Modeler extends JFrame {
     String dataLine;
     int seqNumber = 0;
     FileWriter fileWriter = null;
-    StringBuffer stringBuffer = new StringBuffer();
+    StringBuilder stringBuffer = new StringBuilder();
     BufferedWriter bufferedWriter = null;
     String csvFileName = "";
 
@@ -11441,7 +11399,7 @@ public class Modeler extends JFrame {
         try {
           setCursor(new Cursor(Cursor.WAIT_CURSOR));
           desktop.open(workCsvFile);
-        } catch (Exception ex) {
+        } catch (Exception ignored) {
         } finally {
           setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
         }
@@ -11449,7 +11407,7 @@ public class Modeler extends JFrame {
     } catch (Exception ex3) {
       try {
         bufferedWriter.close();
-      } catch (Exception ex4) {
+      } catch (Exception ignored) {
       }
     }
   }
@@ -11586,7 +11544,7 @@ public class Modeler extends JFrame {
         keyFieldList = node3.getElement().getElementsByTagName("TableKeyField");
         sortableDomElementListModel.removeAllElements();
         for (int m = 0; m < keyFieldList.getLength(); m++) {
-          sortableDomElementListModel.addElement((Object) keyFieldList.item(m));
+          sortableDomElementListModel.addElement(keyFieldList.item(m));
         }
         if (sortableDomElementListModel.getSize() > 0) {
           //
@@ -11602,13 +11560,7 @@ public class Modeler extends JFrame {
           }
           if (node3.getElement().getAttribute("Type").equals("SK")) {
             indexOfSK++;
-            statement =
-                statement
-                    + "CONSTRAINT "
-                    + tableName
-                    + "_SK"
-                    + Integer.toString(indexOfSK)
-                    + " UNIQUE (";
+            statement = statement + "CONSTRAINT " + tableName + "_SK" + indexOfSK + " UNIQUE (";
           }
           //
           sortableDomElementListModel.sortElements();
@@ -11669,19 +11621,14 @@ public class Modeler extends JFrame {
             //
             indexOfFK++;
             statement =
-                statement
-                    + "CONSTRAINT "
-                    + tableName
-                    + "_FK"
-                    + Integer.toString(indexOfFK)
-                    + " FOREIGN KEY (";
+                statement + "CONSTRAINT " + tableName + "_FK" + indexOfFK + " FOREIGN KEY (";
             //
             keyFieldList = objectTableKeyElement.getElementsByTagName("TableKeyField");
             keyFieldList2 = tableKeyElement.getElementsByTagName("TableKeyField");
             //
             sortableDomElementListModel.removeAllElements();
             for (int m = 0; m < keyFieldList.getLength(); m++) {
-              sortableDomElementListModel.addElement((Object) keyFieldList.item(m));
+              sortableDomElementListModel.addElement(keyFieldList.item(m));
             }
             sortableDomElementListModel.sortElements();
             for (int m = 0; m < sortableDomElementListModel.getSize(); m++) {
@@ -11799,19 +11746,14 @@ public class Modeler extends JFrame {
             //
             indexOfFK++;
             statement =
-                statement
-                    + "CONSTRAINT "
-                    + tableName
-                    + "_FK"
-                    + Integer.toString(indexOfFK)
-                    + " FOREIGN KEY (";
+                statement + "CONSTRAINT " + tableName + "_FK" + indexOfFK + " FOREIGN KEY (";
             //
             keyFieldList = objectTableKeyElement.getElementsByTagName("TableKeyField");
             keyFieldList2 = tableKeyElement.getElementsByTagName("TableKeyField");
             //
             sortableDomElementListModel.removeAllElements();
             for (int m = 0; m < keyFieldList.getLength(); m++) {
-              sortableDomElementListModel.addElement((Object) keyFieldList.item(m));
+              sortableDomElementListModel.addElement(keyFieldList.item(m));
             }
             sortableDomElementListModel.sortElements();
             for (int m = 0; m < sortableDomElementListModel.getSize(); m++) {
@@ -11900,7 +11842,7 @@ public class Modeler extends JFrame {
             keyFieldList = objectTableKeyElement.getElementsByTagName("TableKeyField");
             sortableDomElementListModel.removeAllElements();
             for (int m = 0; m < keyFieldList.getLength(); m++) {
-              sortableDomElementListModel.addElement((Object) keyFieldList.item(m));
+              sortableDomElementListModel.addElement(keyFieldList.item(m));
             }
             sortableDomElementListModel.sortElements();
             for (int m = 0; m < sortableDomElementListModel.getSize(); m++) {
@@ -11955,19 +11897,14 @@ public class Modeler extends JFrame {
             //
             indexOfFK++;
             statement =
-                statement
-                    + "CONSTRAINT "
-                    + tableName
-                    + "_FK"
-                    + Integer.toString(indexOfFK)
-                    + " FOREIGN KEY (";
+                statement + "CONSTRAINT " + tableName + "_FK" + indexOfFK + " FOREIGN KEY (";
             //
             keyFieldList = objectTableKeyElement.getElementsByTagName("TableKeyField");
             keyFieldList2 = tableKeyElement.getElementsByTagName("TableKeyField");
             //
             sortableDomElementListModel.removeAllElements();
             for (int m = 0; m < keyFieldList.getLength(); m++) {
-              sortableDomElementListModel.addElement((Object) keyFieldList.item(m));
+              sortableDomElementListModel.addElement(keyFieldList.item(m));
             }
             sortableDomElementListModel.sortElements();
             for (int m = 0; m < sortableDomElementListModel.getSize(); m++) {
@@ -12056,7 +11993,7 @@ public class Modeler extends JFrame {
             keyFieldList = objectTableKeyElement.getElementsByTagName("TableKeyField");
             sortableDomElementListModel.removeAllElements();
             for (int m = 0; m < keyFieldList.getLength(); m++) {
-              sortableDomElementListModel.addElement((Object) keyFieldList.item(m));
+              sortableDomElementListModel.addElement(keyFieldList.item(m));
             }
             sortableDomElementListModel.sortElements();
             for (int m = 0; m < sortableDomElementListModel.getSize(); m++) {
@@ -12111,7 +12048,7 @@ public class Modeler extends JFrame {
         keyFieldList = node3.getElement().getElementsByTagName("TableKeyField");
         sortableDomElementListModel.removeAllElements();
         for (int m = 0; m < keyFieldList.getLength(); m++) {
-          sortableDomElementListModel.addElement((Object) keyFieldList.item(m));
+          sortableDomElementListModel.addElement(keyFieldList.item(m));
         }
         if (sortableDomElementListModel.getSize() > 0) {
           sortableDomElementListModel.sortElements();
@@ -12260,7 +12197,7 @@ public class Modeler extends JFrame {
         try {
           setCursor(new Cursor(Cursor.WAIT_CURSOR));
           desktop.browse(new URI(urlString));
-        } catch (Exception ex) {
+        } catch (Exception ignored) {
         } finally {
           setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
         }
@@ -12298,7 +12235,7 @@ public class Modeler extends JFrame {
       try {
         setCursor(new Cursor(Cursor.WAIT_CURSOR));
         desktop.open(helpFile);
-      } catch (Exception ex) {
+      } catch (Exception ignored) {
       } finally {
         setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
       }
@@ -12744,7 +12681,7 @@ public class Modeler extends JFrame {
         //
         // Setup contents pane for the node selected//
         TreePath tp = jTreeMain.getSelectionPath();
-        if ((XeadTreeNode) tp.getLastPathComponent() != currentMainTreeNode) {
+        if (tp.getLastPathComponent() != currentMainTreeNode) {
           setupContentsPaneForTreeNodeSelected((XeadTreeNode) tp.getLastPathComponent(), true);
         }
         //
@@ -12929,7 +12866,6 @@ public class Modeler extends JFrame {
    * Method to adjust font size in text-field
    *
    * @param textfield :text-field to be processed
-   * @return int :max size of font
    */
   void adjustFontSizeOfTextField(Object textfield, int maxSize) {
     FontMetrics metrics;
@@ -14317,7 +14253,7 @@ public class Modeler extends JFrame {
         StyledDocument styledDocument = textPane.getStyledDocument();
         try {
           styledDocument.remove(textPane.getCaretPosition(), 1);
-        } catch (BadLocationException ex) {
+        } catch (BadLocationException ignored) {
         }
       }
     }
@@ -14382,7 +14318,7 @@ public class Modeler extends JFrame {
               styledDocumentCopiedSegmentList
                   .get(styledDocumentCopiedTextList.size() - 1)
                   .insertString(j, textElementString, textElement.getAttributes());
-            } catch (BadLocationException ex) {
+            } catch (BadLocationException ignored) {
             }
           }
         }
@@ -14438,7 +14374,7 @@ public class Modeler extends JFrame {
             styledDocumentCopiedSegmentList
                 .get(0)
                 .insertString(i, textElementString, textElement.getAttributes());
-          } catch (BadLocationException ex) {
+          } catch (BadLocationException ignored) {
           }
         }
         //
@@ -14477,7 +14413,7 @@ public class Modeler extends JFrame {
       if (contentsReceived.isDataFlavorSupported(DataFlavor.stringFlavor)) {
         try {
           clipboardData = (String) contentsReceived.getTransferData(DataFlavor.stringFlavor);
-        } catch (Exception ex) {
+        } catch (Exception ignored) {
         }
       }
     }
@@ -14530,7 +14466,7 @@ public class Modeler extends JFrame {
           try {
             String textElementString = styledDocumentCopiedTextList.get(j).substring(i, i + 1);
             styledDocument.insertString(pastingPos, textElementString, textElement.getAttributes());
-          } catch (BadLocationException ex) {
+          } catch (BadLocationException ignored) {
           }
           pastingPos++;
         }
@@ -14800,7 +14736,7 @@ public class Modeler extends JFrame {
             try {
               String textElementString = styleCanceledDocumentCopiedText.substring(j, j + 1);
               styledDocument.insertString(j + selectionStartPos, textElementString, null);
-            } catch (BadLocationException ex) {
+            } catch (BadLocationException ignored) {
             }
           }
         }
@@ -14821,7 +14757,7 @@ public class Modeler extends JFrame {
           try {
             String textElementString = styleCanceledDocumentCopiedText.substring(i, i + 1);
             styledDocument.insertString(i + selectionStart, textElementString, null);
-          } catch (BadLocationException ex) {
+          } catch (BadLocationException ignored) {
           }
         }
       }
@@ -14896,7 +14832,7 @@ public class Modeler extends JFrame {
           }
         }
         br.close();
-      } catch (IOException ex) {
+      } catch (IOException ignored) {
       }
 
       if (validLineNumber == 0) {
@@ -15128,7 +15064,7 @@ public class Modeler extends JFrame {
           StringTokenizer workTokenizer = new StringTokenizer(answer, ",");
           workX = Integer.parseInt(workTokenizer.nextToken());
           workY = Integer.parseInt(workTokenizer.nextToken());
-        } catch (Exception ex1) {
+        } catch (Exception ignored) {
         }
         iOPanelCharLengthX = workX;
         iOPanelCharLengthY = workY;
@@ -15155,7 +15091,7 @@ public class Modeler extends JFrame {
           StringTokenizer workTokenizer = new StringTokenizer(answer, ",");
           workX = Integer.parseInt(workTokenizer.nextToken());
           workY = Integer.parseInt(workTokenizer.nextToken());
-        } catch (Exception ex) {
+        } catch (Exception ignored) {
         }
         iOSpoolCharLengthX = workX;
         iOSpoolCharLengthY = workY;
@@ -15264,7 +15200,7 @@ public class Modeler extends JFrame {
         NodeList nodeList = node.getElement().getElementsByTagName("FunctionUsedByThis");
         sortableDomElementListModel.removeAllElements();
         for (int i = 0; i < nodeList.getLength(); i++) {
-          sortableDomElementListModel.addElement((Object) nodeList.item(i));
+          sortableDomElementListModel.addElement(nodeList.item(i));
         }
         sortableDomElementListModel.sortElements();
         for (int i = 0; i < sortableDomElementListModel.getSize(); i++) {
@@ -15463,7 +15399,7 @@ public class Modeler extends JFrame {
                     jEditorPaneFunctionsStructureIOImageArray[k].setText(
                         res.getString("S1829") + fileName);
                     jEditorPaneFunctionsStructureIOImageArray[k].setPage(fileName);
-                  } catch (Exception ex) {
+                  } catch (Exception ignored) {
                   }
                 }
               }
@@ -15476,7 +15412,7 @@ public class Modeler extends JFrame {
                   jScrollPaneFunctionsStructureIOImageArray[k]);
             }
             if (functionIONode.getType().equals("IOTable")) {
-              elementFunctionIO = (org.w3c.dom.Element) functionIONode.getElement();
+              elementFunctionIO = functionIONode.getElement();
               Object[] Cell = new Object[8];
               j = j + 1;
               Cell[0] = new TableRowNumber(j, elementFunctionIO);
@@ -15943,7 +15879,7 @@ public class Modeler extends JFrame {
           if (element
               .getAttribute("DepartmentID")
               .equals(tableRowNumber.getElement().getAttribute("ID"))) {
-            sortableDomElementListModel.addElement((Object) element);
+            sortableDomElementListModel.addElement(element);
           }
         }
         sortableDomElementListModel.sortElements();
@@ -16038,7 +15974,7 @@ public class Modeler extends JFrame {
           if (element
               .getAttribute("TaskTypeID")
               .equals(tableRowNumber.getElement().getAttribute("ID"))) {
-            sortableDomElementListModel.addElement((Object) element);
+            sortableDomElementListModel.addElement(element);
           }
         }
         sortableDomElementListModel.sortElements();
@@ -16133,7 +16069,7 @@ public class Modeler extends JFrame {
           if (element
               .getAttribute("TableTypeID")
               .equals(tableRowNumber.getElement().getAttribute("ID"))) {
-            sortableDomElementListModel.addElement((Object) element);
+            sortableDomElementListModel.addElement(element);
           }
         }
         sortableDomElementListModel.sortElements();
@@ -16218,9 +16154,8 @@ public class Modeler extends JFrame {
             if (comboBoxModelDataTypeBasicType
                 .getElementAt(i)
                 .equals(
-                    (String)
-                        tableModelSystemDataTypeList.getValueAt(
-                            selectedRow_jTableSystemDataTypeList, 3))) {
+                    tableModelSystemDataTypeList.getValueAt(
+                        selectedRow_jTableSystemDataTypeList, 3))) {
               comboBoxModelDataTypeBasicType.setSelectedItem(
                   comboBoxModelDataTypeBasicType.getElementAt(i));
             }
@@ -16395,7 +16330,7 @@ public class Modeler extends JFrame {
           if (element
               .getAttribute("FunctionTypeID")
               .equals(tableRowNumber.getElement().getAttribute("ID"))) {
-            sortableDomElementListModel.addElement((Object) element);
+            sortableDomElementListModel.addElement(element);
           }
         }
         sortableDomElementListModel.sortElements();
@@ -16500,7 +16435,7 @@ public class Modeler extends JFrame {
               }
             }
             jEditorPaneSystemTermsDescriptions.setPage(fileName);
-          } catch (Exception ex) {
+          } catch (Exception ignored) {
           }
         }
       }
@@ -16990,7 +16925,7 @@ public class Modeler extends JFrame {
               if (componentType_jPopupMenuComponent.equals("NativeTableList")) {
                 if (j == 3) {
                   showOnModelFlag = (Boolean) tableModel.getValueAt(i, j);
-                  if (showOnModelFlag.booleanValue()) {
+                  if (showOnModelFlag) {
                     bufferedWriter.write(res.getString("S483"));
                   } else {
                     bufferedWriter.write("");
@@ -17002,7 +16937,7 @@ public class Modeler extends JFrame {
               if (componentType_jPopupMenuComponent.equals("ForeignTableList")) {
                 if (j == 4) {
                   showOnModelFlag = (Boolean) tableModel.getValueAt(i, j);
-                  if (showOnModelFlag.booleanValue()) {
+                  if (showOnModelFlag) {
                     bufferedWriter.write(res.getString("S483"));
                   } else {
                     bufferedWriter.write("");
@@ -17023,7 +16958,7 @@ public class Modeler extends JFrame {
       } catch (Exception ex1) {
         try {
           bufferedWriter.close();
-        } catch (Exception ex2) {
+        } catch (Exception ignored) {
         }
       }
       try {
@@ -17034,14 +16969,14 @@ public class Modeler extends JFrame {
         try {
           setCursor(new Cursor(Cursor.WAIT_CURSOR));
           desktop.open(workCsvFile);
-        } catch (Exception ex) {
+        } catch (Exception ignored) {
         } finally {
           setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
         }
       } catch (Exception ex3) {
         try {
           bufferedWriter.close();
-        } catch (Exception ex4) {
+        } catch (Exception ignored) {
         }
       }
     }
@@ -17393,7 +17328,7 @@ public class Modeler extends JFrame {
         sortKey = workTokenizer.nextToken();
         length = Integer.parseInt(workTokenizer.nextToken());
         name = workTokenizer.nextToken();
-      } catch (Exception ex1) {
+      } catch (Exception ignored) {
       }
       if (!sortKey.equals("") && !name.equals("")) {
         //
@@ -17413,7 +17348,7 @@ public class Modeler extends JFrame {
         newElement.setAttribute("SortKey", sortKey);
         newElement.setAttribute("Length", Integer.toString(length));
         newElement.setAttribute("Decimal", "0");
-        newElement.setAttribute("SQLExpression", "CHAR(" + Integer.toString(length) + ")");
+        newElement.setAttribute("SQLExpression", "CHAR(" + length + ")");
         nextSiblingNode = lastElement.getNextSibling();
         systemNode.getElement().insertBefore(newElement, nextSiblingNode);
         //
@@ -18232,7 +18167,7 @@ public class Modeler extends JFrame {
         for (int i = 0; i < actionList.getLength(); i++) {
           element = (org.w3c.dom.Element) actionList.item(i);
           workNode = new XeadTreeNode("TaskAction", (org.w3c.dom.Element) actionList.item(i));
-          sortableXeadTreeNodeListModel.addElement((Object) workNode);
+          sortableXeadTreeNodeListModel.addElement(workNode);
         }
         sortableXeadTreeNodeListModel.sortElements();
         for (int i = 0; i < sortableXeadTreeNodeListModel.getSize(); i++) {
@@ -19085,7 +19020,7 @@ public class Modeler extends JFrame {
       }
     }
     jPanelDatamodel.setPreferredSize(
-        new Dimension((int) panelWidth * 120 / 100, (int) panelHeight * 150 / 100));
+        new Dimension(panelWidth * 120 / 100, panelHeight * 150 / 100));
     for (DatamodelRelationshipLine datamodelRelationshipLine : datamodelRelationshipLineArray) {
       datamodelRelationshipLine.setupTerminalIcons();
       datamodelRelationshipLine.setupRelationLine();
@@ -19210,7 +19145,7 @@ public class Modeler extends JFrame {
       }
     }
     jPanelDatamodel.setPreferredSize(
-        new Dimension((int) panelWidth * 120 / 100, (int) panelHeight * 150 / 100));
+        new Dimension(panelWidth * 120 / 100, panelHeight * 150 / 100));
     if (isShowingInstance && hasNoInstance) {
       JOptionPane.showMessageDialog(null, res.getString("S900"));
       isShowingInstance = false;
@@ -19422,7 +19357,7 @@ public class Modeler extends JFrame {
                   jPanelDatamodelSlideShow2,
                   relationshipElement);
           datamodelRelationshipLineSlideShowArray.add(relationshipLine);
-        } catch (Exception e) {
+        } catch (Exception ignored) {
         }
       }
     }
@@ -19529,9 +19464,7 @@ public class Modeler extends JFrame {
     diff.y = topBoxPoint.y - ((int) pixelRoundValue * intWork + (int) pixelRoundValue / 2);
     topBoxPoint.y = ((int) pixelRoundValue * intWork + (int) pixelRoundValue / 2);
 
-    datamodelEntityBoxArray
-        .get(topBoxIndex)
-        .changePositionTo((int) topBoxPoint.x, (int) topBoxPoint.y);
+    datamodelEntityBoxArray.get(topBoxIndex).changePositionTo(topBoxPoint.x, topBoxPoint.y);
 
     for (int i = 0; i < datamodelEntityBoxArray.size(); i++) {
       if (i != topBoxIndex) {
@@ -19660,16 +19593,12 @@ public class Modeler extends JFrame {
               sv.setAttribute("xml:space", "preserve");
               sv.setAttribute("width", Integer.toString(imageSize.x));
               sv.setAttribute("height", Integer.toString(imageSize.y));
-              sv.setAttribute(
-                  "viewBox",
-                  "0 0 " + Integer.toString(imageSize.x) + " " + Integer.toString(imageSize.y));
+              sv.setAttribute("viewBox", "0 0 " + imageSize.x + " " + imageSize.y);
               try {
                 OutputStream os = new FileOutputStream(file);
                 BufferedOutputStream bos = new BufferedOutputStream(os);
-                Writer out = new OutputStreamWriter(bos, "UTF-8");
+                Writer out = new OutputStreamWriter(bos, StandardCharsets.UTF_8);
                 svg2d.stream(sv, out);
-              } catch (UnsupportedEncodingException ue) {
-                ue.printStackTrace();
               } catch (SVGGraphics2DIOException se) {
                 se.printStackTrace();
               } catch (IOException ioe) {
@@ -19743,16 +19672,12 @@ public class Modeler extends JFrame {
               sv.setAttribute("xml:space", "preserve");
               sv.setAttribute("width", Integer.toString(imageSize.x));
               sv.setAttribute("height", Integer.toString(imageSize.y));
-              sv.setAttribute(
-                  "viewBox",
-                  "0 0 " + Integer.toString(imageSize.x) + " " + Integer.toString(imageSize.y));
+              sv.setAttribute("viewBox", "0 0 " + imageSize.x + " " + imageSize.y);
               try {
                 OutputStream os = new FileOutputStream(file);
                 BufferedOutputStream bos = new BufferedOutputStream(os);
-                Writer out = new OutputStreamWriter(bos, "UTF-8");
+                Writer out = new OutputStreamWriter(bos, StandardCharsets.UTF_8);
                 svg2d.stream(sv, out);
-              } catch (UnsupportedEncodingException ue) {
-                ue.printStackTrace();
               } catch (SVGGraphics2DIOException se) {
                 se.printStackTrace();
               } catch (IOException ioe) {
@@ -19786,16 +19711,14 @@ public class Modeler extends JFrame {
               sv.setAttribute(
                   "viewBox",
                   "0 0 "
-                      + Integer.toString(jTextPaneIOPanelImage.getWidth())
+                      + jTextPaneIOPanelImage.getWidth()
                       + " "
-                      + Integer.toString(jTextPaneIOPanelImage.getHeight()));
+                      + jTextPaneIOPanelImage.getHeight());
               try {
                 OutputStream os = new FileOutputStream(file);
                 BufferedOutputStream bos = new BufferedOutputStream(os);
-                Writer out = new OutputStreamWriter(bos, "UTF-8");
+                Writer out = new OutputStreamWriter(bos, StandardCharsets.UTF_8);
                 svg2d.stream(sv, out);
-              } catch (UnsupportedEncodingException ue) {
-                ue.printStackTrace();
               } catch (SVGGraphics2DIOException se) {
                 se.printStackTrace();
               } catch (IOException ioe) {
@@ -19829,16 +19752,14 @@ public class Modeler extends JFrame {
               sv.setAttribute(
                   "viewBox",
                   "0 0 "
-                      + Integer.toString(jTextPaneIOSpoolImage.getWidth())
+                      + jTextPaneIOSpoolImage.getWidth()
                       + " "
-                      + Integer.toString(jTextPaneIOSpoolImage.getHeight()));
+                      + jTextPaneIOSpoolImage.getHeight());
               try {
                 OutputStream os = new FileOutputStream(file);
                 BufferedOutputStream bos = new BufferedOutputStream(os);
-                Writer out = new OutputStreamWriter(bos, "UTF-8");
+                Writer out = new OutputStreamWriter(bos, StandardCharsets.UTF_8);
                 svg2d.stream(sv, out);
-              } catch (UnsupportedEncodingException ue) {
-                ue.printStackTrace();
               } catch (SVGGraphics2DIOException se) {
                 se.printStackTrace();
               } catch (IOException ioe) {
@@ -19856,7 +19777,7 @@ public class Modeler extends JFrame {
             }
           }
           desktop.browse(file.toURI());
-        } catch (Exception ex) {
+        } catch (Exception ignored) {
         }
       }
     }
@@ -19924,7 +19845,7 @@ public class Modeler extends JFrame {
           currentTaskActionTreeNode.getElement().getElementsByTagName("TaskFunctionIO");
       sortableDomElementListModel.removeAllElements();
       for (int i = 0; i < taskFunctionIOList.getLength(); i++) {
-        sortableDomElementListModel.addElement((Object) taskFunctionIOList.item(i));
+        sortableDomElementListModel.addElement(taskFunctionIOList.item(i));
       }
       sortableDomElementListModel.sortElements();
       int lastSortKey = 0;
@@ -19945,7 +19866,7 @@ public class Modeler extends JFrame {
           currentTaskActionTreeNode.getElement().getElementsByTagName("TaskFunctionIO");
       sortableDomElementListModel.removeAllElements();
       for (int i = 0; i < taskFunctionIOList.getLength(); i++) {
-        sortableDomElementListModel.addElement((Object) taskFunctionIOList.item(i));
+        sortableDomElementListModel.addElement(taskFunctionIOList.item(i));
       }
       sortableDomElementListModel.sortElements();
       int workSortKey = 0;
@@ -20023,7 +19944,7 @@ public class Modeler extends JFrame {
           currentTaskActionTreeNode.getElement().getElementsByTagName("TaskFunctionIO");
       sortableDomElementListModel.removeAllElements();
       for (int i = 0; i < taskFunctionIOList.getLength(); i++) {
-        sortableDomElementListModel.addElement((Object) taskFunctionIOList.item(i));
+        sortableDomElementListModel.addElement(taskFunctionIOList.item(i));
       }
       sortableDomElementListModel.sortElements();
       for (int i = 0; i < sortableDomElementListModel.getSize(); i++) {
@@ -20040,7 +19961,7 @@ public class Modeler extends JFrame {
       taskFunctionIOList = currentMainTreeNode.getElement().getElementsByTagName("TaskFunctionIO");
       sortableDomElementListModel.removeAllElements();
       for (int i = 0; i < taskFunctionIOList.getLength(); i++) {
-        sortableDomElementListModel.addElement((Object) taskFunctionIOList.item(i));
+        sortableDomElementListModel.addElement(taskFunctionIOList.item(i));
       }
       sortableDomElementListModel.sortElements();
       int workSortKey = 0;
@@ -20085,10 +20006,8 @@ public class Modeler extends JFrame {
       }
       if (currentTaskActionTreeNode.equals(secondActionNode)) {
         //
-        org.w3c.dom.Element elementOfFirstActionNode =
-            (org.w3c.dom.Element) firstActionNode.getElement();
-        org.w3c.dom.Element elementOfSecondActionNode =
-            (org.w3c.dom.Element) secondActionNode.getElement();
+        org.w3c.dom.Element elementOfFirstActionNode = firstActionNode.getElement();
+        org.w3c.dom.Element elementOfSecondActionNode = secondActionNode.getElement();
         //
         String indentLevelOfFirstAction = elementOfFirstActionNode.getAttribute("IndentLevel");
         String sortKeyOfFirstAction = elementOfFirstActionNode.getAttribute("SortKey");
@@ -20123,7 +20042,7 @@ public class Modeler extends JFrame {
           while (lastChildOfCurrentNode.getChildCount() > 0) {
             lastChildOfCurrentNode = (XeadTreeNode) lastChildOfCurrentNode.getLastChild();
           }
-          element1 = (org.w3c.dom.Element) lastChildOfCurrentNode.getElement();
+          element1 = lastChildOfCurrentNode.getElement();
           intSortKey = Integer.parseInt(element1.getAttribute("SortKey"));
           //
           // update SortKey of nodes//
@@ -20165,10 +20084,8 @@ public class Modeler extends JFrame {
       XeadTreeNode secondActionNode = (XeadTreeNode) firstActionNode.getChildAt(0);
       if (currentTaskActionTreeNode.equals(firstActionNode)) {
         //
-        org.w3c.dom.Element elementOfFirstActionNode =
-            (org.w3c.dom.Element) firstActionNode.getElement();
-        org.w3c.dom.Element elementOfSecondActionNode =
-            (org.w3c.dom.Element) secondActionNode.getElement();
+        org.w3c.dom.Element elementOfFirstActionNode = firstActionNode.getElement();
+        org.w3c.dom.Element elementOfSecondActionNode = secondActionNode.getElement();
         //
         String indentLevelOfFirstAction = elementOfFirstActionNode.getAttribute("IndentLevel");
         String sortKeyOfFirstAction = elementOfFirstActionNode.getAttribute("SortKey");
@@ -20205,7 +20122,7 @@ public class Modeler extends JFrame {
           while (lastChildOfNodeBelow.getChildCount() > 0) {
             lastChildOfNodeBelow = (XeadTreeNode) lastChildOfNodeBelow.getLastChild();
           }
-          element1 = (org.w3c.dom.Element) lastChildOfNodeBelow.getElement();
+          element1 = lastChildOfNodeBelow.getElement();
           intSortKey = Integer.parseInt(element1.getAttribute("SortKey"));
           //
           // update SortKey of nodes//
@@ -21002,7 +20919,7 @@ public class Modeler extends JFrame {
       }
       for (int i = 0; i < functionIONode.getChildCount(); i++) {
         XeadTreeNode node = (XeadTreeNode) functionIONode.getChildAt(i);
-        org.w3c.dom.Element element = (org.w3c.dom.Element) node.getElement();
+        org.w3c.dom.Element element = node.getElement();
         Object[] Cell = new Object[3];
         Cell[0] = i + 1;
         Cell[1] = node.getName();
@@ -21499,31 +21416,31 @@ public class Modeler extends JFrame {
             workLong = Long.parseLong(sortKeyOfTargetRow) + Long.parseLong(sortKeyOfFollowingRow);
             workLong = workLong / 2;
             if (workLong < 10) {
-              workStr = "000000000" + Long.toString(workLong);
+              workStr = "000000000" + workLong;
             } else {
               if (workLong < 100) {
-                workStr = "00000000" + Long.toString(workLong);
+                workStr = "00000000" + workLong;
               } else {
                 if (workLong < 1000) {
-                  workStr = "0000000" + Long.toString(workLong);
+                  workStr = "0000000" + workLong;
                 } else {
                   if (workLong < 10000) {
-                    workStr = "000000" + Long.toString(workLong);
+                    workStr = "000000" + workLong;
                   } else {
                     if (workLong < 100000) {
-                      workStr = "00000" + Long.toString(workLong);
+                      workStr = "00000" + workLong;
                     } else {
                       if (workLong < 1000000) {
-                        workStr = "0000" + Long.toString(workLong);
+                        workStr = "0000" + workLong;
                       } else {
                         if (workLong < 10000000) {
-                          workStr = "000" + Long.toString(workLong);
+                          workStr = "000" + workLong;
                         } else {
                           if (workLong < 100000000) {
-                            workStr = "00" + Long.toString(workLong);
+                            workStr = "00" + workLong;
                           } else {
                             if (workLong < 1000000000) {
-                              workStr = "0" + Long.toString(workLong);
+                              workStr = "0" + workLong;
                             } else {
                               if (workLong < 1000000000) {
                                 workStr = Long.toString(workLong);
@@ -21676,7 +21593,7 @@ public class Modeler extends JFrame {
               currentMainTreeNode.getElement().getElementsByTagName("TableKeyField");
           sortableDomElementListModel.removeAllElements();
           for (int i = 0; i < keyFieldList.getLength(); i++) {
-            sortableDomElementListModel.addElement((Object) keyFieldList.item(i));
+            sortableDomElementListModel.addElement(keyFieldList.item(i));
           }
           //
           sortableDomElementListModel.sortElements();
@@ -21921,7 +21838,7 @@ public class Modeler extends JFrame {
               currentMainTreeNode.getElement().getElementsByTagName("FunctionUsedByThis");
           sortableDomElementListModel.removeAllElements();
           for (int i = 0; i < functionsUsedByThis.getLength(); i++) {
-            sortableDomElementListModel.addElement((Object) functionsUsedByThis.item(i));
+            sortableDomElementListModel.addElement(functionsUsedByThis.item(i));
           }
           //
           sortableDomElementListModel.sortElements();
@@ -22553,14 +22470,14 @@ public class Modeler extends JFrame {
             reply = true;
           }
         }
-      } catch (BadLocationException ex) {
+      } catch (BadLocationException ignored) {
       }
     }
     return reply;
   }
 
   /** Class of Table Row Number */
-  class CreateStatement extends Object {
+  class CreateStatement {
     private String statement_;
     private boolean warningOccured_;
 
@@ -22596,7 +22513,7 @@ public class Modeler extends JFrame {
       //				node = (XeadTreeNode)it.next();
       //				this.addElement(node);
       //			}
-      ArrayList<XeadTreeNode> list = new ArrayList<XeadTreeNode>();
+      ArrayList<XeadTreeNode> list = new ArrayList<>();
       for (int i = 0; i < this.getSize(); i++) {
         list.add((XeadTreeNode) this.getElementAt(i));
       }
@@ -22626,7 +22543,7 @@ public class Modeler extends JFrame {
       //				node = (XeadTreeNode)it.next();
       //				this.addElement(node);
       //			}
-      ArrayList<XeadTreeNode> list = new ArrayList<XeadTreeNode>();
+      ArrayList<XeadTreeNode> list = new ArrayList<>();
       for (int i = 0; i < this.getSize(); i++) {
         list.add((XeadTreeNode) this.getElementAt(i));
       }
@@ -22662,7 +22579,7 @@ public class Modeler extends JFrame {
       //				domElement = (org.w3c.dom.Element)it.next();
       //				this.addElement(domElement);
       //			}
-      ArrayList<XeadElement> list = new ArrayList<XeadElement>();
+      ArrayList<XeadElement> list = new ArrayList<>();
       for (int i = 0; i < this.getSize(); i++) {
         list.add((XeadElement) super.getElementAt(i));
       }
@@ -22685,7 +22602,7 @@ public class Modeler extends JFrame {
 
     public void addElement(Object object) {
       XeadFieldElement element = new XeadFieldElement((org.w3c.dom.Element) object);
-      super.addElement((Object) element);
+      super.addElement(element);
     }
 
     public void sortElements() {
@@ -22703,7 +22620,7 @@ public class Modeler extends JFrame {
       //				domElement = (org.w3c.dom.Element)it.next();
       //				this.addElement(domElement);
       //			}
-      ArrayList<XeadFieldElement> list = new ArrayList<XeadFieldElement>();
+      ArrayList<XeadFieldElement> list = new ArrayList<>();
       for (int i = 0; i < this.getSize(); i++) {
         list.add((XeadFieldElement) super.getElementAt(i));
       }
@@ -22731,7 +22648,7 @@ public class Modeler extends JFrame {
       super();
       node_ = nd;
       this.setFont(new java.awt.Font(mainFontName, 0, MAIN_FONT_SIZE - 2));
-      String nodeType = ((XeadTreeNode) node_).getType();
+      String nodeType = node_.getType();
       this.addActionListener(new NodeJumpButton_actionAdapter(this));
       if (nodeType == "System") {
         this.setIcon(imageIconSystem);
@@ -22928,7 +22845,7 @@ public class Modeler extends JFrame {
       jTextFieldNodeNameExt.setOpaque(false);
       jTextFieldNodeNameExt.setName("jTextFieldNodeNameExt");
       Integer num = new Integer(dataflowNodeElement_.getAttribute("SlideNumber"));
-      slideNumber = num.intValue();
+      slideNumber = num;
       jSpinnerSlideNumber.setFont(new java.awt.Font(mainFontName, 0, 12));
       jSpinnerSlideNumber.addChangeListener(new jSpinnerSlideNumber_changeAdapter(this));
       SpinnerNumberModel spinnerNumberModel = new SpinnerNumberModel(slideNumber, 1, 30, 1);
@@ -24958,11 +24875,8 @@ public class Modeler extends JFrame {
         boundaryHeight = 50;
       }
       jLabelName.setBounds(new Rectangle(15, boundaryHeight - 30, 300, 20));
-      dataflowBoundaryElement_.setAttribute(
-          "BoundaryPosition",
-          Integer.toString(boundaryPosX) + "," + Integer.toString(boundaryPosY));
-      dataflowBoundaryElement_.setAttribute(
-          "BoundarySize", Integer.toString(boundaryWidth) + "," + Integer.toString(boundaryHeight));
+      dataflowBoundaryElement_.setAttribute("BoundaryPosition", boundaryPosX + "," + boundaryPosY);
+      dataflowBoundaryElement_.setAttribute("BoundarySize", boundaryWidth + "," + boundaryHeight);
       super.setBounds(boundaryPosX, boundaryPosY, boundaryWidth + 1, boundaryHeight + 1);
     }
 
@@ -24988,11 +24902,8 @@ public class Modeler extends JFrame {
         boundaryHeight = 50;
       }
       jLabelName.setBounds(new Rectangle(15, boundaryHeight - 30, 300, 20));
-      dataflowBoundaryElement_.setAttribute(
-          "BoundaryPosition",
-          Integer.toString(boundaryPosX) + "," + Integer.toString(boundaryPosY));
-      dataflowBoundaryElement_.setAttribute(
-          "BoundarySize", Integer.toString(boundaryWidth) + "," + Integer.toString(boundaryHeight));
+      dataflowBoundaryElement_.setAttribute("BoundaryPosition", boundaryPosX + "," + boundaryPosY);
+      dataflowBoundaryElement_.setAttribute("BoundarySize", boundaryWidth + "," + boundaryHeight);
       super.setBounds(boundaryPosX, boundaryPosY, boundaryWidth + 1, boundaryHeight + 1);
     }
 
@@ -25300,7 +25211,7 @@ public class Modeler extends JFrame {
 
       // Setup slide number//
       Integer num = new Integer(dataflowLineElement_.getAttribute("SlideNumber"));
-      slideNumber = num.intValue();
+      slideNumber = num;
       jSpinnerSlideNumber.setFont(new java.awt.Font(mainFontName, 0, 12));
       jSpinnerSlideNumber.addChangeListener(new jSpinnerSlideNumber_changeAdapter(this));
       SpinnerNumberModel spinnerNumberModel = new SpinnerNumberModel(slideNumber, 1, 30, 1);
@@ -25311,12 +25222,12 @@ public class Modeler extends JFrame {
 
       // Setup properties of jLabelArrow1&2//
       Integer work = new Integer(dataflowLineElement_.getAttribute("TerminalPosIndex1"));
-      terminalPosIndex1 = work.intValue();
+      terminalPosIndex1 = work;
       if (dataflowLineElement_.getAttribute("ShowArrow1").equals("true")) {
         showArrow1 = true;
       }
       work = new Integer(dataflowLineElement_.getAttribute("TerminalPosIndex2"));
-      terminalPosIndex2 = work.intValue();
+      terminalPosIndex2 = work;
       if (dataflowLineElement_.getAttribute("ShowArrow2").equals("true")) {
         showArrow2 = true;
       }
@@ -25531,9 +25442,9 @@ public class Modeler extends JFrame {
 
     public void setLinePositionIndex() {
       Integer work = new Integer(dataflowLineElement_.getAttribute("TerminalPosIndex1"));
-      terminalPosIndex1 = work.intValue();
+      terminalPosIndex1 = work;
       work = new Integer(dataflowLineElement_.getAttribute("TerminalPosIndex2"));
-      terminalPosIndex2 = work.intValue();
+      terminalPosIndex2 = work;
     }
 
     public void updatePosition() {
@@ -26325,7 +26236,7 @@ public class Modeler extends JFrame {
   } // End of Class DataflowLine//
 
   /** Class of Data-model Relationship Line */
-  class DatamodelRelationshipLine extends Object {
+  class DatamodelRelationshipLine {
     public Arc2D arc2D_A, arc2D_B;
     private org.w3c.dom.Element subsystemRelationshipElement_;
     private org.w3c.dom.Element relationshipElement_;
@@ -28246,10 +28157,10 @@ public class Modeler extends JFrame {
     private boolean isVisibleOnModel = false;
     private boolean isSelected_ = false;
     private int heightOfInstanceArea;
-    private ArrayList<ElementLabel> elementLabelArray = new ArrayList<ElementLabel>();
+    private ArrayList<ElementLabel> elementLabelArray = new ArrayList<>();
     private int rightMarginOfElementsPanel = 0;
-    private ArrayList<String> slideInstanceArray = new ArrayList<String>();
-    private ArrayList<Integer> slideNumberArray = new ArrayList<Integer>();
+    private ArrayList<String> slideInstanceArray = new ArrayList<>();
+    private ArrayList<Integer> slideNumberArray = new ArrayList<>();
     private int currentSlideArrayIndex = -1;
 
     // Visual components structure //
@@ -28581,7 +28492,7 @@ public class Modeler extends JFrame {
           }
         }
       }
-      StringBuffer bf = new StringBuffer();
+      StringBuilder bf = new StringBuilder();
       if (isC) {
         bf.append("C");
       }
@@ -28648,7 +28559,7 @@ public class Modeler extends JFrame {
       } else {
         SortableDomElementListModel sortableDomElementListModel = new SortableDomElementListModel();
         for (int i = 0; i < nodeList.getLength(); i++) {
-          sortableDomElementListModel.addElement((Object) nodeList.item(i));
+          sortableDomElementListModel.addElement(nodeList.item(i));
         }
         sortableDomElementListModel.sortElements();
         for (int i = 0; i < sortableDomElementListModel.getSize(); i++) {
@@ -29357,7 +29268,7 @@ public class Modeler extends JFrame {
             }
           }
           jPanelDatamodel.setPreferredSize(
-              new Dimension((int) panelWidth * 120 / 100, (int) panelHeight * 150 / 100));
+              new Dimension(panelWidth * 120 / 100, panelHeight * 150 / 100));
           jPanelDatamodel.updateUI();
         } else {
           setupSlideInstanceArray();
@@ -29499,7 +29410,7 @@ public class Modeler extends JFrame {
 
         // Setup ToolTipText //
         String zenkaku;
-        StringBuffer strbf = new StringBuffer("<html>");
+        StringBuilder strbf = new StringBuilder("<html>");
         String strwork = elementNode_.getElement().getAttribute("Alias");
         if (!strwork.equals("")) {
           strbf.append(strwork);
@@ -29620,8 +29531,7 @@ public class Modeler extends JFrame {
           if ((e.getModifiers() & InputEvent.BUTTON1_MASK) == InputEvent.BUTTON1_MASK
               && draggingKeyElement != null) {
             MouseEvent eventOnPanel =
-                SwingUtilities.convertMouseEvent(
-                    (Component) e.getSource(), e, (Component) jPanelDatamodel);
+                SwingUtilities.convertMouseEvent((Component) e.getSource(), e, jPanelDatamodel);
             dropTargetComponent =
                 jPanelDatamodel.findComponentAt(eventOnPanel.getX(), eventOnPanel.getY());
             if (dropTargetComponent instanceof JLabel) {
@@ -30401,7 +30311,7 @@ public class Modeler extends JFrame {
     }
 
     public String getNameAsOwnerNode() {
-      StringBuffer bf = new StringBuffer();
+      StringBuilder bf = new StringBuilder();
       if (nodeType_.equals("TableList")
           || nodeType_.equals("TableFieldList")
           || nodeType_.equals("TableKeyList")
@@ -30435,7 +30345,7 @@ public class Modeler extends JFrame {
     }
 
     public String getNameAsLoggedNode() {
-      StringBuffer bf = new StringBuffer();
+      StringBuilder bf = new StringBuilder();
       if (nodeType_.equals("TableList")) {
         bf.append(res.getString("S466"));
       } else {
@@ -30682,7 +30592,7 @@ public class Modeler extends JFrame {
           nodeList = domDocument.getElementsByTagName("Department");
           for (int i = 0; i < nodeList.getLength(); i++) {
             node = new XeadTreeNode("Department", (org.w3c.dom.Element) nodeList.item(i));
-            sortableComboBoxModelDepartment.addElement((Object) node);
+            sortableComboBoxModelDepartment.addElement(node);
           }
           sortableComboBoxModelDepartment.sortElements();
           node = (XeadTreeNode) sortableComboBoxModelDepartment.getElementAt(0);
@@ -30719,7 +30629,7 @@ public class Modeler extends JFrame {
           nodeList = domDocument.getElementsByTagName("TaskType");
           for (int i = 0; i < nodeList.getLength(); i++) {
             node = new XeadTreeNode("TaskType", (org.w3c.dom.Element) nodeList.item(i));
-            sortableComboBoxModelTaskType.addElement((Object) node);
+            sortableComboBoxModelTaskType.addElement(node);
           }
           sortableComboBoxModelTaskType.sortElements();
           if (sortableComboBoxModelTaskType.getSize() > 0) {
@@ -30734,7 +30644,7 @@ public class Modeler extends JFrame {
           nodeList = domDocument.getElementsByTagName("TaskType");
           for (int i = 0; i < nodeList.getLength(); i++) {
             node = new XeadTreeNode("TaskType", (org.w3c.dom.Element) nodeList.item(i));
-            sortableComboBoxModelTaskType.addElement((Object) node);
+            sortableComboBoxModelTaskType.addElement(node);
           }
           sortableComboBoxModelTaskType.sortElements();
           if (sortableComboBoxModelTaskType.getSize() > 0) {
@@ -30841,7 +30751,7 @@ public class Modeler extends JFrame {
           sortableDomElementListModel.removeAllElements();
           nodeList = domDocument.getElementsByTagName("DataType");
           for (int i = 0; i < nodeList.getLength(); i++) {
-            sortableDomElementListModel.addElement((Object) nodeList.item(i));
+            sortableDomElementListModel.addElement(nodeList.item(i));
           }
           sortableDomElementListModel.sortElements();
           org.w3c.dom.Element defaultDataTypeElement =
@@ -30966,7 +30876,7 @@ public class Modeler extends JFrame {
           nodeList = domDocument.getElementsByTagName("FunctionType");
           for (int i = 0; i < nodeList.getLength(); i++) {
             node = new XeadTreeNode("FunctionType", (org.w3c.dom.Element) nodeList.item(i));
-            sortableComboBoxModelFunctionType.addElement((Object) node);
+            sortableComboBoxModelFunctionType.addElement(node);
           }
           sortableComboBoxModelFunctionType.sortElements();
           node = (XeadTreeNode) sortableComboBoxModelFunctionType.getElementAt(0);
@@ -32235,7 +32145,7 @@ public class Modeler extends JFrame {
       if (printerJob.printDialog()) {
         try {
           printerJob.print();
-        } catch (PrinterException ex) {
+        } catch (PrinterException ignored) {
         }
       }
     }
@@ -32368,7 +32278,7 @@ public class Modeler extends JFrame {
       //				node = (XeadTreeNode)it.next();
       //				this.add(node);
       //			}
-      ArrayList<XeadTreeNode> list = new ArrayList<XeadTreeNode>();
+      ArrayList<XeadTreeNode> list = new ArrayList<>();
       XeadTreeNode node;
       for (int i = 0; i < this.getChildCount(); i++) {
         node = (XeadTreeNode) this.getChildAt(i);
@@ -32584,7 +32494,7 @@ public class Modeler extends JFrame {
         element = (org.w3c.dom.Element) domNode_.cloneNode(true);
         for (org.w3c.dom.Element value : newlyAddedDataTypeElementList) {
           dataTypeElement = value;
-          element.appendChild((org.w3c.dom.Element) dataTypeElement.cloneNode(true));
+          element.appendChild(dataTypeElement.cloneNode(true));
         }
       }
       //
@@ -32597,7 +32507,7 @@ public class Modeler extends JFrame {
 
     public boolean isPrimaryKeyField() {
       boolean value = false;
-      if (((XeadTreeNode) this).getType().equals("TableField")) {
+      if (this.getType().equals("TableField")) {
         XeadTreeNode tableNode = (XeadTreeNode) this.getParent().getParent();
         org.w3c.dom.Element element1, element2;
         String fieldID = domNode_.getAttribute("ID");
@@ -32729,7 +32639,7 @@ public class Modeler extends JFrame {
         nodeList1 = domDocument.getElementsByTagName("Department");
         sortableDomElementListModel.removeAllElements();
         for (int i = 0; i < nodeList1.getLength(); i++) {
-          sortableDomElementListModel.addElement((Object) nodeList1.item(i));
+          sortableDomElementListModel.addElement(nodeList1.item(i));
         }
         sortableDomElementListModel.sortElements();
         for (int i = 0; i < sortableDomElementListModel.getSize(); i++) {
@@ -32784,7 +32694,7 @@ public class Modeler extends JFrame {
         nodeList1 = domDocument.getElementsByTagName("TaskType");
         sortableDomElementListModel.removeAllElements();
         for (int i = 0; i < nodeList1.getLength(); i++) {
-          sortableDomElementListModel.addElement((Object) nodeList1.item(i));
+          sortableDomElementListModel.addElement(nodeList1.item(i));
         }
         sortableDomElementListModel.sortElements();
         for (int i = 0; i < sortableDomElementListModel.getSize(); i++) {
@@ -32839,7 +32749,7 @@ public class Modeler extends JFrame {
         nodeList1 = domDocument.getElementsByTagName("TableType");
         sortableDomElementListModel.removeAllElements();
         for (int i = 0; i < nodeList1.getLength(); i++) {
-          sortableDomElementListModel.addElement((Object) nodeList1.item(i));
+          sortableDomElementListModel.addElement(nodeList1.item(i));
         }
         sortableDomElementListModel.sortElements();
         for (int i = 0; i < sortableDomElementListModel.getSize(); i++) {
@@ -32894,7 +32804,7 @@ public class Modeler extends JFrame {
         nodeList1 = domDocument.getElementsByTagName("DataType");
         sortableDomElementListModel.removeAllElements();
         for (int i = 0; i < nodeList1.getLength(); i++) {
-          sortableDomElementListModel.addElement((Object) nodeList1.item(i));
+          sortableDomElementListModel.addElement(nodeList1.item(i));
         }
         sortableDomElementListModel.sortElements();
         for (int i = 0; i < sortableDomElementListModel.getSize(); i++) {
@@ -32939,7 +32849,7 @@ public class Modeler extends JFrame {
             NodeList fieldList = domDocument.getElementsByTagName("TableField");
             sortableDomElementFieldListModel.removeAllElements();
             for (int j = 0; j < fieldList.getLength(); j++) {
-              sortableDomElementFieldListModel.addElement((Object) fieldList.item(j));
+              sortableDomElementFieldListModel.addElement(fieldList.item(j));
             }
             sortableDomElementFieldListModel.sortElements();
           } finally {
@@ -32978,7 +32888,7 @@ public class Modeler extends JFrame {
         nodeList1 = domDocument.getElementsByTagName("FunctionType");
         sortableDomElementListModel.removeAllElements();
         for (int i = 0; i < nodeList1.getLength(); i++) {
-          sortableDomElementListModel.addElement((Object) nodeList1.item(i));
+          sortableDomElementListModel.addElement(nodeList1.item(i));
         }
         sortableDomElementListModel.sortElements();
         for (int i = 0; i < sortableDomElementListModel.getSize(); i++) {
@@ -33033,7 +32943,7 @@ public class Modeler extends JFrame {
         nodeList1 = domDocument.getElementsByTagName("Terms");
         sortableDomElementListModel.removeAllElements();
         for (int i = 0; i < nodeList1.getLength(); i++) {
-          sortableDomElementListModel.addElement((Object) nodeList1.item(i));
+          sortableDomElementListModel.addElement(nodeList1.item(i));
         }
         sortableDomElementListModel.sortElements();
         for (int i = 0; i < sortableDomElementListModel.getSize(); i++) {
@@ -33087,7 +32997,7 @@ public class Modeler extends JFrame {
         nodeList1 = domDocument.getElementsByTagName("MaintenanceLog");
         sortableDomElementListModel.removeAllElements();
         for (int i = 0; i < nodeList1.getLength(); i++) {
-          sortableDomElementListModel.addElement((Object) nodeList1.item(i));
+          sortableDomElementListModel.addElement(nodeList1.item(i));
         }
         sortableDomElementListModel.sortElements();
         for (int i = 0; i < sortableDomElementListModel.getSize(); i++) {
@@ -33133,7 +33043,7 @@ public class Modeler extends JFrame {
       }
       for (int i = 0; i < this.getChildCount(); i++) {
         node = (XeadTreeNode) this.getChildAt(i);
-        element = (org.w3c.dom.Element) node.getElement();
+        element = node.getElement();
         Object[] Cell = new Object[4];
         Cell[0] = new TableRowNumber(i + 1, element);
         Cell[1] = node.getElement().getAttribute("SortKey");
@@ -33280,7 +33190,7 @@ public class Modeler extends JFrame {
       }
       for (int i = 0; i < this.getChildCount(); i++) {
         node = (XeadTreeNode) this.getChildAt(i);
-        element = (org.w3c.dom.Element) node.getElement();
+        element = node.getElement();
         Object[] Cell = new Object[6];
         Cell[0] = new TableRowNumber(i + 1, element);
         Cell[1] = node.getElement().getAttribute("SortKey");
@@ -33322,7 +33232,7 @@ public class Modeler extends JFrame {
       }
       for (int i = 0; i < this.getChildCount(); i++) {
         node = (XeadTreeNode) this.getChildAt(i);
-        element = (org.w3c.dom.Element) node.getElement();
+        element = node.getElement();
         Object[] Cell = new Object[6];
         Cell[0] = new TableRowNumber(i + 1, element);
         Cell[1] = node.getElement().getAttribute("SortKey");
@@ -33344,7 +33254,7 @@ public class Modeler extends JFrame {
       NodeList departmentList = domDocument.getElementsByTagName("Department");
       for (int i = 0; i < departmentList.getLength(); i++) {
         node = new XeadTreeNode("Department", (org.w3c.dom.Element) departmentList.item(i));
-        sortableComboBoxModelDepartment.addElement((Object) node);
+        sortableComboBoxModelDepartment.addElement(node);
       }
       sortableComboBoxModelDepartment.sortElements();
       for (int i = 0; i < sortableComboBoxModelDepartment.getSize(); i++) {
@@ -33413,7 +33323,7 @@ public class Modeler extends JFrame {
       NodeList departmentList = domDocument.getElementsByTagName("TaskType");
       for (int i = 0; i < departmentList.getLength(); i++) {
         node = new XeadTreeNode("TaskType", (org.w3c.dom.Element) departmentList.item(i));
-        sortableComboBoxModelTaskType.addElement((Object) node);
+        sortableComboBoxModelTaskType.addElement(node);
       }
       sortableComboBoxModelTaskType.sortElements();
       for (int i = 0; i < sortableComboBoxModelTaskType.getSize(); i++) {
@@ -33461,7 +33371,7 @@ public class Modeler extends JFrame {
         if (element == elementOfTaskActionToBeFocused) {
           actionNodeToBeFocused = node;
         }
-        sortableXeadTreeNodeListModel.addElement((Object) node);
+        sortableXeadTreeNodeListModel.addElement(node);
       }
       sortableXeadTreeNodeListModel.sortElements();
       //
@@ -33552,7 +33462,7 @@ public class Modeler extends JFrame {
           taskActionNode.getElement().getElementsByTagName("TaskFunctionIO");
       sortableDomElementListModel.removeAllElements();
       for (int i = 0; i < taskFunctionIOList.getLength(); i++) {
-        sortableDomElementListModel.addElement((Object) taskFunctionIOList.item(i));
+        sortableDomElementListModel.addElement(taskFunctionIOList.item(i));
       }
       sortableDomElementListModel.sortElements();
       for (int i = 0; i < sortableDomElementListModel.getSize(); i++) {
@@ -33716,7 +33626,7 @@ public class Modeler extends JFrame {
                       }
                       jEditorPaneTaskFunctionIOImage.setText(res.getString("S1829") + fileName);
                       jEditorPaneTaskFunctionIOImage.setPage(fileName);
-                    } catch (Exception ex) {
+                    } catch (Exception ignored) {
                     }
                   }
                 }
@@ -33855,7 +33765,7 @@ public class Modeler extends JFrame {
       }
       for (int i = 0; i < this.getChildCount(); i++) {
         node = (XeadTreeNode) this.getChildAt(i);
-        subsystemElement = (org.w3c.dom.Element) node.getElement();
+        subsystemElement = node.getElement();
         Object[] Cell = new Object[11];
         Cell[0] = new TableRowNumber(i + 1, subsystemElement);
         Cell[1] = node.getElement().getAttribute("SortKey");
@@ -33933,7 +33843,7 @@ public class Modeler extends JFrame {
         listModel.removeAllElements();
         for (int m = 0; m < node.getChildAt(1).getChildCount(); m++) {
           nodeFunction = (XeadTreeNode) node.getChildAt(1).getChildAt(m);
-          functionElement = (org.w3c.dom.Element) nodeFunction.getElement();
+          functionElement = nodeFunction.getElement();
           functionsUsedByThis = functionElement.getElementsByTagName("FunctionUsedByThis");
           for (int j = 0; j < functionsUsedByThis.getLength(); j++) {
             elementFunctionUsedByThis = (org.w3c.dom.Element) functionsUsedByThis.item(j);
@@ -33944,8 +33854,8 @@ public class Modeler extends JFrame {
                 .getElement()
                 .getAttribute("SubsystemID")
                 .equals(functionElement.getAttribute("SubsystemID"))) {
-              if (!listModel.contains((Object) nodeFunctionUsedByThis)) {
-                listModel.addElement((Object) nodeFunctionUsedByThis);
+              if (!listModel.contains(nodeFunctionUsedByThis)) {
+                listModel.addElement(nodeFunctionUsedByThis);
                 numberOfForeignFunctions = numberOfForeignFunctions + 1;
               }
             }
@@ -33982,7 +33892,7 @@ public class Modeler extends JFrame {
             }
           }
           if (!usedByAnyFunction) {
-            sortableDomElementListModel.addElement((Object) elementFunction);
+            sortableDomElementListModel.addElement(elementFunction);
           }
         }
         //
@@ -34065,7 +33975,7 @@ public class Modeler extends JFrame {
         }
         for (int i = 0; i < this.getChildCount(); i++) {
           node = (XeadTreeNode) this.getChildAt(i);
-          element = (org.w3c.dom.Element) node.getElement();
+          element = node.getElement();
           Object[] Cell = new Object[15];
           Cell[0] = new TableRowNumber(i + 1, element);
           Cell[1] = node.getElement().getAttribute("SortKey");
@@ -34333,7 +34243,7 @@ public class Modeler extends JFrame {
           jProgressBar.paintImmediately(0, 0, jProgressBar.getWidth(), jProgressBar.getHeight());
         }
         jPanelDatamodel.setPreferredSize(
-            new Dimension((int) panelWidth * 120 / 100, (int) panelHeight * 150 / 100));
+            new Dimension(panelWidth * 120 / 100, panelHeight * 150 / 100));
 
         ///////////////////////////////////////////
         // Set Table number according to positions//
@@ -34380,8 +34290,7 @@ public class Modeler extends JFrame {
         jProgressBar.setValue(jProgressBar.getValue() + 1);
         jProgressBar.paintImmediately(0, 0, jProgressBar.getWidth(), jProgressBar.getHeight());
 
-        ArrayList<org.w3c.dom.Element> invalidSubsystemRelationshipList =
-            new ArrayList<org.w3c.dom.Element>();
+        ArrayList<org.w3c.dom.Element> invalidSubsystemRelationshipList = new ArrayList<>();
         DatamodelRelationshipLine relationshipLine = null;
         datamodelRelationshipLineArray.clear();
         for (int i = 0; i < subsystemRelationshipList.getLength(); i++) {
@@ -34411,7 +34320,7 @@ public class Modeler extends JFrame {
           }
         }
         for (org.w3c.dom.Element value : invalidSubsystemRelationshipList) {
-          subsystemRelationshipElement = (org.w3c.dom.Element) value;
+          subsystemRelationshipElement = value;
           Node parentDomNode = subsystemRelationshipElement.getParentNode();
           parentDomNode.removeChild(subsystemRelationshipElement);
         }
@@ -34468,7 +34377,7 @@ public class Modeler extends JFrame {
       for (int i = 0; i < tableTypeList.getLength(); i++) {
         XeadTreeNode node =
             new XeadTreeNode("TableType", (org.w3c.dom.Element) tableTypeList.item(i));
-        sortableComboBoxModelTableType.addElement((Object) node);
+        sortableComboBoxModelTableType.addElement(node);
       }
       sortableComboBoxModelTableType.sortElements();
       for (int i = 0; i < sortableComboBoxModelTableType.getSize(); i++) {
@@ -34720,7 +34629,7 @@ public class Modeler extends JFrame {
       //
       for (int i = 0; i < this.getChildCount(); i++) {
         node = (XeadTreeNode) this.getChildAt(i);
-        element = (org.w3c.dom.Element) node.getElement();
+        element = node.getElement();
         Object[] Cell = new Object[10];
         Cell[0] = new TableRowNumber(i + 1, element);
         if (node.isPrimaryKeyField()) {
@@ -35000,7 +34909,7 @@ public class Modeler extends JFrame {
       }
       for (int i = 0; i < this.getChildCount(); i++) {
         node = (XeadTreeNode) this.getChildAt(i);
-        element = (org.w3c.dom.Element) node.getElement();
+        element = node.getElement();
         Object[] Cell = new Object[4];
         Cell[0] = new TableRowNumber(i + 1, element);
         if (node.getElement().getAttribute("Type").equals("PK")) {
@@ -35071,7 +34980,7 @@ public class Modeler extends JFrame {
       NodeList keyFieldList = this.getElement().getElementsByTagName("TableKeyField");
       sortableDomElementListModel.removeAllElements();
       for (int i = 0; i < keyFieldList.getLength(); i++) {
-        sortableDomElementListModel.addElement((Object) keyFieldList.item(i));
+        sortableDomElementListModel.addElement(keyFieldList.item(i));
       }
       sortableDomElementListModel.sortElements();
       for (int i = 0; i < sortableDomElementListModel.getSize(); i++) {
@@ -35297,7 +35206,7 @@ public class Modeler extends JFrame {
       }
       for (int i = 0; i < this.getChildCount(); i++) {
         node = (XeadTreeNode) this.getChildAt(i);
-        element = (org.w3c.dom.Element) node.getElement();
+        element = node.getElement();
         Object[] Cell = new Object[8];
         Cell[0] = new TableRowNumber(i + 1, element);
         Cell[1] = element.getAttribute("SortKey");
@@ -35335,7 +35244,7 @@ public class Modeler extends JFrame {
       sortableDomElementListModel.removeAllElements();
       for (int i = 0; i < this.getChildCount(); i++) {
         node = (XeadTreeNode) this.getChildAt(i);
-        element = (org.w3c.dom.Element) node.getElement();
+        element = node.getElement();
         functionsUsedByThis = element.getElementsByTagName("FunctionUsedByThis");
         for (int j = 0; j < functionsUsedByThis.getLength(); j++) {
           nodeFunctionUsedByThis =
@@ -35344,9 +35253,8 @@ public class Modeler extends JFrame {
                   ((org.w3c.dom.Element) functionsUsedByThis.item(j)).getAttribute("FunctionID"),
                   null);
           if (!nodeFunctionUsedByThis.getElement().getAttribute("SubsystemID").equals(subsystemID)
-              && !sortableDomElementListModel.contains(
-                  (Object) nodeFunctionUsedByThis.getElement())) {
-            sortableDomElementListModel.addElement((Object) nodeFunctionUsedByThis.getElement());
+              && !sortableDomElementListModel.contains(nodeFunctionUsedByThis.getElement())) {
+            sortableDomElementListModel.addElement(nodeFunctionUsedByThis.getElement());
           }
         }
         //
@@ -35460,7 +35368,7 @@ public class Modeler extends JFrame {
       NodeList functionTypeList = domDocument.getElementsByTagName("FunctionType");
       for (int i = 0; i < functionTypeList.getLength(); i++) {
         node = new XeadTreeNode("FunctionType", (org.w3c.dom.Element) functionTypeList.item(i));
-        sortableComboBoxModelFunctionType.addElement((Object) node);
+        sortableComboBoxModelFunctionType.addElement(node);
       }
       sortableComboBoxModelFunctionType.sortElements();
       for (int i = 0; i < sortableComboBoxModelFunctionType.getSize(); i++) {
@@ -35481,7 +35389,7 @@ public class Modeler extends JFrame {
       j = 0;
       for (int i = 0; i < this.getChildCount(); i++) {
         node = (XeadTreeNode) this.getChildAt(i);
-        element = (org.w3c.dom.Element) node.getElement();
+        element = node.getElement();
         Object[] Cell = new Object[4];
         Cell[0] = new TableRowNumber(i + 1, element);
         Cell[1] = element.getAttribute("SortKey");
@@ -35531,7 +35439,7 @@ public class Modeler extends JFrame {
       //
       sortableDomElementListModel.removeAllElements();
       for (int i = 0; i < functionUsedByThis.getLength(); i++) {
-        sortableDomElementListModel.addElement((Object) functionUsedByThis.item(i));
+        sortableDomElementListModel.addElement(functionUsedByThis.item(i));
       }
       sortableDomElementListModel.sortElements();
       for (int i = 0; i < sortableDomElementListModel.getSize(); i++) {
@@ -35624,7 +35532,7 @@ public class Modeler extends JFrame {
             } else {
               for (int i = 0; i < this.getChildCount(); i++) {
                 node = (XeadTreeNode) this.getChildAt(i);
-                element = (org.w3c.dom.Element) node.getElement();
+                element = node.getElement();
                 if (element3.getAttribute("FunctionID").equals(domNode_.getAttribute("ID"))
                     && element3.getAttribute("IOID").equals(element.getAttribute("ID"))) {
                   XeadTreeNode roleNode =
@@ -35781,7 +35689,7 @@ public class Modeler extends JFrame {
       column3.setCellRenderer(rendererAlignmentLeft);
       column3.setCellEditor(defaultCellEditor);
       column4.setCellRenderer(rendererAlignmentLeft);
-      String ioFieldType[] = {
+      String[] ioFieldType = {
         res.getString("S5223"),
         res.getString("S5224"),
         res.getString("S5225"),
@@ -35802,7 +35710,7 @@ public class Modeler extends JFrame {
       NodeList fieldList = this.getElement().getElementsByTagName("IOPanelField");
       sortableDomElementListModel.removeAllElements();
       for (int i = 0; i < fieldList.getLength(); i++) {
-        sortableDomElementListModel.addElement((Object) fieldList.item(i));
+        sortableDomElementListModel.addElement(fieldList.item(i));
       }
       sortableDomElementListModel.sortElements();
       for (int i = 0; i < sortableDomElementListModel.getSize(); i++) {
@@ -35956,7 +35864,7 @@ public class Modeler extends JFrame {
       NodeList fieldList = this.getElement().getElementsByTagName("IOSpoolField");
       sortableDomElementListModel.removeAllElements();
       for (int i = 0; i < fieldList.getLength(); i++) {
-        sortableDomElementListModel.addElement((Object) fieldList.item(i));
+        sortableDomElementListModel.addElement(fieldList.item(i));
       }
       sortableDomElementListModel.sortElements();
       org.w3c.dom.Element fieldElement;
@@ -36229,7 +36137,7 @@ public class Modeler extends JFrame {
       column3.setCellRenderer(rendererAlignmentLeft);
       column3.setCellEditor(defaultCellEditor);
       column4.setCellRenderer(rendererAlignmentLeft);
-      String ioFieldType[] = {
+      String[] ioFieldType = {
         res.getString("S5223"),
         res.getString("S5224"),
         res.getString("S5225"),
@@ -36250,7 +36158,7 @@ public class Modeler extends JFrame {
       NodeList fieldList = this.getElement().getElementsByTagName("IOWebPageField");
       sortableDomElementListModel.removeAllElements();
       for (int i = 0; i < fieldList.getLength(); i++) {
-        sortableDomElementListModel.addElement((Object) fieldList.item(i));
+        sortableDomElementListModel.addElement(fieldList.item(i));
       }
       sortableDomElementListModel.sortElements();
       for (int i = 0; i < sortableDomElementListModel.getSize(); i++) {
@@ -36358,7 +36266,7 @@ public class Modeler extends JFrame {
 
     // Get Name of Table-Key Specified with its ID//
     private String getNameOfTableKey() {
-      StringBuffer keyName = new StringBuffer();
+      StringBuilder keyName = new StringBuilder();
       XeadTreeNode node1, node2, node3;
       org.w3c.dom.Element keyFieldElement;
       if (this.getType() == "TableKey") {
@@ -36370,7 +36278,7 @@ public class Modeler extends JFrame {
           NodeList keyFieldList = this.getElement().getElementsByTagName("TableKeyField");
           sortableDomElementListModel.removeAllElements();
           for (int i = 0; i < keyFieldList.getLength(); i++) {
-            sortableDomElementListModel.addElement((Object) keyFieldList.item(i));
+            sortableDomElementListModel.addElement(keyFieldList.item(i));
           }
           sortableDomElementListModel.sortElements();
           for (int i = 0; i < sortableDomElementListModel.getSize(); i++) {
@@ -37495,8 +37403,8 @@ public class Modeler extends JFrame {
       String keyType2 = keyNode2.getElement().getAttribute("Type");
       NodeList keyFieldListNode1 = keyNode1.getElement().getElementsByTagName("TableKeyField");
       NodeList keyFieldListNode2 = keyNode2.getElement().getElementsByTagName("TableKeyField");
-      String dataTypeArray1[] = new String[keyFieldListNode1.getLength()];
-      String dataTypeArray2[] = new String[keyFieldListNode2.getLength()];
+      String[] dataTypeArray1 = new String[keyFieldListNode1.getLength()];
+      String[] dataTypeArray2 = new String[keyFieldListNode2.getLength()];
       XeadTreeNode tableNode1 = (XeadTreeNode) keyNode1.getParent().getParent();
       XeadTreeNode tableNode2 = (XeadTreeNode) keyNode2.getParent().getParent();
       NodeList fieldListNode1 = tableNode1.getElement().getElementsByTagName("TableField");
@@ -38330,9 +38238,7 @@ public class Modeler extends JFrame {
         org.w3c.dom.Node nextSiblingNode = lastElement.getNextSibling();
         NodeList nodeList = cloneElement.getElementsByTagName("DataType");
         for (int i = 0; i < nodeList.getLength(); i++) {
-          systemNode
-              .getElement()
-              .insertBefore((org.w3c.dom.Element) nodeList.item(i), nextSiblingNode);
+          systemNode.getElement().insertBefore(nodeList.item(i), nextSiblingNode);
         }
         //
         parentNode = (XeadTreeNode) this.getParent().getParent();
@@ -38886,7 +38792,7 @@ public class Modeler extends JFrame {
           }
           if (!element
               .getAttribute("BasicType")
-              .equals((String) jComboBoxSystemDataTypeBasicType.getSelectedItem())) {
+              .equals(jComboBoxSystemDataTypeBasicType.getSelectedItem())) {
             valueOfFieldsChangedByTabbedPane = true;
           }
           if (!element
@@ -38899,7 +38805,7 @@ public class Modeler extends JFrame {
           int length2 = 0;
           try {
             length2 = Integer.parseInt(jTextFieldSystemDataTypeLength.getText());
-          } catch (NumberFormatException ex) {
+          } catch (NumberFormatException ignored) {
           }
           if (length1 != length2) {
             valueOfFieldsChangedByTabbedPane = true;
@@ -38909,7 +38815,7 @@ public class Modeler extends JFrame {
           int decimal2 = 0;
           try {
             decimal2 = Integer.parseInt(jTextFieldSystemDataTypeDecimal.getText());
-          } catch (NumberFormatException ex1) {
+          } catch (NumberFormatException ignored) {
           }
           if (decimal1 != decimal2) {
             valueOfFieldsChangedByTabbedPane = true;
@@ -38932,15 +38838,15 @@ public class Modeler extends JFrame {
             element.setAttribute(
                 "BasicType", (String) jComboBoxSystemDataTypeBasicType.getSelectedItem());
             tableModelSystemDataTypeList.setValueAt(
-                (String) jComboBoxSystemDataTypeBasicType.getSelectedItem(),
+                jComboBoxSystemDataTypeBasicType.getSelectedItem(),
                 selectedRow_jTableSystemDataTypeList,
                 3);
             element.setAttribute("Length", Integer.toString(length2));
             tableModelSystemDataTypeList.setValueAt(
-                new Integer(length2), selectedRow_jTableSystemDataTypeList, 4);
+                length2, selectedRow_jTableSystemDataTypeList, 4);
             element.setAttribute("Decimal", Integer.toString(decimal2));
             tableModelSystemDataTypeList.setValueAt(
-                new Integer(decimal2), selectedRow_jTableSystemDataTypeList, 5);
+                decimal2, selectedRow_jTableSystemDataTypeList, 5);
           }
         }
       }
@@ -39199,7 +39105,7 @@ public class Modeler extends JFrame {
       // Update DOM element of those children node//
       sortableDomElementListModel.removeAllElements();
       for (int i = 0; i < k; i++) {
-        element = (org.w3c.dom.Element) nodeArray[i].getElement();
+        element = nodeArray[i].getElement();
         indentLevel =
             Integer.parseInt(element.getAttribute("IndentLevel")) + valueOfIndentLevelToBeAdjusted;
         element.setAttribute("IndentLevel", Integer.toString(indentLevel));
@@ -39235,7 +39141,7 @@ public class Modeler extends JFrame {
       // Update DOM element of those children node//
       sortableDomElementListModel.removeAllElements();
       for (int i = 0; i < k; i++) {
-        sortableDomElementListModel.addElement((Object) nodeArray[i].getElement());
+        sortableDomElementListModel.addElement(nodeArray[i].getElement());
       }
       sortableDomElementListModel.sortElements();
       for (int i = 0; i < sortableDomElementListModel.getSize(); i++) {
@@ -39340,7 +39246,7 @@ public class Modeler extends JFrame {
       NodeList taskFunctionIOList = domNode_.getElementsByTagName("TaskFunctionIO");
       sortableDomElementListModel.removeAllElements();
       for (int i = 0; i < taskFunctionIOList.getLength(); i++) {
-        sortableDomElementListModel.addElement((Object) taskFunctionIOList.item(i));
+        sortableDomElementListModel.addElement(taskFunctionIOList.item(i));
       }
       sortableDomElementListModel.sortElements();
       for (int i = 0; i < sortableDomElementListModel.getSize(); i++) {
@@ -39416,7 +39322,7 @@ public class Modeler extends JFrame {
           for (int j = 0; j < subsystemTableList.getLength(); j++) {
             org.w3c.dom.Element element = (org.w3c.dom.Element) subsystemTableList.item(j);
             if (number.getElement().getAttribute("ID").equals(element.getAttribute("TableID"))) {
-              if (showOnModelFlag.booleanValue()) {
+              if (showOnModelFlag) {
                 if (element.getAttribute("ShowOnModel").equals("false")) {
                   valueOfFieldsChanged = true;
                   element.setAttribute("ShowOnModel", "true");
@@ -39447,7 +39353,7 @@ public class Modeler extends JFrame {
                 .getElement()
                 .getAttribute("TableID")
                 .equals(element.getAttribute("TableID"))) {
-              if (showOnModelFlag.booleanValue()) {
+              if (showOnModelFlag) {
                 if (element.getAttribute("ShowOnModel").equals("false")) {
                   valueOfFieldsChanged = true;
                   element.setAttribute("ShowOnModel", "true");
@@ -39596,7 +39502,7 @@ public class Modeler extends JFrame {
         for (int j = 0; j < tableFieldList.getLength(); j++) {
           org.w3c.dom.Element element = (org.w3c.dom.Element) tableFieldList.item(j);
           if (number.getElement().getAttribute("ID").equals(element.getAttribute("ID"))) {
-            if (showOnModelFlag.booleanValue()) {
+            if (showOnModelFlag) {
               if (element.getAttribute("ShowOnModel").equals("false")) {
                 valueOfFieldsChanged = true;
                 element.setAttribute("ShowOnModel", "true");
@@ -39844,7 +39750,7 @@ public class Modeler extends JFrame {
         elementFunctionUsedByThis = tableRowNumber.getElement();
         if (!elementFunctionUsedByThis
             .getAttribute("LaunchEvent")
-            .equals((String) tableModelFunctionsUsedByThis.getValueAt(i, 5))) {
+            .equals(tableModelFunctionsUsedByThis.getValueAt(i, 5))) {
           listRowChanged = true;
         }
         if (listRowChanged) {
@@ -39948,9 +39854,9 @@ public class Modeler extends JFrame {
                 org.w3c.dom.Element elementTextStyle = domDocument.createElement("IOPanelStyle");
                 elementTextStyle.setAttribute(
                     "Value",
-                    Integer.toString(PositionFromBackground)
+                    PositionFromBackground
                         + ","
-                        + Integer.toString(PositionThruBackground)
+                        + PositionThruBackground
                         + ","
                         + "BG"
                         + ","
@@ -39970,9 +39876,9 @@ public class Modeler extends JFrame {
               org.w3c.dom.Element elementTextStyle = domDocument.createElement("IOPanelStyle");
               elementTextStyle.setAttribute(
                   "Value",
-                  Integer.toString(PositionFromBackground)
+                  PositionFromBackground
                       + ","
-                      + Integer.toString(PositionThruBackground)
+                      + PositionThruBackground
                       + ","
                       + "BG"
                       + ","
@@ -40000,9 +39906,9 @@ public class Modeler extends JFrame {
                 org.w3c.dom.Element elementTextStyle = domDocument.createElement("IOPanelStyle");
                 elementTextStyle.setAttribute(
                     "Value",
-                    Integer.toString(PositionFromForeground)
+                    PositionFromForeground
                         + ","
-                        + Integer.toString(PositionThruForeground)
+                        + PositionThruForeground
                         + ","
                         + "FG"
                         + ","
@@ -40022,9 +39928,9 @@ public class Modeler extends JFrame {
               org.w3c.dom.Element elementTextStyle = domDocument.createElement("IOPanelStyle");
               elementTextStyle.setAttribute(
                   "Value",
-                  Integer.toString(PositionFromForeground)
+                  PositionFromForeground
                       + ","
-                      + Integer.toString(PositionThruForeground)
+                      + PositionThruForeground
                       + ","
                       + "FG"
                       + ","
@@ -40046,12 +39952,7 @@ public class Modeler extends JFrame {
             if (PositionFromUnderline > -1) {
               org.w3c.dom.Element elementTextStyle = domDocument.createElement("IOPanelStyle");
               elementTextStyle.setAttribute(
-                  "Value",
-                  Integer.toString(PositionFromUnderline)
-                      + ","
-                      + Integer.toString(PositionThruUnderline)
-                      + ","
-                      + "UL");
+                  "Value", PositionFromUnderline + "," + PositionThruUnderline + "," + "UL");
               if (!isDuplicatedStyle(
                   elementTextStyle, this.getElement().getElementsByTagName("IOPanelStyle"))) {
                 this.getElement().appendChild(elementTextStyle);
@@ -40074,17 +39975,17 @@ public class Modeler extends JFrame {
         fieldElement = tableRowNumber.getElement();
         if (!fieldElement
             .getAttribute("SortKey")
-            .equals((String) tableModelIOPanelFieldList.getValueAt(i, 1))) {
+            .equals(tableModelIOPanelFieldList.getValueAt(i, 1))) {
           listRowChanged = true;
         }
         if (!fieldElement
             .getAttribute("Label")
-            .equals((String) tableModelIOPanelFieldList.getValueAt(i, 2))) {
+            .equals(tableModelIOPanelFieldList.getValueAt(i, 2))) {
           listRowChanged = true;
         }
         if (!fieldElement
             .getAttribute("Name")
-            .equals((String) tableModelIOPanelFieldList.getValueAt(i, 3))) {
+            .equals(tableModelIOPanelFieldList.getValueAt(i, 3))) {
           listRowChanged = true;
         }
         String valueOfIOType = (String) tableModelIOPanelFieldList.getValueAt(i, 4);
@@ -40106,7 +40007,7 @@ public class Modeler extends JFrame {
         }
         if (!fieldElement
             .getAttribute("Descriptions")
-            .equals((String) tableModelIOPanelFieldList.getValueAt(i, 5))) {
+            .equals(tableModelIOPanelFieldList.getValueAt(i, 5))) {
           listRowChanged = true;
         }
         if (listRowChanged) {
@@ -40264,9 +40165,9 @@ public class Modeler extends JFrame {
                 org.w3c.dom.Element elementTextStyle = domDocument.createElement("IOSpoolStyle");
                 elementTextStyle.setAttribute(
                     "Value",
-                    Integer.toString(PositionFromBackground)
+                    PositionFromBackground
                         + ","
-                        + Integer.toString(PositionThruBackground)
+                        + PositionThruBackground
                         + ","
                         + "BG"
                         + ","
@@ -40286,9 +40187,9 @@ public class Modeler extends JFrame {
               org.w3c.dom.Element elementTextStyle = domDocument.createElement("IOSpoolStyle");
               elementTextStyle.setAttribute(
                   "Value",
-                  Integer.toString(PositionFromBackground)
+                  PositionFromBackground
                       + ","
-                      + Integer.toString(PositionThruBackground)
+                      + PositionThruBackground
                       + ","
                       + "BG"
                       + ","
@@ -40316,9 +40217,9 @@ public class Modeler extends JFrame {
                 org.w3c.dom.Element elementTextStyle = domDocument.createElement("IOSpoolStyle");
                 elementTextStyle.setAttribute(
                     "Value",
-                    Integer.toString(PositionFromForeground)
+                    PositionFromForeground
                         + ","
-                        + Integer.toString(PositionThruForeground)
+                        + PositionThruForeground
                         + ","
                         + "FG"
                         + ","
@@ -40338,9 +40239,9 @@ public class Modeler extends JFrame {
               org.w3c.dom.Element elementTextStyle = domDocument.createElement("IOSpoolStyle");
               elementTextStyle.setAttribute(
                   "Value",
-                  Integer.toString(PositionFromForeground)
+                  PositionFromForeground
                       + ","
-                      + Integer.toString(PositionThruForeground)
+                      + PositionThruForeground
                       + ","
                       + "FG"
                       + ","
@@ -40362,12 +40263,7 @@ public class Modeler extends JFrame {
             if (PositionFromUnderline > -1) {
               org.w3c.dom.Element elementTextStyle = domDocument.createElement("IOSpoolStyle");
               elementTextStyle.setAttribute(
-                  "Value",
-                  Integer.toString(PositionFromUnderline)
-                      + ","
-                      + Integer.toString(PositionThruUnderline)
-                      + ","
-                      + "UL");
+                  "Value", PositionFromUnderline + "," + PositionThruUnderline + "," + "UL");
               if (!isDuplicatedStyle(
                   elementTextStyle, this.getElement().getElementsByTagName("IOSpoolStyle"))) {
                 this.getElement().appendChild(elementTextStyle);
@@ -40390,22 +40286,22 @@ public class Modeler extends JFrame {
         fieldElement = tableRowNumber.getElement();
         if (!fieldElement
             .getAttribute("SortKey")
-            .equals((String) tableModelIOSpoolFieldList.getValueAt(i, 1))) {
+            .equals(tableModelIOSpoolFieldList.getValueAt(i, 1))) {
           listRowChanged = true;
         }
         if (!fieldElement
             .getAttribute("Label")
-            .equals((String) tableModelIOSpoolFieldList.getValueAt(i, 2))) {
+            .equals(tableModelIOSpoolFieldList.getValueAt(i, 2))) {
           listRowChanged = true;
         }
         if (!fieldElement
             .getAttribute("Name")
-            .equals((String) tableModelIOSpoolFieldList.getValueAt(i, 3))) {
+            .equals(tableModelIOSpoolFieldList.getValueAt(i, 3))) {
           listRowChanged = true;
         }
         if (!fieldElement
             .getAttribute("Descriptions")
-            .equals((String) tableModelIOSpoolFieldList.getValueAt(i, 4))) {
+            .equals(tableModelIOSpoolFieldList.getValueAt(i, 4))) {
           listRowChanged = true;
         }
         if (listRowChanged) {
@@ -40473,17 +40369,17 @@ public class Modeler extends JFrame {
         fieldElement = tableRowNumber.getElement();
         if (!fieldElement
             .getAttribute("SortKey")
-            .equals((String) tableModelIOWebPageFieldList.getValueAt(i, 1))) {
+            .equals(tableModelIOWebPageFieldList.getValueAt(i, 1))) {
           listRowChanged = true;
         }
         if (!fieldElement
             .getAttribute("Label")
-            .equals((String) tableModelIOWebPageFieldList.getValueAt(i, 2))) {
+            .equals(tableModelIOWebPageFieldList.getValueAt(i, 2))) {
           listRowChanged = true;
         }
         if (!fieldElement
             .getAttribute("Name")
-            .equals((String) tableModelIOWebPageFieldList.getValueAt(i, 3))) {
+            .equals(tableModelIOWebPageFieldList.getValueAt(i, 3))) {
           listRowChanged = true;
         }
         String valueOfIOType = (String) tableModelIOWebPageFieldList.getValueAt(i, 4);
@@ -40505,7 +40401,7 @@ public class Modeler extends JFrame {
         }
         if (!fieldElement
             .getAttribute("Descriptions")
-            .equals((String) tableModelIOWebPageFieldList.getValueAt(i, 5))) {
+            .equals(tableModelIOWebPageFieldList.getValueAt(i, 5))) {
           listRowChanged = true;
         }
         if (listRowChanged) {
@@ -40689,7 +40585,7 @@ public class Modeler extends JFrame {
         } else {
           if (!fieldIOElement
               .getAttribute("Descriptions")
-              .equals((String) tableModelIOTableFieldList.getValueAt(i, 4))) {
+              .equals(tableModelIOTableFieldList.getValueAt(i, 4))) {
             listRowChanged = true;
           }
           if (listRowChanged) {
@@ -40713,7 +40609,7 @@ public class Modeler extends JFrame {
   } // End of Class Definition of XeadTreeNode//
 
   /** Class of Table Row Number */
-  class TableRowNumber extends Object {
+  class TableRowNumber {
     private org.w3c.dom.Element element_;
     private org.w3c.dom.Element element_ext1;
     private org.w3c.dom.Element element_ext2;
@@ -40996,18 +40892,18 @@ public class Modeler extends JFrame {
         setForeground(table.getForeground());
         setBackground(table.getBackground());
       }
-      setSelected((value != null && ((Boolean) value).booleanValue()));
+      setSelected((value != null && (Boolean) value));
       return this;
     }
   }
 
   /** Class of XEAD Undo Manager */
   class XeadUndoManager {
-    ArrayList<String> actionArray = new ArrayList<String>();
-    ArrayList<XeadTreeNode> nodeArray = new ArrayList<XeadTreeNode>();
-    ArrayList<XeadTreeNode> ownerNodeArray = new ArrayList<XeadTreeNode>();
-    ArrayList<org.w3c.dom.Element> oldDomElementArray = new ArrayList<org.w3c.dom.Element>();
-    ArrayList<org.w3c.dom.Element> newDomElementArray = new ArrayList<org.w3c.dom.Element>();
+    ArrayList<String> actionArray = new ArrayList<>();
+    ArrayList<XeadTreeNode> nodeArray = new ArrayList<>();
+    ArrayList<XeadTreeNode> ownerNodeArray = new ArrayList<>();
+    ArrayList<org.w3c.dom.Element> oldDomElementArray = new ArrayList<>();
+    ArrayList<org.w3c.dom.Element> newDomElementArray = new ArrayList<>();
     org.w3c.dom.Element savedDomElement;
     XeadTreeNode savedOwnerNode;
     int indexOfLastElement = 0;
@@ -41164,11 +41060,11 @@ public class Modeler extends JFrame {
     }
 
     String getText() {
-      ArrayList<String> logList = new ArrayList<String>();
-      StringBuffer bf;
+      ArrayList<String> logList = new ArrayList<>();
+      StringBuilder bf;
 
       for (int i = 0; i < indexOfLastElement; i++) {
-        bf = new StringBuffer();
+        bf = new StringBuilder();
         bf.append(res.getString("S3319"));
         if (nodeArray.get(i).getNodeType().equals("System")) {
           int selectedIndex =
@@ -41218,7 +41114,7 @@ public class Modeler extends JFrame {
         }
       }
 
-      bf = new StringBuffer();
+      bf = new StringBuilder();
       for (String s : logList) {
         bf.append(s);
       }
@@ -41246,7 +41142,7 @@ public class Modeler extends JFrame {
     }
 
     private String getTextOfElementOfIndex(int index) {
-      StringBuffer bf = new StringBuffer();
+      StringBuilder bf = new StringBuilder();
       bf.append(res.getString("S3326"));
       bf.append(nodeArray.get(index).getName());
       bf.append(res.getString("S3327"));
@@ -41311,7 +41207,7 @@ public class Modeler extends JFrame {
       }
       //
       // Set text expression of node//
-      this.setText(((XeadTreeNode) treeNode).toString());
+      this.setText(treeNode.toString());
       //
       // Set graphic expression of node//
       String nodeType = ((XeadTreeNode) treeNode).getType();
@@ -41436,7 +41332,7 @@ public class Modeler extends JFrame {
     public void actionPerformed(ActionEvent e) {
       try {
         textPaneUndoManager.undo();
-      } catch (CannotUndoException ex) {
+      } catch (CannotUndoException ignored) {
       }
       update();
       redoAction.update();
@@ -41465,7 +41361,7 @@ public class Modeler extends JFrame {
     public void actionPerformed(ActionEvent e) {
       try {
         textPaneUndoManager.redo();
-      } catch (CannotRedoException ex) {
+      } catch (CannotRedoException ignored) {
       }
       update();
       undoAction.update();
@@ -41499,7 +41395,7 @@ public class Modeler extends JFrame {
       this.removeAll();
       sortableDomElementListModel.removeAllElements();
       for (int i = 0; i < nodeList.getLength(); i++) {
-        sortableDomElementListModel.addElement((Object) nodeList.item(i));
+        sortableDomElementListModel.addElement(nodeList.item(i));
       }
       sortableDomElementListModel.sortElements();
       for (int i = 0; i < sortableDomElementListModel.getSize(); i++) {
