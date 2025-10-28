@@ -1767,7 +1767,6 @@ public class Modeler extends JFrame {
   static String convertSingleByteCharsToDoubleByteChars(String originalString) {
     int diff = 'Ａ' - 'A';
     String signs = "!#$%&()*+,-./:;<=>?@[]^_{|}";
-    ;
     char[] cc = originalString.toCharArray();
     StringBuilder sb = new StringBuilder();
     for (char c : cc) {
@@ -6988,10 +6987,7 @@ public class Modeler extends JFrame {
     }
   }
 
-  /**
-   * Setup main tree model with selected file
-   *
-   */
+  /** Setup main tree model with selected file */
   void setupMainTreeModelWithCurrentFileName() throws Exception {
     NodeList xmlnodelist1, xmlnodelist2;
     org.w3c.dom.Element element1, element2;
@@ -10407,7 +10403,7 @@ public class Modeler extends JFrame {
     //
     do {
       index++;
-      returnFileName = fileName + Integer.toString(index) + ".csv";
+      returnFileName = fileName + index + ".csv";
       File workCsvFile = new File(returnFileName);
       if (workCsvFile.exists()) {
         if (workCsvFile.canRead()) {
@@ -10441,14 +10437,14 @@ public class Modeler extends JFrame {
     //
     int month = calendar.get(Calendar.MONTH) + 1;
     if (month < 10) {
-      monthStr = "0" + Integer.toString(month);
+      monthStr = "0" + month;
     } else {
       monthStr = Integer.toString(month);
     }
     //
     int day = calendar.get(Calendar.DAY_OF_MONTH);
     if (day < 10) {
-      dayStr = "0" + Integer.toString(day);
+      dayStr = "0" + day;
     } else {
       dayStr = Integer.toString(day);
     }
@@ -10459,27 +10455,27 @@ public class Modeler extends JFrame {
     if (timeFormat.equals("withTime") || timeFormat.equals("withUnderbarAndTime")) {
       int hour = calendar.get(Calendar.HOUR_OF_DAY);
       if (hour < 10) {
-        hourStr = "0" + Integer.toString(hour);
+        hourStr = "0" + hour;
       } else {
         hourStr = Integer.toString(hour);
       }
       //
       int minute = calendar.get(Calendar.MINUTE);
       if (minute < 10) {
-        minStr = "0" + Integer.toString(minute);
+        minStr = "0" + minute;
       } else {
         minStr = Integer.toString(minute);
       }
       //
       int second = calendar.get(Calendar.SECOND);
       if (second < 10) {
-        secStr = "0" + Integer.toString(second);
+        secStr = "0" + second;
       } else {
         secStr = Integer.toString(second);
       }
     }
     //
-    returnValue = Integer.toString(year) + monthStr + dayStr + underbar + hourStr + minStr + secStr;
+    returnValue = year + monthStr + dayStr + underbar + hourStr + minStr + secStr;
     return returnValue;
   }
 
@@ -10555,7 +10551,7 @@ public class Modeler extends JFrame {
           seqNumber = seqNumber + 1;
           // dataLine = Integer.toString(seqNumber) + ",,,";
           dataLine =
-              Integer.toString(seqNumber)
+              seqNumber
                   + ","
                   + element1.getAttribute("SortKey")
                   + ","
@@ -10732,7 +10728,7 @@ public class Modeler extends JFrame {
           bufferedWriter.write(dataLine);
           //
           seqNumber = seqNumber + 1;
-          dataLine = Integer.toString(seqNumber) + ",,";
+          dataLine = seqNumber + ",,";
         }
       }
     } catch (Exception ex1) {
@@ -10900,7 +10896,7 @@ public class Modeler extends JFrame {
             node3 = (XeadTreeNode) node2.getChildAt(0).getChildAt(k);
             element3 = (org.w3c.dom.Element) node3.getElement();
             //
-            dataLine = Integer.toString(seqNumber) + "," + subsystemName + "," + tableName;
+            dataLine = seqNumber + "," + subsystemName + "," + tableName;
             if (node3.isPrimaryKeyField()) {
               dataLine =
                   dataLine
@@ -10989,7 +10985,7 @@ public class Modeler extends JFrame {
             bufferedWriter.write(dataLine);
             //
             seqNumber = seqNumber + 1;
-            dataLine = Integer.toString(seqNumber) + ",,";
+            dataLine = seqNumber + ",,";
           }
           //
           jProgressBar.setValue(jProgressBar.getValue() + 1);
@@ -11131,7 +11127,7 @@ public class Modeler extends JFrame {
           bufferedWriter.write(dataLine);
           //
           seqNumber = seqNumber + 1;
-          dataLine = Integer.toString(seqNumber) + ",,";
+          dataLine = seqNumber + ",,";
           //
           jProgressBar.setValue(jProgressBar.getValue() + 1);
           jProgressBar.paintImmediately(0, 0, jProgressBar.getWidth(), jProgressBar.getHeight());
@@ -11585,13 +11581,7 @@ public class Modeler extends JFrame {
           }
           if (node3.getElement().getAttribute("Type").equals("SK")) {
             indexOfSK++;
-            statement =
-                statement
-                    + "CONSTRAINT "
-                    + tableName
-                    + "_SK"
-                    + Integer.toString(indexOfSK)
-                    + " UNIQUE (";
+            statement = statement + "CONSTRAINT " + tableName + "_SK" + indexOfSK + " UNIQUE (";
           }
           //
           sortableDomElementListModel.sortElements();
@@ -11652,12 +11642,7 @@ public class Modeler extends JFrame {
             //
             indexOfFK++;
             statement =
-                statement
-                    + "CONSTRAINT "
-                    + tableName
-                    + "_FK"
-                    + Integer.toString(indexOfFK)
-                    + " FOREIGN KEY (";
+                statement + "CONSTRAINT " + tableName + "_FK" + indexOfFK + " FOREIGN KEY (";
             //
             keyFieldList = objectTableKeyElement.getElementsByTagName("TableKeyField");
             keyFieldList2 = tableKeyElement.getElementsByTagName("TableKeyField");
@@ -11782,12 +11767,7 @@ public class Modeler extends JFrame {
             //
             indexOfFK++;
             statement =
-                statement
-                    + "CONSTRAINT "
-                    + tableName
-                    + "_FK"
-                    + Integer.toString(indexOfFK)
-                    + " FOREIGN KEY (";
+                statement + "CONSTRAINT " + tableName + "_FK" + indexOfFK + " FOREIGN KEY (";
             //
             keyFieldList = objectTableKeyElement.getElementsByTagName("TableKeyField");
             keyFieldList2 = tableKeyElement.getElementsByTagName("TableKeyField");
@@ -11938,12 +11918,7 @@ public class Modeler extends JFrame {
             //
             indexOfFK++;
             statement =
-                statement
-                    + "CONSTRAINT "
-                    + tableName
-                    + "_FK"
-                    + Integer.toString(indexOfFK)
-                    + " FOREIGN KEY (";
+                statement + "CONSTRAINT " + tableName + "_FK" + indexOfFK + " FOREIGN KEY (";
             //
             keyFieldList = objectTableKeyElement.getElementsByTagName("TableKeyField");
             keyFieldList2 = tableKeyElement.getElementsByTagName("TableKeyField");
@@ -17395,7 +17370,7 @@ public class Modeler extends JFrame {
         newElement.setAttribute("SortKey", sortKey);
         newElement.setAttribute("Length", Integer.toString(length));
         newElement.setAttribute("Decimal", "0");
-        newElement.setAttribute("SQLExpression", "CHAR(" + Integer.toString(length) + ")");
+        newElement.setAttribute("SQLExpression", "CHAR(" + length + ")");
         nextSiblingNode = lastElement.getNextSibling();
         systemNode.getElement().insertBefore(newElement, nextSiblingNode);
         //
@@ -19642,9 +19617,7 @@ public class Modeler extends JFrame {
               sv.setAttribute("xml:space", "preserve");
               sv.setAttribute("width", Integer.toString(imageSize.x));
               sv.setAttribute("height", Integer.toString(imageSize.y));
-              sv.setAttribute(
-                  "viewBox",
-                  "0 0 " + Integer.toString(imageSize.x) + " " + Integer.toString(imageSize.y));
+              sv.setAttribute("viewBox", "0 0 " + imageSize.x + " " + imageSize.y);
               try {
                 OutputStream os = new FileOutputStream(file);
                 BufferedOutputStream bos = new BufferedOutputStream(os);
@@ -19725,9 +19698,7 @@ public class Modeler extends JFrame {
               sv.setAttribute("xml:space", "preserve");
               sv.setAttribute("width", Integer.toString(imageSize.x));
               sv.setAttribute("height", Integer.toString(imageSize.y));
-              sv.setAttribute(
-                  "viewBox",
-                  "0 0 " + Integer.toString(imageSize.x) + " " + Integer.toString(imageSize.y));
+              sv.setAttribute("viewBox", "0 0 " + imageSize.x + " " + imageSize.y);
               try {
                 OutputStream os = new FileOutputStream(file);
                 BufferedOutputStream bos = new BufferedOutputStream(os);
@@ -19768,9 +19739,9 @@ public class Modeler extends JFrame {
               sv.setAttribute(
                   "viewBox",
                   "0 0 "
-                      + Integer.toString(jTextPaneIOPanelImage.getWidth())
+                      + jTextPaneIOPanelImage.getWidth()
                       + " "
-                      + Integer.toString(jTextPaneIOPanelImage.getHeight()));
+                      + jTextPaneIOPanelImage.getHeight());
               try {
                 OutputStream os = new FileOutputStream(file);
                 BufferedOutputStream bos = new BufferedOutputStream(os);
@@ -19811,9 +19782,9 @@ public class Modeler extends JFrame {
               sv.setAttribute(
                   "viewBox",
                   "0 0 "
-                      + Integer.toString(jTextPaneIOSpoolImage.getWidth())
+                      + jTextPaneIOSpoolImage.getWidth()
                       + " "
-                      + Integer.toString(jTextPaneIOSpoolImage.getHeight()));
+                      + jTextPaneIOSpoolImage.getHeight());
               try {
                 OutputStream os = new FileOutputStream(file);
                 BufferedOutputStream bos = new BufferedOutputStream(os);
@@ -21481,31 +21452,31 @@ public class Modeler extends JFrame {
             workLong = Long.parseLong(sortKeyOfTargetRow) + Long.parseLong(sortKeyOfFollowingRow);
             workLong = workLong / 2;
             if (workLong < 10) {
-              workStr = "000000000" + Long.toString(workLong);
+              workStr = "000000000" + workLong;
             } else {
               if (workLong < 100) {
-                workStr = "00000000" + Long.toString(workLong);
+                workStr = "00000000" + workLong;
               } else {
                 if (workLong < 1000) {
-                  workStr = "0000000" + Long.toString(workLong);
+                  workStr = "0000000" + workLong;
                 } else {
                   if (workLong < 10000) {
-                    workStr = "000000" + Long.toString(workLong);
+                    workStr = "000000" + workLong;
                   } else {
                     if (workLong < 100000) {
-                      workStr = "00000" + Long.toString(workLong);
+                      workStr = "00000" + workLong;
                     } else {
                       if (workLong < 1000000) {
-                        workStr = "0000" + Long.toString(workLong);
+                        workStr = "0000" + workLong;
                       } else {
                         if (workLong < 10000000) {
-                          workStr = "000" + Long.toString(workLong);
+                          workStr = "000" + workLong;
                         } else {
                           if (workLong < 100000000) {
-                            workStr = "00" + Long.toString(workLong);
+                            workStr = "00" + workLong;
                           } else {
                             if (workLong < 1000000000) {
-                              workStr = "0" + Long.toString(workLong);
+                              workStr = "0" + workLong;
                             } else {
                               if (workLong < 1000000000) {
                                 workStr = Long.toString(workLong);
@@ -24940,11 +24911,8 @@ public class Modeler extends JFrame {
         boundaryHeight = 50;
       }
       jLabelName.setBounds(new Rectangle(15, boundaryHeight - 30, 300, 20));
-      dataflowBoundaryElement_.setAttribute(
-          "BoundaryPosition",
-          Integer.toString(boundaryPosX) + "," + Integer.toString(boundaryPosY));
-      dataflowBoundaryElement_.setAttribute(
-          "BoundarySize", Integer.toString(boundaryWidth) + "," + Integer.toString(boundaryHeight));
+      dataflowBoundaryElement_.setAttribute("BoundaryPosition", boundaryPosX + "," + boundaryPosY);
+      dataflowBoundaryElement_.setAttribute("BoundarySize", boundaryWidth + "," + boundaryHeight);
       super.setBounds(boundaryPosX, boundaryPosY, boundaryWidth + 1, boundaryHeight + 1);
     }
 
@@ -24970,11 +24938,8 @@ public class Modeler extends JFrame {
         boundaryHeight = 50;
       }
       jLabelName.setBounds(new Rectangle(15, boundaryHeight - 30, 300, 20));
-      dataflowBoundaryElement_.setAttribute(
-          "BoundaryPosition",
-          Integer.toString(boundaryPosX) + "," + Integer.toString(boundaryPosY));
-      dataflowBoundaryElement_.setAttribute(
-          "BoundarySize", Integer.toString(boundaryWidth) + "," + Integer.toString(boundaryHeight));
+      dataflowBoundaryElement_.setAttribute("BoundaryPosition", boundaryPosX + "," + boundaryPosY);
+      dataflowBoundaryElement_.setAttribute("BoundarySize", boundaryWidth + "," + boundaryHeight);
       super.setBounds(boundaryPosX, boundaryPosY, boundaryWidth + 1, boundaryHeight + 1);
     }
 
@@ -35763,7 +35728,7 @@ public class Modeler extends JFrame {
       column3.setCellRenderer(rendererAlignmentLeft);
       column3.setCellEditor(defaultCellEditor);
       column4.setCellRenderer(rendererAlignmentLeft);
-      String ioFieldType[] = {
+      String[] ioFieldType = {
         res.getString("S5223"),
         res.getString("S5224"),
         res.getString("S5225"),
@@ -36211,7 +36176,7 @@ public class Modeler extends JFrame {
       column3.setCellRenderer(rendererAlignmentLeft);
       column3.setCellEditor(defaultCellEditor);
       column4.setCellRenderer(rendererAlignmentLeft);
-      String ioFieldType[] = {
+      String[] ioFieldType = {
         res.getString("S5223"),
         res.getString("S5224"),
         res.getString("S5225"),
@@ -37477,8 +37442,8 @@ public class Modeler extends JFrame {
       String keyType2 = keyNode2.getElement().getAttribute("Type");
       NodeList keyFieldListNode1 = keyNode1.getElement().getElementsByTagName("TableKeyField");
       NodeList keyFieldListNode2 = keyNode2.getElement().getElementsByTagName("TableKeyField");
-      String dataTypeArray1[] = new String[keyFieldListNode1.getLength()];
-      String dataTypeArray2[] = new String[keyFieldListNode2.getLength()];
+      String[] dataTypeArray1 = new String[keyFieldListNode1.getLength()];
+      String[] dataTypeArray2 = new String[keyFieldListNode2.getLength()];
       XeadTreeNode tableNode1 = (XeadTreeNode) keyNode1.getParent().getParent();
       XeadTreeNode tableNode2 = (XeadTreeNode) keyNode2.getParent().getParent();
       NodeList fieldListNode1 = tableNode1.getElement().getElementsByTagName("TableField");
@@ -39930,9 +39895,9 @@ public class Modeler extends JFrame {
                 org.w3c.dom.Element elementTextStyle = domDocument.createElement("IOPanelStyle");
                 elementTextStyle.setAttribute(
                     "Value",
-                    Integer.toString(PositionFromBackground)
+                    PositionFromBackground
                         + ","
-                        + Integer.toString(PositionThruBackground)
+                        + PositionThruBackground
                         + ","
                         + "BG"
                         + ","
@@ -39952,9 +39917,9 @@ public class Modeler extends JFrame {
               org.w3c.dom.Element elementTextStyle = domDocument.createElement("IOPanelStyle");
               elementTextStyle.setAttribute(
                   "Value",
-                  Integer.toString(PositionFromBackground)
+                  PositionFromBackground
                       + ","
-                      + Integer.toString(PositionThruBackground)
+                      + PositionThruBackground
                       + ","
                       + "BG"
                       + ","
@@ -39982,9 +39947,9 @@ public class Modeler extends JFrame {
                 org.w3c.dom.Element elementTextStyle = domDocument.createElement("IOPanelStyle");
                 elementTextStyle.setAttribute(
                     "Value",
-                    Integer.toString(PositionFromForeground)
+                    PositionFromForeground
                         + ","
-                        + Integer.toString(PositionThruForeground)
+                        + PositionThruForeground
                         + ","
                         + "FG"
                         + ","
@@ -40004,9 +39969,9 @@ public class Modeler extends JFrame {
               org.w3c.dom.Element elementTextStyle = domDocument.createElement("IOPanelStyle");
               elementTextStyle.setAttribute(
                   "Value",
-                  Integer.toString(PositionFromForeground)
+                  PositionFromForeground
                       + ","
-                      + Integer.toString(PositionThruForeground)
+                      + PositionThruForeground
                       + ","
                       + "FG"
                       + ","
@@ -40028,12 +39993,7 @@ public class Modeler extends JFrame {
             if (PositionFromUnderline > -1) {
               org.w3c.dom.Element elementTextStyle = domDocument.createElement("IOPanelStyle");
               elementTextStyle.setAttribute(
-                  "Value",
-                  Integer.toString(PositionFromUnderline)
-                      + ","
-                      + Integer.toString(PositionThruUnderline)
-                      + ","
-                      + "UL");
+                  "Value", PositionFromUnderline + "," + PositionThruUnderline + "," + "UL");
               if (!isDuplicatedStyle(
                   elementTextStyle, this.getElement().getElementsByTagName("IOPanelStyle"))) {
                 this.getElement().appendChild(elementTextStyle);
@@ -40246,9 +40206,9 @@ public class Modeler extends JFrame {
                 org.w3c.dom.Element elementTextStyle = domDocument.createElement("IOSpoolStyle");
                 elementTextStyle.setAttribute(
                     "Value",
-                    Integer.toString(PositionFromBackground)
+                    PositionFromBackground
                         + ","
-                        + Integer.toString(PositionThruBackground)
+                        + PositionThruBackground
                         + ","
                         + "BG"
                         + ","
@@ -40268,9 +40228,9 @@ public class Modeler extends JFrame {
               org.w3c.dom.Element elementTextStyle = domDocument.createElement("IOSpoolStyle");
               elementTextStyle.setAttribute(
                   "Value",
-                  Integer.toString(PositionFromBackground)
+                  PositionFromBackground
                       + ","
-                      + Integer.toString(PositionThruBackground)
+                      + PositionThruBackground
                       + ","
                       + "BG"
                       + ","
@@ -40298,9 +40258,9 @@ public class Modeler extends JFrame {
                 org.w3c.dom.Element elementTextStyle = domDocument.createElement("IOSpoolStyle");
                 elementTextStyle.setAttribute(
                     "Value",
-                    Integer.toString(PositionFromForeground)
+                    PositionFromForeground
                         + ","
-                        + Integer.toString(PositionThruForeground)
+                        + PositionThruForeground
                         + ","
                         + "FG"
                         + ","
@@ -40320,9 +40280,9 @@ public class Modeler extends JFrame {
               org.w3c.dom.Element elementTextStyle = domDocument.createElement("IOSpoolStyle");
               elementTextStyle.setAttribute(
                   "Value",
-                  Integer.toString(PositionFromForeground)
+                  PositionFromForeground
                       + ","
-                      + Integer.toString(PositionThruForeground)
+                      + PositionThruForeground
                       + ","
                       + "FG"
                       + ","
@@ -40344,12 +40304,7 @@ public class Modeler extends JFrame {
             if (PositionFromUnderline > -1) {
               org.w3c.dom.Element elementTextStyle = domDocument.createElement("IOSpoolStyle");
               elementTextStyle.setAttribute(
-                  "Value",
-                  Integer.toString(PositionFromUnderline)
-                      + ","
-                      + Integer.toString(PositionThruUnderline)
-                      + ","
-                      + "UL");
+                  "Value", PositionFromUnderline + "," + PositionThruUnderline + "," + "UL");
               if (!isDuplicatedStyle(
                   elementTextStyle, this.getElement().getElementsByTagName("IOSpoolStyle"))) {
                 this.getElement().appendChild(elementTextStyle);
