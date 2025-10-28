@@ -684,7 +684,7 @@ public class DialogReorganizeDataTypes extends JDialog {
   //		}
   //	}
 
-  class XeadNode implements Comparable {
+  class XeadNode implements Comparable<XeadNode> {
     private String nodeType_;
     private org.w3c.dom.Element domNode_;
 
@@ -712,7 +712,7 @@ public class DialogReorganizeDataTypes extends JDialog {
       return domNode_;
     }
 
-    public int compareTo(Object other) {
+    public int compareTo(XeadNode other) {
       XeadNode otherNode = (XeadNode) other;
       return domNode_
           .getAttribute("SortKey")
@@ -778,7 +778,7 @@ public class DialogReorganizeDataTypes extends JDialog {
   //		}
   //	}
 
-  class XeadFieldElement implements Comparable {
+  class XeadFieldElement implements Comparable<XeadFieldElement> {
     private org.w3c.dom.Element domNode_;
 
     public XeadFieldElement(org.w3c.dom.Element node) {
@@ -790,7 +790,7 @@ public class DialogReorganizeDataTypes extends JDialog {
       return domNode_;
     }
 
-    public int compareTo(Object other) {
+    public int compareTo(XeadFieldElement other) {
       XeadFieldElement otherNode = (XeadFieldElement) other;
       return domNode_.getAttribute("Alias").compareTo(otherNode.getElement().getAttribute("Alias"));
     }

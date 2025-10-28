@@ -3244,7 +3244,7 @@ public class DialogImportXEAD extends JDialog {
     this.setVisible(false);
   }
 
-  class XeadNode implements Comparable {
+  class XeadNode implements Comparable<XeadNode> {
     private String nodeType_;
     private org.w3c.dom.Element domNode_;
 
@@ -3278,7 +3278,7 @@ public class DialogImportXEAD extends JDialog {
       return domNode_;
     }
 
-    public int compareTo(Object other) {
+    public int compareTo(XeadNode other) {
       XeadNode otherNode = (XeadNode) other;
       return domNode_
           .getAttribute("SortKey")

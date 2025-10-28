@@ -1939,7 +1939,7 @@ public class Modeler extends JFrame {
 
     // Process in case that point is on the last line only with "\n"//
     if (!(point.x == 1 && point.y == 0)) {
-      if (point.x == rowNumber && position == 0 && text.length() > 0) {
+      if (point.x == rowNumber && position == 0 && !text.isEmpty()) {
         position = text.length();
       }
     }
@@ -2015,7 +2015,7 @@ public class Modeler extends JFrame {
 
     // Process in case that point is on the last line only with "\n"//
     if (!(point.x == 1 && point.y == 0)) {
-      if (point.x == rowNumber && position == 0 && text.length() > 0) {
+      if (point.x == rowNumber && position == 0 && !text.isEmpty()) {
         position = text.length();
       }
     }
@@ -28249,7 +28249,7 @@ public class Modeler extends JFrame {
             }
           }
           if (!secondaryKeyElement || partOfPrimaryKey) {
-            if (elementLabelArray.size() == 0) {
+            if (elementLabelArray.isEmpty()) {
               elementLabel = new ElementLabel(" ");
             } else {
               elementLabel = new ElementLabel(", ", partOfPrimaryKey);
@@ -28293,7 +28293,7 @@ public class Modeler extends JFrame {
             }
           }
           if (secondaryKeyToBeShown) {
-            if (elementLabelArray.size() == 0) {
+            if (elementLabelArray.isEmpty()) {
               elementLabel = new ElementLabel(" {");
             } else {
               elementLabel = new ElementLabel(", {");
@@ -28329,13 +28329,13 @@ public class Modeler extends JFrame {
       }
 
       if (hiddenFieldNames.equals("")) {
-        if (elementLabelArray.size() == 0) {
+        if (elementLabelArray.isEmpty()) {
           elementLabel = new ElementLabel(" *none");
           elementLabelArray.add(elementLabel);
           jPanelElements.add(elementLabel);
         }
       } else {
-        if (elementLabelArray.size() > 0) {
+        if (!elementLabelArray.isEmpty()) {
           elementLabel = new ElementLabel(", ");
           elementLabelArray.add(elementLabel);
           jPanelElements.add(elementLabel);
@@ -28775,7 +28775,7 @@ public class Modeler extends JFrame {
 
     public int getWidthOfShownFields() {
       int width = rightMarginOfElementsPanel;
-      if (elementLabelArray.size() > 0) {
+      if (!elementLabelArray.isEmpty()) {
         width =
             width
                 + elementLabelArray.get(elementLabelArray.size() - 1).getBounds().x
@@ -29957,7 +29957,7 @@ public class Modeler extends JFrame {
   } // End of Class XeadPagePrinter//
 
   /** Class of Comparable Element (sorted by "SortKey") */
-  class XeadElement implements Comparable {
+  class XeadElement implements Comparable<XeadElement> {
     private org.w3c.dom.Element domNode_;
 
     public XeadElement(org.w3c.dom.Element node) {
@@ -29969,7 +29969,7 @@ public class Modeler extends JFrame {
       return domNode_;
     }
 
-    public int compareTo(Object other) {
+    public int compareTo(XeadElement other) {
       XeadElement otherNode = (XeadElement) other;
       return domNode_
           .getAttribute("SortKey")
@@ -29978,7 +29978,7 @@ public class Modeler extends JFrame {
   }
 
   /** Class of Comparable Field Element (sorted by "Alias") */
-  class XeadFieldElement implements Comparable {
+  class XeadFieldElement implements Comparable<XeadFieldElement> {
     private org.w3c.dom.Element domNode_;
 
     public XeadFieldElement(org.w3c.dom.Element node) {
@@ -29990,14 +29990,14 @@ public class Modeler extends JFrame {
       return domNode_;
     }
 
-    public int compareTo(Object other) {
+    public int compareTo(XeadFieldElement other) {
       XeadFieldElement otherNode = (XeadFieldElement) other;
       return domNode_.getAttribute("Alias").compareTo(otherNode.getElement().getAttribute("Alias"));
     }
   }
 
   /** Class of XEAD Tree Node */
-  class XeadTreeNode extends DefaultMutableTreeNode implements Comparable {
+  class XeadTreeNode extends DefaultMutableTreeNode implements Comparable<XeadTreeNode> {
     private static final long serialVersionUID = 1L;
     private String nodeType_;
     private org.w3c.dom.Element domNode_;
@@ -30017,7 +30017,7 @@ public class Modeler extends JFrame {
       }
     }
 
-    public int compareTo(Object other) {
+    public int compareTo(XeadTreeNode other) {
       XeadTreeNode otherNode = (XeadTreeNode) other;
       return domNode_
           .getAttribute("SortKey")
@@ -34516,7 +34516,7 @@ public class Modeler extends JFrame {
       }
 
       // Setup TableReferringModelFileList//
-      if (referringFileDocList.size() == 0) {
+      if (referringFileDocList.isEmpty()) {
         jTabbedPaneTable.setEnabledAt(3, false);
       } else {
         jTabbedPaneTable.setEnabledAt(3, true);
