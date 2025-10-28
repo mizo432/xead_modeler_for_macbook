@@ -41,7 +41,6 @@ import java.awt.print.*;
 import java.io.*;
 import java.net.URI;
 import java.util.*;
-
 import javax.imageio.*;
 import javax.swing.*;
 import javax.swing.border.*;
@@ -53,16 +52,14 @@ import javax.swing.text.Element;
 import javax.swing.text.html.HTMLEditorKit;
 import javax.swing.tree.*;
 import javax.swing.undo.*;
-
 import org.apache.batik.dom.GenericDOMImplementation;
 import org.apache.batik.svggen.SVGGraphics2D;
 import org.apache.batik.svggen.SVGGraphics2DIOException;
 import org.apache.xerces.parsers.*;
+import org.apache.xml.serialize.OutputFormat;
+import org.apache.xml.serialize.XMLSerializer;
 import org.w3c.dom.*;
 import org.xml.sax.*;
-
-import com.sun.org.apache.xml.internal.serialize.OutputFormat;
-import com.sun.org.apache.xml.internal.serialize.XMLSerializer;
 
 public class Modeler extends JFrame {
 	private static final long serialVersionUID = 1L;
@@ -28094,7 +28091,6 @@ public class Modeler extends JFrame {
 
 	/**
 	 * Method to convert a hankaku string to zenkaku string
-	 * @param originalString :original string value to be processed
 	 * @return String :result value processed
 	 */
 	public static String getZenkakuOfHankaku(String value) {
@@ -39467,4 +39463,3 @@ class Modeler_jListSubjectAreaWithThisTask_mouseMotionAdapter extends java.awt.e
 		adaptee.jListSubjectAreaWithThisTask_mouseMoved(e);
 	}
 }
-
