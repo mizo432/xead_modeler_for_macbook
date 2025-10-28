@@ -75,11 +75,15 @@ public class Modeler extends JFrame {
   public static final Color INACTIVE_COLOR = new Color(219, 219, 219);
   public static final Color SELECT_COLOR = Color.magenta;
   private static final long serialVersionUID = 1L;
+
   /** Static constants */
   private static final ResourceBundle res = ResourceBundle.getBundle("xeadModeler.Res");
+
   public String currentFileName, currentFileFolder, systemName;
+
   /** parsed XML Document for this application */
   public DOMParser domParser = new DOMParser();
+
   public org.w3c.dom.Document domDocument;
   public org.w3c.dom.Document domDocumentSaved = null;
   public String mainFontName = "SansSerif";
@@ -97,24 +101,32 @@ public class Modeler extends JFrame {
   public boolean setCommentToFieldsWithAlias = true;
   public boolean ignoreForeignKeyConstraints = false;
   public boolean ignoreKeyDefinitionWarnings = true;
+
   /** Desktop Launcher */
   public Desktop desktop = Desktop.getDesktop();
+
   public XeadTreeNode currentMainTreeNode;
   public boolean isToShowGridsOnSubjectArea = true;
   public boolean isNormalColorConfigOnSubjectArea = true;
   public String datamodelSize = "M";
   public boolean isToShowGridsOnDataModel = true;
   public boolean isNormalColorConfigOnDataModel = true;
+
   /** status controller related to setup field definition list */
   boolean isRequiredToSetupSortableFieldList = true;
+
   /** status controller related to deleted table definitions */
   boolean isRequiredToPurgeInvalidSubsystemTable = false;
+
   /** status controller related to deleted relationship definitions */
   boolean isRequiredToPurgeInvalidSubsystemRelationship = false;
+
   /** change status controller for general use */
   boolean informationOnThisPageChanged;
+
   /** Main panels and labels */
   private JPanel jPanelMain;
+
   private JPanel jPanelJumpButtons = new JPanel();
   private GridLayout gridLayoutJumpButtons = new GridLayout();
   private NodeJumpButton[] nodeJumpButton = new NodeJumpButton[8];
@@ -132,8 +144,10 @@ public class Modeler extends JFrame {
   private String urlString = "";
   private int screenWidth = 800;
   private int screenHeight = 600;
+
   /** Main Menu */
   private JMenuBar jMenuBar = new JMenuBar();
+
   private JMenu jMenuFile = new JMenu();
   private JMenuItem jMenuItemFileNew = new JMenuItem();
   private JMenuItem jMenuItemFileOpen = new JMenuItem();
@@ -194,31 +208,42 @@ public class Modeler extends JFrame {
   private ArrayList<String> referringFileNameList = new ArrayList<String>();
   private ArrayList<org.w3c.dom.Document> referringFileDocList =
       new ArrayList<org.w3c.dom.Document>();
+
   /** Variants for Properties */
   private Properties properties = new Properties();
+
   /** Main undo manager */
   private XeadUndoManager xeadUndoManager = new XeadUndoManager();
+
   /** sorter for general use */
   private SortableXeadTreeNodeListModel sortableXeadTreeNodeListModel =
       new SortableXeadTreeNodeListModel();
+
   private SortableDomElementFieldListModel sortableDomElementFieldListModel =
       new SortableDomElementFieldListModel();
+
   /** fields for style processing for JTextpane */
   private ArrayList<String> styledDocumentCopiedTextList = new ArrayList<String>();
+
   private ArrayList<DefaultStyledDocument> styledDocumentCopiedSegmentList =
       new ArrayList<DefaultStyledDocument>();
   private ChangeState changeState = new ChangeState();
+
   /** Dialog box and fileChooser for general use */
   private JFileChooser jFileChooser = new JFileChooser();
+
   /** common used storage for copy/paste operation */
   private boolean inBlockSelectMode = false;
+
   private Point blockSelectPointFrom = new Point();
   private Point blockSelectPointThru = new Point();
   private Rectangle blockSelectRec = new Rectangle(0, 0, 0, 0);
   private Graphics savedImage = null;
   private org.w3c.dom.Element pastingDomElement = null;
+
   /** Dialogs and related variants */
   private DialogDataflowNode dialogDataflowNode;
+
   private DialogDataflowLine dialogDataflowLine;
   private DialogScan dialogScan;
   private DialogReorganizeDataTypes dialogReorganizeDataTypes;
@@ -231,15 +256,20 @@ public class Modeler extends JFrame {
   private DialogConfigColors dialogConfigColors;
   private DialogTableSynchronize dialogTableSynchronize;
   private DialogToListChangesOfFiles dialogToListChangesOfFiles;
+
   /** Print Controller */
   private XeadPagePainter painter = new XeadPagePainter();
+
   private PrinterJob printerJob;
   private PageFormat pageFormat;
   private boolean printFormatSpecified = false;
+
   /** Last focused KanjiTextArea */
   private KanjiTextArea lastFocusedTextArea = null;
+
   /** Icons */
   private Image imageTitle;
+
   private ImageIcon imageIconSystem;
   private ImageIcon imageIconSubjectAreaList;
   private ImageIcon imageIconSubjectArea;
@@ -274,8 +304,10 @@ public class Modeler extends JFrame {
   private ImageIcon imageIconModel;
   private ImageIcon imageIconText;
   private ImageIcon imageIconBook;
+
   /** Main TreeView */
   private JScrollPane jScrollPaneTreeView = new JScrollPane();
+
   private CustomTreeRenderer customTreeRenderer = new CustomTreeRenderer();
   private JTree jTreeMain = new JTree();
   private DefaultTreeModel treeModel;
@@ -291,8 +323,10 @@ public class Modeler extends JFrame {
   private int dragStartPointY = 0;
   private XeadTreeNode systemNode, SubjectAreaListNode, roleListNode, subsystemListNode;
   private XeadTreeNode currentTaskActionTreeNode, previousTaskActionTreeNode;
+
   /** PopupMenu for editing XeadTreeNode */
   private JPopupMenu jPopupMenuXeadTreeNode = new JPopupMenu();
+
   private JMenuItem jMenuItemXeadTreeNodeAdd = new JMenuItem();
   private JMenuItem jMenuItemXeadTreeNodeAddList = new JMenuItem();
   private JMenuItem jMenuItemXeadTreeNodeCopy = new JMenuItem();
@@ -306,8 +340,10 @@ public class Modeler extends JFrame {
   private JMenuItem jMenuItemXeadTreeNodeAddFK = new JMenuItem();
   private JMenuItem jMenuItemXeadTreeNodeAddSK = new JMenuItem();
   private JMenuItem jMenuItemXeadTreeNodeAddIndex = new JMenuItem();
+
   /** PopupMenu for Contents Pane Components */
   private JPopupMenu jPopupMenuComponent = new JPopupMenu();
+
   private JMenuItem jMenuItemComponentToAdd = new JMenuItem();
   private JMenuItem jMenuItemComponentToAddIOPanel = new JMenuItem();
   private JMenuItem jMenuItemComponentToAddIOSpool = new JMenuItem();
@@ -336,8 +372,10 @@ public class Modeler extends JFrame {
   private JMenuItem jMenuItemComponentToPrintImage = new JMenuItem();
   private JMenuItem jMenuItemComponentToSetIOWebPage = new JMenuItem();
   private String componentType_jPopupMenuComponent = "";
+
   /** components for JTables */
   private DefaultTableCellRenderer rendererAlignmentCenter = new DefaultTableCellRenderer();
+
   private DefaultTableCellRenderer rendererAlignmentRight = new DefaultTableCellRenderer();
   private DefaultTableCellRenderer rendererAlignmentLeft = new DefaultTableCellRenderer();
   private DefaultTableCellRenderer rendererAlignmentCenterControlColor =
@@ -362,6 +400,7 @@ public class Modeler extends JFrame {
       columnC,
       columnD,
       columnE;
+
   /** customized key-map for text component */
   private JTextComponent.KeyBinding[] customBindings = {
     new JTextComponent.KeyBinding(
@@ -375,11 +414,15 @@ public class Modeler extends JFrame {
     new JTextComponent.KeyBinding(
         KeyStroke.getKeyStroke("ctrl X"), DefaultEditorKit.defaultKeyTypedAction)
   };
+
   /** Definition components for selection of elements of ERD and DFD */
   private JPanel jPanelSelectionGuide = new JPanel();
+
   private Point pointOfSelecterFrom = new Point();
+
   /** Definition components on jPanelSystem */
   private JPanel jPanelSystem = new JPanel();
+
   private JPanel jPanelSystem6 = new JPanel();
   private JLabel jLabelSystemName = new JLabel();
   private KanjiTextField jTextFieldSystemName = new KanjiTextField();
@@ -546,14 +589,18 @@ public class Modeler extends JFrame {
   private JLabel jLabelSystemMaintenanceLogDescriptions = new JLabel();
   private JScrollPane jScrollPaneSystemMaintenanceLogDescriptions = new JScrollPane();
   private KanjiTextArea jTextAreaSystemMaintenanceLogDescriptions = new KanjiTextArea();
+
   /** Definition components on jPanelSubjectAreaList */
   private JPanel jPanelSubjectAreaList = new JPanel();
+
   private JScrollPane jScrollPaneSubjectAreaList = new JScrollPane();
   private TableModelReadOnlyList tableModelSubjectAreaList = new TableModelReadOnlyList();
   private JTable jTableSubjectAreaList = new JTable(tableModelSubjectAreaList);
   private int selectedRow_jTableSubjectAreaList;
+
   /** Definition components on jPanelSubjectArea */
   private JPanel jPanelSubjectArea = new JPanel();
+
   private JSplitPane jSplitPaneSubjectArea = new JSplitPane();
   private JScrollPane jScrollPaneSubjectArea = new JScrollPane();
   private JPanel jPanelSubjectArea1 = new JPanel();
@@ -646,14 +693,18 @@ public class Modeler extends JFrame {
   private String boundaryResizeMode = "";
   private Point boundaryResizeStartPoint;
   private Rectangle boundaryResizeGuideRec;
+
   /** Definition components on jPanelRoleList */
   private JPanel jPanelRoleList = new JPanel();
+
   private JScrollPane jScrollPaneRoleList = new JScrollPane();
   private TableModelReadOnlyList tableModelRoleList = new TableModelReadOnlyList();
   private JTable jTableRoleList = new JTable(tableModelRoleList);
   private int selectedRow_jTableRoleList;
+
   /** Definition components on jPanelRole(with Task List) */
   private JPanel jPanelRole = new JPanel();
+
   private JSplitPane jSplitPaneRole = new JSplitPane();
   private JScrollPane jScrollPaneTaskList = new JScrollPane();
   private JViewport jViewportTaskList = new JViewport();
@@ -676,8 +727,10 @@ public class Modeler extends JFrame {
   private KanjiTextArea jTextAreaRoleDescriptions = new KanjiTextArea();
   private JLabel jLabelDepartment = new JLabel();
   private JLabel jLabelTaskSortKey = new JLabel();
+
   /** Definition components on jPanelTask */
   private JPanel jPanelTask = new JPanel();
+
   private JSplitPane jSplitPaneTask = new JSplitPane();
   private JScrollPane jScrollPaneTask1 = new JScrollPane();
   private JPanel jPanelTask1 = new JPanel();
@@ -763,8 +816,10 @@ public class Modeler extends JFrame {
   private JScrollPane jScrollPaneFunctionIOImageIOList = new JScrollPane();
   private TableModelReadOnlyList tableModelFunctionIOImageIOList = new TableModelReadOnlyList();
   private JTable jTableFunctionIOImageIOList = new JTable(tableModelFunctionIOImageIOList);
+
   /** Definition components on jPanelSubsystemList */
   private JPanel jPanelSubsystemList = new JPanel();
+
   private JTabbedPane jTabbedPaneSubsystemList = new JTabbedPane();
   private JScrollPane jScrollPaneSubsystemList = new JScrollPane();
   private TableModelReadOnlyList tableModelSubsystemList = new TableModelReadOnlyList();
@@ -854,8 +909,10 @@ public class Modeler extends JFrame {
   private JTable jTableFunctionsStructureTableIOList =
       new JTable(tableModelFunctionsStructureTableIOList);
   private boolean taskFunctionIOTabSelectChangeActivated = true;
+
   /** Definition components on jPanelSubsystem */
   private JPanel jPanelSubsystem = new JPanel();
+
   private JPanel jPanelSubsystem1 = new JPanel();
   private JPanel jPanelSubsystem2 = new JPanel();
   private JPanel jPanelSubsystem3 = new JPanel();
@@ -866,8 +923,10 @@ public class Modeler extends JFrame {
   private JTextField jTextFieldSubsystemSortKey = new JTextField();
   private JScrollPane jScrollPaneSubsystemDescriptions = new JScrollPane();
   private KanjiTextArea jTextAreaSubsystemDescriptions = new KanjiTextArea();
+
   /** Definition components on jPanelTableList */
   private JPanel jPanelTableList = new JPanel();
+
   private JScrollPane jScrollPaneNativeTableList = new JScrollPane();
   private JViewport jViewportNativeTableList = new JViewport();
   private JTabbedPane jTabbedPaneTableList = new JTabbedPane();
@@ -1042,6 +1101,7 @@ public class Modeler extends JFrame {
       };
   private JLabel jLabelDatamodelSlideShowPageGuide = new JLabel();
   private String datamodelPageTitle;
+
   /** Definition components on jPanelTable */
   private JScrollPane jScrollPaneTable1 = new JScrollPane();
 
@@ -1279,8 +1339,10 @@ public class Modeler extends JFrame {
   private JLabel jLabelIOPanelImage = new JLabel();
   private JLabel jLabelIOPanelCaretPosition = new JLabel();
   private int iOPanelCharLengthX, iOPanelCharLengthY;
+
   /** Definition components on jPanelIOSpool */
   private JPanel jPanelIOSpool = new JPanel();
+
   private JSplitPane jSplitPaneIOSpool1 = new JSplitPane();
   private JSplitPane jSplitPaneIOSpool2 = new JSplitPane();
   private JLabel jLabelIOSpoolName = new JLabel();
@@ -1332,8 +1394,10 @@ public class Modeler extends JFrame {
   private JLabel jLabelIOSpoolCaretPosition = new JLabel();
   private JPanel jPanelIOSpoolImage = new JPanel();
   private int iOSpoolCharLengthX, iOSpoolCharLengthY;
+
   /** Definition components on jPanelIOTable */
   private JPanel jPanelIOTable = new JPanel();
+
   private JSplitPane jSplitPaneIOTable = new JSplitPane();
   private JScrollPane jScrollPaneIOTableDescriptions = new JScrollPane();
   private JPanel jPanelIOTable2 = new JPanel();
@@ -1365,8 +1429,10 @@ public class Modeler extends JFrame {
   private JCheckBox jCheckBoxIOTableD = new JCheckBox();
   private JButton jButtonIOTableJump = new JButton();
   private int selectedRow_jTableIOTableFieldList;
+
   /** PopUp-Menu for editing IO Image(IOPanel and IOSpool) */
   private JPopupMenu jPopupMenuIOImage = new JPopupMenu();
+
   private JMenuItem jMenuItemIOImageUndo = new JMenuItem();
   private JMenuItem jMenuItemIOImageRedo = new JMenuItem();
   private JMenuItem jMenuItemIOImageCut = new JMenuItem();
@@ -1427,8 +1493,10 @@ public class Modeler extends JFrame {
   private JCheckBoxMenuItem jMenuItemIOImageSearchImageFile = new JCheckBoxMenuItem();
   private JMenuItem jMenuItemIOImageCaptureImage = new JMenuItem();
   private JMenuItem jMenuItemIOImagePrintImage = new JMenuItem();
+
   /** Definition components on jPanelIOWebPage */
   private JPanel jPanelIOWebPage = new JPanel();
+
   private JSplitPane jSplitPaneIOWebPage1 = new JSplitPane();
   private JSplitPane jSplitPaneIOWebPage2 = new JSplitPane();
   private JLabel jLabelIOWebPageName = new JLabel();
@@ -1454,8 +1522,10 @@ public class Modeler extends JFrame {
   private JPanel jPanelIOWebPage6 = new JPanel();
   private JLabel jLabelIOWebPageImage = new JLabel();
   private String htmlFileName = "";
+
   /** undo handler for JTextPane */
   private UndoableEditListener textPaneUndoableEditListener = new CustomUndoableEditListener();
+
   private UndoManager textPaneUndoManager = new UndoManager();
   private TextPaneUndoAction undoAction = new TextPaneUndoAction();
   private TextPaneRedoAction redoAction = new TextPaneRedoAction();
@@ -1491,6 +1561,7 @@ public class Modeler extends JFrame {
           redoAction.actionPerformed(e);
         }
       };
+
   /** HTML Editor Kit */
   private HTMLEditorKit htmlEditorKit = new HTMLEditorKit();
 
