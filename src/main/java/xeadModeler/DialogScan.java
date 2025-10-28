@@ -2274,7 +2274,7 @@ public class DialogScan extends JDialog {
     }
   }
 
-  class TableRowNumber extends Object {
+  class TableRowNumber {
     private org.w3c.dom.Element element_;
     private int number_;
     private String attributeType_;
