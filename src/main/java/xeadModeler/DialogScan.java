@@ -463,21 +463,14 @@ public class DialogScan extends JDialog {
   }
 
   void jCheckBoxTaskAndRole_stateChanged(ChangeEvent e) {
-    if (jCheckBoxTask.isSelected() || jCheckBoxRole.isSelected()) {
-      jComboBoxRoles.setEnabled(true);
-    } else {
-      jComboBoxRoles.setEnabled(false);
-    }
+    jComboBoxRoles.setEnabled(jCheckBoxTask.isSelected() || jCheckBoxRole.isSelected());
   }
 
   void jCheckBoxSubsystem_stateChanged(ChangeEvent e) {
-    if (jCheckBoxSubsystem.isSelected()
-        || jCheckBoxTable.isSelected()
-        || jCheckBoxFunction.isSelected()) {
-      jComboBoxSubsystems.setEnabled(true);
-    } else {
-      jComboBoxSubsystems.setEnabled(false);
-    }
+    jComboBoxSubsystems.setEnabled(
+        jCheckBoxSubsystem.isSelected()
+            || jCheckBoxTable.isSelected()
+            || jCheckBoxFunction.isSelected());
   }
 
   void jCheckBoxAll_actionPerformed(ActionEvent e) {
@@ -597,7 +590,7 @@ public class DialogScan extends JDialog {
       }
       if (jCheckBoxRole.isSelected()) {
         roleList = frame_.domDocument.getElementsByTagName("Role");
-        if (roleID.equals("")) {
+        if (roleID.isEmpty()) {
           countOfElementsToBeScanned += roleList.getLength();
         } else {
           countOfElementsToBeScanned++;
@@ -605,7 +598,7 @@ public class DialogScan extends JDialog {
       }
       if (jCheckBoxTask.isSelected()) {
         taskList = frame_.domDocument.getElementsByTagName("Task");
-        if (roleID.equals("")) {
+        if (roleID.isEmpty()) {
           countOfElementsToBeScanned += taskList.getLength();
         } else {
           for (int i = 0; i < taskList.getLength(); i++) {
@@ -618,7 +611,7 @@ public class DialogScan extends JDialog {
       }
       if (jCheckBoxSubsystem.isSelected()) {
         subsystemList = frame_.domDocument.getElementsByTagName("Subsystem");
-        if (subsystemID.equals("")) {
+        if (subsystemID.isEmpty()) {
           countOfElementsToBeScanned += subsystemList.getLength();
         } else {
           countOfElementsToBeScanned++;
@@ -626,7 +619,7 @@ public class DialogScan extends JDialog {
       }
       if (jCheckBoxTable.isSelected()) {
         tableList = frame_.domDocument.getElementsByTagName("Table");
-        if (subsystemID.equals("")) {
+        if (subsystemID.isEmpty()) {
           countOfElementsToBeScanned += tableList.getLength();
         } else {
           for (int i = 0; i < tableList.getLength(); i++) {
@@ -639,7 +632,7 @@ public class DialogScan extends JDialog {
           }
         }
         relationshipList = frame_.domDocument.getElementsByTagName("Relationship");
-        if (subsystemID.equals("")) {
+        if (subsystemID.isEmpty()) {
           countOfElementsToBeScanned += relationshipList.getLength();
         } else {
           for (int i = 0; i < relationshipList.getLength(); i++) {
@@ -659,7 +652,7 @@ public class DialogScan extends JDialog {
       }
       if (jCheckBoxFunction.isSelected()) {
         functionList = frame_.domDocument.getElementsByTagName("Function");
-        if (subsystemID.equals("")) {
+        if (subsystemID.isEmpty()) {
           countOfElementsToBeScanned += functionList.getLength();
         } else {
           for (int i = 0; i < functionList.getLength(); i++) {
@@ -793,7 +786,7 @@ public class DialogScan extends JDialog {
       if (jCheckBoxRole.isSelected()) {
         for (int i = 0; i < roleList.getLength(); i++) {
           org.w3c.dom.Element element = (org.w3c.dom.Element) roleList.item(i);
-          if (roleID.equals("") || roleID.equals(element.getAttribute("ID"))) {
+          if (roleID.isEmpty() || roleID.equals(element.getAttribute("ID"))) {
             jProgressBar.setValue(jProgressBar.getValue() + 1);
             jProgressBar.paintImmediately(0, 0, jProgressBar.getWidth(), jProgressBar.getHeight());
             //
@@ -801,7 +794,7 @@ public class DialogScan extends JDialog {
             scanAttribute(element, "Role", "Name");
             scanAttribute(element, "Role", "Descriptions");
             //
-            if (!roleID.equals("") && roleID.equals(element.getAttribute("ID"))) {
+            if (!roleID.isEmpty() && roleID.equals(element.getAttribute("ID"))) {
               break;
             }
           }
@@ -810,7 +803,7 @@ public class DialogScan extends JDialog {
       if (jCheckBoxTask.isSelected()) {
         for (int i = 0; i < taskList.getLength(); i++) {
           org.w3c.dom.Element element = (org.w3c.dom.Element) taskList.item(i);
-          if (roleID.equals("") || roleID.equals(element.getAttribute("RoleID"))) {
+          if (roleID.isEmpty() || roleID.equals(element.getAttribute("RoleID"))) {
             jProgressBar.setValue(jProgressBar.getValue() + 1);
             jProgressBar.paintImmediately(0, 0, jProgressBar.getWidth(), jProgressBar.getHeight());
             //
@@ -838,7 +831,7 @@ public class DialogScan extends JDialog {
       if (jCheckBoxSubsystem.isSelected()) {
         for (int i = 0; i < subsystemList.getLength(); i++) {
           org.w3c.dom.Element element = (org.w3c.dom.Element) subsystemList.item(i);
-          if (subsystemID.equals("") || subsystemID.equals(element.getAttribute("ID"))) {
+          if (subsystemID.isEmpty() || subsystemID.equals(element.getAttribute("ID"))) {
             jProgressBar.setValue(jProgressBar.getValue() + 1);
             jProgressBar.paintImmediately(0, 0, jProgressBar.getWidth(), jProgressBar.getHeight());
             //
@@ -854,7 +847,7 @@ public class DialogScan extends JDialog {
               }
             }
             //
-            if (!subsystemID.equals("") && subsystemID.equals(element.getAttribute("ID"))) {
+            if (!subsystemID.isEmpty() && subsystemID.equals(element.getAttribute("ID"))) {
               break;
             }
           }
@@ -863,7 +856,7 @@ public class DialogScan extends JDialog {
       if (jCheckBoxTable.isSelected()) {
         for (int i = 0; i < tableList.getLength(); i++) {
           org.w3c.dom.Element element = (org.w3c.dom.Element) tableList.item(i);
-          if (subsystemID.equals("") || subsystemID.equals(element.getAttribute("SubsystemID"))) {
+          if (subsystemID.isEmpty() || subsystemID.equals(element.getAttribute("SubsystemID"))) {
             jProgressBar.setValue(jProgressBar.getValue() + 1);
             jProgressBar.paintImmediately(0, 0, jProgressBar.getWidth(), jProgressBar.getHeight());
             //
@@ -885,7 +878,7 @@ public class DialogScan extends JDialog {
         }
         for (int i = 0; i < relationshipList.getLength(); i++) {
           org.w3c.dom.Element element = (org.w3c.dom.Element) relationshipList.item(i);
-          if (subsystemID.equals("")) {
+          if (subsystemID.isEmpty()) {
             jProgressBar.setValue(jProgressBar.getValue() + 1);
             jProgressBar.paintImmediately(0, 0, jProgressBar.getWidth(), jProgressBar.getHeight());
             //
@@ -911,7 +904,7 @@ public class DialogScan extends JDialog {
       if (jCheckBoxFunction.isSelected()) {
         for (int i = 0; i < functionList.getLength(); i++) {
           org.w3c.dom.Element element = (org.w3c.dom.Element) functionList.item(i);
-          if (subsystemID.equals("") || subsystemID.equals(element.getAttribute("SubsystemID"))) {
+          if (subsystemID.isEmpty() || subsystemID.equals(element.getAttribute("SubsystemID"))) {
             jProgressBar.setValue(jProgressBar.getValue() + 1);
             jProgressBar.paintImmediately(0, 0, jProgressBar.getWidth(), jProgressBar.getHeight());
             //
@@ -1250,7 +1243,7 @@ public class DialogScan extends JDialog {
     //
     if (elementType.equals("DataflowNode")) {
       workElement1 = (org.w3c.dom.Element) element.getParentNode();
-      if (element.getAttribute("NameExt").equals("")) {
+      if (element.getAttribute("NameExt").isEmpty()) {
         itemName =
             workElement1.getAttribute("Name")
                 + "("
@@ -1273,7 +1266,7 @@ public class DialogScan extends JDialog {
     //
     if (elementType.equals("DataflowLine")) {
       workElement1 = (org.w3c.dom.Element) element.getParentNode();
-      if (element.getAttribute("NameExt").equals("")) {
+      if (element.getAttribute("NameExt").isEmpty()) {
         itemName =
             workElement1.getAttribute("Name")
                 + "("
@@ -1450,7 +1443,7 @@ public class DialogScan extends JDialog {
       for (int m = 0; m < workList.getLength(); m++) {
         workElement1 = (org.w3c.dom.Element) workList.item(m);
         if (element.getAttribute("Table1ID").equals(workElement1.getAttribute("ID"))) {
-          if (workString.equals("")) {
+          if (workString.isEmpty()) {
             workString =
                 workElement1.getAttribute("Name")
                     + "("
@@ -1468,7 +1461,7 @@ public class DialogScan extends JDialog {
           }
         }
         if (element.getAttribute("Table2ID").equals(workElement1.getAttribute("ID"))) {
-          if (workString.equals("")) {
+          if (workString.isEmpty()) {
             workString =
                 workElement1.getAttribute("Name")
                     + "("
@@ -2114,7 +2107,7 @@ public class DialogScan extends JDialog {
   }
 
   void jTextFieldScan_keyReleased(KeyEvent e) {
-    if (jTextFieldScan.getText().equals("")) {
+    if (jTextFieldScan.getText().isEmpty()) {
       jButtonStartScan.setEnabled(false);
     } else {
       jButtonStartScan.setEnabled(true);
@@ -2266,11 +2259,7 @@ public class DialogScan extends JDialog {
     private static final long serialVersionUID = 1L;
 
     public boolean isCellEditable(int row, int col) {
-      if (col != 1) {
-        return false;
-      } else {
-        return true;
-      }
+      return col == 1;
     }
   }
 
@@ -2302,19 +2291,6 @@ public class DialogScan extends JDialog {
     private static final long serialVersionUID = 1L;
 
     public void sortElements() {
-      //			TreeSet<XeadNode> treeSet = new TreeSet<XeadNode>(new NodeComparator());
-      //			int elementCount = this.getSize();
-      //			XeadNode node;
-      //			for (int i = 0; i < elementCount; i++) {
-      //				node = (XeadNode)this.getElementAt(i);
-      //				treeSet.add(node);
-      //			}
-      //			this.removeAllElements();
-      //			Iterator<XeadNode> it = treeSet.iterator();
-      //			while( it.hasNext() ){
-      //				node = (XeadNode)it.next();
-      //				this.addElement(node);
-      //			}
       ArrayList<XeadNode> list = new ArrayList<>();
       for (int i = 0; i < this.getSize(); i++) {
         list.add((XeadNode) this.getElementAt(i));
@@ -2327,25 +2303,7 @@ public class DialogScan extends JDialog {
     }
   }
 
-  //	class NodeComparator implements java.util.Comparator<XeadNode> {
-  //		public int compare(XeadNode node1, XeadNode node2) {
-  //			String value1, value2;
-  //			value1 = node1.getElement().getAttribute("SortKey");
-  //			value2 = node2.getElement().getAttribute("SortKey");
-  //			int compareResult = value1.compareTo(value2);
-  //			if (compareResult == 0) {
-  //				value1 = node1.getElement().getAttribute("ID");
-  //				value2 = node2.getElement().getAttribute("ID");
-  //				compareResult = value1.compareTo(value2);
-  //				if (compareResult == 0) {
-  //					compareResult = 1;
-  //				}
-  //			}
-  //			return(compareResult);
-  //		}
-  //	}
-
-  class XeadNode implements Comparable {
+  class XeadNode implements Comparable<XeadNode> {
     private String nodeType_;
     private org.w3c.dom.Element domNode_;
 
@@ -2376,8 +2334,8 @@ public class DialogScan extends JDialog {
       return domNode_;
     }
 
-    public int compareTo(Object other) {
-      XeadNode otherNode = (XeadNode) other;
+    public int compareTo(XeadNode other) {
+      XeadNode otherNode = other;
       return domNode_
           .getAttribute("SortKey")
           .compareTo(otherNode.getElement().getAttribute("SortKey"));

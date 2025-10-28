@@ -31,1691 +31,2084 @@ package xeadModeler;
  * POSSIBILITY OF SUCH DAMAGE.
  */
 
-import java.io.*;
-import java.util.*;
 import java.awt.*;
 import java.awt.event.*;
+import java.io.*;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.util.*;
 import javax.swing.*;
 import org.apache.xerces.parsers.*;
 import org.w3c.dom.*;
 import org.xml.sax.*;
 
 public class DialogToListChangesOfFiles extends JDialog {
-	private static final long serialVersionUID = 1L;
-	private static ResourceBundle res = ResourceBundle.getBundle("xeadModeler.Res");
-	private JPanel panelMain = new JPanel();
-	private JScrollPane jScrollPane = new JScrollPane();
-	private JProgressBar jProgressBar = new JProgressBar();
-	private JButton jButtonStart = new JButton();
-	private JButton jButtonCancel = new JButton();
-	private JTextArea jTextArea = new JTextArea();
-	private JLabel jLabel1 = new JLabel();
-	private JTextField jTextFieldImportFileName = new JTextField();
-	private JLabel jLabel2 = new JLabel();
-	private JTextField jTextFieldImportSystemName = new JTextField();
-	private Modeler frame_;
-	private org.w3c.dom.Document domDocumentOld;
-	private org.w3c.dom.Element systemElementOld, systemElementNew;
-	private int countOfChanges = 0;
-	private StringBuffer buffer;
+  private static final long serialVersionUID = 1L;
+  private static ResourceBundle res = ResourceBundle.getBundle("xeadModeler.Res");
+  private JPanel panelMain = new JPanel();
+  private JScrollPane jScrollPane = new JScrollPane();
+  private JProgressBar jProgressBar = new JProgressBar();
+  private JButton jButtonStart = new JButton();
+  private JButton jButtonCancel = new JButton();
+  private JTextArea jTextArea = new JTextArea();
+  private JLabel jLabel1 = new JLabel();
+  private JTextField jTextFieldImportFileName = new JTextField();
+  private JLabel jLabel2 = new JLabel();
+  private JTextField jTextFieldImportSystemName = new JTextField();
+  private Modeler frame_;
+  private org.w3c.dom.Document domDocumentOld;
+  private org.w3c.dom.Element systemElementOld, systemElementNew;
+  private int countOfChanges = 0;
+  private StringBuffer buffer;
 
-	public DialogToListChangesOfFiles(Modeler frame, String title, boolean modal) {
-		super(frame, title, modal);
-		try {
-			frame_ = frame;
-			jbInit();
-			pack();
-		} catch(Exception ex) {
-			ex.printStackTrace();
-		}
-	}
-	
-	public DialogToListChangesOfFiles(Modeler frame) {
-		this(frame, "", true);
-	}
+  public DialogToListChangesOfFiles(Modeler frame, String title, boolean modal) {
+    super(frame, title, modal);
+    try {
+      frame_ = frame;
+      jbInit();
+      pack();
+    } catch (Exception ex) {
+      ex.printStackTrace();
+    }
+  }
 
-	private void jbInit() throws Exception {
-		this.setResizable(false);
-		this.setTitle(res.getString("DialogToListChangesOfFiles1"));
+  public DialogToListChangesOfFiles(Modeler frame) {
+    this(frame, "", true);
+  }
 
-		jLabel1.setFont(new java.awt.Font(frame_.mainFontName, 0, Modeler.MAIN_FONT_SIZE));
-		jLabel1.setHorizontalAlignment(SwingConstants.RIGHT);
-		jLabel1.setText(res.getString("DialogToListChangesOfFiles3"));
-		jLabel1.setBounds(new Rectangle(5, 12, 170, 20));
-		jTextFieldImportFileName.setFont(new java.awt.Font(frame_.mainFontName, 0, Modeler.MAIN_FONT_SIZE));
-		jTextFieldImportFileName.setBounds(new Rectangle(180, 9, 650, 25));
-		jTextFieldImportFileName.setEditable(false);
+  private void jbInit() throws Exception {
+    this.setResizable(false);
+    this.setTitle(res.getString("DialogToListChangesOfFiles1"));
 
-		jLabel2.setFont(new java.awt.Font(frame_.mainFontName, 0, Modeler.MAIN_FONT_SIZE));
-		jLabel2.setHorizontalAlignment(SwingConstants.RIGHT);
-		jLabel2.setText(res.getString("DialogToListChangesOfFiles4"));
-		jLabel2.setBounds(new Rectangle(5, 43, 170, 20));
-		jTextFieldImportSystemName.setFont(new java.awt.Font(frame_.mainFontName, 0, Modeler.MAIN_FONT_SIZE));
-		jTextFieldImportSystemName.setBounds(new Rectangle(180, 40, 650, 25));
-		jTextFieldImportSystemName.setEditable(false);
+    jLabel1.setFont(new java.awt.Font(frame_.mainFontName, 0, Modeler.MAIN_FONT_SIZE));
+    jLabel1.setHorizontalAlignment(SwingConstants.RIGHT);
+    jLabel1.setText(res.getString("DialogToListChangesOfFiles3"));
+    jLabel1.setBounds(new Rectangle(5, 12, 170, 20));
+    jTextFieldImportFileName.setFont(
+        new java.awt.Font(frame_.mainFontName, 0, Modeler.MAIN_FONT_SIZE));
+    jTextFieldImportFileName.setBounds(new Rectangle(180, 9, 650, 25));
+    jTextFieldImportFileName.setEditable(false);
 
-		jScrollPane.setBounds(new Rectangle(9, 73, 822, 458));
-		jScrollPane.setBorder(BorderFactory.createLoweredBevelBorder());
-		jScrollPane.getViewport().add(jTextArea);
-		jTextArea.setFont(new java.awt.Font(frame_.mainFontName, 0, Modeler.MAIN_FONT_SIZE));
-		jTextArea.setEditable(false);
-		jTextArea.setLineWrap(true);
-		jTextArea.setBackground(SystemColor.control);
-		jTextArea.setBorder(null);
+    jLabel2.setFont(new java.awt.Font(frame_.mainFontName, 0, Modeler.MAIN_FONT_SIZE));
+    jLabel2.setHorizontalAlignment(SwingConstants.RIGHT);
+    jLabel2.setText(res.getString("DialogToListChangesOfFiles4"));
+    jLabel2.setBounds(new Rectangle(5, 43, 170, 20));
+    jTextFieldImportSystemName.setFont(
+        new java.awt.Font(frame_.mainFontName, 0, Modeler.MAIN_FONT_SIZE));
+    jTextFieldImportSystemName.setBounds(new Rectangle(180, 40, 650, 25));
+    jTextFieldImportSystemName.setEditable(false);
 
-		jProgressBar.setBounds(new Rectangle(30, 540, 640, 30));
-		jProgressBar.setStringPainted(true);
-		jProgressBar.setVisible(false);
+    jScrollPane.setBounds(new Rectangle(9, 73, 822, 458));
+    jScrollPane.setBorder(BorderFactory.createLoweredBevelBorder());
+    jScrollPane.getViewport().add(jTextArea);
+    jTextArea.setFont(new java.awt.Font(frame_.mainFontName, 0, Modeler.MAIN_FONT_SIZE));
+    jTextArea.setEditable(false);
+    jTextArea.setLineWrap(true);
+    jTextArea.setBackground(SystemColor.control);
+    jTextArea.setBorder(null);
 
-		jButtonStart.setBounds(new Rectangle(30, 540, 640, 30));
-		jButtonStart.setFont(new java.awt.Font(frame_.mainFontName, 0, Modeler.MAIN_FONT_SIZE));
-		jButtonStart.setText(res.getString("DialogToListChangesOfFiles5"));
-		jButtonStart.addActionListener(new DialogToListChangesOfFiles_jButtonStart_actionAdapter(this));
+    jProgressBar.setBounds(new Rectangle(30, 540, 640, 30));
+    jProgressBar.setStringPainted(true);
+    jProgressBar.setVisible(false);
 
-		jButtonCancel.setBounds(new Rectangle(700, 540, 110, 30));
-		jButtonCancel.setFont(new java.awt.Font(frame_.mainFontName, 0, Modeler.MAIN_FONT_SIZE));
-		jButtonCancel.setText(res.getString("DialogToListChangesOfFiles6"));
-		jButtonCancel.addActionListener(new DialogToListChangesOfFiles_jButtonCancel_actionAdapter(this));
+    jButtonStart.setBounds(new Rectangle(30, 540, 640, 30));
+    jButtonStart.setFont(new java.awt.Font(frame_.mainFontName, 0, Modeler.MAIN_FONT_SIZE));
+    jButtonStart.setText(res.getString("DialogToListChangesOfFiles5"));
+    jButtonStart.addActionListener(new DialogToListChangesOfFiles_jButtonStart_actionAdapter(this));
 
-		panelMain.setLayout(null);
-		panelMain.setPreferredSize(new Dimension(840, 583));
-		panelMain.setBorder(BorderFactory.createEtchedBorder());
-		panelMain.add(jLabel1, null);
-		panelMain.add(jLabel2, null);
-		panelMain.add(jTextFieldImportFileName, null);
-		panelMain.add(jTextFieldImportSystemName, null);
-		panelMain.add(jScrollPane, null);
-		panelMain.add(jProgressBar, null);
-		panelMain.add(jButtonStart, null);
-		panelMain.add(jButtonCancel, null);
+    jButtonCancel.setBounds(new Rectangle(700, 540, 110, 30));
+    jButtonCancel.setFont(new java.awt.Font(frame_.mainFontName, 0, Modeler.MAIN_FONT_SIZE));
+    jButtonCancel.setText(res.getString("DialogToListChangesOfFiles6"));
+    jButtonCancel.addActionListener(
+        new DialogToListChangesOfFiles_jButtonCancel_actionAdapter(this));
 
-		this.getContentPane().add(panelMain, BorderLayout.SOUTH);
-		this.getRootPane().setDefaultButton(jButtonStart);
+    panelMain.setLayout(null);
+    panelMain.setPreferredSize(new Dimension(840, 583));
+    panelMain.setBorder(BorderFactory.createEtchedBorder());
+    panelMain.add(jLabel1, null);
+    panelMain.add(jLabel2, null);
+    panelMain.add(jTextFieldImportFileName, null);
+    panelMain.add(jTextFieldImportSystemName, null);
+    panelMain.add(jScrollPane, null);
+    panelMain.add(jProgressBar, null);
+    panelMain.add(jButtonStart, null);
+    panelMain.add(jButtonCancel, null);
 
-		Dimension scrSize = Toolkit.getDefaultToolkit().getScreenSize();
-		Dimension dlgSize = this.getPreferredSize();
-		this.setLocation((scrSize.width - dlgSize.width)/2 , (scrSize.height - dlgSize.height)/2);
-		this.pack();
-	}
+    this.getContentPane().add(panelMain, BorderLayout.SOUTH);
+    this.getRootPane().setDefaultButton(jButtonStart);
 
-	public void request(String fileName) {
-		try {
-			DOMParser parser = new DOMParser();
-			parser.parse(new InputSource(new FileInputStream(fileName)));
-			domDocumentOld = parser.getDocument();
+    Dimension scrSize = Toolkit.getDefaultToolkit().getScreenSize();
+    Dimension dlgSize = this.getPreferredSize();
+    this.setLocation((scrSize.width - dlgSize.width) / 2, (scrSize.height - dlgSize.height) / 2);
+    this.pack();
+  }
 
-			NodeList elementList = domDocumentOld.getElementsByTagName("System");
-			systemElementOld = (org.w3c.dom.Element)elementList.item(0);
-			elementList = frame_.domDocument.getElementsByTagName("System");
-			systemElementNew = (org.w3c.dom.Element)elementList.item(0);
+  public void request(String fileName) {
+    try {
+      DOMParser parser = new DOMParser();
+      parser.parse(new InputSource(Files.newInputStream(Paths.get(fileName))));
+      domDocumentOld = parser.getDocument();
 
-			float importFileFormat = Float.parseFloat(systemElementOld.getAttribute("FormatVersion"));
-			float appliFormat = Float.parseFloat(DialogAbout.FORMAT_VERSION);
-			if (importFileFormat > appliFormat) {
-				JOptionPane.showMessageDialog(this, res.getString("S1") + systemElementOld.getAttribute("FormatVersion") + res.getString("S2") + DialogAbout.FORMAT_VERSION + res.getString("S3"));
-			} else {
-				jTextFieldImportFileName.setText(fileName);
-				jTextFieldImportSystemName.setText(systemElementOld.getAttribute("Name") + " V" + systemElementOld.getAttribute("Version"));
-				jTextArea.setText(res.getString("DialogToListChangesOfFiles2"));
-				jProgressBar.setValue(0);
-				jButtonStart.setEnabled(true);
-				this.getRootPane().setDefaultButton(jButtonStart);
-				super.setVisible(true);
-			}
-		} catch (Exception ex) {
-			JOptionPane.showMessageDialog(null, "XML format of the file is invalid. Process is canceled.");
-		}
-	}
+      NodeList elementList = domDocumentOld.getElementsByTagName("System");
+      systemElementOld = (org.w3c.dom.Element) elementList.item(0);
+      elementList = frame_.domDocument.getElementsByTagName("System");
+      systemElementNew = (org.w3c.dom.Element) elementList.item(0);
 
-	void jButtonStart_actionPerformed(ActionEvent e) {
-		try {
-			setCursor(new Cursor(Cursor.WAIT_CURSOR));
+      float importFileFormat = Float.parseFloat(systemElementOld.getAttribute("FormatVersion"));
+      float appliFormat = Float.parseFloat(DialogAbout.FORMAT_VERSION);
+      if (importFileFormat > appliFormat) {
+        JOptionPane.showMessageDialog(
+            this,
+            res.getString("S1")
+                + systemElementOld.getAttribute("FormatVersion")
+                + res.getString("S2")
+                + DialogAbout.FORMAT_VERSION
+                + res.getString("S3"));
+      } else {
+        jTextFieldImportFileName.setText(fileName);
+        jTextFieldImportSystemName.setText(
+            systemElementOld.getAttribute("Name")
+                + " V"
+                + systemElementOld.getAttribute("Version"));
+        jTextArea.setText(res.getString("DialogToListChangesOfFiles2"));
+        jProgressBar.setValue(0);
+        jButtonStart.setEnabled(true);
+        this.getRootPane().setDefaultButton(jButtonStart);
+        super.setVisible(true);
+      }
+    } catch (Exception ex) {
+      JOptionPane.showMessageDialog(
+          null, "XML format of the file is invalid. Process is canceled.");
+    }
+  }
 
-			jButtonStart.setVisible(false);
-			jProgressBar.setVisible(true);
-			setupProgressMaxValue();
-			buffer = new StringBuffer();
-			countOfChanges = 0;
+  void jButtonStart_actionPerformed(ActionEvent e) {
+    try {
+      setCursor(new Cursor(Cursor.WAIT_CURSOR));
 
-			listChangesOfBasicInfo();
-			listChangesOfDataflow();
-			listChangesOfRoleAndTask();
-			listChangesOfSubsystem();
-			listChangesOfTable();
-			listChangesOfFunction();
+      jButtonStart.setVisible(false);
+      jProgressBar.setVisible(true);
+      setupProgressMaxValue();
+      buffer = new StringBuffer();
+      countOfChanges = 0;
 
-		} finally {
-			jTextArea.setText(countOfChanges + res.getString("DialogToListChangesOfFiles35") + buffer.toString());
-			jTextArea.setCaretPosition(0);
+      listChangesOfBasicInfo();
+      listChangesOfDataflow();
+      listChangesOfRoleAndTask();
+      listChangesOfSubsystem();
+      listChangesOfTable();
+      listChangesOfFunction();
 
-			jProgressBar.setVisible(false);
-			jButtonStart.setVisible(true);
-			jButtonStart.setEnabled(false);
-			this.getRootPane().setDefaultButton(jButtonCancel);
+    } finally {
+      jTextArea.setText(
+          countOfChanges + res.getString("DialogToListChangesOfFiles35") + buffer.toString());
+      jTextArea.setCaretPosition(0);
 
-			setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
-		}
-	}
+      jProgressBar.setVisible(false);
+      jButtonStart.setVisible(true);
+      jButtonStart.setEnabled(false);
+      this.getRootPane().setDefaultButton(jButtonCancel);
 
-	void setupProgressMaxValue() {
-		NodeList workElementList;
-		int countOfElementsProcessed = 0;
+      setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
+    }
+  }
 
-		workElementList = systemElementOld.getElementsByTagName("Department");
-		countOfElementsProcessed = countOfElementsProcessed + workElementList.getLength();
-		workElementList = systemElementNew.getElementsByTagName("Department");
-		countOfElementsProcessed = countOfElementsProcessed + workElementList.getLength();
-		workElementList = systemElementOld.getElementsByTagName("TaskType");
-		countOfElementsProcessed = countOfElementsProcessed + workElementList.getLength();
-		workElementList = systemElementNew.getElementsByTagName("TaskType");
-		countOfElementsProcessed = countOfElementsProcessed + workElementList.getLength();
-		workElementList = systemElementOld.getElementsByTagName("TableType");
-		countOfElementsProcessed = countOfElementsProcessed + workElementList.getLength();
-		workElementList = systemElementNew.getElementsByTagName("TableType");
-		countOfElementsProcessed = countOfElementsProcessed + workElementList.getLength();
-		workElementList = systemElementOld.getElementsByTagName("DataType");
-		countOfElementsProcessed = countOfElementsProcessed + workElementList.getLength();
-		workElementList = systemElementNew.getElementsByTagName("DataType");
-		countOfElementsProcessed = countOfElementsProcessed + workElementList.getLength();
-		workElementList = systemElementOld.getElementsByTagName("FunctionType");
-		countOfElementsProcessed = countOfElementsProcessed + workElementList.getLength();
-		workElementList = systemElementNew.getElementsByTagName("FunctionType");
-		countOfElementsProcessed = countOfElementsProcessed + workElementList.getLength();
-		workElementList = systemElementOld.getElementsByTagName("Terms");
-		countOfElementsProcessed = countOfElementsProcessed + workElementList.getLength();
-		workElementList = systemElementNew.getElementsByTagName("Terms");
-		countOfElementsProcessed = countOfElementsProcessed + workElementList.getLength();
-		workElementList = systemElementOld.getElementsByTagName("MaintenanceLog");
-		countOfElementsProcessed = countOfElementsProcessed + workElementList.getLength();
-		workElementList = systemElementNew.getElementsByTagName("MaintenanceLog");
-		countOfElementsProcessed = countOfElementsProcessed + workElementList.getLength();
+  void setupProgressMaxValue() {
+    NodeList workElementList;
+    int countOfElementsProcessed = 0;
 
-		workElementList = systemElementOld.getElementsByTagName("SubjectArea");
-		countOfElementsProcessed = countOfElementsProcessed + workElementList.getLength();
-		workElementList = systemElementNew.getElementsByTagName("SubjectArea");
-		countOfElementsProcessed = countOfElementsProcessed + workElementList.getLength();
+    workElementList = systemElementOld.getElementsByTagName("Department");
+    countOfElementsProcessed = countOfElementsProcessed + workElementList.getLength();
+    workElementList = systemElementNew.getElementsByTagName("Department");
+    countOfElementsProcessed = countOfElementsProcessed + workElementList.getLength();
+    workElementList = systemElementOld.getElementsByTagName("TaskType");
+    countOfElementsProcessed = countOfElementsProcessed + workElementList.getLength();
+    workElementList = systemElementNew.getElementsByTagName("TaskType");
+    countOfElementsProcessed = countOfElementsProcessed + workElementList.getLength();
+    workElementList = systemElementOld.getElementsByTagName("TableType");
+    countOfElementsProcessed = countOfElementsProcessed + workElementList.getLength();
+    workElementList = systemElementNew.getElementsByTagName("TableType");
+    countOfElementsProcessed = countOfElementsProcessed + workElementList.getLength();
+    workElementList = systemElementOld.getElementsByTagName("DataType");
+    countOfElementsProcessed = countOfElementsProcessed + workElementList.getLength();
+    workElementList = systemElementNew.getElementsByTagName("DataType");
+    countOfElementsProcessed = countOfElementsProcessed + workElementList.getLength();
+    workElementList = systemElementOld.getElementsByTagName("FunctionType");
+    countOfElementsProcessed = countOfElementsProcessed + workElementList.getLength();
+    workElementList = systemElementNew.getElementsByTagName("FunctionType");
+    countOfElementsProcessed = countOfElementsProcessed + workElementList.getLength();
+    workElementList = systemElementOld.getElementsByTagName("Terms");
+    countOfElementsProcessed = countOfElementsProcessed + workElementList.getLength();
+    workElementList = systemElementNew.getElementsByTagName("Terms");
+    countOfElementsProcessed = countOfElementsProcessed + workElementList.getLength();
+    workElementList = systemElementOld.getElementsByTagName("MaintenanceLog");
+    countOfElementsProcessed = countOfElementsProcessed + workElementList.getLength();
+    workElementList = systemElementNew.getElementsByTagName("MaintenanceLog");
+    countOfElementsProcessed = countOfElementsProcessed + workElementList.getLength();
 
-		workElementList = systemElementOld.getElementsByTagName("Role");
-		countOfElementsProcessed = countOfElementsProcessed + workElementList.getLength();
-		workElementList = systemElementNew.getElementsByTagName("Role");
-		countOfElementsProcessed = countOfElementsProcessed + workElementList.getLength();
-		workElementList = systemElementOld.getElementsByTagName("Task");
-		countOfElementsProcessed = countOfElementsProcessed + workElementList.getLength();
-		workElementList = systemElementNew.getElementsByTagName("Task");
-		countOfElementsProcessed = countOfElementsProcessed + workElementList.getLength();
+    workElementList = systemElementOld.getElementsByTagName("SubjectArea");
+    countOfElementsProcessed = countOfElementsProcessed + workElementList.getLength();
+    workElementList = systemElementNew.getElementsByTagName("SubjectArea");
+    countOfElementsProcessed = countOfElementsProcessed + workElementList.getLength();
 
-		workElementList = systemElementOld.getElementsByTagName("Subsystem");
-		countOfElementsProcessed = countOfElementsProcessed + workElementList.getLength();
-		workElementList = systemElementNew.getElementsByTagName("Subsystem");
-		countOfElementsProcessed = countOfElementsProcessed + workElementList.getLength();
-		workElementList = systemElementOld.getElementsByTagName("Table");
-		countOfElementsProcessed = countOfElementsProcessed + workElementList.getLength();
-		workElementList = systemElementNew.getElementsByTagName("Table");
-		countOfElementsProcessed = countOfElementsProcessed + workElementList.getLength();
-		workElementList = systemElementOld.getElementsByTagName("Function");
-		countOfElementsProcessed = countOfElementsProcessed + workElementList.getLength();
-		workElementList = systemElementNew.getElementsByTagName("Function");
-		countOfElementsProcessed = countOfElementsProcessed + workElementList.getLength();
+    workElementList = systemElementOld.getElementsByTagName("Role");
+    countOfElementsProcessed = countOfElementsProcessed + workElementList.getLength();
+    workElementList = systemElementNew.getElementsByTagName("Role");
+    countOfElementsProcessed = countOfElementsProcessed + workElementList.getLength();
+    workElementList = systemElementOld.getElementsByTagName("Task");
+    countOfElementsProcessed = countOfElementsProcessed + workElementList.getLength();
+    workElementList = systemElementNew.getElementsByTagName("Task");
+    countOfElementsProcessed = countOfElementsProcessed + workElementList.getLength();
 
-		jProgressBar.setMaximum(countOfElementsProcessed + 1); // System Info counts 1//
-	}
+    workElementList = systemElementOld.getElementsByTagName("Subsystem");
+    countOfElementsProcessed = countOfElementsProcessed + workElementList.getLength();
+    workElementList = systemElementNew.getElementsByTagName("Subsystem");
+    countOfElementsProcessed = countOfElementsProcessed + workElementList.getLength();
+    workElementList = systemElementOld.getElementsByTagName("Table");
+    countOfElementsProcessed = countOfElementsProcessed + workElementList.getLength();
+    workElementList = systemElementNew.getElementsByTagName("Table");
+    countOfElementsProcessed = countOfElementsProcessed + workElementList.getLength();
+    workElementList = systemElementOld.getElementsByTagName("Function");
+    countOfElementsProcessed = countOfElementsProcessed + workElementList.getLength();
+    workElementList = systemElementNew.getElementsByTagName("Function");
+    countOfElementsProcessed = countOfElementsProcessed + workElementList.getLength();
 
-	void listChangesOfBasicInfo() {
-		NodeList newElementList, oldElementList;
-		String tagName;
-		ArrayList<String> attrList = new ArrayList<>();
-		int workCount = countOfChanges;
-		buffer.append("\n\n<").append(res.getString("DialogToListChangesOfFiles8")).append(">");
+    jProgressBar.setMaximum(countOfElementsProcessed + 1); // System Info counts 1//
+  }
 
-		/////////////////////////
-		// System Descriptions //
-		/////////////////////////
-		compareNewAndOldElements(systemElementNew, systemElementOld, "Name", res.getString("DialogToListChangesOfFiles9"));
-		compareNewAndOldElements(systemElementNew, systemElementOld, "Version", res.getString("DialogToListChangesOfFiles9"));
-		compareNewAndOldElements(systemElementNew, systemElementOld, "RefFiles", res.getString("DialogToListChangesOfFiles9"));
-		compareNewAndOldElements(systemElementNew, systemElementOld, "Descriptions", res.getString("DialogToListChangesOfFiles9"));
+  void listChangesOfBasicInfo() {
+    NodeList newElementList, oldElementList;
+    String tagName;
+    ArrayList<String> attrList = new ArrayList<>();
+    int workCount = countOfChanges;
+    buffer.append("\n\n<").append(res.getString("DialogToListChangesOfFiles8")).append(">");
 
-		/////////////////
-		// Departments //
-		/////////////////
-		tagName = "Department";
-		attrList.clear();
-		attrList.add("Name");
-		attrList.add("Descriptions");
-		oldElementList = systemElementOld.getElementsByTagName(tagName);
-		newElementList = systemElementNew.getElementsByTagName(tagName);
-		checkIfNewElementChangedOrAdded(newElementList, oldElementList, attrList, tagName, "Name");
-		checkIfNewElementDeleted(newElementList, oldElementList, tagName, "Name");
+    /////////////////////////
+    // System Descriptions //
+    /////////////////////////
+    compareNewAndOldElements(
+        systemElementNew, systemElementOld, "Name", res.getString("DialogToListChangesOfFiles9"));
+    compareNewAndOldElements(
+        systemElementNew,
+        systemElementOld,
+        "Version",
+        res.getString("DialogToListChangesOfFiles9"));
+    compareNewAndOldElements(
+        systemElementNew,
+        systemElementOld,
+        "RefFiles",
+        res.getString("DialogToListChangesOfFiles9"));
+    compareNewAndOldElements(
+        systemElementNew,
+        systemElementOld,
+        "Descriptions",
+        res.getString("DialogToListChangesOfFiles9"));
 
-		////////////////
-		// Task Types //
-		////////////////
-		tagName = "TaskType";
-		attrList.clear();
-		attrList.add("Name");
-		attrList.add("Descriptions");
-		oldElementList = systemElementOld.getElementsByTagName(tagName);
-		newElementList = systemElementNew.getElementsByTagName(tagName);
-		checkIfNewElementChangedOrAdded(newElementList, oldElementList, attrList, tagName, "Name");
-		checkIfNewElementDeleted(newElementList, oldElementList, tagName, "Name");
+    /////////////////
+    // Departments //
+    /////////////////
+    tagName = "Department";
+    attrList.clear();
+    attrList.add("Name");
+    attrList.add("Descriptions");
+    oldElementList = systemElementOld.getElementsByTagName(tagName);
+    newElementList = systemElementNew.getElementsByTagName(tagName);
+    checkIfNewElementChangedOrAdded(newElementList, oldElementList, attrList, tagName, "Name");
+    checkIfNewElementDeleted(newElementList, oldElementList, tagName, "Name");
 
-		/////////////////
-		// Table Types //
-		/////////////////
-		tagName = "TableType";
-		attrList.clear();
-		attrList.add("Name");
-		attrList.add("Descriptions");
-		oldElementList = systemElementOld.getElementsByTagName(tagName);
-		newElementList = systemElementNew.getElementsByTagName("TableType");
-		checkIfNewElementChangedOrAdded(newElementList, oldElementList, attrList, tagName, "Name");
-		checkIfNewElementDeleted(newElementList, oldElementList, tagName, "Name");
+    ////////////////
+    // Task Types //
+    ////////////////
+    tagName = "TaskType";
+    attrList.clear();
+    attrList.add("Name");
+    attrList.add("Descriptions");
+    oldElementList = systemElementOld.getElementsByTagName(tagName);
+    newElementList = systemElementNew.getElementsByTagName(tagName);
+    checkIfNewElementChangedOrAdded(newElementList, oldElementList, attrList, tagName, "Name");
+    checkIfNewElementDeleted(newElementList, oldElementList, tagName, "Name");
 
-		////////////////
-		// Data Types //
-		////////////////
-		tagName = "DataType";
-		attrList.clear();
-		attrList.add("Name");
-		attrList.add("BasicType");
-		attrList.add("Length");
-		attrList.add("Decimal");
-		attrList.add("SQLExpression");
-		oldElementList = systemElementOld.getElementsByTagName(tagName);
-		newElementList = systemElementNew.getElementsByTagName(tagName);
-		checkIfNewElementChangedOrAdded(newElementList, oldElementList, attrList, tagName, "Name");
-		checkIfNewElementDeleted(newElementList, oldElementList, tagName, "Name");
+    /////////////////
+    // Table Types //
+    /////////////////
+    tagName = "TableType";
+    attrList.clear();
+    attrList.add("Name");
+    attrList.add("Descriptions");
+    oldElementList = systemElementOld.getElementsByTagName(tagName);
+    newElementList = systemElementNew.getElementsByTagName("TableType");
+    checkIfNewElementChangedOrAdded(newElementList, oldElementList, attrList, tagName, "Name");
+    checkIfNewElementDeleted(newElementList, oldElementList, tagName, "Name");
 
-		////////////////////
-		// Function Types //
-		////////////////////
-		tagName = "FunctionType";
-		attrList.clear();
-		attrList.add("Name");
-		attrList.add("Descriptions");
-		oldElementList = systemElementOld.getElementsByTagName(tagName);
-		newElementList = systemElementNew.getElementsByTagName(tagName);
-		checkIfNewElementChangedOrAdded(newElementList, oldElementList, attrList, tagName, "Name");
-		checkIfNewElementDeleted(newElementList, oldElementList, tagName, "Name");
+    ////////////////
+    // Data Types //
+    ////////////////
+    tagName = "DataType";
+    attrList.clear();
+    attrList.add("Name");
+    attrList.add("BasicType");
+    attrList.add("Length");
+    attrList.add("Decimal");
+    attrList.add("SQLExpression");
+    oldElementList = systemElementOld.getElementsByTagName(tagName);
+    newElementList = systemElementNew.getElementsByTagName(tagName);
+    checkIfNewElementChangedOrAdded(newElementList, oldElementList, attrList, tagName, "Name");
+    checkIfNewElementDeleted(newElementList, oldElementList, tagName, "Name");
 
-		///////////
-		// Terms //
-		///////////
-		tagName = "Terms";
-		attrList.clear();
-		attrList.add("Header");
-		attrList.add("HtmlFileName");
-		attrList.add("Descriptions");
-		oldElementList = systemElementOld.getElementsByTagName(tagName);
-		newElementList = systemElementNew.getElementsByTagName(tagName);
-		checkIfNewElementChangedOrAdded(newElementList, oldElementList, attrList, tagName, "Header");
-		checkIfNewElementDeleted(newElementList, oldElementList, tagName, "Header");
+    ////////////////////
+    // Function Types //
+    ////////////////////
+    tagName = "FunctionType";
+    attrList.clear();
+    attrList.add("Name");
+    attrList.add("Descriptions");
+    oldElementList = systemElementOld.getElementsByTagName(tagName);
+    newElementList = systemElementNew.getElementsByTagName(tagName);
+    checkIfNewElementChangedOrAdded(newElementList, oldElementList, attrList, tagName, "Name");
+    checkIfNewElementDeleted(newElementList, oldElementList, tagName, "Name");
 
-		/////////////////////
-		// Maintenance Log //
-		/////////////////////
-		tagName = "MaintenanceLog";
-		attrList.clear();
-		attrList.add("Headder");
-		attrList.add("Descriptions");
-		oldElementList = systemElementOld.getElementsByTagName(tagName);
-		newElementList = systemElementNew.getElementsByTagName(tagName);
-		checkIfNewElementChangedOrAdded(newElementList, oldElementList, attrList, tagName, "Header");
-		checkIfNewElementDeleted(newElementList, oldElementList, tagName, "Header");
+    ///////////
+    // Terms //
+    ///////////
+    tagName = "Terms";
+    attrList.clear();
+    attrList.add("Header");
+    attrList.add("HtmlFileName");
+    attrList.add("Descriptions");
+    oldElementList = systemElementOld.getElementsByTagName(tagName);
+    newElementList = systemElementNew.getElementsByTagName(tagName);
+    checkIfNewElementChangedOrAdded(newElementList, oldElementList, attrList, tagName, "Header");
+    checkIfNewElementDeleted(newElementList, oldElementList, tagName, "Header");
 
-		////////////////////////////////////////
-		// Set message if with no differences //
-		////////////////////////////////////////
-		if (countOfChanges == workCount) {
-			buffer.append("\n").append(res.getString("DialogToListChangesOfFiles7"));
-		}
-	}
+    /////////////////////
+    // Maintenance Log //
+    /////////////////////
+    tagName = "MaintenanceLog";
+    attrList.clear();
+    attrList.add("Headder");
+    attrList.add("Descriptions");
+    oldElementList = systemElementOld.getElementsByTagName(tagName);
+    newElementList = systemElementNew.getElementsByTagName(tagName);
+    checkIfNewElementChangedOrAdded(newElementList, oldElementList, attrList, tagName, "Header");
+    checkIfNewElementDeleted(newElementList, oldElementList, tagName, "Header");
 
-	void listChangesOfDataflow() {
-		NodeList newElementList, oldElementList;
-		String tagName;
-		ArrayList<String> attrList = new ArrayList<>();
-		int workCount = countOfChanges;
-		buffer.append("\n\n<").append(res.getString("S3385")).append(">");
+    ////////////////////////////////////////
+    // Set message if with no differences //
+    ////////////////////////////////////////
+    if (countOfChanges == workCount) {
+      buffer.append("\n").append(res.getString("DialogToListChangesOfFiles7"));
+    }
+  }
 
-		///////////////////
-		// Subject Areas //
-		///////////////////
-		tagName = "SubjectArea";
-		attrList.clear();
-		attrList.add("Name");
-		attrList.add("Descriptions");
-		oldElementList = systemElementOld.getElementsByTagName(tagName);
-		newElementList = systemElementNew.getElementsByTagName(tagName);
-		checkIfNewElementChangedOrAdded(newElementList, oldElementList, attrList, tagName, "Name");
-		checkIfNewElementDeleted(newElementList, oldElementList, tagName, "Name");
+  void listChangesOfDataflow() {
+    NodeList newElementList, oldElementList;
+    String tagName;
+    ArrayList<String> attrList = new ArrayList<>();
+    int workCount = countOfChanges;
+    buffer.append("\n\n<").append(res.getString("S3385")).append(">");
 
-		////////////////////////////////////////
-		// Set message if with no differences //
-		////////////////////////////////////////
-		if (countOfChanges == workCount) {
-			buffer.append("\n").append(res.getString("DialogToListChangesOfFiles7"));
-		}
-	}
+    ///////////////////
+    // Subject Areas //
+    ///////////////////
+    tagName = "SubjectArea";
+    attrList.clear();
+    attrList.add("Name");
+    attrList.add("Descriptions");
+    oldElementList = systemElementOld.getElementsByTagName(tagName);
+    newElementList = systemElementNew.getElementsByTagName(tagName);
+    checkIfNewElementChangedOrAdded(newElementList, oldElementList, attrList, tagName, "Name");
+    checkIfNewElementDeleted(newElementList, oldElementList, tagName, "Name");
 
-	void listChangesOfRoleAndTask() {
-		NodeList newElementList, oldElementList;
-		String tagName;
-		ArrayList<String> attrList = new ArrayList<>();
-		int workCount = countOfChanges;
-		buffer.append("\n\n<").append(res.getString("S3391")).append(">");
+    ////////////////////////////////////////
+    // Set message if with no differences //
+    ////////////////////////////////////////
+    if (countOfChanges == workCount) {
+      buffer.append("\n").append(res.getString("DialogToListChangesOfFiles7"));
+    }
+  }
 
-		///////////
-		// Roles //
-		///////////
-		tagName = "Role";
-		attrList.clear();
-		attrList.add("Name");
-		attrList.add("DepartmentID");
-		attrList.add("Descriptions");
-		oldElementList = systemElementOld.getElementsByTagName(tagName);
-		newElementList = systemElementNew.getElementsByTagName(tagName);
-		checkIfNewElementChangedOrAdded(newElementList, oldElementList, attrList, tagName, "Name");
-		checkIfNewElementDeleted(newElementList, oldElementList, tagName, "Name");
+  void listChangesOfRoleAndTask() {
+    NodeList newElementList, oldElementList;
+    String tagName;
+    ArrayList<String> attrList = new ArrayList<>();
+    int workCount = countOfChanges;
+    buffer.append("\n\n<").append(res.getString("S3391")).append(">");
 
-		//////////
-		// Task //
-		//////////
-		tagName = "Task";
-		attrList.clear();
-		attrList.add("Name");
-		attrList.add("Descriptions");
-		attrList.add("Event");
-		attrList.add("TaskTypeID");
-		attrList.add("RoleID");
-		oldElementList = systemElementOld.getElementsByTagName(tagName);
-		newElementList = systemElementNew.getElementsByTagName(tagName);
-		checkIfNewElementChangedOrAdded(newElementList, oldElementList, attrList, tagName, "Name");
-		checkIfNewElementDeleted(newElementList, oldElementList, tagName, "Name");
+    ///////////
+    // Roles //
+    ///////////
+    tagName = "Role";
+    attrList.clear();
+    attrList.add("Name");
+    attrList.add("DepartmentID");
+    attrList.add("Descriptions");
+    oldElementList = systemElementOld.getElementsByTagName(tagName);
+    newElementList = systemElementNew.getElementsByTagName(tagName);
+    checkIfNewElementChangedOrAdded(newElementList, oldElementList, attrList, tagName, "Name");
+    checkIfNewElementDeleted(newElementList, oldElementList, tagName, "Name");
 
-		////////////////////////////////////////
-		// Set message if with no differences //
-		////////////////////////////////////////
-		if (countOfChanges == workCount) {
-			buffer.append("\n").append(res.getString("DialogToListChangesOfFiles7"));
-		}
-	}
+    //////////
+    // Task //
+    //////////
+    tagName = "Task";
+    attrList.clear();
+    attrList.add("Name");
+    attrList.add("Descriptions");
+    attrList.add("Event");
+    attrList.add("TaskTypeID");
+    attrList.add("RoleID");
+    oldElementList = systemElementOld.getElementsByTagName(tagName);
+    newElementList = systemElementNew.getElementsByTagName(tagName);
+    checkIfNewElementChangedOrAdded(newElementList, oldElementList, attrList, tagName, "Name");
+    checkIfNewElementDeleted(newElementList, oldElementList, tagName, "Name");
 
-	void listChangesOfSubsystem() {
-		NodeList newElementList, oldElementList;
-		String tagName;
-		ArrayList<String> attrList = new ArrayList<>();
-		int workCount = countOfChanges;
-		buffer.append("\n\n<").append(res.getString("S413")).append(">");
+    ////////////////////////////////////////
+    // Set message if with no differences //
+    ////////////////////////////////////////
+    if (countOfChanges == workCount) {
+      buffer.append("\n").append(res.getString("DialogToListChangesOfFiles7"));
+    }
+  }
 
-		////////////////
-		// Subsystems //
-		////////////////
-		tagName = "Subsystem";
-		attrList.clear();
-		attrList.add("Name");
-		attrList.add("Descriptions");
-		attrList.add("DatamodelDescriptions");
-		oldElementList = systemElementOld.getElementsByTagName(tagName);
-		newElementList = systemElementNew.getElementsByTagName(tagName);
-		checkIfNewElementChangedOrAdded(newElementList, oldElementList, attrList, tagName, "Name");
-		checkIfNewElementDeleted(newElementList, oldElementList, tagName, "Name");
+  void listChangesOfSubsystem() {
+    NodeList newElementList, oldElementList;
+    String tagName;
+    ArrayList<String> attrList = new ArrayList<>();
+    int workCount = countOfChanges;
+    buffer.append("\n\n<").append(res.getString("S413")).append(">");
 
-		////////////////////////////////////////
-		// Set message if with no differences //
-		////////////////////////////////////////
-		if (countOfChanges == workCount) {
-			buffer.append("\n").append(res.getString("DialogToListChangesOfFiles7"));
-		}
-	}
+    ////////////////
+    // Subsystems //
+    ////////////////
+    tagName = "Subsystem";
+    attrList.clear();
+    attrList.add("Name");
+    attrList.add("Descriptions");
+    attrList.add("DatamodelDescriptions");
+    oldElementList = systemElementOld.getElementsByTagName(tagName);
+    newElementList = systemElementNew.getElementsByTagName(tagName);
+    checkIfNewElementChangedOrAdded(newElementList, oldElementList, attrList, tagName, "Name");
+    checkIfNewElementDeleted(newElementList, oldElementList, tagName, "Name");
 
-	void listChangesOfTable() {
-		NodeList newElementList, oldElementList;
-		String tagName;
-		ArrayList<String> attrList = new ArrayList<>();
-		int workCount = countOfChanges;
-		buffer.append("\n\n<").append(res.getString("DialogToListChangesOfFiles10")).append(">");
+    ////////////////////////////////////////
+    // Set message if with no differences //
+    ////////////////////////////////////////
+    if (countOfChanges == workCount) {
+      buffer.append("\n").append(res.getString("DialogToListChangesOfFiles7"));
+    }
+  }
 
-		////////////
-		// Tables //
-		////////////
-		tagName = "Table";
-		attrList.clear();
-		attrList.add("Name");
-		attrList.add("Descriptions");
-		attrList.add("Alias");
-		attrList.add("SynchFile");
-		attrList.add("TableTypeID");
-		attrList.add("SubsystemID");
-		oldElementList = systemElementOld.getElementsByTagName(tagName);
-		newElementList = systemElementNew.getElementsByTagName(tagName);
-		checkIfNewElementChangedOrAdded(newElementList, oldElementList, attrList, tagName, "Name");
-		checkIfNewElementDeleted(newElementList, oldElementList, tagName, "Name");
+  void listChangesOfTable() {
+    NodeList newElementList, oldElementList;
+    String tagName;
+    ArrayList<String> attrList = new ArrayList<>();
+    int workCount = countOfChanges;
+    buffer.append("\n\n<").append(res.getString("DialogToListChangesOfFiles10")).append(">");
 
-		////////////////////////////////////////
-		// Set message if with no differences //
-		////////////////////////////////////////
-		if (countOfChanges == workCount) {
-			buffer.append("\n").append(res.getString("DialogToListChangesOfFiles7"));
-		}
-	}
+    ////////////
+    // Tables //
+    ////////////
+    tagName = "Table";
+    attrList.clear();
+    attrList.add("Name");
+    attrList.add("Descriptions");
+    attrList.add("Alias");
+    attrList.add("SynchFile");
+    attrList.add("TableTypeID");
+    attrList.add("SubsystemID");
+    oldElementList = systemElementOld.getElementsByTagName(tagName);
+    newElementList = systemElementNew.getElementsByTagName(tagName);
+    checkIfNewElementChangedOrAdded(newElementList, oldElementList, attrList, tagName, "Name");
+    checkIfNewElementDeleted(newElementList, oldElementList, tagName, "Name");
 
-	void listChangesOfFunction() {
-		NodeList newElementList, oldElementList;
-		String tagName;
-		ArrayList<String> attrList = new ArrayList<>();
-		int workCount = countOfChanges;
-		buffer.append("\n\n<").append(res.getString("DialogToListChangesOfFiles14")).append(">");
+    ////////////////////////////////////////
+    // Set message if with no differences //
+    ////////////////////////////////////////
+    if (countOfChanges == workCount) {
+      buffer.append("\n").append(res.getString("DialogToListChangesOfFiles7"));
+    }
+  }
 
-		///////////////
-		// Functions //
-		///////////////
-		tagName = "Function";
-		attrList.clear();
-		attrList.add("Name");
-		attrList.add("Descriptions");
-		attrList.add("Summary");
-		attrList.add("Parameters");
-		attrList.add("Return");
-		attrList.add("FunctionTypeID");
-		attrList.add("SubsystemID");
-		oldElementList = systemElementOld.getElementsByTagName(tagName);
-		newElementList = systemElementNew.getElementsByTagName(tagName);
-		checkIfNewElementChangedOrAdded(newElementList, oldElementList, attrList, tagName, "Name");
-		checkIfNewElementDeleted(newElementList, oldElementList, tagName, "Name");
+  void listChangesOfFunction() {
+    NodeList newElementList, oldElementList;
+    String tagName;
+    ArrayList<String> attrList = new ArrayList<>();
+    int workCount = countOfChanges;
+    buffer.append("\n\n<").append(res.getString("DialogToListChangesOfFiles14")).append(">");
 
-		////////////////////////////////////////
-		// Set message if with no differences //
-		////////////////////////////////////////
-		if (countOfChanges == workCount) {
-			buffer.append("\n").append(res.getString("DialogToListChangesOfFiles7"));
-		}
-	}
+    ///////////////
+    // Functions //
+    ///////////////
+    tagName = "Function";
+    attrList.clear();
+    attrList.add("Name");
+    attrList.add("Descriptions");
+    attrList.add("Summary");
+    attrList.add("Parameters");
+    attrList.add("Return");
+    attrList.add("FunctionTypeID");
+    attrList.add("SubsystemID");
+    oldElementList = systemElementOld.getElementsByTagName(tagName);
+    newElementList = systemElementNew.getElementsByTagName(tagName);
+    checkIfNewElementChangedOrAdded(newElementList, oldElementList, attrList, tagName, "Name");
+    checkIfNewElementDeleted(newElementList, oldElementList, tagName, "Name");
 
-	void compareNewAndOldElements(org.w3c.dom.Element elementNew, org.w3c.dom.Element elementOld, String attribute, String elementLabel) {
-		String sortKeyOld, sortKeyNew;
-		if (attribute.endsWith("ID")) {
-			sortKeyOld = getSortKeyAccordingToID(attribute, elementOld.getAttribute(attribute), systemElementOld);
-			sortKeyNew = getSortKeyAccordingToID(attribute, elementNew.getAttribute(attribute), systemElementNew);
-			if (!sortKeyNew.equals(sortKeyOld)) {
-				countOfChanges++;
-				buffer.append("\n").append(countOfChanges).append(".").append(elementLabel)
+    ////////////////////////////////////////
+    // Set message if with no differences //
+    ////////////////////////////////////////
+    if (countOfChanges == workCount) {
+      buffer.append("\n").append(res.getString("DialogToListChangesOfFiles7"));
+    }
+  }
+
+  void compareNewAndOldElements(
+      org.w3c.dom.Element elementNew,
+      org.w3c.dom.Element elementOld,
+      String attribute,
+      String elementLabel) {
+    String sortKeyOld, sortKeyNew;
+    if (attribute.endsWith("ID")) {
+      sortKeyOld =
+          getSortKeyAccordingToID(attribute, elementOld.getAttribute(attribute), systemElementOld);
+      sortKeyNew =
+          getSortKeyAccordingToID(attribute, elementNew.getAttribute(attribute), systemElementNew);
+      if (!sortKeyNew.equals(sortKeyOld)) {
+        countOfChanges++;
+        buffer
+            .append("\n")
+            .append(countOfChanges)
+            .append(".")
+            .append(elementLabel)
             .append(res.getString("DialogToListChangesOfFiles20"))
             .append(attribute.replace("ID", ""))
-            .append(res.getString("DialogToListChangesOfFiles21")).append(sortKeyOld)
-            .append(res.getString("DialogToListChangesOfFiles22")).append(sortKeyNew)
+            .append(res.getString("DialogToListChangesOfFiles21"))
+            .append(sortKeyOld)
+            .append(res.getString("DialogToListChangesOfFiles22"))
+            .append(sortKeyNew)
             .append(res.getString("DialogToListChangesOfFiles23"));
-			}
-		} else {
-			if (!elementNew.getAttribute(attribute).equals(elementOld.getAttribute(attribute))) {
-				countOfChanges++;
-				if (attribute.equals("ImageText")) {
-					buffer.append("\n").append(countOfChanges).append(".").append(elementLabel)
+      }
+    } else {
+      if (!elementNew.getAttribute(attribute).equals(elementOld.getAttribute(attribute))) {
+        countOfChanges++;
+        if (attribute.equals("ImageText")) {
+          buffer
+              .append("\n")
+              .append(countOfChanges)
+              .append(".")
+              .append(elementLabel)
               .append(res.getString("DialogToListChangesOfFiles24"));
-				} else {
-					if (attribute.equals("Descriptions")) {
-						buffer.append("\n").append(countOfChanges).append(".").append(elementLabel)
+        } else {
+          if (attribute.equals("Descriptions")) {
+            buffer
+                .append("\n")
+                .append(countOfChanges)
+                .append(".")
+                .append(elementLabel)
                 .append(res.getString("DialogToListChangesOfFiles25"));
-					} else {
-						if (attribute.equals("DatamodelDescriptions")) {
-							buffer.append("\n").append(countOfChanges).append(".").append(elementLabel)
+          } else {
+            if (attribute.equals("DatamodelDescriptions")) {
+              buffer
+                  .append("\n")
+                  .append(countOfChanges)
+                  .append(".")
+                  .append(elementLabel)
                   .append(res.getString("DialogToListChangesOfFiles26"));
-						} else {
-							if (attribute.equals("Name")) {
-								buffer.append("\n").append(countOfChanges).append(".").append(elementLabel)
+            } else {
+              if (attribute.equals("Name")) {
+                buffer
+                    .append("\n")
+                    .append(countOfChanges)
+                    .append(".")
+                    .append(elementLabel)
                     .append(res.getString("DialogToListChangesOfFiles27"))
                     .append(elementOld.getAttribute(attribute))
                     .append(res.getString("DialogToListChangesOfFiles22"))
                     .append(elementNew.getAttribute(attribute))
                     .append(res.getString("DialogToListChangesOfFiles23"));
-							} else {
-								buffer.append("\n").append(countOfChanges).append(".").append(elementLabel)
-                    .append(res.getString("DialogToListChangesOfFiles20")).append(attribute)
+              } else {
+                buffer
+                    .append("\n")
+                    .append(countOfChanges)
+                    .append(".")
+                    .append(elementLabel)
+                    .append(res.getString("DialogToListChangesOfFiles20"))
+                    .append(attribute)
                     .append(res.getString("DialogToListChangesOfFiles21"))
                     .append(elementOld.getAttribute(attribute))
                     .append(res.getString("DialogToListChangesOfFiles22"))
                     .append(elementNew.getAttribute(attribute))
                     .append(res.getString("DialogToListChangesOfFiles23"));
-							}
-						}
-					}
-				}
-			}
-		}
-	}
+              }
+            }
+          }
+        }
+      }
+    }
+  }
 
-	private String getSortKeyAccordingToID(String attribute, String id, org.w3c.dom.Element systemElement) {
-		String value = "(N/A)";
-		String tagName = "";
-		org.w3c.dom.Element element;
+  private String getSortKeyAccordingToID(
+      String attribute, String id, org.w3c.dom.Element systemElement) {
+    String value = "(N/A)";
+    String tagName = "";
+    org.w3c.dom.Element element;
 
-		if (attribute.equals("DepartmentID")) {
-			tagName = "Department";
-		}
-		if (attribute.equals("TaskTypeID")) {
-			tagName = "TaskType";
-		}
-		if (attribute.equals("RoleID")) {
-			tagName = "Role";
-		}
-		if (attribute.equals("SubsystemID")) {
-			tagName = "Subsystem";
-		}
-		if (attribute.equals("TableTypeID")) {
-			tagName = "TableType";
-		}
-		if (attribute.equals("DataTypeID")) {
-			tagName = "DataType";
-		}
-		if (attribute.equals("FunctionTypeID")) {
-			tagName = "FunctionType";
-		}
-		if (attribute.equals("TableID")) {
-			tagName = "Table";
-		}
-		if (attribute.equals("FunctionID")) {
-			tagName = "Function";
-		}
+    if (attribute.equals("DepartmentID")) {
+      tagName = "Department";
+    }
+    if (attribute.equals("TaskTypeID")) {
+      tagName = "TaskType";
+    }
+    if (attribute.equals("RoleID")) {
+      tagName = "Role";
+    }
+    if (attribute.equals("SubsystemID")) {
+      tagName = "Subsystem";
+    }
+    if (attribute.equals("TableTypeID")) {
+      tagName = "TableType";
+    }
+    if (attribute.equals("DataTypeID")) {
+      tagName = "DataType";
+    }
+    if (attribute.equals("FunctionTypeID")) {
+      tagName = "FunctionType";
+    }
+    if (attribute.equals("TableID")) {
+      tagName = "Table";
+    }
+    if (attribute.equals("FunctionID")) {
+      tagName = "Function";
+    }
 
-		NodeList elementList = systemElement.getElementsByTagName(tagName);
-		for (int i = 0; i < elementList.getLength(); i++) {
-			element = (org.w3c.dom.Element)elementList.item(i);
-			if (element.getAttribute("ID").equals(id)) {
-				value = element.getAttribute("SortKey");
-				break;
-			}
-		}
-		return value;
-	}
+    NodeList elementList = systemElement.getElementsByTagName(tagName);
+    for (int i = 0; i < elementList.getLength(); i++) {
+      element = (org.w3c.dom.Element) elementList.item(i);
+      if (element.getAttribute("ID").equals(id)) {
+        value = element.getAttribute("SortKey");
+        break;
+      }
+    }
+    return value;
+  }
 
-	void checkIfNewElementChangedOrAdded(NodeList newElementList, NodeList oldElementList, ArrayList<String> attrList, String tagName, String nameAttr) {
-		org.w3c.dom.Element newElement, oldElement;
-		boolean isNotFound;
-		String elementLabel;
-		String elementName = getElementNameAccordingToTagName(tagName);
-		for (int i = 0; i < newElementList.getLength(); i++) {
-			jProgressBar.setValue(jProgressBar.getValue() + 1);
-			jProgressBar.paintImmediately(0,0,jProgressBar.getWidth(),jProgressBar.getHeight());
-			newElement = (org.w3c.dom.Element)newElementList.item(i);
-			isNotFound = true;
-			for (int j = 0; j < oldElementList.getLength(); j++) {
-				oldElement = (org.w3c.dom.Element)oldElementList.item(j);
-				if (oldElement.getAttribute("SortKey").equals(newElement.getAttribute("SortKey"))) {
+  void checkIfNewElementChangedOrAdded(
+      NodeList newElementList,
+      NodeList oldElementList,
+      ArrayList<String> attrList,
+      String tagName,
+      String nameAttr) {
+    org.w3c.dom.Element newElement, oldElement;
+    boolean isNotFound;
+    String elementLabel;
+    String elementName = getElementNameAccordingToTagName(tagName);
+    for (int i = 0; i < newElementList.getLength(); i++) {
+      jProgressBar.setValue(jProgressBar.getValue() + 1);
+      jProgressBar.paintImmediately(0, 0, jProgressBar.getWidth(), jProgressBar.getHeight());
+      newElement = (org.w3c.dom.Element) newElementList.item(i);
+      isNotFound = true;
+      for (int j = 0; j < oldElementList.getLength(); j++) {
+        oldElement = (org.w3c.dom.Element) oldElementList.item(j);
+        if (oldElement.getAttribute("SortKey").equals(newElement.getAttribute("SortKey"))) {
           for (String s : attrList) {
-            elementLabel = elementName + res.getString("DialogToListChangesOfFiles28")
-                + newElement.getAttribute("SortKey") + " " + newElement.getAttribute(nameAttr)
-                + res.getString("DialogToListChangesOfFiles29");
+            elementLabel =
+                elementName
+                    + res.getString("DialogToListChangesOfFiles28")
+                    + newElement.getAttribute("SortKey")
+                    + " "
+                    + newElement.getAttribute(nameAttr)
+                    + res.getString("DialogToListChangesOfFiles29");
             compareNewAndOldElements(newElement, oldElement, s, elementLabel);
           }
-					isNotFound = false;
-					if (tagName.equals("SubjectArea")) {
-						checkSubjectAreaDetails(oldElement, newElement, elementName);
-					}
-					if (tagName.equals("Task")) {
-						checkTaskDetails(oldElement, newElement, elementName);
-					}
-					if (tagName.equals("Subsystem")) {
-						checkSubsystemDetails(oldElement, newElement, elementName);
-					}
-					if (tagName.equals("Table")) {
-						checkTableDetails(oldElement, newElement);
-					}
-					if (tagName.equals("Function")) {
-						checkFunctionDetails(oldElement, newElement);
-					}
-					break;
-				}
-			}
-			if (isNotFound) {
-				countOfChanges++;
-				buffer.append("\n").append(countOfChanges).append(".").append(elementName)
+          isNotFound = false;
+          if (tagName.equals("SubjectArea")) {
+            checkSubjectAreaDetails(oldElement, newElement, elementName);
+          }
+          if (tagName.equals("Task")) {
+            checkTaskDetails(oldElement, newElement, elementName);
+          }
+          if (tagName.equals("Subsystem")) {
+            checkSubsystemDetails(oldElement, newElement, elementName);
+          }
+          if (tagName.equals("Table")) {
+            checkTableDetails(oldElement, newElement);
+          }
+          if (tagName.equals("Function")) {
+            checkFunctionDetails(oldElement, newElement);
+          }
+          break;
+        }
+      }
+      if (isNotFound) {
+        countOfChanges++;
+        buffer
+            .append("\n")
+            .append(countOfChanges)
+            .append(".")
+            .append(elementName)
             .append(res.getString("DialogToListChangesOfFiles28"))
-            .append(newElement.getAttribute("SortKey")).append(" ")
+            .append(newElement.getAttribute("SortKey"))
+            .append(" ")
             .append(newElement.getAttribute(nameAttr))
             .append(res.getString("DialogToListChangesOfFiles29"))
             .append(res.getString("DialogToListChangesOfFiles30"));
-			}
-		}
-	}
+      }
+    }
+  }
 
-	void checkIfNewElementDeleted(NodeList newElementList, NodeList oldElementList, String tagName, String nameAttr) {
-		org.w3c.dom.Element newElement, oldElement;
-		boolean isNotFound;
-		String elementName = getElementNameAccordingToTagName(tagName);
-		for (int i = 0; i < oldElementList.getLength(); i++) {
-			jProgressBar.setValue(jProgressBar.getValue() + 1);
-			jProgressBar.paintImmediately(0,0,jProgressBar.getWidth(),jProgressBar.getHeight());
-			oldElement = (org.w3c.dom.Element)oldElementList.item(i);
-			isNotFound = true;
-			for (int j = 0; j < newElementList.getLength(); j++) {
-				newElement = (org.w3c.dom.Element)newElementList.item(j);
-				if (oldElement.getAttribute("SortKey").equals(newElement.getAttribute("SortKey"))) {
-					isNotFound = false;
-					break;
-				}
-			}
-			if (isNotFound) {
-				countOfChanges++;
-				buffer.append("\n").append(countOfChanges).append(".").append(elementName)
+  void checkIfNewElementDeleted(
+      NodeList newElementList, NodeList oldElementList, String tagName, String nameAttr) {
+    org.w3c.dom.Element newElement, oldElement;
+    boolean isNotFound;
+    String elementName = getElementNameAccordingToTagName(tagName);
+    for (int i = 0; i < oldElementList.getLength(); i++) {
+      jProgressBar.setValue(jProgressBar.getValue() + 1);
+      jProgressBar.paintImmediately(0, 0, jProgressBar.getWidth(), jProgressBar.getHeight());
+      oldElement = (org.w3c.dom.Element) oldElementList.item(i);
+      isNotFound = true;
+      for (int j = 0; j < newElementList.getLength(); j++) {
+        newElement = (org.w3c.dom.Element) newElementList.item(j);
+        if (oldElement.getAttribute("SortKey").equals(newElement.getAttribute("SortKey"))) {
+          isNotFound = false;
+          break;
+        }
+      }
+      if (isNotFound) {
+        countOfChanges++;
+        buffer
+            .append("\n")
+            .append(countOfChanges)
+            .append(".")
+            .append(elementName)
             .append(res.getString("DialogToListChangesOfFiles28"))
-            .append(oldElement.getAttribute("SortKey")).append(" ")
+            .append(oldElement.getAttribute("SortKey"))
+            .append(" ")
             .append(oldElement.getAttribute(nameAttr))
             .append(res.getString("DialogToListChangesOfFiles29"))
             .append(res.getString("DialogToListChangesOfFiles31"));
-			}
-		}
-	}
+      }
+    }
+  }
 
-	void checkSubjectAreaDetails(org.w3c.dom.Element oldElement, org.w3c.dom.Element newElement, String elementName) {
-		if (!oldElement.getAttribute("BoundaryPosition").equals(newElement.getAttribute("BoundaryPosition"))
-				|| !oldElement.getAttribute("BoundarySize").equals(newElement.getAttribute("BoundarySize"))) {
-			countOfChanges++;
-			buffer.append("\n").append(countOfChanges).append(".").append(elementName)
+  void checkSubjectAreaDetails(
+      org.w3c.dom.Element oldElement, org.w3c.dom.Element newElement, String elementName) {
+    if (!oldElement
+            .getAttribute("BoundaryPosition")
+            .equals(newElement.getAttribute("BoundaryPosition"))
+        || !oldElement
+            .getAttribute("BoundarySize")
+            .equals(newElement.getAttribute("BoundarySize"))) {
+      countOfChanges++;
+      buffer
+          .append("\n")
+          .append(countOfChanges)
+          .append(".")
+          .append(elementName)
           .append(res.getString("DialogToListChangesOfFiles28"))
-          .append(newElement.getAttribute("SortKey")).append(" ")
+          .append(newElement.getAttribute("SortKey"))
+          .append(" ")
           .append(newElement.getAttribute("Name"))
           .append(res.getString("DialogToListChangesOfFiles29"))
           .append(res.getString("DialogToListChangesOfFiles24"));
-		} else {
-			NodeList oldNodeList = oldElement.getElementsByTagName("DataflowNode");
-			NodeList newNodeList = newElement.getElementsByTagName("DataflowNode");
-			NodeList oldLineList = oldElement.getElementsByTagName("DataflowLine");
-			NodeList newLineList = newElement.getElementsByTagName("DataflowLine");
-			if (oldNodeList.getLength() != newNodeList.getLength()
-					|| oldLineList.getLength() != newLineList.getLength()) {
-				countOfChanges++;
-				buffer.append("\n").append(countOfChanges).append(".").append(elementName)
+    } else {
+      NodeList oldNodeList = oldElement.getElementsByTagName("DataflowNode");
+      NodeList newNodeList = newElement.getElementsByTagName("DataflowNode");
+      NodeList oldLineList = oldElement.getElementsByTagName("DataflowLine");
+      NodeList newLineList = newElement.getElementsByTagName("DataflowLine");
+      if (oldNodeList.getLength() != newNodeList.getLength()
+          || oldLineList.getLength() != newLineList.getLength()) {
+        countOfChanges++;
+        buffer
+            .append("\n")
+            .append(countOfChanges)
+            .append(".")
+            .append(elementName)
             .append(res.getString("DialogToListChangesOfFiles28"))
-            .append(newElement.getAttribute("SortKey")).append(" ")
+            .append(newElement.getAttribute("SortKey"))
+            .append(" ")
             .append(newElement.getAttribute("Name"))
             .append(res.getString("DialogToListChangesOfFiles29"))
             .append(res.getString("DialogToListChangesOfFiles24"));
-			} else {
-				if (!oldElement.isEqualNode(newElement)) {
-					countOfChanges++;
-					buffer.append("\n").append(countOfChanges).append(".").append(elementName)
+      } else {
+        if (!oldElement.isEqualNode(newElement)) {
+          countOfChanges++;
+          buffer
+              .append("\n")
+              .append(countOfChanges)
+              .append(".")
+              .append(elementName)
               .append(res.getString("DialogToListChangesOfFiles28"))
-              .append(newElement.getAttribute("SortKey")).append(" ")
+              .append(newElement.getAttribute("SortKey"))
+              .append(" ")
               .append(newElement.getAttribute("Name"))
               .append(res.getString("DialogToListChangesOfFiles29"))
               .append(res.getString("DialogToListChangesOfFiles24"));
-				}
-			}
-		}
-	}
+        }
+      }
+    }
+  }
 
-	void checkTaskDetails(org.w3c.dom.Element oldElement, org.w3c.dom.Element newElement, String elementName) {
-		NodeList oldActionList = oldElement.getElementsByTagName("TaskAction");
-		NodeList newActionList = newElement.getElementsByTagName("TaskAction");
-		if (oldActionList.getLength() != newActionList.getLength()) {
-			countOfChanges++;
-			buffer.append("\n").append(countOfChanges).append(".").append(elementName)
+  void checkTaskDetails(
+      org.w3c.dom.Element oldElement, org.w3c.dom.Element newElement, String elementName) {
+    NodeList oldActionList = oldElement.getElementsByTagName("TaskAction");
+    NodeList newActionList = newElement.getElementsByTagName("TaskAction");
+    if (oldActionList.getLength() != newActionList.getLength()) {
+      countOfChanges++;
+      buffer
+          .append("\n")
+          .append(countOfChanges)
+          .append(".")
+          .append(elementName)
           .append(res.getString("DialogToListChangesOfFiles28"))
-          .append(newElement.getAttribute("SortKey")).append(" ")
+          .append(newElement.getAttribute("SortKey"))
+          .append(" ")
           .append(newElement.getAttribute("Name"))
           .append(res.getString("DialogToListChangesOfFiles29"))
           .append(res.getString("DialogToListChangesOfFiles32"));
-		} else {
-			if (!oldElement.isEqualNode(newElement)) {
-				countOfChanges++;
-				buffer.append("\n").append(countOfChanges).append(".").append(elementName)
+    } else {
+      if (!oldElement.isEqualNode(newElement)) {
+        countOfChanges++;
+        buffer
+            .append("\n")
+            .append(countOfChanges)
+            .append(".")
+            .append(elementName)
             .append(res.getString("DialogToListChangesOfFiles28"))
-            .append(newElement.getAttribute("SortKey")).append(" ")
+            .append(newElement.getAttribute("SortKey"))
+            .append(" ")
             .append(newElement.getAttribute("Name"))
             .append(res.getString("DialogToListChangesOfFiles29"))
             .append(res.getString("DialogToListChangesOfFiles32"));
-			}
-		}
-	}
+      }
+    }
+  }
 
-	void checkSubsystemDetails(org.w3c.dom.Element oldElement, org.w3c.dom.Element newElement, String elementName) {
-		NodeList oldTableBoxList = oldElement.getElementsByTagName("SubsystemTable");
-		NodeList newTableBoxList = newElement.getElementsByTagName("SubsystemTable");
-		NodeList oldTableRelList = oldElement.getElementsByTagName("SubsystemRelationship");
-		NodeList newTableRelList = newElement.getElementsByTagName("SubsystemRelationship");
-		if (oldTableBoxList.getLength() != newTableBoxList.getLength()
-				|| oldTableRelList.getLength() != newTableRelList.getLength()) {
-			countOfChanges++;
-			buffer.append("\n").append(countOfChanges).append(".").append(elementName)
+  void checkSubsystemDetails(
+      org.w3c.dom.Element oldElement, org.w3c.dom.Element newElement, String elementName) {
+    NodeList oldTableBoxList = oldElement.getElementsByTagName("SubsystemTable");
+    NodeList newTableBoxList = newElement.getElementsByTagName("SubsystemTable");
+    NodeList oldTableRelList = oldElement.getElementsByTagName("SubsystemRelationship");
+    NodeList newTableRelList = newElement.getElementsByTagName("SubsystemRelationship");
+    if (oldTableBoxList.getLength() != newTableBoxList.getLength()
+        || oldTableRelList.getLength() != newTableRelList.getLength()) {
+      countOfChanges++;
+      buffer
+          .append("\n")
+          .append(countOfChanges)
+          .append(".")
+          .append(elementName)
           .append(res.getString("DialogToListChangesOfFiles28"))
-          .append(newElement.getAttribute("SortKey")).append(" ")
+          .append(newElement.getAttribute("SortKey"))
+          .append(" ")
           .append(newElement.getAttribute("Name"))
           .append(res.getString("DialogToListChangesOfFiles29"))
           .append(res.getString("DialogToListChangesOfFiles33"));
-		} else {
-			if (!oldElement.isEqualNode(newElement)) {
-				countOfChanges++;
-				buffer.append("\n").append(countOfChanges).append(".").append(elementName)
+    } else {
+      if (!oldElement.isEqualNode(newElement)) {
+        countOfChanges++;
+        buffer
+            .append("\n")
+            .append(countOfChanges)
+            .append(".")
+            .append(elementName)
             .append(res.getString("DialogToListChangesOfFiles28"))
-            .append(newElement.getAttribute("SortKey")).append(" ")
+            .append(newElement.getAttribute("SortKey"))
+            .append(" ")
             .append(newElement.getAttribute("Name"))
             .append(res.getString("DialogToListChangesOfFiles29"))
             .append(res.getString("DialogToListChangesOfFiles33"));
-			}
-		}
-	}
+      }
+    }
+  }
 
-	void checkTableDetails(org.w3c.dom.Element oldElement, org.w3c.dom.Element newElement) {
-		NodeList oldElementList, newElementList;
-		ArrayList<org.w3c.dom.Element> newRelList = new ArrayList<>();
-		ArrayList<org.w3c.dom.Element> oldRelList = new ArrayList<>();
-		ArrayList<String> attrList = new ArrayList<>();
-		org.w3c.dom.Element newElementWork, oldElementWork;
-		boolean isNotFound;
-		String tagName, elementName, elementLabel;
-		String tableInternalID = newElement.getAttribute("ID");
-		String tableLabel = res.getString("DialogToListChangesOfFiles10")
-					+ res.getString("DialogToListChangesOfFiles28")
-					+ newElement.getAttribute("SortKey") + " " + newElement.getAttribute("Name")
-					+ res.getString("DialogToListChangesOfFiles29");
+  void checkTableDetails(org.w3c.dom.Element oldElement, org.w3c.dom.Element newElement) {
+    NodeList oldElementList, newElementList;
+    ArrayList<org.w3c.dom.Element> newRelList = new ArrayList<>();
+    ArrayList<org.w3c.dom.Element> oldRelList = new ArrayList<>();
+    ArrayList<String> attrList = new ArrayList<>();
+    org.w3c.dom.Element newElementWork, oldElementWork;
+    boolean isNotFound;
+    String tagName, elementName, elementLabel;
+    String tableInternalID = newElement.getAttribute("ID");
+    String tableLabel =
+        res.getString("DialogToListChangesOfFiles10")
+            + res.getString("DialogToListChangesOfFiles28")
+            + newElement.getAttribute("SortKey")
+            + " "
+            + newElement.getAttribute("Name")
+            + res.getString("DialogToListChangesOfFiles29");
 
-		////////////
-		// Fields //
-		////////////
-		tagName = "TableField";
-		elementName = getElementNameAccordingToTagName(tagName);
-		attrList.clear();
-		attrList.add("Descriptions");
-		attrList.add("AttributeType");
-		attrList.add("DataTypeID");
-		attrList.add("ShowOnModel");
-		attrList.add("NotNull");
-		attrList.add("NoUpdate");
-		attrList.add("Default");
-		attrList.add("SortKey");
-		oldElementList = oldElement.getElementsByTagName(tagName);
-		newElementList = newElement.getElementsByTagName(tagName);
-		for (int i = 0; i < newElementList.getLength(); i++) {
-			newElementWork = (org.w3c.dom.Element)newElementList.item(i);
-			isNotFound = true;
-			for (int j = 0; j < oldElementList.getLength(); j++) {
-				oldElementWork = (org.w3c.dom.Element)oldElementList.item(j);
-				if (oldElementWork.getAttribute("Name").equals(newElementWork.getAttribute("Name"))
-						&& oldElementWork.getAttribute("Alias").equals(newElementWork.getAttribute("Alias"))) {
-					elementLabel = tableLabel+ res.getString("DialogToListChangesOfFiles20")
-							+ elementName + res.getString("DialogToListChangesOfFiles28")
-							+ newElementWork.getAttribute("Alias")
-							+ " " + newElementWork.getAttribute("Name")
-							+ res.getString("DialogToListChangesOfFiles29");
+    ////////////
+    // Fields //
+    ////////////
+    tagName = "TableField";
+    elementName = getElementNameAccordingToTagName(tagName);
+    attrList.clear();
+    attrList.add("Descriptions");
+    attrList.add("AttributeType");
+    attrList.add("DataTypeID");
+    attrList.add("ShowOnModel");
+    attrList.add("NotNull");
+    attrList.add("NoUpdate");
+    attrList.add("Default");
+    attrList.add("SortKey");
+    oldElementList = oldElement.getElementsByTagName(tagName);
+    newElementList = newElement.getElementsByTagName(tagName);
+    for (int i = 0; i < newElementList.getLength(); i++) {
+      newElementWork = (org.w3c.dom.Element) newElementList.item(i);
+      isNotFound = true;
+      for (int j = 0; j < oldElementList.getLength(); j++) {
+        oldElementWork = (org.w3c.dom.Element) oldElementList.item(j);
+        if (oldElementWork.getAttribute("Name").equals(newElementWork.getAttribute("Name"))
+            && oldElementWork.getAttribute("Alias").equals(newElementWork.getAttribute("Alias"))) {
+          elementLabel =
+              tableLabel
+                  + res.getString("DialogToListChangesOfFiles20")
+                  + elementName
+                  + res.getString("DialogToListChangesOfFiles28")
+                  + newElementWork.getAttribute("Alias")
+                  + " "
+                  + newElementWork.getAttribute("Name")
+                  + res.getString("DialogToListChangesOfFiles29");
           for (String s : attrList) {
             compareNewAndOldElements(newElementWork, oldElementWork, s, elementLabel);
           }
-					isNotFound = false;
-					break;
-				}
-			}
-			if (isNotFound) {
-				countOfChanges++;
-				buffer.append("\n").append(countOfChanges).append(".").append(tableLabel)
-            .append(res.getString("DialogToListChangesOfFiles20")).append(elementName)
+          isNotFound = false;
+          break;
+        }
+      }
+      if (isNotFound) {
+        countOfChanges++;
+        buffer
+            .append("\n")
+            .append(countOfChanges)
+            .append(".")
+            .append(tableLabel)
+            .append(res.getString("DialogToListChangesOfFiles20"))
+            .append(elementName)
             .append(res.getString("DialogToListChangesOfFiles28"))
-            .append(newElementWork.getAttribute("Alias")).append(" ")
+            .append(newElementWork.getAttribute("Alias"))
+            .append(" ")
             .append(newElementWork.getAttribute("Name"))
             .append(res.getString("DialogToListChangesOfFiles29"))
             .append(res.getString("DialogToListChangesOfFiles30"));
-			}
-		}
-		for (int i = 0; i < oldElementList.getLength(); i++) {
-			oldElementWork = (org.w3c.dom.Element)oldElementList.item(i);
-			isNotFound = true;
-			for (int j = 0; j < newElementList.getLength(); j++) {
-				newElementWork = (org.w3c.dom.Element)newElementList.item(j);
-				if (oldElementWork.getAttribute("Name").equals(newElementWork.getAttribute("Name"))) {
-					isNotFound = false;
-					break;
-				}
-			}
-			if (isNotFound) {
-				countOfChanges++;
-				buffer.append("\n").append(countOfChanges).append(".").append(tableLabel)
-            .append(res.getString("DialogToListChangesOfFiles20")).append(elementName)
+      }
+    }
+    for (int i = 0; i < oldElementList.getLength(); i++) {
+      oldElementWork = (org.w3c.dom.Element) oldElementList.item(i);
+      isNotFound = true;
+      for (int j = 0; j < newElementList.getLength(); j++) {
+        newElementWork = (org.w3c.dom.Element) newElementList.item(j);
+        if (oldElementWork.getAttribute("Name").equals(newElementWork.getAttribute("Name"))) {
+          isNotFound = false;
+          break;
+        }
+      }
+      if (isNotFound) {
+        countOfChanges++;
+        buffer
+            .append("\n")
+            .append(countOfChanges)
+            .append(".")
+            .append(tableLabel)
+            .append(res.getString("DialogToListChangesOfFiles20"))
+            .append(elementName)
             .append(res.getString("DialogToListChangesOfFiles28"))
-            .append(oldElementWork.getAttribute("Alias")).append(" ")
+            .append(oldElementWork.getAttribute("Alias"))
+            .append(" ")
             .append(oldElementWork.getAttribute("Name"))
             .append(res.getString("DialogToListChangesOfFiles29"))
             .append(res.getString("DialogToListChangesOfFiles31"));
-			}
-		}
+      }
+    }
 
-		//////////
-		// Keys //
-		//////////
-		tagName = "TableKey";
-		elementName = getElementNameAccordingToTagName(tagName);
-		oldElementList = oldElement.getElementsByTagName(tagName);
-		newElementList = newElement.getElementsByTagName(tagName);
-		for (int i = 0; i < newElementList.getLength(); i++) {
-			newElementWork = (org.w3c.dom.Element)newElementList.item(i);
-			isNotFound = true;
-			for (int j = 0; j < oldElementList.getLength(); j++) {
-				oldElementWork = (org.w3c.dom.Element)oldElementList.item(j);
-				if (oldElementWork.getAttribute("Type").equals(newElementWork.getAttribute("Type"))) {
-					if (oldElementWork.isEqualNode(newElementWork)) {
-						isNotFound = false;
-						break;
-					}
-				}
-			}
-			if (isNotFound) {
-				countOfChanges++;
-				buffer.append("\n").append(countOfChanges).append(".").append(tableLabel)
-            .append(res.getString("DialogToListChangesOfFiles20")).append(elementName).append("(")
-            .append(newElementWork.getAttribute("Type")).append(")")
+    //////////
+    // Keys //
+    //////////
+    tagName = "TableKey";
+    elementName = getElementNameAccordingToTagName(tagName);
+    oldElementList = oldElement.getElementsByTagName(tagName);
+    newElementList = newElement.getElementsByTagName(tagName);
+    for (int i = 0; i < newElementList.getLength(); i++) {
+      newElementWork = (org.w3c.dom.Element) newElementList.item(i);
+      isNotFound = true;
+      for (int j = 0; j < oldElementList.getLength(); j++) {
+        oldElementWork = (org.w3c.dom.Element) oldElementList.item(j);
+        if (oldElementWork.getAttribute("Type").equals(newElementWork.getAttribute("Type"))) {
+          if (oldElementWork.isEqualNode(newElementWork)) {
+            isNotFound = false;
+            break;
+          }
+        }
+      }
+      if (isNotFound) {
+        countOfChanges++;
+        buffer
+            .append("\n")
+            .append(countOfChanges)
+            .append(".")
+            .append(tableLabel)
+            .append(res.getString("DialogToListChangesOfFiles20"))
+            .append(elementName)
+            .append("(")
+            .append(newElementWork.getAttribute("Type"))
+            .append(")")
             .append(res.getString("DialogToListChangesOfFiles34"));
-			}
-		}
-		for (int i = 0; i < oldElementList.getLength(); i++) {
-			oldElementWork = (org.w3c.dom.Element)oldElementList.item(i);
-			isNotFound = true;
-			for (int j = 0; j < newElementList.getLength(); j++) {
-				newElementWork = (org.w3c.dom.Element)newElementList.item(j);
-				if (oldElementWork.getAttribute("Type").equals(newElementWork.getAttribute("Type"))) {
-					isNotFound = false;
-					break;
-				}
-			}
-			if (isNotFound) {
-				countOfChanges++;
-				buffer.append("\n").append(countOfChanges).append(".").append(tableLabel)
-            .append(res.getString("DialogToListChangesOfFiles20")).append(elementName).append("(")
-            .append(oldElementWork.getAttribute("Type")).append(")")
+      }
+    }
+    for (int i = 0; i < oldElementList.getLength(); i++) {
+      oldElementWork = (org.w3c.dom.Element) oldElementList.item(i);
+      isNotFound = true;
+      for (int j = 0; j < newElementList.getLength(); j++) {
+        newElementWork = (org.w3c.dom.Element) newElementList.item(j);
+        if (oldElementWork.getAttribute("Type").equals(newElementWork.getAttribute("Type"))) {
+          isNotFound = false;
+          break;
+        }
+      }
+      if (isNotFound) {
+        countOfChanges++;
+        buffer
+            .append("\n")
+            .append(countOfChanges)
+            .append(".")
+            .append(tableLabel)
+            .append(res.getString("DialogToListChangesOfFiles20"))
+            .append(elementName)
+            .append("(")
+            .append(oldElementWork.getAttribute("Type"))
+            .append(")")
             .append(res.getString("DialogToListChangesOfFiles31"));
-			}
-		}
+      }
+    }
 
-		///////////////////
-		// Relationships //
-		///////////////////
-		tagName = "Relationship";
-		elementName = getElementNameAccordingToTagName(tagName);
-		oldElementList = systemElementOld.getElementsByTagName(tagName);
-		newElementList = systemElementNew.getElementsByTagName(tagName);
-		for (int i = 0; i < newElementList.getLength(); i++) {
-			newElementWork = (org.w3c.dom.Element)newElementList.item(i);
-			if (newElementWork.getAttribute("Table1ID").equals(tableInternalID)
-					|| newElementWork.getAttribute("Table2ID").equals(tableInternalID)) {
-				newRelList.add(newElementWork);
-			}
-		}
-		for (int i = 0; i < oldElementList.getLength(); i++) {
-			oldElementWork = (org.w3c.dom.Element)oldElementList.item(i);
-			if (oldElementWork.getAttribute("Table1ID").equals(tableInternalID)
-					|| oldElementWork.getAttribute("Table2ID").equals(tableInternalID)) {
-				oldRelList.add(oldElementWork);
-			}
-		}
-		if (newRelList.size() != oldRelList.size()) {
-			countOfChanges++;
-			buffer.append("\n").append(countOfChanges).append(".").append(tableLabel)
-          .append(res.getString("DialogToListChangesOfFiles20")).append(elementName)
+    ///////////////////
+    // Relationships //
+    ///////////////////
+    tagName = "Relationship";
+    elementName = getElementNameAccordingToTagName(tagName);
+    oldElementList = systemElementOld.getElementsByTagName(tagName);
+    newElementList = systemElementNew.getElementsByTagName(tagName);
+    for (int i = 0; i < newElementList.getLength(); i++) {
+      newElementWork = (org.w3c.dom.Element) newElementList.item(i);
+      if (newElementWork.getAttribute("Table1ID").equals(tableInternalID)
+          || newElementWork.getAttribute("Table2ID").equals(tableInternalID)) {
+        newRelList.add(newElementWork);
+      }
+    }
+    for (int i = 0; i < oldElementList.getLength(); i++) {
+      oldElementWork = (org.w3c.dom.Element) oldElementList.item(i);
+      if (oldElementWork.getAttribute("Table1ID").equals(tableInternalID)
+          || oldElementWork.getAttribute("Table2ID").equals(tableInternalID)) {
+        oldRelList.add(oldElementWork);
+      }
+    }
+    if (newRelList.size() != oldRelList.size()) {
+      countOfChanges++;
+      buffer
+          .append("\n")
+          .append(countOfChanges)
+          .append(".")
+          .append(tableLabel)
+          .append(res.getString("DialogToListChangesOfFiles20"))
+          .append(elementName)
           .append(res.getString("DialogToListChangesOfFiles34"));
-		} else {
-			isNotFound = true;
-			for (int i = 0; i < newRelList.size(); i++) {
-				newElementWork = newRelList.get(i);
-				for (int j = 0; j < oldRelList.size(); j++) {
-					oldElementWork = oldRelList.get(i);
-					if (newElementWork.isEqualNode(oldElementWork)) {
-						isNotFound = false;
-						break;
-					}
-				}
-				if (isNotFound) {
-					countOfChanges++;
-					buffer.append("\n").append(countOfChanges).append(".").append(tableLabel)
-              .append(res.getString("DialogToListChangesOfFiles20")).append(elementName)
+    } else {
+      isNotFound = true;
+      for (int i = 0; i < newRelList.size(); i++) {
+        newElementWork = newRelList.get(i);
+        for (int j = 0; j < oldRelList.size(); j++) {
+          oldElementWork = oldRelList.get(i);
+          if (newElementWork.isEqualNode(oldElementWork)) {
+            isNotFound = false;
+            break;
+          }
+        }
+        if (isNotFound) {
+          countOfChanges++;
+          buffer
+              .append("\n")
+              .append(countOfChanges)
+              .append(".")
+              .append(tableLabel)
+              .append(res.getString("DialogToListChangesOfFiles20"))
+              .append(elementName)
               .append(res.getString("DialogToListChangesOfFiles34"));
-					break;
-				}
-			}
-		}
-	}
+          break;
+        }
+      }
+    }
+  }
 
-	void checkFunctionDetails(org.w3c.dom.Element oldElement, org.w3c.dom.Element newElement) {
-		NodeList oldElementList, newElementList, oldElementList2, newElementList2;
-		String tagName, elementName, wrkStr1, wrkStr2, tableID1, tableID2, fieldName1, fieldName2, tableCRUD1, tableCRUD2, elementLabel;
-		org.w3c.dom.Element newElementWork, oldElementWork, newElementWork2, oldElementWork2;
-		ArrayList<String> attrList = new ArrayList<>();
-		String functionLabel = res.getString("DialogToListChangesOfFiles14")
-				+ res.getString("DialogToListChangesOfFiles28")
-				+ newElement.getAttribute("SortKey") + " " + newElement.getAttribute("Name")
-				+ res.getString("DialogToListChangesOfFiles29");
-		boolean isNotFound, isNotFound2, isAnyChanged;
+  void checkFunctionDetails(org.w3c.dom.Element oldElement, org.w3c.dom.Element newElement) {
+    NodeList oldElementList, newElementList, oldElementList2, newElementList2;
+    String tagName,
+        elementName,
+        wrkStr1,
+        wrkStr2,
+        tableID1,
+        tableID2,
+        fieldName1,
+        fieldName2,
+        tableCRUD1,
+        tableCRUD2,
+        elementLabel;
+    org.w3c.dom.Element newElementWork, oldElementWork, newElementWork2, oldElementWork2;
+    ArrayList<String> attrList = new ArrayList<>();
+    String functionLabel =
+        res.getString("DialogToListChangesOfFiles14")
+            + res.getString("DialogToListChangesOfFiles28")
+            + newElement.getAttribute("SortKey")
+            + " "
+            + newElement.getAttribute("Name")
+            + res.getString("DialogToListChangesOfFiles29");
+    boolean isNotFound, isNotFound2, isAnyChanged;
 
-		////////////////////////////
-		// Functions Used By This //
-		////////////////////////////
-		tagName = "FunctionUsedByThis";
-		elementName = getElementNameAccordingToTagName(tagName);
-		oldElementList = oldElement.getElementsByTagName(tagName);
-		newElementList = newElement.getElementsByTagName(tagName);
-		for (int i = 0; i < newElementList.getLength(); i++) {
-			newElementWork = (org.w3c.dom.Element)newElementList.item(i);
-			isNotFound = true;
-			for (int j = 0; j < oldElementList.getLength(); j++) {
-				oldElementWork = (org.w3c.dom.Element)oldElementList.item(j);
-				if (oldElementWork.getAttribute("LaunchEvent").equals(newElementWork.getAttribute("LaunchEvent"))
-						&& oldElementWork.getAttribute("SortKey").equals(newElementWork.getAttribute("SortKey"))) {
-					wrkStr1 = getSortKeyAccordingToID("FunctionID", oldElementWork.getAttribute("FunctionID"), systemElementOld);
-					wrkStr2 = getSortKeyAccordingToID("FunctionID", newElementWork.getAttribute("FunctionID"), systemElementNew);
-					if (wrkStr1.equals(wrkStr2)) {
-						isNotFound = false;
-						break;
-					}
-				}
-			}
-			if (isNotFound) {
-				countOfChanges++;
-				buffer.append("\n").append(countOfChanges).append(".").append(functionLabel)
-            .append(res.getString("DialogToListChangesOfFiles20")).append(elementName)
+    ////////////////////////////
+    // Functions Used By This //
+    ////////////////////////////
+    tagName = "FunctionUsedByThis";
+    elementName = getElementNameAccordingToTagName(tagName);
+    oldElementList = oldElement.getElementsByTagName(tagName);
+    newElementList = newElement.getElementsByTagName(tagName);
+    for (int i = 0; i < newElementList.getLength(); i++) {
+      newElementWork = (org.w3c.dom.Element) newElementList.item(i);
+      isNotFound = true;
+      for (int j = 0; j < oldElementList.getLength(); j++) {
+        oldElementWork = (org.w3c.dom.Element) oldElementList.item(j);
+        if (oldElementWork
+                .getAttribute("LaunchEvent")
+                .equals(newElementWork.getAttribute("LaunchEvent"))
+            && oldElementWork
+                .getAttribute("SortKey")
+                .equals(newElementWork.getAttribute("SortKey"))) {
+          wrkStr1 =
+              getSortKeyAccordingToID(
+                  "FunctionID", oldElementWork.getAttribute("FunctionID"), systemElementOld);
+          wrkStr2 =
+              getSortKeyAccordingToID(
+                  "FunctionID", newElementWork.getAttribute("FunctionID"), systemElementNew);
+          if (wrkStr1.equals(wrkStr2)) {
+            isNotFound = false;
+            break;
+          }
+        }
+      }
+      if (isNotFound) {
+        countOfChanges++;
+        buffer
+            .append("\n")
+            .append(countOfChanges)
+            .append(".")
+            .append(functionLabel)
+            .append(res.getString("DialogToListChangesOfFiles20"))
+            .append(elementName)
             .append(res.getString("DialogToListChangesOfFiles34"));
-				break;
-			}
-		}
-		for (int i = 0; i < oldElementList.getLength(); i++) {
-			oldElementWork = (org.w3c.dom.Element)oldElementList.item(i);
-			isNotFound = true;
-			for (int j = 0; j < newElementList.getLength(); j++) {
-				newElementWork = (org.w3c.dom.Element)newElementList.item(j);
-				if (oldElementWork.getAttribute("LaunchEvent").equals(newElementWork.getAttribute("LaunchEvent"))
-						&& oldElementWork.getAttribute("SortKey").equals(newElementWork.getAttribute("SortKey"))) {
-					wrkStr1 = getSortKeyAccordingToID("FunctionID", oldElementWork.getAttribute("FunctionID"), systemElementOld);
-					wrkStr2 = getSortKeyAccordingToID("FunctionID", newElementWork.getAttribute("FunctionID"), systemElementNew);
-					if (wrkStr1.equals(wrkStr2)) {
-						isNotFound = false;
-						break;
-					}
-				}
-			}
-			if (isNotFound) {
-				countOfChanges++;
-				buffer.append("\n").append(countOfChanges).append(".").append(functionLabel)
-            .append(res.getString("DialogToListChangesOfFiles20")).append(elementName)
+        break;
+      }
+    }
+    for (int i = 0; i < oldElementList.getLength(); i++) {
+      oldElementWork = (org.w3c.dom.Element) oldElementList.item(i);
+      isNotFound = true;
+      for (int j = 0; j < newElementList.getLength(); j++) {
+        newElementWork = (org.w3c.dom.Element) newElementList.item(j);
+        if (oldElementWork
+                .getAttribute("LaunchEvent")
+                .equals(newElementWork.getAttribute("LaunchEvent"))
+            && oldElementWork
+                .getAttribute("SortKey")
+                .equals(newElementWork.getAttribute("SortKey"))) {
+          wrkStr1 =
+              getSortKeyAccordingToID(
+                  "FunctionID", oldElementWork.getAttribute("FunctionID"), systemElementOld);
+          wrkStr2 =
+              getSortKeyAccordingToID(
+                  "FunctionID", newElementWork.getAttribute("FunctionID"), systemElementNew);
+          if (wrkStr1.equals(wrkStr2)) {
+            isNotFound = false;
+            break;
+          }
+        }
+      }
+      if (isNotFound) {
+        countOfChanges++;
+        buffer
+            .append("\n")
+            .append(countOfChanges)
+            .append(".")
+            .append(functionLabel)
+            .append(res.getString("DialogToListChangesOfFiles20"))
+            .append(elementName)
             .append(res.getString("DialogToListChangesOfFiles34"));
-			}
-		}
+      }
+    }
 
-		///////////////
-		// IO Panels //
-		///////////////
-		tagName = "IOPanel";
-		attrList.clear();
-		attrList.add("Descriptions");
-		attrList.add("ImageText");
-		attrList.add("Background");
-		attrList.add("Size");
-		attrList.add("FontSize");
-		attrList.add("SortKey");
-		elementName = getElementNameAccordingToTagName(tagName);
-		oldElementList = oldElement.getElementsByTagName(tagName);
-		newElementList = newElement.getElementsByTagName(tagName);
-		for (int i = 0; i < newElementList.getLength(); i++) {
-			newElementWork = (org.w3c.dom.Element)newElementList.item(i);
-			isNotFound = true;
-			for (int j = 0; j < oldElementList.getLength(); j++) {
-				oldElementWork = (org.w3c.dom.Element)oldElementList.item(j);
-				if (oldElementWork.getAttribute("Name").equals(newElementWork.getAttribute("Name"))) {
+    ///////////////
+    // IO Panels //
+    ///////////////
+    tagName = "IOPanel";
+    attrList.clear();
+    attrList.add("Descriptions");
+    attrList.add("ImageText");
+    attrList.add("Background");
+    attrList.add("Size");
+    attrList.add("FontSize");
+    attrList.add("SortKey");
+    elementName = getElementNameAccordingToTagName(tagName);
+    oldElementList = oldElement.getElementsByTagName(tagName);
+    newElementList = newElement.getElementsByTagName(tagName);
+    for (int i = 0; i < newElementList.getLength(); i++) {
+      newElementWork = (org.w3c.dom.Element) newElementList.item(i);
+      isNotFound = true;
+      for (int j = 0; j < oldElementList.getLength(); j++) {
+        oldElementWork = (org.w3c.dom.Element) oldElementList.item(j);
+        if (oldElementWork.getAttribute("Name").equals(newElementWork.getAttribute("Name"))) {
 
-					elementLabel = functionLabel + res.getString("DialogToListChangesOfFiles20")
-							+ elementName + res.getString("DialogToListChangesOfFiles28")
-							+ newElementWork.getAttribute("Name") + res.getString("DialogToListChangesOfFiles29");
+          elementLabel =
+              functionLabel
+                  + res.getString("DialogToListChangesOfFiles20")
+                  + elementName
+                  + res.getString("DialogToListChangesOfFiles28")
+                  + newElementWork.getAttribute("Name")
+                  + res.getString("DialogToListChangesOfFiles29");
           for (String s : attrList) {
             compareNewAndOldElements(newElementWork, oldElementWork, s, elementLabel);
           }
-	
-					/////////////////////
-					// IO Panel Styles //
-					/////////////////////
-					isAnyChanged = false;
-					oldElementList2 = oldElementWork.getElementsByTagName("IOPanelStyle");
-					newElementList2 = newElementWork.getElementsByTagName("IOPanelStyle");
-					for (int m = 0; m < newElementList2.getLength(); m++) {
-						newElementWork2 = (org.w3c.dom.Element)newElementList2.item(m);
-						isNotFound2 = true;
-						for (int p = 0; p < oldElementList2.getLength(); p++) {
-							oldElementWork2 = (org.w3c.dom.Element)oldElementList2.item(p);
-							if (oldElementWork2.getAttribute("Value").equals(newElementWork2.getAttribute("Value"))) {
-								isNotFound2 = false;
-								break;
-							}
-						}
-						if (isNotFound2) {
-							isAnyChanged = true;
-							break;
-						}
-					}
-					for (int m = 0; m < oldElementList2.getLength(); m++) {
-						oldElementWork2 = (org.w3c.dom.Element)oldElementList2.item(m);
-						isNotFound2 = true;
-						for (int p = 0; p < newElementList2.getLength(); p++) {
-							newElementWork2 = (org.w3c.dom.Element)newElementList2.item(p);
-							if (oldElementWork2.getAttribute("Value").equals(newElementWork2.getAttribute("Value"))) {
-								isNotFound2 = false;
-								break;
-							}
-						}
-						if (isNotFound2) {
-							isAnyChanged = true;
-							break;
-						}
-					}
-					if (isAnyChanged) {
-						countOfChanges++;
-						buffer.append("\n").append(countOfChanges).append(".").append(elementLabel)
-                .append(res.getString("DialogToListChangesOfFiles20")).append("Style")
-                .append(res.getString("DialogToListChangesOfFiles34"));
-					}
 
-					/////////////////////
-					// IO Panel Fields //
-					/////////////////////
-					isAnyChanged = false;
-					oldElementList2 = oldElementWork.getElementsByTagName("IOPanelField");
-					newElementList2 = newElementWork.getElementsByTagName("IOPanelField");
-					for (int m = 0; m < newElementList2.getLength(); m++) {
-						newElementWork2 = (org.w3c.dom.Element)newElementList2.item(m);
-						isNotFound2 = true;
-						for (int p = 0; p < oldElementList2.getLength(); p++) {
-							oldElementWork2 = (org.w3c.dom.Element)oldElementList2.item(p);
-							if (oldElementWork2.getAttribute("Name").equals(newElementWork2.getAttribute("Name"))
-									&& oldElementWork2.getAttribute("Label").equals(newElementWork2.getAttribute("Label"))
-									&& oldElementWork2.getAttribute("IOType").equals(newElementWork2.getAttribute("IOType"))
-									&& oldElementWork2.getAttribute("Descriptions").equals(newElementWork2.getAttribute("Descriptions"))
-									&& oldElementWork2.getAttribute("SortKey").equals(newElementWork2.getAttribute("SortKey"))) {
-								isNotFound2 = false;
-								break;
-							}
-						}
-						if (isNotFound2) {
-							isAnyChanged = true;
-							break;
-						}
-					}
-					for (int m = 0; m < oldElementList2.getLength(); m++) {
-						oldElementWork2 = (org.w3c.dom.Element)oldElementList2.item(m);
-						isNotFound2 = true;
-						for (int p = 0; p < newElementList2.getLength(); p++) {
-							newElementWork2 = (org.w3c.dom.Element)newElementList2.item(p);
-							if (oldElementWork2.getAttribute("Name").equals(newElementWork2.getAttribute("Name"))
-									&& oldElementWork2.getAttribute("Label").equals(newElementWork2.getAttribute("Label"))
-									&& oldElementWork2.getAttribute("IOType").equals(newElementWork2.getAttribute("IOType"))
-									&& oldElementWork2.getAttribute("Descriptions").equals(newElementWork2.getAttribute("Descriptions"))
-									&& oldElementWork2.getAttribute("SortKey").equals(newElementWork2.getAttribute("SortKey"))) {
-								isNotFound2 = false;
-								break;
-							}
-						}
-						if (isNotFound2) {
-							isAnyChanged = true;
-							break;
-						}
-					}
-					if (isAnyChanged) {
-						countOfChanges++;
-						buffer.append("\n").append(countOfChanges).append(".").append(elementLabel)
-                .append(res.getString("DialogToListChangesOfFiles20")).append("Field")
+          /////////////////////
+          // IO Panel Styles //
+          /////////////////////
+          isAnyChanged = false;
+          oldElementList2 = oldElementWork.getElementsByTagName("IOPanelStyle");
+          newElementList2 = newElementWork.getElementsByTagName("IOPanelStyle");
+          for (int m = 0; m < newElementList2.getLength(); m++) {
+            newElementWork2 = (org.w3c.dom.Element) newElementList2.item(m);
+            isNotFound2 = true;
+            for (int p = 0; p < oldElementList2.getLength(); p++) {
+              oldElementWork2 = (org.w3c.dom.Element) oldElementList2.item(p);
+              if (oldElementWork2
+                  .getAttribute("Value")
+                  .equals(newElementWork2.getAttribute("Value"))) {
+                isNotFound2 = false;
+                break;
+              }
+            }
+            if (isNotFound2) {
+              isAnyChanged = true;
+              break;
+            }
+          }
+          for (int m = 0; m < oldElementList2.getLength(); m++) {
+            oldElementWork2 = (org.w3c.dom.Element) oldElementList2.item(m);
+            isNotFound2 = true;
+            for (int p = 0; p < newElementList2.getLength(); p++) {
+              newElementWork2 = (org.w3c.dom.Element) newElementList2.item(p);
+              if (oldElementWork2
+                  .getAttribute("Value")
+                  .equals(newElementWork2.getAttribute("Value"))) {
+                isNotFound2 = false;
+                break;
+              }
+            }
+            if (isNotFound2) {
+              isAnyChanged = true;
+              break;
+            }
+          }
+          if (isAnyChanged) {
+            countOfChanges++;
+            buffer
+                .append("\n")
+                .append(countOfChanges)
+                .append(".")
+                .append(elementLabel)
+                .append(res.getString("DialogToListChangesOfFiles20"))
+                .append("Style")
                 .append(res.getString("DialogToListChangesOfFiles34"));
-					}
+          }
 
-					isNotFound = false;
-					break;
-				}
-			}
-			if (isNotFound) {
-				countOfChanges++;
-				buffer.append("\n").append(countOfChanges).append(".").append(functionLabel)
-            .append(res.getString("DialogToListChangesOfFiles20")).append(elementName)
+          /////////////////////
+          // IO Panel Fields //
+          /////////////////////
+          isAnyChanged = false;
+          oldElementList2 = oldElementWork.getElementsByTagName("IOPanelField");
+          newElementList2 = newElementWork.getElementsByTagName("IOPanelField");
+          for (int m = 0; m < newElementList2.getLength(); m++) {
+            newElementWork2 = (org.w3c.dom.Element) newElementList2.item(m);
+            isNotFound2 = true;
+            for (int p = 0; p < oldElementList2.getLength(); p++) {
+              oldElementWork2 = (org.w3c.dom.Element) oldElementList2.item(p);
+              if (oldElementWork2.getAttribute("Name").equals(newElementWork2.getAttribute("Name"))
+                  && oldElementWork2
+                      .getAttribute("Label")
+                      .equals(newElementWork2.getAttribute("Label"))
+                  && oldElementWork2
+                      .getAttribute("IOType")
+                      .equals(newElementWork2.getAttribute("IOType"))
+                  && oldElementWork2
+                      .getAttribute("Descriptions")
+                      .equals(newElementWork2.getAttribute("Descriptions"))
+                  && oldElementWork2
+                      .getAttribute("SortKey")
+                      .equals(newElementWork2.getAttribute("SortKey"))) {
+                isNotFound2 = false;
+                break;
+              }
+            }
+            if (isNotFound2) {
+              isAnyChanged = true;
+              break;
+            }
+          }
+          for (int m = 0; m < oldElementList2.getLength(); m++) {
+            oldElementWork2 = (org.w3c.dom.Element) oldElementList2.item(m);
+            isNotFound2 = true;
+            for (int p = 0; p < newElementList2.getLength(); p++) {
+              newElementWork2 = (org.w3c.dom.Element) newElementList2.item(p);
+              if (oldElementWork2.getAttribute("Name").equals(newElementWork2.getAttribute("Name"))
+                  && oldElementWork2
+                      .getAttribute("Label")
+                      .equals(newElementWork2.getAttribute("Label"))
+                  && oldElementWork2
+                      .getAttribute("IOType")
+                      .equals(newElementWork2.getAttribute("IOType"))
+                  && oldElementWork2
+                      .getAttribute("Descriptions")
+                      .equals(newElementWork2.getAttribute("Descriptions"))
+                  && oldElementWork2
+                      .getAttribute("SortKey")
+                      .equals(newElementWork2.getAttribute("SortKey"))) {
+                isNotFound2 = false;
+                break;
+              }
+            }
+            if (isNotFound2) {
+              isAnyChanged = true;
+              break;
+            }
+          }
+          if (isAnyChanged) {
+            countOfChanges++;
+            buffer
+                .append("\n")
+                .append(countOfChanges)
+                .append(".")
+                .append(elementLabel)
+                .append(res.getString("DialogToListChangesOfFiles20"))
+                .append("Field")
+                .append(res.getString("DialogToListChangesOfFiles34"));
+          }
+
+          isNotFound = false;
+          break;
+        }
+      }
+      if (isNotFound) {
+        countOfChanges++;
+        buffer
+            .append("\n")
+            .append(countOfChanges)
+            .append(".")
+            .append(functionLabel)
+            .append(res.getString("DialogToListChangesOfFiles20"))
+            .append(elementName)
             .append(res.getString("DialogToListChangesOfFiles28"))
             .append(newElementWork.getAttribute("Name"))
             .append(res.getString("DialogToListChangesOfFiles29"))
             .append(res.getString("DialogToListChangesOfFiles30"));
-			}
-		}
-		for (int i = 0; i < oldElementList.getLength(); i++) {
-			oldElementWork = (org.w3c.dom.Element)oldElementList.item(i);
-			isNotFound = true;
-			for (int j = 0; j < newElementList.getLength(); j++) {
-				newElementWork = (org.w3c.dom.Element)newElementList.item(j);
-				if (oldElementWork.getAttribute("Name").equals(newElementWork.getAttribute("Name"))) {
-					isNotFound = false;
-					break;
-				}
-			}
-			if (isNotFound) {
-				countOfChanges++;
-				buffer.append("\n").append(countOfChanges).append(".").append(functionLabel)
-            .append(res.getString("DialogToListChangesOfFiles20")).append(elementName)
+      }
+    }
+    for (int i = 0; i < oldElementList.getLength(); i++) {
+      oldElementWork = (org.w3c.dom.Element) oldElementList.item(i);
+      isNotFound = true;
+      for (int j = 0; j < newElementList.getLength(); j++) {
+        newElementWork = (org.w3c.dom.Element) newElementList.item(j);
+        if (oldElementWork.getAttribute("Name").equals(newElementWork.getAttribute("Name"))) {
+          isNotFound = false;
+          break;
+        }
+      }
+      if (isNotFound) {
+        countOfChanges++;
+        buffer
+            .append("\n")
+            .append(countOfChanges)
+            .append(".")
+            .append(functionLabel)
+            .append(res.getString("DialogToListChangesOfFiles20"))
+            .append(elementName)
             .append(res.getString("DialogToListChangesOfFiles28"))
             .append(oldElementWork.getAttribute("Name"))
             .append(res.getString("DialogToListChangesOfFiles29"))
             .append(res.getString("DialogToListChangesOfFiles31"));
-			}
-		}
+      }
+    }
 
-		///////////////
-		// IO Spools //
-		///////////////
-		tagName = "IOSpool";
-		attrList.clear();
-		attrList.add("Descriptions");
-		attrList.add("ImageText");
-		attrList.add("Background");
-		attrList.add("Size");
-		attrList.add("FontSize");
-		attrList.add("SortKey");
-		elementName = getElementNameAccordingToTagName(tagName);
-		oldElementList = oldElement.getElementsByTagName(tagName);
-		newElementList = newElement.getElementsByTagName(tagName);
-		for (int i = 0; i < newElementList.getLength(); i++) {
-			newElementWork = (org.w3c.dom.Element)newElementList.item(i);
-			isNotFound = true;
-			for (int j = 0; j < oldElementList.getLength(); j++) {
-				oldElementWork = (org.w3c.dom.Element)oldElementList.item(j);
-				if (oldElementWork.getAttribute("Name").equals(newElementWork.getAttribute("Name"))) {
+    ///////////////
+    // IO Spools //
+    ///////////////
+    tagName = "IOSpool";
+    attrList.clear();
+    attrList.add("Descriptions");
+    attrList.add("ImageText");
+    attrList.add("Background");
+    attrList.add("Size");
+    attrList.add("FontSize");
+    attrList.add("SortKey");
+    elementName = getElementNameAccordingToTagName(tagName);
+    oldElementList = oldElement.getElementsByTagName(tagName);
+    newElementList = newElement.getElementsByTagName(tagName);
+    for (int i = 0; i < newElementList.getLength(); i++) {
+      newElementWork = (org.w3c.dom.Element) newElementList.item(i);
+      isNotFound = true;
+      for (int j = 0; j < oldElementList.getLength(); j++) {
+        oldElementWork = (org.w3c.dom.Element) oldElementList.item(j);
+        if (oldElementWork.getAttribute("Name").equals(newElementWork.getAttribute("Name"))) {
 
-					elementLabel = functionLabel + res.getString("DialogToListChangesOfFiles20")
-							+ elementName + res.getString("DialogToListChangesOfFiles28")
-							+ newElementWork.getAttribute("Name") + res.getString("DialogToListChangesOfFiles29");
+          elementLabel =
+              functionLabel
+                  + res.getString("DialogToListChangesOfFiles20")
+                  + elementName
+                  + res.getString("DialogToListChangesOfFiles28")
+                  + newElementWork.getAttribute("Name")
+                  + res.getString("DialogToListChangesOfFiles29");
           for (String s : attrList) {
             compareNewAndOldElements(newElementWork, oldElementWork, s, elementLabel);
           }
-					
-					/////////////////////
-					// IO Spool Styles //
-					/////////////////////
-					isAnyChanged = false;
-					oldElementList2 = oldElementWork.getElementsByTagName("IOSpoolStyle");
-					newElementList2 = newElementWork.getElementsByTagName("IOSpoolStyle");
-					for (int m = 0; m < newElementList2.getLength(); m++) {
-						newElementWork2 = (org.w3c.dom.Element)newElementList2.item(m);
-						isNotFound2 = true;
-						for (int p = 0; p < oldElementList2.getLength(); p++) {
-							oldElementWork2 = (org.w3c.dom.Element)oldElementList2.item(p);
-							if (oldElementWork2.getAttribute("Value").equals(newElementWork2.getAttribute("Value"))) {
-								isNotFound2 = false;
-								break;
-							}
-						}
-						if (isNotFound2) {
-							isAnyChanged = true;
-							break;
-						}
-					}
-					for (int m = 0; m < oldElementList2.getLength(); m++) {
-						oldElementWork2 = (org.w3c.dom.Element)oldElementList2.item(m);
-						isNotFound2 = true;
-						for (int p = 0; p < newElementList2.getLength(); p++) {
-							newElementWork2 = (org.w3c.dom.Element)newElementList2.item(p);
-							if (oldElementWork2.getAttribute("Value").equals(newElementWork2.getAttribute("Value"))) {
-								isNotFound2 = false;
-								break;
-							}
-						}
-						if (isNotFound2) {
-							isAnyChanged = true;
-							break;
-						}
-					}
-					if (isAnyChanged) {
-						countOfChanges++;
-						buffer.append("\n").append(countOfChanges).append(".").append(elementLabel)
-                .append(res.getString("DialogToListChangesOfFiles20")).append("Style")
-                .append(res.getString("DialogToListChangesOfFiles34"));
-					}
-					
-					/////////////////////
-					// IO Spool Fields //
-					/////////////////////
-					isAnyChanged = false;
-					oldElementList2 = oldElementWork.getElementsByTagName("IOSpoolField");
-					newElementList2 = newElementWork.getElementsByTagName("IOSpoolField");
-					for (int m = 0; m < newElementList2.getLength(); m++) {
-						newElementWork2 = (org.w3c.dom.Element)newElementList2.item(m);
-						isNotFound2 = true;
-						for (int p = 0; p < oldElementList2.getLength(); p++) {
-							oldElementWork2 = (org.w3c.dom.Element)oldElementList2.item(p);
-							if (oldElementWork2.getAttribute("Name").equals(newElementWork2.getAttribute("Name"))
-									&& oldElementWork2.getAttribute("Label").equals(newElementWork2.getAttribute("Label"))
-									&& oldElementWork2.getAttribute("Descriptions").equals(newElementWork2.getAttribute("Descriptions"))
-									&& oldElementWork2.getAttribute("SortKey").equals(newElementWork2.getAttribute("SortKey"))) {
-								isNotFound2 = false;
-								break;
-							}
-						}
-						if (isNotFound2) {
-							isAnyChanged = true;
-							break;
-						}
-					}
-					for (int m = 0; m < oldElementList2.getLength(); m++) {
-						oldElementWork2 = (org.w3c.dom.Element)oldElementList2.item(m);
-						isNotFound2 = true;
-						for (int p = 0; p < newElementList2.getLength(); p++) {
-							newElementWork2 = (org.w3c.dom.Element)newElementList2.item(p);
-							if (oldElementWork2.getAttribute("Name").equals(newElementWork2.getAttribute("Name"))
-									&& oldElementWork2.getAttribute("Label").equals(newElementWork2.getAttribute("Label"))
-									&& oldElementWork2.getAttribute("Descriptions").equals(newElementWork2.getAttribute("Descriptions"))
-									&& oldElementWork2.getAttribute("SortKey").equals(newElementWork2.getAttribute("SortKey"))) {
-								isNotFound2 = false;
-								break;
-							}
-						}
-						if (isNotFound2) {
-							isAnyChanged = true;
-							break;
-						}
-					}
-					if (isAnyChanged) {
-						countOfChanges++;
-						buffer.append("\n").append(countOfChanges).append(".").append(elementLabel)
-                .append(res.getString("DialogToListChangesOfFiles20")).append("Field")
-                .append(res.getString("DialogToListChangesOfFiles34"));
-					}
 
-					isNotFound = false;
-					break;
-				}
-			}
-			if (isNotFound) {
-				countOfChanges++;
-				buffer.append("\n").append(countOfChanges).append(".").append(functionLabel)
-            .append(res.getString("DialogToListChangesOfFiles20")).append(elementName)
+          /////////////////////
+          // IO Spool Styles //
+          /////////////////////
+          isAnyChanged = false;
+          oldElementList2 = oldElementWork.getElementsByTagName("IOSpoolStyle");
+          newElementList2 = newElementWork.getElementsByTagName("IOSpoolStyle");
+          for (int m = 0; m < newElementList2.getLength(); m++) {
+            newElementWork2 = (org.w3c.dom.Element) newElementList2.item(m);
+            isNotFound2 = true;
+            for (int p = 0; p < oldElementList2.getLength(); p++) {
+              oldElementWork2 = (org.w3c.dom.Element) oldElementList2.item(p);
+              if (oldElementWork2
+                  .getAttribute("Value")
+                  .equals(newElementWork2.getAttribute("Value"))) {
+                isNotFound2 = false;
+                break;
+              }
+            }
+            if (isNotFound2) {
+              isAnyChanged = true;
+              break;
+            }
+          }
+          for (int m = 0; m < oldElementList2.getLength(); m++) {
+            oldElementWork2 = (org.w3c.dom.Element) oldElementList2.item(m);
+            isNotFound2 = true;
+            for (int p = 0; p < newElementList2.getLength(); p++) {
+              newElementWork2 = (org.w3c.dom.Element) newElementList2.item(p);
+              if (oldElementWork2
+                  .getAttribute("Value")
+                  .equals(newElementWork2.getAttribute("Value"))) {
+                isNotFound2 = false;
+                break;
+              }
+            }
+            if (isNotFound2) {
+              isAnyChanged = true;
+              break;
+            }
+          }
+          if (isAnyChanged) {
+            countOfChanges++;
+            buffer
+                .append("\n")
+                .append(countOfChanges)
+                .append(".")
+                .append(elementLabel)
+                .append(res.getString("DialogToListChangesOfFiles20"))
+                .append("Style")
+                .append(res.getString("DialogToListChangesOfFiles34"));
+          }
+
+          /////////////////////
+          // IO Spool Fields //
+          /////////////////////
+          isAnyChanged = false;
+          oldElementList2 = oldElementWork.getElementsByTagName("IOSpoolField");
+          newElementList2 = newElementWork.getElementsByTagName("IOSpoolField");
+          for (int m = 0; m < newElementList2.getLength(); m++) {
+            newElementWork2 = (org.w3c.dom.Element) newElementList2.item(m);
+            isNotFound2 = true;
+            for (int p = 0; p < oldElementList2.getLength(); p++) {
+              oldElementWork2 = (org.w3c.dom.Element) oldElementList2.item(p);
+              if (oldElementWork2.getAttribute("Name").equals(newElementWork2.getAttribute("Name"))
+                  && oldElementWork2
+                      .getAttribute("Label")
+                      .equals(newElementWork2.getAttribute("Label"))
+                  && oldElementWork2
+                      .getAttribute("Descriptions")
+                      .equals(newElementWork2.getAttribute("Descriptions"))
+                  && oldElementWork2
+                      .getAttribute("SortKey")
+                      .equals(newElementWork2.getAttribute("SortKey"))) {
+                isNotFound2 = false;
+                break;
+              }
+            }
+            if (isNotFound2) {
+              isAnyChanged = true;
+              break;
+            }
+          }
+          for (int m = 0; m < oldElementList2.getLength(); m++) {
+            oldElementWork2 = (org.w3c.dom.Element) oldElementList2.item(m);
+            isNotFound2 = true;
+            for (int p = 0; p < newElementList2.getLength(); p++) {
+              newElementWork2 = (org.w3c.dom.Element) newElementList2.item(p);
+              if (oldElementWork2.getAttribute("Name").equals(newElementWork2.getAttribute("Name"))
+                  && oldElementWork2
+                      .getAttribute("Label")
+                      .equals(newElementWork2.getAttribute("Label"))
+                  && oldElementWork2
+                      .getAttribute("Descriptions")
+                      .equals(newElementWork2.getAttribute("Descriptions"))
+                  && oldElementWork2
+                      .getAttribute("SortKey")
+                      .equals(newElementWork2.getAttribute("SortKey"))) {
+                isNotFound2 = false;
+                break;
+              }
+            }
+            if (isNotFound2) {
+              isAnyChanged = true;
+              break;
+            }
+          }
+          if (isAnyChanged) {
+            countOfChanges++;
+            buffer
+                .append("\n")
+                .append(countOfChanges)
+                .append(".")
+                .append(elementLabel)
+                .append(res.getString("DialogToListChangesOfFiles20"))
+                .append("Field")
+                .append(res.getString("DialogToListChangesOfFiles34"));
+          }
+
+          isNotFound = false;
+          break;
+        }
+      }
+      if (isNotFound) {
+        countOfChanges++;
+        buffer
+            .append("\n")
+            .append(countOfChanges)
+            .append(".")
+            .append(functionLabel)
+            .append(res.getString("DialogToListChangesOfFiles20"))
+            .append(elementName)
             .append(res.getString("DialogToListChangesOfFiles28"))
             .append(newElementWork.getAttribute("Name"))
             .append(res.getString("DialogToListChangesOfFiles29"))
             .append(res.getString("DialogToListChangesOfFiles30"));
-			}
-		}
-		for (int i = 0; i < oldElementList.getLength(); i++) {
-			oldElementWork = (org.w3c.dom.Element)oldElementList.item(i);
-			isNotFound = true;
-			for (int j = 0; j < newElementList.getLength(); j++) {
-				newElementWork = (org.w3c.dom.Element)newElementList.item(j);
-				if (oldElementWork.getAttribute("Name").equals(newElementWork.getAttribute("Name"))) {
-					isNotFound = false;
-					break;
-				}
-			}
-			if (isNotFound) {
-				countOfChanges++;
-				buffer.append("\n").append(countOfChanges).append(".").append(functionLabel)
-            .append(res.getString("DialogToListChangesOfFiles20")).append(elementName)
+      }
+    }
+    for (int i = 0; i < oldElementList.getLength(); i++) {
+      oldElementWork = (org.w3c.dom.Element) oldElementList.item(i);
+      isNotFound = true;
+      for (int j = 0; j < newElementList.getLength(); j++) {
+        newElementWork = (org.w3c.dom.Element) newElementList.item(j);
+        if (oldElementWork.getAttribute("Name").equals(newElementWork.getAttribute("Name"))) {
+          isNotFound = false;
+          break;
+        }
+      }
+      if (isNotFound) {
+        countOfChanges++;
+        buffer
+            .append("\n")
+            .append(countOfChanges)
+            .append(".")
+            .append(functionLabel)
+            .append(res.getString("DialogToListChangesOfFiles20"))
+            .append(elementName)
             .append(res.getString("DialogToListChangesOfFiles28"))
             .append(oldElementWork.getAttribute("Name"))
             .append(res.getString("DialogToListChangesOfFiles29"))
             .append(res.getString("DialogToListChangesOfFiles31"));
-			}
-		}
+      }
+    }
 
-		//////////////////
-		// IO Web Pages //
-		//////////////////
-		tagName = "IOWebPage";
-		attrList.clear();
-		attrList.add("Descriptions");
-		attrList.add("FileName");
-		attrList.add("SortKey");
-		elementName = getElementNameAccordingToTagName(tagName);
-		oldElementList = oldElement.getElementsByTagName(tagName);
-		newElementList = newElement.getElementsByTagName(tagName);
-		for (int i = 0; i < newElementList.getLength(); i++) {
-			newElementWork = (org.w3c.dom.Element)newElementList.item(i);
-			isNotFound = true;
-			for (int j = 0; j < oldElementList.getLength(); j++) {
-				oldElementWork = (org.w3c.dom.Element)oldElementList.item(j);
-				if (oldElementWork.getAttribute("Name").equals(newElementWork.getAttribute("Name"))) {
+    //////////////////
+    // IO Web Pages //
+    //////////////////
+    tagName = "IOWebPage";
+    attrList.clear();
+    attrList.add("Descriptions");
+    attrList.add("FileName");
+    attrList.add("SortKey");
+    elementName = getElementNameAccordingToTagName(tagName);
+    oldElementList = oldElement.getElementsByTagName(tagName);
+    newElementList = newElement.getElementsByTagName(tagName);
+    for (int i = 0; i < newElementList.getLength(); i++) {
+      newElementWork = (org.w3c.dom.Element) newElementList.item(i);
+      isNotFound = true;
+      for (int j = 0; j < oldElementList.getLength(); j++) {
+        oldElementWork = (org.w3c.dom.Element) oldElementList.item(j);
+        if (oldElementWork.getAttribute("Name").equals(newElementWork.getAttribute("Name"))) {
 
-					elementLabel = functionLabel + res.getString("DialogToListChangesOfFiles20")
-							+ elementName + res.getString("DialogToListChangesOfFiles28")
-							+ newElementWork.getAttribute("Name") + res.getString("DialogToListChangesOfFiles29");
+          elementLabel =
+              functionLabel
+                  + res.getString("DialogToListChangesOfFiles20")
+                  + elementName
+                  + res.getString("DialogToListChangesOfFiles28")
+                  + newElementWork.getAttribute("Name")
+                  + res.getString("DialogToListChangesOfFiles29");
           for (String s : attrList) {
             compareNewAndOldElements(newElementWork, oldElementWork, s, elementLabel);
           }
-					
-					////////////////////////
-					// IO Web Page Fields //
-					////////////////////////
-					isAnyChanged = false;
-					oldElementList2 = oldElementWork.getElementsByTagName("IOWebPageField");
-					newElementList2 = newElementWork.getElementsByTagName("IOWebPageField");
-					for (int m = 0; m < newElementList2.getLength(); m++) {
-						newElementWork2 = (org.w3c.dom.Element)newElementList2.item(m);
-						isNotFound2 = true;
-						for (int p = 0; p < oldElementList2.getLength(); p++) {
-							oldElementWork2 = (org.w3c.dom.Element)oldElementList2.item(p);
-							if (oldElementWork2.getAttribute("Name").equals(newElementWork2.getAttribute("Name"))
-									&& oldElementWork2.getAttribute("Label").equals(newElementWork2.getAttribute("Label"))
-									&& oldElementWork2.getAttribute("IOType").equals(newElementWork2.getAttribute("IOType"))
-									&& oldElementWork2.getAttribute("Descriptions").equals(newElementWork2.getAttribute("Descriptions"))
-									&& oldElementWork2.getAttribute("SortKey").equals(newElementWork2.getAttribute("SortKey"))) {
-								isNotFound2 = false;
-								break;
-							}
-						}
-						if (isNotFound2) {
-							isAnyChanged = true;
-							break;
-						}
-					}
-					for (int m = 0; m < oldElementList2.getLength(); m++) {
-						oldElementWork2 = (org.w3c.dom.Element)oldElementList2.item(m);
-						isNotFound2 = true;
-						for (int p = 0; p < newElementList2.getLength(); p++) {
-							newElementWork2 = (org.w3c.dom.Element)newElementList2.item(p);
-							if (oldElementWork2.getAttribute("Name").equals(newElementWork2.getAttribute("Name"))
-									&& oldElementWork2.getAttribute("Label").equals(newElementWork2.getAttribute("Label"))
-									&& oldElementWork2.getAttribute("IOType").equals(newElementWork2.getAttribute("IOType"))
-									&& oldElementWork2.getAttribute("Descriptions").equals(newElementWork2.getAttribute("Descriptions"))
-									&& oldElementWork2.getAttribute("SortKey").equals(newElementWork2.getAttribute("SortKey"))) {
-								isNotFound2 = false;
-								break;
-							}
-						}
-						if (isNotFound2) {
-							isAnyChanged = true;
-							break;
-						}
-					}
-					if (isAnyChanged) {
-						countOfChanges++;
-						buffer.append("\n").append(countOfChanges).append(".").append(elementLabel)
-                .append(res.getString("DialogToListChangesOfFiles20")).append("Field")
-                .append(res.getString("DialogToListChangesOfFiles34"));
-					}
 
-					isNotFound = false;
-					break;
-				}
-			}
-			if (isNotFound) {
-				countOfChanges++;
-				buffer.append("\n").append(countOfChanges).append(".").append(functionLabel)
-            .append(res.getString("DialogToListChangesOfFiles20")).append(elementName)
+          ////////////////////////
+          // IO Web Page Fields //
+          ////////////////////////
+          isAnyChanged = false;
+          oldElementList2 = oldElementWork.getElementsByTagName("IOWebPageField");
+          newElementList2 = newElementWork.getElementsByTagName("IOWebPageField");
+          for (int m = 0; m < newElementList2.getLength(); m++) {
+            newElementWork2 = (org.w3c.dom.Element) newElementList2.item(m);
+            isNotFound2 = true;
+            for (int p = 0; p < oldElementList2.getLength(); p++) {
+              oldElementWork2 = (org.w3c.dom.Element) oldElementList2.item(p);
+              if (oldElementWork2.getAttribute("Name").equals(newElementWork2.getAttribute("Name"))
+                  && oldElementWork2
+                      .getAttribute("Label")
+                      .equals(newElementWork2.getAttribute("Label"))
+                  && oldElementWork2
+                      .getAttribute("IOType")
+                      .equals(newElementWork2.getAttribute("IOType"))
+                  && oldElementWork2
+                      .getAttribute("Descriptions")
+                      .equals(newElementWork2.getAttribute("Descriptions"))
+                  && oldElementWork2
+                      .getAttribute("SortKey")
+                      .equals(newElementWork2.getAttribute("SortKey"))) {
+                isNotFound2 = false;
+                break;
+              }
+            }
+            if (isNotFound2) {
+              isAnyChanged = true;
+              break;
+            }
+          }
+          for (int m = 0; m < oldElementList2.getLength(); m++) {
+            oldElementWork2 = (org.w3c.dom.Element) oldElementList2.item(m);
+            isNotFound2 = true;
+            for (int p = 0; p < newElementList2.getLength(); p++) {
+              newElementWork2 = (org.w3c.dom.Element) newElementList2.item(p);
+              if (oldElementWork2.getAttribute("Name").equals(newElementWork2.getAttribute("Name"))
+                  && oldElementWork2
+                      .getAttribute("Label")
+                      .equals(newElementWork2.getAttribute("Label"))
+                  && oldElementWork2
+                      .getAttribute("IOType")
+                      .equals(newElementWork2.getAttribute("IOType"))
+                  && oldElementWork2
+                      .getAttribute("Descriptions")
+                      .equals(newElementWork2.getAttribute("Descriptions"))
+                  && oldElementWork2
+                      .getAttribute("SortKey")
+                      .equals(newElementWork2.getAttribute("SortKey"))) {
+                isNotFound2 = false;
+                break;
+              }
+            }
+            if (isNotFound2) {
+              isAnyChanged = true;
+              break;
+            }
+          }
+          if (isAnyChanged) {
+            countOfChanges++;
+            buffer
+                .append("\n")
+                .append(countOfChanges)
+                .append(".")
+                .append(elementLabel)
+                .append(res.getString("DialogToListChangesOfFiles20"))
+                .append("Field")
+                .append(res.getString("DialogToListChangesOfFiles34"));
+          }
+
+          isNotFound = false;
+          break;
+        }
+      }
+      if (isNotFound) {
+        countOfChanges++;
+        buffer
+            .append("\n")
+            .append(countOfChanges)
+            .append(".")
+            .append(functionLabel)
+            .append(res.getString("DialogToListChangesOfFiles20"))
+            .append(elementName)
             .append(res.getString("DialogToListChangesOfFiles28"))
             .append(newElementWork.getAttribute("Name"))
             .append(res.getString("DialogToListChangesOfFiles29"))
             .append(res.getString("DialogToListChangesOfFiles30"));
-			}
-		}
-		for (int i = 0; i < oldElementList.getLength(); i++) {
-			oldElementWork = (org.w3c.dom.Element)oldElementList.item(i);
-			isNotFound = true;
-			for (int j = 0; j < newElementList.getLength(); j++) {
-				newElementWork = (org.w3c.dom.Element)newElementList.item(j);
-				if (oldElementWork.getAttribute("Name").equals(newElementWork.getAttribute("Name"))) {
-					isNotFound = false;
-					break;
-				}
-			}
-			if (isNotFound) {
-				countOfChanges++;
-				buffer.append("\n").append(countOfChanges).append(".").append(functionLabel)
-            .append(res.getString("DialogToListChangesOfFiles20")).append(elementName)
+      }
+    }
+    for (int i = 0; i < oldElementList.getLength(); i++) {
+      oldElementWork = (org.w3c.dom.Element) oldElementList.item(i);
+      isNotFound = true;
+      for (int j = 0; j < newElementList.getLength(); j++) {
+        newElementWork = (org.w3c.dom.Element) newElementList.item(j);
+        if (oldElementWork.getAttribute("Name").equals(newElementWork.getAttribute("Name"))) {
+          isNotFound = false;
+          break;
+        }
+      }
+      if (isNotFound) {
+        countOfChanges++;
+        buffer
+            .append("\n")
+            .append(countOfChanges)
+            .append(".")
+            .append(functionLabel)
+            .append(res.getString("DialogToListChangesOfFiles20"))
+            .append(elementName)
             .append(res.getString("DialogToListChangesOfFiles28"))
             .append(oldElementWork.getAttribute("Name"))
             .append(res.getString("DialogToListChangesOfFiles29"))
             .append(res.getString("DialogToListChangesOfFiles31"));
-			}
-		}
+      }
+    }
 
-		///////////////
-		// IO Tables //
-		///////////////
-		tagName = "IOTable";
-		attrList.clear();
-		attrList.add("Descriptions");
-		attrList.add("NameExtension");
-		attrList.add("SortKey");
-		attrList.add("Position");
-		elementName = getElementNameAccordingToTagName(tagName);
-		oldElementList = oldElement.getElementsByTagName(tagName);
-		newElementList = newElement.getElementsByTagName(tagName);
-		for (int i = 0; i < newElementList.getLength(); i++) {
-			newElementWork = (org.w3c.dom.Element)newElementList.item(i);
-			tableID1 = getSortKeyAccordingToID("TableID", newElementWork.getAttribute("TableID"), systemElementNew);
-			tableCRUD1 = getTableCRUD(newElementWork);
-			isNotFound = true;
-			for (int j = 0; j < oldElementList.getLength(); j++) {
-				oldElementWork = (org.w3c.dom.Element)oldElementList.item(j);
-				tableID2 = getSortKeyAccordingToID("TableID", oldElementWork.getAttribute("TableID"), systemElementOld);
-				tableCRUD2 = getTableCRUD(oldElementWork);
-				if (tableID1.equals(tableID2) && tableCRUD1.equals(tableCRUD2)) {
+    ///////////////
+    // IO Tables //
+    ///////////////
+    tagName = "IOTable";
+    attrList.clear();
+    attrList.add("Descriptions");
+    attrList.add("NameExtension");
+    attrList.add("SortKey");
+    attrList.add("Position");
+    elementName = getElementNameAccordingToTagName(tagName);
+    oldElementList = oldElement.getElementsByTagName(tagName);
+    newElementList = newElement.getElementsByTagName(tagName);
+    for (int i = 0; i < newElementList.getLength(); i++) {
+      newElementWork = (org.w3c.dom.Element) newElementList.item(i);
+      tableID1 =
+          getSortKeyAccordingToID(
+              "TableID", newElementWork.getAttribute("TableID"), systemElementNew);
+      tableCRUD1 = getTableCRUD(newElementWork);
+      isNotFound = true;
+      for (int j = 0; j < oldElementList.getLength(); j++) {
+        oldElementWork = (org.w3c.dom.Element) oldElementList.item(j);
+        tableID2 =
+            getSortKeyAccordingToID(
+                "TableID", oldElementWork.getAttribute("TableID"), systemElementOld);
+        tableCRUD2 = getTableCRUD(oldElementWork);
+        if (tableID1.equals(tableID2) && tableCRUD1.equals(tableCRUD2)) {
 
-					elementLabel = functionLabel + res.getString("DialogToListChangesOfFiles20")
-							+ elementName + " " + tableID1 + "(" + tableCRUD1 + ")";
+          elementLabel =
+              functionLabel
+                  + res.getString("DialogToListChangesOfFiles20")
+                  + elementName
+                  + " "
+                  + tableID1
+                  + "("
+                  + tableCRUD1
+                  + ")";
           for (String s : attrList) {
             compareNewAndOldElements(newElementWork, oldElementWork, s, elementLabel);
           }
 
-					/////////////////////
-					// IO Table Fields //
-					/////////////////////
-					oldElementList2 = oldElementWork.getElementsByTagName("IOTableField");
-					newElementList2 = newElementWork.getElementsByTagName("IOTableField");
-					for (int m = 0; m < newElementList2.getLength(); m++) {
-						newElementWork2 = (org.w3c.dom.Element)newElementList2.item(m);
-						fieldName1 = getSortKeyAccordingToID("FieldID", newElementWork2.getAttribute("FieldID"), systemElementNew);
-						isNotFound2 = true;
-						for (int p = 0; p < oldElementList2.getLength(); p++) {
-							oldElementWork2 = (org.w3c.dom.Element)oldElementList2.item(p);
-							fieldName2 = getSortKeyAccordingToID("FieldID", oldElementWork2.getAttribute("FieldID"), systemElementOld);
-							if (fieldName1.equals(fieldName2)) {
-								if (newElementWork2.getAttribute("Descriptions").equals(oldElementWork2.getAttribute("Descriptions"))) {
-									buffer.append("\n").append(countOfChanges).append(".").append(elementLabel)
+          /////////////////////
+          // IO Table Fields //
+          /////////////////////
+          oldElementList2 = oldElementWork.getElementsByTagName("IOTableField");
+          newElementList2 = newElementWork.getElementsByTagName("IOTableField");
+          for (int m = 0; m < newElementList2.getLength(); m++) {
+            newElementWork2 = (org.w3c.dom.Element) newElementList2.item(m);
+            fieldName1 =
+                getSortKeyAccordingToID(
+                    "FieldID", newElementWork2.getAttribute("FieldID"), systemElementNew);
+            isNotFound2 = true;
+            for (int p = 0; p < oldElementList2.getLength(); p++) {
+              oldElementWork2 = (org.w3c.dom.Element) oldElementList2.item(p);
+              fieldName2 =
+                  getSortKeyAccordingToID(
+                      "FieldID", oldElementWork2.getAttribute("FieldID"), systemElementOld);
+              if (fieldName1.equals(fieldName2)) {
+                if (newElementWork2
+                    .getAttribute("Descriptions")
+                    .equals(oldElementWork2.getAttribute("Descriptions"))) {
+                  buffer
+                      .append("\n")
+                      .append(countOfChanges)
+                      .append(".")
+                      .append(elementLabel)
                       .append(res.getString("DialogToListChangesOfFiles20"))
-                      .append(res.getString("DialogToListChangesOfFiles28")).append(fieldName1)
+                      .append(res.getString("DialogToListChangesOfFiles28"))
+                      .append(fieldName1)
                       .append(res.getString("DialogToListChangesOfFiles29"))
                       .append(res.getString("DialogToListChangesOfFiles34"));
-								}
-								isNotFound2 = false;
-								break;
-							}
-						}
-						if (isNotFound2) {
-							countOfChanges++;
-							buffer.append("\n").append(countOfChanges).append(".").append(elementLabel)
+                }
+                isNotFound2 = false;
+                break;
+              }
+            }
+            if (isNotFound2) {
+              countOfChanges++;
+              buffer
+                  .append("\n")
+                  .append(countOfChanges)
+                  .append(".")
+                  .append(elementLabel)
                   .append(res.getString("DialogToListChangesOfFiles20"))
-                  .append(res.getString("DialogToListChangesOfFiles28")).append(fieldName1)
+                  .append(res.getString("DialogToListChangesOfFiles28"))
+                  .append(fieldName1)
                   .append(res.getString("DialogToListChangesOfFiles29"))
                   .append(res.getString("DialogToListChangesOfFiles34"));
-							break;
-						}
-					}
-					for (int m = 0; m < oldElementList2.getLength(); m++) {
-						oldElementWork2 = (org.w3c.dom.Element)oldElementList2.item(m);
-						fieldName2 = getFieldNameAccordingToID(oldElementWork.getAttribute("TableID"), oldElementWork2.getAttribute("FieldID"), systemElementOld);
-						isNotFound2 = true;
-						for (int p = 0; p < newElementList2.getLength(); p++) {
-							newElementWork2 = (org.w3c.dom.Element)newElementList2.item(p);
-							fieldName1 = getFieldNameAccordingToID(newElementWork.getAttribute("TableID"), newElementWork2.getAttribute("FieldID"), systemElementNew);
-							if (fieldName1.equals(fieldName2)) {
-								isNotFound2 = false;
-								break;
-							}
-						}
-						if (isNotFound2) {
-							countOfChanges++;
-							buffer.append("\n").append(countOfChanges).append(".").append(elementLabel)
+              break;
+            }
+          }
+          for (int m = 0; m < oldElementList2.getLength(); m++) {
+            oldElementWork2 = (org.w3c.dom.Element) oldElementList2.item(m);
+            fieldName2 =
+                getFieldNameAccordingToID(
+                    oldElementWork.getAttribute("TableID"),
+                    oldElementWork2.getAttribute("FieldID"),
+                    systemElementOld);
+            isNotFound2 = true;
+            for (int p = 0; p < newElementList2.getLength(); p++) {
+              newElementWork2 = (org.w3c.dom.Element) newElementList2.item(p);
+              fieldName1 =
+                  getFieldNameAccordingToID(
+                      newElementWork.getAttribute("TableID"),
+                      newElementWork2.getAttribute("FieldID"),
+                      systemElementNew);
+              if (fieldName1.equals(fieldName2)) {
+                isNotFound2 = false;
+                break;
+              }
+            }
+            if (isNotFound2) {
+              countOfChanges++;
+              buffer
+                  .append("\n")
+                  .append(countOfChanges)
+                  .append(".")
+                  .append(elementLabel)
                   .append(res.getString("DialogToListChangesOfFiles20"))
-                  .append(res.getString("DialogToListChangesOfFiles28")).append(fieldName2)
+                  .append(res.getString("DialogToListChangesOfFiles28"))
+                  .append(fieldName2)
                   .append(res.getString("DialogToListChangesOfFiles29"))
                   .append(res.getString("DialogToListChangesOfFiles31"));
-							break;
-						}
-					}
-					isNotFound = false;
-					break;
-				}
-			}
-			if (isNotFound) {
-				countOfChanges++;
-				buffer.append("\n").append(countOfChanges).append(".").append(functionLabel)
-            .append(res.getString("DialogToListChangesOfFiles20")).append(elementName)
-            .append(res.getString("DialogToListChangesOfFiles28")).append(tableID1).append("(")
-            .append(tableCRUD1).append(")").append(res.getString("DialogToListChangesOfFiles29"))
+              break;
+            }
+          }
+          isNotFound = false;
+          break;
+        }
+      }
+      if (isNotFound) {
+        countOfChanges++;
+        buffer
+            .append("\n")
+            .append(countOfChanges)
+            .append(".")
+            .append(functionLabel)
+            .append(res.getString("DialogToListChangesOfFiles20"))
+            .append(elementName)
+            .append(res.getString("DialogToListChangesOfFiles28"))
+            .append(tableID1)
+            .append("(")
+            .append(tableCRUD1)
+            .append(")")
+            .append(res.getString("DialogToListChangesOfFiles29"))
             .append(res.getString("DialogToListChangesOfFiles30"));
-			}
-		}
-		for (int i = 0; i < oldElementList.getLength(); i++) {
-			oldElementWork = (org.w3c.dom.Element)oldElementList.item(i);
-			tableID2 = getSortKeyAccordingToID("TableID", oldElementWork.getAttribute("TableID"), systemElementOld);
-			tableCRUD2 = getTableCRUD(oldElementWork);
-			isNotFound = true;
-			for (int j = 0; j < newElementList.getLength(); j++) {
-				newElementWork = (org.w3c.dom.Element)newElementList.item(j);
-				tableID1 = getSortKeyAccordingToID("TableID", newElementWork.getAttribute("TableID"), systemElementNew);
-				tableCRUD1 = getTableCRUD(newElementWork);
-				if (tableID1.equals(tableID2) && tableCRUD1.equals(tableCRUD2)) {
-					isNotFound = false;
-					break;
-				}
-			}
-			if (isNotFound) {
-				countOfChanges++;
-				buffer.append("\n").append(countOfChanges).append(".").append(functionLabel)
-            .append(res.getString("DialogToListChangesOfFiles20")).append(elementName)
-            .append(res.getString("DialogToListChangesOfFiles28")).append(tableID2).append("(")
-            .append(tableCRUD2).append(")").append(res.getString("DialogToListChangesOfFiles29"))
+      }
+    }
+    for (int i = 0; i < oldElementList.getLength(); i++) {
+      oldElementWork = (org.w3c.dom.Element) oldElementList.item(i);
+      tableID2 =
+          getSortKeyAccordingToID(
+              "TableID", oldElementWork.getAttribute("TableID"), systemElementOld);
+      tableCRUD2 = getTableCRUD(oldElementWork);
+      isNotFound = true;
+      for (int j = 0; j < newElementList.getLength(); j++) {
+        newElementWork = (org.w3c.dom.Element) newElementList.item(j);
+        tableID1 =
+            getSortKeyAccordingToID(
+                "TableID", newElementWork.getAttribute("TableID"), systemElementNew);
+        tableCRUD1 = getTableCRUD(newElementWork);
+        if (tableID1.equals(tableID2) && tableCRUD1.equals(tableCRUD2)) {
+          isNotFound = false;
+          break;
+        }
+      }
+      if (isNotFound) {
+        countOfChanges++;
+        buffer
+            .append("\n")
+            .append(countOfChanges)
+            .append(".")
+            .append(functionLabel)
+            .append(res.getString("DialogToListChangesOfFiles20"))
+            .append(elementName)
+            .append(res.getString("DialogToListChangesOfFiles28"))
+            .append(tableID2)
+            .append("(")
+            .append(tableCRUD2)
+            .append(")")
+            .append(res.getString("DialogToListChangesOfFiles29"))
             .append(res.getString("DialogToListChangesOfFiles31"));
-			}
-		}
-	}
+      }
+    }
+  }
 
-	private String getTableCRUD(org.w3c.dom.Element tableIOElement) {
-		String crud = "";
-		if (tableIOElement.getAttribute("OpC").equals("+")) {
-			crud = "C";
-		}
-		if (tableIOElement.getAttribute("OpR").equals("+")) {
-			crud = crud + "R";
-		}
-		if (tableIOElement.getAttribute("OpU").equals("+")) {
-			crud = crud + "U";
-		}
-		if (tableIOElement.getAttribute("OpD").equals("+")) {
-			crud = crud + "D";
-		}
-		return crud;
-	}
+  private String getTableCRUD(org.w3c.dom.Element tableIOElement) {
+    String crud = "";
+    if (tableIOElement.getAttribute("OpC").equals("+")) {
+      crud = "C";
+    }
+    if (tableIOElement.getAttribute("OpR").equals("+")) {
+      crud = crud + "R";
+    }
+    if (tableIOElement.getAttribute("OpU").equals("+")) {
+      crud = crud + "U";
+    }
+    if (tableIOElement.getAttribute("OpD").equals("+")) {
+      crud = crud + "D";
+    }
+    return crud;
+  }
 
-	private String getFieldNameAccordingToID(String tableID, String fieldID, org.w3c.dom.Element systemElement) {
-		String value = "(N/A)";
-		org.w3c.dom.Element tableElement, fieldElement;
-		NodeList tableList = systemElement.getElementsByTagName("Table");
-		for (int i = 0; i < tableList.getLength(); i++) {
-			tableElement = (org.w3c.dom.Element)tableList.item(i);
-			if (tableElement.getAttribute("ID").equals(tableID)) {
-				NodeList fieldList = tableElement.getElementsByTagName("TableField");
-				for (int j = 0; j < fieldList.getLength(); j++) {
-					fieldElement = (org.w3c.dom.Element)fieldList.item(j);
-					if (fieldElement.getAttribute("ID").equals(fieldID)) {
-						value = fieldElement.getAttribute("Name");
-						break;
-					}
-				}
-				break;
-			}
-		}
-		return value;
-	}
+  private String getFieldNameAccordingToID(
+      String tableID, String fieldID, org.w3c.dom.Element systemElement) {
+    String value = "(N/A)";
+    org.w3c.dom.Element tableElement, fieldElement;
+    NodeList tableList = systemElement.getElementsByTagName("Table");
+    for (int i = 0; i < tableList.getLength(); i++) {
+      tableElement = (org.w3c.dom.Element) tableList.item(i);
+      if (tableElement.getAttribute("ID").equals(tableID)) {
+        NodeList fieldList = tableElement.getElementsByTagName("TableField");
+        for (int j = 0; j < fieldList.getLength(); j++) {
+          fieldElement = (org.w3c.dom.Element) fieldList.item(j);
+          if (fieldElement.getAttribute("ID").equals(fieldID)) {
+            value = fieldElement.getAttribute("Name");
+            break;
+          }
+        }
+        break;
+      }
+    }
+    return value;
+  }
 
-	private String getElementNameAccordingToTagName(String tagName) {
-		String elementName = "???";
+  private String getElementNameAccordingToTagName(String tagName) {
+    String elementName = "???";
 
-		if (tagName.equals("Department")) {
-			elementName = res.getString("S341");
-		}
-		if (tagName.equals("TaskType")) {
-			elementName = res.getString("S362");
-		}
-		if (tagName.equals("TableType")) {
-			elementName = res.getString("S477");
-		}
-		if (tagName.equals("DataType")) {
-			elementName = res.getString("S544");
-		}
-		if (tagName.equals("FunctionType")) {
-			elementName = res.getString("S417");
-		}
-		if (tagName.equals("Terms")) {
-			elementName = res.getString("S245");
-		}
-		if (tagName.equals("MaintenanceLog")) {
-			elementName = res.getString("S252");
-		}
+    if (tagName.equals("Department")) {
+      elementName = res.getString("S341");
+    }
+    if (tagName.equals("TaskType")) {
+      elementName = res.getString("S362");
+    }
+    if (tagName.equals("TableType")) {
+      elementName = res.getString("S477");
+    }
+    if (tagName.equals("DataType")) {
+      elementName = res.getString("S544");
+    }
+    if (tagName.equals("FunctionType")) {
+      elementName = res.getString("S417");
+    }
+    if (tagName.equals("Terms")) {
+      elementName = res.getString("S245");
+    }
+    if (tagName.equals("MaintenanceLog")) {
+      elementName = res.getString("S252");
+    }
 
-		if (tagName.equals("SubjectArea")) {
-			elementName = res.getString("S3385");
-		}
-		if (tagName.equals("Role")) {
-			elementName = res.getString("S339");
-		}
-		if (tagName.equals("Task")) {
-			elementName = res.getString("S359");
-		}
+    if (tagName.equals("SubjectArea")) {
+      elementName = res.getString("S3385");
+    }
+    if (tagName.equals("Role")) {
+      elementName = res.getString("S339");
+    }
+    if (tagName.equals("Task")) {
+      elementName = res.getString("S359");
+    }
 
-		if (tagName.equals("Subsystem")) {
-			elementName = res.getString("S413");
-		}
+    if (tagName.equals("Subsystem")) {
+      elementName = res.getString("S413");
+    }
 
-		if (tagName.equals("Table")) {
-			elementName = res.getString("DialogToListChangesOfFiles10");
-		}
-		if (tagName.equals("TableField")) {
-			elementName = res.getString("DialogToListChangesOfFiles11");
-		}
-		if (tagName.equals("TableKey")) {
-			elementName = res.getString("DialogToListChangesOfFiles12");
-		}
-		if (tagName.equals("Relationship")) {
-			elementName = res.getString("DialogToListChangesOfFiles13");
-		}
+    if (tagName.equals("Table")) {
+      elementName = res.getString("DialogToListChangesOfFiles10");
+    }
+    if (tagName.equals("TableField")) {
+      elementName = res.getString("DialogToListChangesOfFiles11");
+    }
+    if (tagName.equals("TableKey")) {
+      elementName = res.getString("DialogToListChangesOfFiles12");
+    }
+    if (tagName.equals("Relationship")) {
+      elementName = res.getString("DialogToListChangesOfFiles13");
+    }
 
-		if (tagName.equals("Function")) {
-			elementName = res.getString("DialogToListChangesOfFiles14");
-		}
-		if (tagName.equals("FunctionUsedByThis")) {
-			elementName = res.getString("DialogToListChangesOfFiles15");
-		}
-		if (tagName.equals("IOPanel")) {
-			elementName = res.getString("DialogToListChangesOfFiles16");
-		}
-		if (tagName.equals("IOWebPage")) {
-			elementName = res.getString("DialogToListChangesOfFiles17");
-		}
-		if (tagName.equals("IOSpool")) {
-			elementName = res.getString("DialogToListChangesOfFiles18");
-		}
-		if (tagName.equals("IOTable")) {
-			elementName = res.getString("DialogToListChangesOfFiles19");
-		}
+    if (tagName.equals("Function")) {
+      elementName = res.getString("DialogToListChangesOfFiles14");
+    }
+    if (tagName.equals("FunctionUsedByThis")) {
+      elementName = res.getString("DialogToListChangesOfFiles15");
+    }
+    if (tagName.equals("IOPanel")) {
+      elementName = res.getString("DialogToListChangesOfFiles16");
+    }
+    if (tagName.equals("IOWebPage")) {
+      elementName = res.getString("DialogToListChangesOfFiles17");
+    }
+    if (tagName.equals("IOSpool")) {
+      elementName = res.getString("DialogToListChangesOfFiles18");
+    }
+    if (tagName.equals("IOTable")) {
+      elementName = res.getString("DialogToListChangesOfFiles19");
+    }
 
-		return elementName;
-	}
+    return elementName;
+  }
 
-	void jButtonCancel_actionPerformed(ActionEvent e) {
-		this.setVisible(false);
-	}
+  void jButtonCancel_actionPerformed(ActionEvent e) {
+    this.setVisible(false);
+  }
 }
 
-class DialogToListChangesOfFiles_jButtonStart_actionAdapter implements java.awt.event.ActionListener {
-	DialogToListChangesOfFiles adaptee;
+class DialogToListChangesOfFiles_jButtonStart_actionAdapter
+    implements java.awt.event.ActionListener {
+  DialogToListChangesOfFiles adaptee;
 
-	DialogToListChangesOfFiles_jButtonStart_actionAdapter(DialogToListChangesOfFiles adaptee) {
-		this.adaptee = adaptee;
-	}
-	public void actionPerformed(ActionEvent e) {
-		adaptee.jButtonStart_actionPerformed(e);
-	}
+  DialogToListChangesOfFiles_jButtonStart_actionAdapter(DialogToListChangesOfFiles adaptee) {
+    this.adaptee = adaptee;
+  }
+
+  public void actionPerformed(ActionEvent e) {
+    adaptee.jButtonStart_actionPerformed(e);
+  }
 }
 
-class DialogToListChangesOfFiles_jButtonCancel_actionAdapter implements java.awt.event.ActionListener {
-	DialogToListChangesOfFiles adaptee;
+class DialogToListChangesOfFiles_jButtonCancel_actionAdapter
+    implements java.awt.event.ActionListener {
+  DialogToListChangesOfFiles adaptee;
 
-	DialogToListChangesOfFiles_jButtonCancel_actionAdapter(DialogToListChangesOfFiles adaptee) {
-		this.adaptee = adaptee;
-	}
-	public void actionPerformed(ActionEvent e) {
-		adaptee.jButtonCancel_actionPerformed(e);
-	}
+  DialogToListChangesOfFiles_jButtonCancel_actionAdapter(DialogToListChangesOfFiles adaptee) {
+    this.adaptee = adaptee;
+  }
+
+  public void actionPerformed(ActionEvent e) {
+    adaptee.jButtonCancel_actionPerformed(e);
+  }
 }
