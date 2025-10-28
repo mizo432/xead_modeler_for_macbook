@@ -129,18 +129,18 @@ public class Modeler extends JFrame {
   /** Main panels and labels */
   private JPanel jPanelMain;
 
-  private JPanel jPanelJumpButtons = new JPanel();
-  private GridLayout gridLayoutJumpButtons = new GridLayout();
-  private NodeJumpButton[] nodeJumpButton = new NodeJumpButton[8];
-  private JSplitPane jSplitPaneMain = new JSplitPane();
-  private JPanel jPanelTopMargin1 = new JPanel();
-  private JPanel jPanelTopMargin2 = new JPanel();
-  private JLabel jLabelSubtitle = new JLabel();
-  private JLabel jLabelChangeState = new JLabel();
-  private JProgressBar jProgressBar = new JProgressBar();
+  private final JPanel jPanelJumpButtons = new JPanel();
+  private final GridLayout gridLayoutJumpButtons = new GridLayout();
+  private final NodeJumpButton[] nodeJumpButton = new NodeJumpButton[8];
+  private final JSplitPane jSplitPaneMain = new JSplitPane();
+  private final JPanel jPanelTopMargin1 = new JPanel();
+  private final JPanel jPanelTopMargin2 = new JPanel();
+  private final JLabel jLabelSubtitle = new JLabel();
+  private final JLabel jLabelChangeState = new JLabel();
+  private final JProgressBar jProgressBar = new JProgressBar();
   private Border borderOriginal1;
-  private JPanel jPanelContentsPane = new JPanel();
-  private CardLayout cardLayoutContentsPane = new CardLayout();
+  private final JPanel jPanelContentsPane = new JPanel();
+  private final CardLayout cardLayoutContentsPane = new CardLayout();
   private long lastModifyTime = 0;
   private String applicationFolder;
   private String urlString = "";
@@ -148,97 +148,98 @@ public class Modeler extends JFrame {
   private int screenHeight = 600;
 
   /** Main Menu */
-  private JMenuBar jMenuBar = new JMenuBar();
+  private final JMenuBar jMenuBar = new JMenuBar();
 
-  private JMenu jMenuFile = new JMenu();
-  private JMenuItem jMenuItemFileNew = new JMenuItem();
-  private JMenuItem jMenuItemFileOpen = new JMenuItem();
-  private JMenuItem jMenuItemFileExit = new JMenuItem();
-  private JMenuItem jMenuItemFileSave = new JMenuItem();
-  private JMenuItem jMenuItemFileSaveAs = new JMenuItem();
-  private JMenuItem jMenuItemFilePrintFormat = new JMenuItem();
-  private JMenuItem jMenuItemFileDiff = new JMenuItem();
-  private JMenu jMenuImport = new JMenu();
-  private JMenuItem jMenuItemImportXEAD = new JMenuItem();
-  private JMenuItem jMenuItemImportRecover = new JMenuItem();
-  private JMenuItem jMenuItemImportSQL = new JMenuItem();
-  private JMenuItem jMenuItemImportXEAF = new JMenuItem();
-  private JMenu jMenuEdit = new JMenu();
-  private JMenuItem jMenuItemEditUndo = new JMenuItem();
-  private JMenuItem jMenuItemEditRedo = new JMenuItem();
-  private JMenu jMenuScan = new JMenu();
-  private JMenuItem jMenuItemScanString = new JMenuItem();
-  private JMenu jMenuScanSetBookmark = new JMenu();
-  private JMenuItem jMenuItemScanSetBookmark1 = new JMenuItem();
-  private JMenuItem jMenuItemScanSetBookmark2 = new JMenuItem();
-  private JMenuItem jMenuItemScanSetBookmark3 = new JMenuItem();
-  private JMenuItem jMenuItemScanSetBookmark4 = new JMenuItem();
-  private JMenuItem jMenuItemScanSetBookmark5 = new JMenuItem();
-  private JMenuItem jMenuItemScanSetBookmark6 = new JMenuItem();
-  private JMenuItem jMenuItemScanSetBookmark7 = new JMenuItem();
-  private JMenuItem jMenuItemScanSetBookmark8 = new JMenuItem();
-  private JMenuItem jMenuItemScanSetBookmark9 = new JMenuItem();
-  private JMenu jMenuScanJumpBookmark = new JMenu();
-  private JMenuItem jMenuItemScanJumpBookmark1 = new JMenuItem();
-  private JMenuItem jMenuItemScanJumpBookmark2 = new JMenuItem();
-  private JMenuItem jMenuItemScanJumpBookmark3 = new JMenuItem();
-  private JMenuItem jMenuItemScanJumpBookmark4 = new JMenuItem();
-  private JMenuItem jMenuItemScanJumpBookmark5 = new JMenuItem();
-  private JMenuItem jMenuItemScanJumpBookmark6 = new JMenuItem();
-  private JMenuItem jMenuItemScanJumpBookmark7 = new JMenuItem();
-  private JMenuItem jMenuItemScanJumpBookmark8 = new JMenuItem();
-  private JMenuItem jMenuItemScanJumpBookmark9 = new JMenuItem();
-  private JMenu jMenuTool = new JMenu();
-  private JMenuItem jMenuItemToolTaskList = new JMenuItem();
-  private JMenuItem jMenuItemToolTableList = new JMenuItem();
-  private JMenuItem jMenuItemToolDDLList = new JMenuItem();
-  private JMenuItem jMenuItemToolFieldList = new JMenuItem();
-  private JMenuItem jMenuItemToolFunctionList = new JMenuItem();
-  private JMenuItem jMenuItemToolNotedItemList = new JMenuItem();
-  private JMenuItem jMenuItemToolMatrixList = new JMenuItem();
+  private final JMenu jMenuFile = new JMenu();
+  private final JMenuItem jMenuItemFileNew = new JMenuItem();
+  private final JMenuItem jMenuItemFileOpen = new JMenuItem();
+  private final JMenuItem jMenuItemFileExit = new JMenuItem();
+  private final JMenuItem jMenuItemFileSave = new JMenuItem();
+  private final JMenuItem jMenuItemFileSaveAs = new JMenuItem();
+  private final JMenuItem jMenuItemFilePrintFormat = new JMenuItem();
+  private final JMenuItem jMenuItemFileDiff = new JMenuItem();
+  private final JMenu jMenuImport = new JMenu();
+  private final JMenuItem jMenuItemImportXEAD = new JMenuItem();
+  private final JMenuItem jMenuItemImportRecover = new JMenuItem();
+  private final JMenuItem jMenuItemImportSQL = new JMenuItem();
+  private final JMenuItem jMenuItemImportXEAF = new JMenuItem();
+  private final JMenu jMenuEdit = new JMenu();
+  private final JMenuItem jMenuItemEditUndo = new JMenuItem();
+  private final JMenuItem jMenuItemEditRedo = new JMenuItem();
+  private final JMenu jMenuScan = new JMenu();
+  private final JMenuItem jMenuItemScanString = new JMenuItem();
+  private final JMenu jMenuScanSetBookmark = new JMenu();
+  private final JMenuItem jMenuItemScanSetBookmark1 = new JMenuItem();
+  private final JMenuItem jMenuItemScanSetBookmark2 = new JMenuItem();
+  private final JMenuItem jMenuItemScanSetBookmark3 = new JMenuItem();
+  private final JMenuItem jMenuItemScanSetBookmark4 = new JMenuItem();
+  private final JMenuItem jMenuItemScanSetBookmark5 = new JMenuItem();
+  private final JMenuItem jMenuItemScanSetBookmark6 = new JMenuItem();
+  private final JMenuItem jMenuItemScanSetBookmark7 = new JMenuItem();
+  private final JMenuItem jMenuItemScanSetBookmark8 = new JMenuItem();
+  private final JMenuItem jMenuItemScanSetBookmark9 = new JMenuItem();
+  private final JMenu jMenuScanJumpBookmark = new JMenu();
+  private final JMenuItem jMenuItemScanJumpBookmark1 = new JMenuItem();
+  private final JMenuItem jMenuItemScanJumpBookmark2 = new JMenuItem();
+  private final JMenuItem jMenuItemScanJumpBookmark3 = new JMenuItem();
+  private final JMenuItem jMenuItemScanJumpBookmark4 = new JMenuItem();
+  private final JMenuItem jMenuItemScanJumpBookmark5 = new JMenuItem();
+  private final JMenuItem jMenuItemScanJumpBookmark6 = new JMenuItem();
+  private final JMenuItem jMenuItemScanJumpBookmark7 = new JMenuItem();
+  private final JMenuItem jMenuItemScanJumpBookmark8 = new JMenuItem();
+  private final JMenuItem jMenuItemScanJumpBookmark9 = new JMenuItem();
+  private final JMenu jMenuTool = new JMenu();
+  private final JMenuItem jMenuItemToolTaskList = new JMenuItem();
+  private final JMenuItem jMenuItemToolTableList = new JMenuItem();
+  private final JMenuItem jMenuItemToolDDLList = new JMenuItem();
+  private final JMenuItem jMenuItemToolFieldList = new JMenuItem();
+  private final JMenuItem jMenuItemToolFunctionList = new JMenuItem();
+  private final JMenuItem jMenuItemToolNotedItemList = new JMenuItem();
+  private final JMenuItem jMenuItemToolMatrixList = new JMenuItem();
 
   /** status controller to reorganize IOTables */
   // boolean isRequiredToReorganizeIOTable = false;
-  private JMenuItem jMenuItemToolCreateTableStatement = new JMenuItem();
+  private final JMenuItem jMenuItemToolCreateTableStatement = new JMenuItem();
 
-  private JMenuItem jMenuItemToolDocuments = new JMenuItem();
-  private JMenuItem jMenuItemToolReorganizeDataTypes = new JMenuItem();
-  private JMenuItem jMenuItemToolJumpToURLPage = new JMenuItem();
-  private JMenu jMenuHelp = new JMenu();
-  private JMenuItem jMenuItemHelpHelp = new JMenuItem();
-  private JMenuItem jMenuItemHelpAbout = new JMenuItem();
-  private HashMap<String, org.w3c.dom.Document> synchFileMap = new HashMap<>();
-  private ArrayList<String> referringFileNameList = new ArrayList<>();
-  private ArrayList<org.w3c.dom.Document> referringFileDocList = new ArrayList<>();
+  private final JMenuItem jMenuItemToolDocuments = new JMenuItem();
+  private final JMenuItem jMenuItemToolReorganizeDataTypes = new JMenuItem();
+  private final JMenuItem jMenuItemToolJumpToURLPage = new JMenuItem();
+  private final JMenu jMenuHelp = new JMenu();
+  private final JMenuItem jMenuItemHelpHelp = new JMenuItem();
+  private final JMenuItem jMenuItemHelpAbout = new JMenuItem();
+  private final HashMap<String, org.w3c.dom.Document> synchFileMap = new HashMap<>();
+  private final ArrayList<String> referringFileNameList = new ArrayList<>();
+  private final ArrayList<org.w3c.dom.Document> referringFileDocList = new ArrayList<>();
 
   /** Variants for Properties */
-  private Properties properties = new Properties();
+  private final Properties properties = new Properties();
 
   /** Main undo manager */
-  private XeadUndoManager xeadUndoManager = new XeadUndoManager();
+  private final XeadUndoManager xeadUndoManager = new XeadUndoManager();
 
   /** sorter for general use */
-  private SortableXeadTreeNodeListModel sortableXeadTreeNodeListModel =
+  private final SortableXeadTreeNodeListModel sortableXeadTreeNodeListModel =
       new SortableXeadTreeNodeListModel();
 
-  private SortableDomElementFieldListModel sortableDomElementFieldListModel =
+  private final SortableDomElementFieldListModel sortableDomElementFieldListModel =
       new SortableDomElementFieldListModel();
 
   /** fields for style processing for JTextpane */
-  private ArrayList<String> styledDocumentCopiedTextList = new ArrayList<>();
+  private final ArrayList<String> styledDocumentCopiedTextList = new ArrayList<>();
 
-  private ArrayList<DefaultStyledDocument> styledDocumentCopiedSegmentList = new ArrayList<>();
-  private ChangeState changeState = new ChangeState();
+  private final ArrayList<DefaultStyledDocument> styledDocumentCopiedSegmentList =
+      new ArrayList<>();
+  private final ChangeState changeState = new ChangeState();
 
   /** Dialog box and fileChooser for general use */
-  private JFileChooser jFileChooser = new JFileChooser();
+  private final JFileChooser jFileChooser = new JFileChooser();
 
   /** common used storage for copy/paste operation */
   private boolean inBlockSelectMode = false;
 
   private Point blockSelectPointFrom = new Point();
   private Point blockSelectPointThru = new Point();
-  private Rectangle blockSelectRec = new Rectangle(0, 0, 0, 0);
+  private final Rectangle blockSelectRec = new Rectangle(0, 0, 0, 0);
   private Graphics savedImage = null;
   private org.w3c.dom.Element pastingDomElement = null;
 
@@ -259,7 +260,7 @@ public class Modeler extends JFrame {
   private DialogToListChangesOfFiles dialogToListChangesOfFiles;
 
   /** Print Controller */
-  private XeadPagePainter painter = new XeadPagePainter();
+  private final XeadPagePainter painter = new XeadPagePainter();
 
   private PrinterJob printerJob;
   private PageFormat pageFormat;
@@ -307,10 +308,10 @@ public class Modeler extends JFrame {
   private ImageIcon imageIconBook;
 
   /** Main TreeView */
-  private JScrollPane jScrollPaneTreeView = new JScrollPane();
+  private final JScrollPane jScrollPaneTreeView = new JScrollPane();
 
-  private CustomTreeRenderer customTreeRenderer = new CustomTreeRenderer();
-  private JTree jTreeMain = new JTree();
+  private final CustomTreeRenderer customTreeRenderer = new CustomTreeRenderer();
+  private final JTree jTreeMain = new JTree();
   private DefaultTreeModel treeModel;
   private XeadTreeNode previousMainTreeNode, dragSourceMainTreeNode;
   private XeadTreeNode bookmarkedNode1,
@@ -326,64 +327,64 @@ public class Modeler extends JFrame {
   private XeadTreeNode currentTaskActionTreeNode, previousTaskActionTreeNode;
 
   /** PopupMenu for editing XeadTreeNode */
-  private JPopupMenu jPopupMenuXeadTreeNode = new JPopupMenu();
+  private final JPopupMenu jPopupMenuXeadTreeNode = new JPopupMenu();
 
-  private JMenuItem jMenuItemXeadTreeNodeAdd = new JMenuItem();
-  private JMenuItem jMenuItemXeadTreeNodeAddList = new JMenuItem();
-  private JMenuItem jMenuItemXeadTreeNodeCopy = new JMenuItem();
-  private JMenuItem jMenuItemXeadTreeNodeCut = new JMenuItem();
-  private JMenuItem jMenuItemXeadTreeNodePaste = new JMenuItem();
-  private JMenuItem jMenuItemXeadTreeNodeDelete = new JMenuItem();
-  private JMenu jMenuXeadTreeNodeAdd = new JMenu();
-  private JMenuItem jMenuItemXeadTreeNodeAddIOPanel = new JMenuItem();
-  private JMenuItem jMenuItemXeadTreeNodeAddIOSpool = new JMenuItem();
-  private JMenuItem jMenuItemXeadTreeNodeAddIOWebPage = new JMenuItem();
-  private JMenuItem jMenuItemXeadTreeNodeAddFK = new JMenuItem();
-  private JMenuItem jMenuItemXeadTreeNodeAddSK = new JMenuItem();
-  private JMenuItem jMenuItemXeadTreeNodeAddIndex = new JMenuItem();
+  private final JMenuItem jMenuItemXeadTreeNodeAdd = new JMenuItem();
+  private final JMenuItem jMenuItemXeadTreeNodeAddList = new JMenuItem();
+  private final JMenuItem jMenuItemXeadTreeNodeCopy = new JMenuItem();
+  private final JMenuItem jMenuItemXeadTreeNodeCut = new JMenuItem();
+  private final JMenuItem jMenuItemXeadTreeNodePaste = new JMenuItem();
+  private final JMenuItem jMenuItemXeadTreeNodeDelete = new JMenuItem();
+  private final JMenu jMenuXeadTreeNodeAdd = new JMenu();
+  private final JMenuItem jMenuItemXeadTreeNodeAddIOPanel = new JMenuItem();
+  private final JMenuItem jMenuItemXeadTreeNodeAddIOSpool = new JMenuItem();
+  private final JMenuItem jMenuItemXeadTreeNodeAddIOWebPage = new JMenuItem();
+  private final JMenuItem jMenuItemXeadTreeNodeAddFK = new JMenuItem();
+  private final JMenuItem jMenuItemXeadTreeNodeAddSK = new JMenuItem();
+  private final JMenuItem jMenuItemXeadTreeNodeAddIndex = new JMenuItem();
 
   /** PopupMenu for Contents Pane Components */
-  private JPopupMenu jPopupMenuComponent = new JPopupMenu();
+  private final JPopupMenu jPopupMenuComponent = new JPopupMenu();
 
-  private JMenuItem jMenuItemComponentToAdd = new JMenuItem();
-  private JMenuItem jMenuItemComponentToAddIOPanel = new JMenuItem();
-  private JMenuItem jMenuItemComponentToAddIOSpool = new JMenuItem();
-  private JMenuItem jMenuItemComponentToAddIOWebPage = new JMenuItem();
-  private JMenuItem jMenuItemComponentToAddFK = new JMenuItem();
-  private JMenuItem jMenuItemComponentToAddSK = new JMenuItem();
-  private JMenuItem jMenuItemComponentToAddIndex = new JMenuItem();
-  private JMenuItem jMenuItemComponentToSetAscDesc = new JMenuItem();
-  private JMenuItem jMenuItemComponentToCopy = new JMenuItem();
-  private JMenuItem jMenuItemComponentToPaste = new JMenuItem();
-  private JMenuItem jMenuItemComponentToDelete = new JMenuItem();
-  private JMenuItem jMenuItemComponentToRemove = new JMenuItem();
-  private JMenuItem jMenuItemComponentToMoveUp = new JMenuItem();
-  private JMenuItem jMenuItemComponentToMoveDown = new JMenuItem();
-  private JMenuItem jMenuItemComponentToMoveLeft = new JMenuItem();
-  private JMenuItem jMenuItemComponentToMoveRight = new JMenuItem();
-  private JMenuItem jMenuItemComponentToJump = new JMenuItem();
-  private JMenuItem jMenuItemComponentToStartSlideShow = new JMenuItem();
-  private JMenuItem jMenuItemComponentToShowInstance = new JMenuItem();
-  private JMenuItem jMenuItemComponentToShowSlideNumber = new JMenuItem();
-  private JMenuItem jMenuItemComponentToAlignTables = new JMenuItem();
-  private JMenuItem jMenuItemComponentToConfigColors = new JMenuItem();
-  private JMenuItem jMenuItemComponentToCaptureImage = new JMenuItem();
-  private JMenuItem jMenuItemComponentToShowTips = new JMenuItem();
-  private JMenuItem jMenuItemComponentToWriteCSV = new JMenuItem();
-  private JMenuItem jMenuItemComponentToPrintImage = new JMenuItem();
-  private JMenuItem jMenuItemComponentToSetIOWebPage = new JMenuItem();
+  private final JMenuItem jMenuItemComponentToAdd = new JMenuItem();
+  private final JMenuItem jMenuItemComponentToAddIOPanel = new JMenuItem();
+  private final JMenuItem jMenuItemComponentToAddIOSpool = new JMenuItem();
+  private final JMenuItem jMenuItemComponentToAddIOWebPage = new JMenuItem();
+  private final JMenuItem jMenuItemComponentToAddFK = new JMenuItem();
+  private final JMenuItem jMenuItemComponentToAddSK = new JMenuItem();
+  private final JMenuItem jMenuItemComponentToAddIndex = new JMenuItem();
+  private final JMenuItem jMenuItemComponentToSetAscDesc = new JMenuItem();
+  private final JMenuItem jMenuItemComponentToCopy = new JMenuItem();
+  private final JMenuItem jMenuItemComponentToPaste = new JMenuItem();
+  private final JMenuItem jMenuItemComponentToDelete = new JMenuItem();
+  private final JMenuItem jMenuItemComponentToRemove = new JMenuItem();
+  private final JMenuItem jMenuItemComponentToMoveUp = new JMenuItem();
+  private final JMenuItem jMenuItemComponentToMoveDown = new JMenuItem();
+  private final JMenuItem jMenuItemComponentToMoveLeft = new JMenuItem();
+  private final JMenuItem jMenuItemComponentToMoveRight = new JMenuItem();
+  private final JMenuItem jMenuItemComponentToJump = new JMenuItem();
+  private final JMenuItem jMenuItemComponentToStartSlideShow = new JMenuItem();
+  private final JMenuItem jMenuItemComponentToShowInstance = new JMenuItem();
+  private final JMenuItem jMenuItemComponentToShowSlideNumber = new JMenuItem();
+  private final JMenuItem jMenuItemComponentToAlignTables = new JMenuItem();
+  private final JMenuItem jMenuItemComponentToConfigColors = new JMenuItem();
+  private final JMenuItem jMenuItemComponentToCaptureImage = new JMenuItem();
+  private final JMenuItem jMenuItemComponentToShowTips = new JMenuItem();
+  private final JMenuItem jMenuItemComponentToWriteCSV = new JMenuItem();
+  private final JMenuItem jMenuItemComponentToPrintImage = new JMenuItem();
+  private final JMenuItem jMenuItemComponentToSetIOWebPage = new JMenuItem();
   private String componentType_jPopupMenuComponent = "";
 
   /** components for JTables */
-  private DefaultTableCellRenderer rendererAlignmentCenter = new DefaultTableCellRenderer();
+  private final DefaultTableCellRenderer rendererAlignmentCenter = new DefaultTableCellRenderer();
 
-  private DefaultTableCellRenderer rendererAlignmentRight = new DefaultTableCellRenderer();
-  private DefaultTableCellRenderer rendererAlignmentLeft = new DefaultTableCellRenderer();
-  private DefaultTableCellRenderer rendererAlignmentCenterControlColor =
+  private final DefaultTableCellRenderer rendererAlignmentRight = new DefaultTableCellRenderer();
+  private final DefaultTableCellRenderer rendererAlignmentLeft = new DefaultTableCellRenderer();
+  private final DefaultTableCellRenderer rendererAlignmentCenterControlColor =
       new DefaultTableCellRenderer();
-  private DefaultTableCellRenderer rendererAlignmentRightControlColor =
+  private final DefaultTableCellRenderer rendererAlignmentRightControlColor =
       new DefaultTableCellRenderer();
-  private DefaultTableCellRenderer rendererAlignmentLeftControlColor =
+  private final DefaultTableCellRenderer rendererAlignmentLeftControlColor =
       new DefaultTableCellRenderer();
   private DefaultTableCellRenderer rendererTableHeader = null;
   private TableColumn column0,
@@ -403,7 +404,7 @@ public class Modeler extends JFrame {
       columnE;
 
   /** customized key-map for text component */
-  private JTextComponent.KeyBinding[] customBindings = {
+  private final JTextComponent.KeyBinding[] customBindings = {
     new JTextComponent.KeyBinding(
         KeyStroke.getKeyStroke("ctrl B"), DefaultEditorKit.defaultKeyTypedAction),
     new JTextComponent.KeyBinding(
@@ -417,204 +418,207 @@ public class Modeler extends JFrame {
   };
 
   /** Definition components for selection of elements of ERD and DFD */
-  private JPanel jPanelSelectionGuide = new JPanel();
+  private final JPanel jPanelSelectionGuide = new JPanel();
 
   private Point pointOfSelecterFrom = new Point();
 
   /** Definition components on jPanelSystem */
-  private JPanel jPanelSystem = new JPanel();
+  private final JPanel jPanelSystem = new JPanel();
 
-  private JPanel jPanelSystem6 = new JPanel();
-  private JLabel jLabelSystemName = new JLabel();
-  private KanjiTextField jTextFieldSystemName = new KanjiTextField();
-  private JLabel jLabelSystemVersion = new JLabel();
-  private JTextField jTextFieldSystemVersion = new JTextField();
-  private JLabel jLabelSystemReferingModelFiles = new JLabel();
-  private JTextField jTextFieldSystemReferingModelFiles = new JTextField();
-  private JTabbedPane jTabbedPaneSystem = new JTabbedPane();
-  private JScrollPane jScrollPaneSystemDescriptions = new JScrollPane();
-  private KanjiTextArea jTextAreaSystemDescriptions = new KanjiTextArea();
+  private final JPanel jPanelSystem6 = new JPanel();
+  private final JLabel jLabelSystemName = new JLabel();
+  private final KanjiTextField jTextFieldSystemName = new KanjiTextField();
+  private final JLabel jLabelSystemVersion = new JLabel();
+  private final JTextField jTextFieldSystemVersion = new JTextField();
+  private final JLabel jLabelSystemReferingModelFiles = new JLabel();
+  private final JTextField jTextFieldSystemReferingModelFiles = new JTextField();
+  private final JTabbedPane jTabbedPaneSystem = new JTabbedPane();
+  private final JScrollPane jScrollPaneSystemDescriptions = new JScrollPane();
+  private final KanjiTextArea jTextAreaSystemDescriptions = new KanjiTextArea();
   private int previousSelectedIndex_jTabbedPaneSystem = 0;
   // (SystemDepartmentList)//
   private boolean tableSystemDepartmentListSelectChangeActivated = false;
   private int selectedRow_jTableSystemDepartmentList;
-  private JSplitPane jSplitPaneSystemDepartment = new JSplitPane();
-  private JScrollPane jScrollPaneSystemDepartmentList = new JScrollPane();
-  private TableModelReadOnlyList tableModelSystemDepartmentList = new TableModelReadOnlyList();
-  private JTable jTableSystemDepartmentList = new JTable(tableModelSystemDepartmentList);
-  private JPanel jPanelSystemDepartment = new JPanel();
-  private JPanel jPanelSystemDepartment1 = new JPanel();
-  private JScrollPane jScrollPaneSystemDepartmentWhereUsedList = new JScrollPane();
-  private JLabel jLabelSystemDepartmentName = new JLabel();
-  private KanjiTextField jTextFieldSystemDepartmentName = new KanjiTextField();
-  private JLabel jLabelSystemDepartmentSortKey = new JLabel();
-  private JTextField jTextFieldSystemDepartmentSortKey = new JTextField();
-  private JLabel jLabelSystemDepartmentDescriptions = new JLabel();
-  private JScrollPane jScrollPaneSystemDepartmentDescriptions = new JScrollPane();
-  private KanjiTextArea jTextAreaSystemDepartmentDescriptions = new KanjiTextArea();
-  private TableModelReadOnlyList tableModelSystemDepartmentWhereUsedList =
+  private final JSplitPane jSplitPaneSystemDepartment = new JSplitPane();
+  private final JScrollPane jScrollPaneSystemDepartmentList = new JScrollPane();
+  private final TableModelReadOnlyList tableModelSystemDepartmentList =
       new TableModelReadOnlyList();
-  private JTable jTableSystemDepartmentWhereUsedList =
+  private final JTable jTableSystemDepartmentList = new JTable(tableModelSystemDepartmentList);
+  private final JPanel jPanelSystemDepartment = new JPanel();
+  private final JPanel jPanelSystemDepartment1 = new JPanel();
+  private final JScrollPane jScrollPaneSystemDepartmentWhereUsedList = new JScrollPane();
+  private final JLabel jLabelSystemDepartmentName = new JLabel();
+  private final KanjiTextField jTextFieldSystemDepartmentName = new KanjiTextField();
+  private final JLabel jLabelSystemDepartmentSortKey = new JLabel();
+  private final JTextField jTextFieldSystemDepartmentSortKey = new JTextField();
+  private final JLabel jLabelSystemDepartmentDescriptions = new JLabel();
+  private final JScrollPane jScrollPaneSystemDepartmentDescriptions = new JScrollPane();
+  private final KanjiTextArea jTextAreaSystemDepartmentDescriptions = new KanjiTextArea();
+  private final TableModelReadOnlyList tableModelSystemDepartmentWhereUsedList =
+      new TableModelReadOnlyList();
+  private final JTable jTableSystemDepartmentWhereUsedList =
       new JTable(tableModelSystemDepartmentWhereUsedList);
   // (SystemTaskTypeList)//
   private boolean tableSystemTaskTypeListSelectChangeActivated = false;
   private int selectedRow_jTableSystemTaskTypeList;
-  private JSplitPane jSplitPaneSystemTaskType = new JSplitPane();
-  private JScrollPane jScrollPaneSystemTaskTypeList = new JScrollPane();
-  private TableModelReadOnlyList tableModelSystemTaskTypeList = new TableModelReadOnlyList();
-  private JTable jTableSystemTaskTypeList = new JTable(tableModelSystemTaskTypeList);
-  private JPanel jPanelSystemTaskType = new JPanel();
-  private JPanel jPanelSystemTaskType1 = new JPanel();
-  private JScrollPane jScrollPaneSystemTaskTypeWhereUsedList = new JScrollPane();
-  private JLabel jLabelSystemTaskTypeName = new JLabel();
-  private KanjiTextField jTextFieldSystemTaskTypeName = new KanjiTextField();
-  private JLabel jLabelSystemTaskTypeSortKey = new JLabel();
-  private JTextField jTextFieldSystemTaskTypeSortKey = new JTextField();
-  private JLabel jLabelSystemTaskTypeDescriptions = new JLabel();
-  private JScrollPane jScrollPaneSystemTaskTypeDescriptions = new JScrollPane();
-  private KanjiTextArea jTextAreaSystemTaskTypeDescriptions = new KanjiTextArea();
-  private TableModelReadOnlyList tableModelSystemTaskTypeWhereUsedList =
+  private final JSplitPane jSplitPaneSystemTaskType = new JSplitPane();
+  private final JScrollPane jScrollPaneSystemTaskTypeList = new JScrollPane();
+  private final TableModelReadOnlyList tableModelSystemTaskTypeList = new TableModelReadOnlyList();
+  private final JTable jTableSystemTaskTypeList = new JTable(tableModelSystemTaskTypeList);
+  private final JPanel jPanelSystemTaskType = new JPanel();
+  private final JPanel jPanelSystemTaskType1 = new JPanel();
+  private final JScrollPane jScrollPaneSystemTaskTypeWhereUsedList = new JScrollPane();
+  private final JLabel jLabelSystemTaskTypeName = new JLabel();
+  private final KanjiTextField jTextFieldSystemTaskTypeName = new KanjiTextField();
+  private final JLabel jLabelSystemTaskTypeSortKey = new JLabel();
+  private final JTextField jTextFieldSystemTaskTypeSortKey = new JTextField();
+  private final JLabel jLabelSystemTaskTypeDescriptions = new JLabel();
+  private final JScrollPane jScrollPaneSystemTaskTypeDescriptions = new JScrollPane();
+  private final KanjiTextArea jTextAreaSystemTaskTypeDescriptions = new KanjiTextArea();
+  private final TableModelReadOnlyList tableModelSystemTaskTypeWhereUsedList =
       new TableModelReadOnlyList();
-  private JTable jTableSystemTaskTypeWhereUsedList =
+  private final JTable jTableSystemTaskTypeWhereUsedList =
       new JTable(tableModelSystemTaskTypeWhereUsedList);
   // (SystemTableTypeList)//
   private boolean tableSystemTableTypeListSelectChangeActivated = false;
   private int selectedRow_jTableSystemTableTypeList;
-  private JSplitPane jSplitPaneSystemTableType = new JSplitPane();
-  private JScrollPane jScrollPaneSystemTableTypeList = new JScrollPane();
-  private TableModelReadOnlyList tableModelSystemTableTypeList = new TableModelReadOnlyList();
-  private JTable jTableSystemTableTypeList = new JTable(tableModelSystemTableTypeList);
-  private JPanel jPanelSystemTableType = new JPanel();
-  private JPanel jPanelSystemTableType1 = new JPanel();
-  private JScrollPane jScrollPaneSystemTableTypeWhereUsedList = new JScrollPane();
-  private JLabel jLabelSystemTableTypeName = new JLabel();
-  private KanjiTextField jTextFieldSystemTableTypeName = new KanjiTextField();
-  private JLabel jLabelSystemTableTypeSortKey = new JLabel();
-  private JTextField jTextFieldSystemTableTypeSortKey = new JTextField();
-  private JLabel jLabelSystemTableTypeDescriptions = new JLabel();
-  private JScrollPane jScrollPaneSystemTableTypeDescriptions = new JScrollPane();
-  private KanjiTextArea jTextAreaSystemTableTypeDescriptions = new KanjiTextArea();
-  private TableModelReadOnlyList tableModelSystemTableTypeWhereUsedList =
+  private final JSplitPane jSplitPaneSystemTableType = new JSplitPane();
+  private final JScrollPane jScrollPaneSystemTableTypeList = new JScrollPane();
+  private final TableModelReadOnlyList tableModelSystemTableTypeList = new TableModelReadOnlyList();
+  private final JTable jTableSystemTableTypeList = new JTable(tableModelSystemTableTypeList);
+  private final JPanel jPanelSystemTableType = new JPanel();
+  private final JPanel jPanelSystemTableType1 = new JPanel();
+  private final JScrollPane jScrollPaneSystemTableTypeWhereUsedList = new JScrollPane();
+  private final JLabel jLabelSystemTableTypeName = new JLabel();
+  private final KanjiTextField jTextFieldSystemTableTypeName = new KanjiTextField();
+  private final JLabel jLabelSystemTableTypeSortKey = new JLabel();
+  private final JTextField jTextFieldSystemTableTypeSortKey = new JTextField();
+  private final JLabel jLabelSystemTableTypeDescriptions = new JLabel();
+  private final JScrollPane jScrollPaneSystemTableTypeDescriptions = new JScrollPane();
+  private final KanjiTextArea jTextAreaSystemTableTypeDescriptions = new KanjiTextArea();
+  private final TableModelReadOnlyList tableModelSystemTableTypeWhereUsedList =
       new TableModelReadOnlyList();
-  private JTable jTableSystemTableTypeWhereUsedList =
+  private final JTable jTableSystemTableTypeWhereUsedList =
       new JTable(tableModelSystemTableTypeWhereUsedList);
   // (SystemDataTypeList)//
   private boolean tableSystemDataTypeListSelectChangeActivated = false;
   private int selectedRow_jTableSystemDataTypeList;
-  private JSplitPane jSplitPaneSystemDataType = new JSplitPane();
-  private JScrollPane jScrollPaneSystemDataTypeList = new JScrollPane();
-  private TableModelReadOnlyList tableModelSystemDataTypeList = new TableModelReadOnlyList();
-  private JTable jTableSystemDataTypeList = new JTable(tableModelSystemDataTypeList);
-  private JPanel jPanelSystemDataType = new JPanel();
-  private JPanel jPanelSystemDataType1 = new JPanel();
-  private JScrollPane jScrollPaneSystemDataTypeWhereUsedList = new JScrollPane();
-  private JLabel jLabelSystemDataTypeName = new JLabel();
-  private KanjiTextField jTextFieldSystemDataTypeName = new KanjiTextField();
-  private JLabel jLabelSystemDataTypeSortKey = new JLabel();
-  private JTextField jTextFieldSystemDataTypeSortKey = new JTextField();
-  private JLabel jLabelSystemDataTypeBasicType = new JLabel();
-  private DefaultComboBoxModel comboBoxModelDataTypeBasicType = new DefaultComboBoxModel();
-  private JComboBox jComboBoxSystemDataTypeBasicType =
+  private final JSplitPane jSplitPaneSystemDataType = new JSplitPane();
+  private final JScrollPane jScrollPaneSystemDataTypeList = new JScrollPane();
+  private final TableModelReadOnlyList tableModelSystemDataTypeList = new TableModelReadOnlyList();
+  private final JTable jTableSystemDataTypeList = new JTable(tableModelSystemDataTypeList);
+  private final JPanel jPanelSystemDataType = new JPanel();
+  private final JPanel jPanelSystemDataType1 = new JPanel();
+  private final JScrollPane jScrollPaneSystemDataTypeWhereUsedList = new JScrollPane();
+  private final JLabel jLabelSystemDataTypeName = new JLabel();
+  private final KanjiTextField jTextFieldSystemDataTypeName = new KanjiTextField();
+  private final JLabel jLabelSystemDataTypeSortKey = new JLabel();
+  private final JTextField jTextFieldSystemDataTypeSortKey = new JTextField();
+  private final JLabel jLabelSystemDataTypeBasicType = new JLabel();
+  private final DefaultComboBoxModel comboBoxModelDataTypeBasicType = new DefaultComboBoxModel();
+  private final JComboBox jComboBoxSystemDataTypeBasicType =
       new JComboBox(comboBoxModelDataTypeBasicType);
-  private JLabel jLabelSystemDataTypeLength = new JLabel();
-  private JTextField jTextFieldSystemDataTypeLength = new JTextField();
-  private JLabel jLabelSystemDataTypeDecimal = new JLabel();
-  private JTextField jTextFieldSystemDataTypeDecimal = new JTextField();
-  private JLabel jLabelSystemSQLExpression = new JLabel();
-  private JTextField jTextFieldSystemSQLExpression = new JTextField();
-  private TableModelReadOnlyList tableModelSystemDataTypeWhereUsedList =
+  private final JLabel jLabelSystemDataTypeLength = new JLabel();
+  private final JTextField jTextFieldSystemDataTypeLength = new JTextField();
+  private final JLabel jLabelSystemDataTypeDecimal = new JLabel();
+  private final JTextField jTextFieldSystemDataTypeDecimal = new JTextField();
+  private final JLabel jLabelSystemSQLExpression = new JLabel();
+  private final JTextField jTextFieldSystemSQLExpression = new JTextField();
+  private final TableModelReadOnlyList tableModelSystemDataTypeWhereUsedList =
       new TableModelReadOnlyList();
-  private JTable jTableSystemDataTypeWhereUsedList =
+  private final JTable jTableSystemDataTypeWhereUsedList =
       new JTable(tableModelSystemDataTypeWhereUsedList);
-  private HashMap<String, org.w3c.dom.Element> dataTypeElementMap = new HashMap<>();
+  private final HashMap<String, org.w3c.dom.Element> dataTypeElementMap = new HashMap<>();
   // (SystemFunctionTypeList)//
   private boolean tableSystemFunctionTypeListSelectChangeActivated = false;
   private int selectedRow_jTableSystemFunctionTypeList;
-  private JSplitPane jSplitPaneSystemFunctionType = new JSplitPane();
-  private JScrollPane jScrollPaneSystemFunctionTypeList = new JScrollPane();
-  private TableModelReadOnlyList tableModelSystemFunctionTypeList = new TableModelReadOnlyList();
-  private JTable jTableSystemFunctionTypeList = new JTable(tableModelSystemFunctionTypeList);
-  private JPanel jPanelSystemFunctionType = new JPanel();
-  private JPanel jPanelSystemFunctionType1 = new JPanel();
-  private JScrollPane jScrollPaneSystemFunctionTypeWhereUsedList = new JScrollPane();
-  private JLabel jLabelSystemFunctionTypeName = new JLabel();
-  private KanjiTextField jTextFieldSystemFunctionTypeName = new KanjiTextField();
-  private JLabel jLabelSystemFunctionTypeSortKey = new JLabel();
-  private JTextField jTextFieldSystemFunctionTypeSortKey = new JTextField();
-  private JLabel jLabelSystemFunctionTypeDescriptions = new JLabel();
-  private JScrollPane jScrollPaneSystemFunctionTypeDescriptions = new JScrollPane();
-  private KanjiTextArea jTextAreaSystemFunctionTypeDescriptions = new KanjiTextArea();
-  private TableModelReadOnlyList tableModelSystemFunctionTypeWhereUsedList =
+  private final JSplitPane jSplitPaneSystemFunctionType = new JSplitPane();
+  private final JScrollPane jScrollPaneSystemFunctionTypeList = new JScrollPane();
+  private final TableModelReadOnlyList tableModelSystemFunctionTypeList =
       new TableModelReadOnlyList();
-  private JTable jTableSystemFunctionTypeWhereUsedList =
+  private final JTable jTableSystemFunctionTypeList = new JTable(tableModelSystemFunctionTypeList);
+  private final JPanel jPanelSystemFunctionType = new JPanel();
+  private final JPanel jPanelSystemFunctionType1 = new JPanel();
+  private final JScrollPane jScrollPaneSystemFunctionTypeWhereUsedList = new JScrollPane();
+  private final JLabel jLabelSystemFunctionTypeName = new JLabel();
+  private final KanjiTextField jTextFieldSystemFunctionTypeName = new KanjiTextField();
+  private final JLabel jLabelSystemFunctionTypeSortKey = new JLabel();
+  private final JTextField jTextFieldSystemFunctionTypeSortKey = new JTextField();
+  private final JLabel jLabelSystemFunctionTypeDescriptions = new JLabel();
+  private final JScrollPane jScrollPaneSystemFunctionTypeDescriptions = new JScrollPane();
+  private final KanjiTextArea jTextAreaSystemFunctionTypeDescriptions = new KanjiTextArea();
+  private final TableModelReadOnlyList tableModelSystemFunctionTypeWhereUsedList =
+      new TableModelReadOnlyList();
+  private final JTable jTableSystemFunctionTypeWhereUsedList =
       new JTable(tableModelSystemFunctionTypeWhereUsedList);
-  private HashMap<String, org.w3c.dom.Element> functionTypeElementMap = new HashMap<>();
+  private final HashMap<String, org.w3c.dom.Element> functionTypeElementMap = new HashMap<>();
   // (SystemTermsList)//
   private boolean tableSystemTermsListSelectChangeActivated = false;
   private int selectedRow_jTableSystemTermsList;
-  private JSplitPane jSplitPaneSystemTermsList = new JSplitPane();
-  private JScrollPane jScrollPaneSystemTermsList = new JScrollPane();
-  private TableModelReadOnlyList tableModelSystemTermsList = new TableModelReadOnlyList();
-  private JTable jTableSystemTermsList = new JTable(tableModelSystemTermsList);
-  private JPanel jPanelSystemTermsList = new JPanel();
-  private JPanel jPanelSystemTermsList1 = new JPanel();
-  private JPanel jPanelSystemTermsList2 = new JPanel();
-  private JPanel jPanelSystemTermsList3 = new JPanel();
-  private JLabel jLabelSystemTermsHeadder = new JLabel();
-  private KanjiTextField jTextFieldSystemTermsHeadder = new KanjiTextField();
-  private JLabel jLabelSystemTermsSortKey = new JLabel();
-  private JTextField jTextFieldSystemTermsSortKey = new JTextField();
-  private JLabel jLabelSystemTermsHtmlFileName = new JLabel();
-  private JTextField jTextFieldSystemTermsHtmlFileName = new JTextField();
-  private JLabel jLabelSystemTermsDescriptions = new JLabel();
-  private JScrollPane jScrollPaneSystemTermsDescriptions = new JScrollPane();
-  private KanjiTextArea jTextAreaSystemTermsDescriptions = new KanjiTextArea();
-  private JEditorPane jEditorPaneSystemTermsDescriptions = new JEditorPane();
+  private final JSplitPane jSplitPaneSystemTermsList = new JSplitPane();
+  private final JScrollPane jScrollPaneSystemTermsList = new JScrollPane();
+  private final TableModelReadOnlyList tableModelSystemTermsList = new TableModelReadOnlyList();
+  private final JTable jTableSystemTermsList = new JTable(tableModelSystemTermsList);
+  private final JPanel jPanelSystemTermsList = new JPanel();
+  private final JPanel jPanelSystemTermsList1 = new JPanel();
+  private final JPanel jPanelSystemTermsList2 = new JPanel();
+  private final JPanel jPanelSystemTermsList3 = new JPanel();
+  private final JLabel jLabelSystemTermsHeadder = new JLabel();
+  private final KanjiTextField jTextFieldSystemTermsHeadder = new KanjiTextField();
+  private final JLabel jLabelSystemTermsSortKey = new JLabel();
+  private final JTextField jTextFieldSystemTermsSortKey = new JTextField();
+  private final JLabel jLabelSystemTermsHtmlFileName = new JLabel();
+  private final JTextField jTextFieldSystemTermsHtmlFileName = new JTextField();
+  private final JLabel jLabelSystemTermsDescriptions = new JLabel();
+  private final JScrollPane jScrollPaneSystemTermsDescriptions = new JScrollPane();
+  private final KanjiTextArea jTextAreaSystemTermsDescriptions = new KanjiTextArea();
+  private final JEditorPane jEditorPaneSystemTermsDescriptions = new JEditorPane();
   // (SystemMaintenanceLogList)//
   private boolean tableSystemMaintenanceLogSelectChangeActivated = false;
   private int selectedRow_jTableSystemMaintenanceLog;
-  private JSplitPane jSplitPaneSystemMaintenanceLog = new JSplitPane();
-  private JScrollPane jScrollPaneSystemMaintenanceLog = new JScrollPane();
-  private TableModelReadOnlyList tableModelSystemMaintenanceLog = new TableModelReadOnlyList();
-  private JTable jTableSystemMaintenanceLog = new JTable(tableModelSystemMaintenanceLog);
-  private JPanel jPanelSystemMaintenanceLog = new JPanel();
-  private JPanel jPanelSystemMaintenanceLog1 = new JPanel();
-  private JPanel jPanelSystemMaintenanceLog2 = new JPanel();
-  private JPanel jPanelSystemMaintenanceLog3 = new JPanel();
-  private JLabel jLabelSystemMaintenanceLogHeadder = new JLabel();
-  private JTextField jTextFieldSystemMaintenanceLogHeadder = new JTextField();
-  private JLabel jLabelSystemMaintenanceLogSortKey = new JLabel();
-  private JTextField jTextFieldSystemMaintenanceLogSortKey = new JTextField();
-  private JLabel jLabelSystemMaintenanceLogDescriptions = new JLabel();
-  private JScrollPane jScrollPaneSystemMaintenanceLogDescriptions = new JScrollPane();
-  private KanjiTextArea jTextAreaSystemMaintenanceLogDescriptions = new KanjiTextArea();
+  private final JSplitPane jSplitPaneSystemMaintenanceLog = new JSplitPane();
+  private final JScrollPane jScrollPaneSystemMaintenanceLog = new JScrollPane();
+  private final TableModelReadOnlyList tableModelSystemMaintenanceLog =
+      new TableModelReadOnlyList();
+  private final JTable jTableSystemMaintenanceLog = new JTable(tableModelSystemMaintenanceLog);
+  private final JPanel jPanelSystemMaintenanceLog = new JPanel();
+  private final JPanel jPanelSystemMaintenanceLog1 = new JPanel();
+  private final JPanel jPanelSystemMaintenanceLog2 = new JPanel();
+  private final JPanel jPanelSystemMaintenanceLog3 = new JPanel();
+  private final JLabel jLabelSystemMaintenanceLogHeadder = new JLabel();
+  private final JTextField jTextFieldSystemMaintenanceLogHeadder = new JTextField();
+  private final JLabel jLabelSystemMaintenanceLogSortKey = new JLabel();
+  private final JTextField jTextFieldSystemMaintenanceLogSortKey = new JTextField();
+  private final JLabel jLabelSystemMaintenanceLogDescriptions = new JLabel();
+  private final JScrollPane jScrollPaneSystemMaintenanceLogDescriptions = new JScrollPane();
+  private final KanjiTextArea jTextAreaSystemMaintenanceLogDescriptions = new KanjiTextArea();
 
   /** Definition components on jPanelSubjectAreaList */
-  private JPanel jPanelSubjectAreaList = new JPanel();
+  private final JPanel jPanelSubjectAreaList = new JPanel();
 
-  private JScrollPane jScrollPaneSubjectAreaList = new JScrollPane();
-  private TableModelReadOnlyList tableModelSubjectAreaList = new TableModelReadOnlyList();
-  private JTable jTableSubjectAreaList = new JTable(tableModelSubjectAreaList);
+  private final JScrollPane jScrollPaneSubjectAreaList = new JScrollPane();
+  private final TableModelReadOnlyList tableModelSubjectAreaList = new TableModelReadOnlyList();
+  private final JTable jTableSubjectAreaList = new JTable(tableModelSubjectAreaList);
   private int selectedRow_jTableSubjectAreaList;
 
   /** Definition components on jPanelSubjectArea */
-  private JPanel jPanelSubjectArea = new JPanel();
+  private final JPanel jPanelSubjectArea = new JPanel();
 
-  private JSplitPane jSplitPaneSubjectArea = new JSplitPane();
-  private JScrollPane jScrollPaneSubjectArea = new JScrollPane();
-  private JPanel jPanelSubjectArea1 = new JPanel();
-  private JPanel jPanelSubjectArea2 = new JPanel();
-  private JPanel jPanelSubjectArea4 = new JPanel();
-  private JLabel jLabelSubjectAreaName = new JLabel();
-  private JLabel jLabelSubjectAreaDescriptions = new JLabel();
-  private JPanel jPanelSubjectArea3 = new JPanel();
-  private KanjiTextField jTextFieldSubjectAreaName = new KanjiTextField();
-  private JScrollPane jScrollPaneSubjectAreaDescriptions = new JScrollPane();
-  private JLabel jLabelSubjectAreaSortKey = new JLabel();
-  private JTextField jTextFieldSubjectAreaSortKey = new JTextField();
-  private KanjiTextArea jTextAreaSubjectAreaDescriptions = new KanjiTextArea();
+  private final JSplitPane jSplitPaneSubjectArea = new JSplitPane();
+  private final JScrollPane jScrollPaneSubjectArea = new JScrollPane();
+  private final JPanel jPanelSubjectArea1 = new JPanel();
+  private final JPanel jPanelSubjectArea2 = new JPanel();
+  private final JPanel jPanelSubjectArea4 = new JPanel();
+  private final JLabel jLabelSubjectAreaName = new JLabel();
+  private final JLabel jLabelSubjectAreaDescriptions = new JLabel();
+  private final JPanel jPanelSubjectArea3 = new JPanel();
+  private final KanjiTextField jTextFieldSubjectAreaName = new KanjiTextField();
+  private final JScrollPane jScrollPaneSubjectAreaDescriptions = new JScrollPane();
+  private final JLabel jLabelSubjectAreaSortKey = new JLabel();
+  private final JTextField jTextFieldSubjectAreaSortKey = new JTextField();
+  private final KanjiTextArea jTextAreaSubjectAreaDescriptions = new KanjiTextArea();
   // private JPanel jPanelSubjectAreaDataflowEditor1 = new JPanel();
-  private JPanel jPanelSubjectAreaDataflowEditor1 =
+  private final JPanel jPanelSubjectAreaDataflowEditor1 =
       new JPanel() {
         private static final long serialVersionUID = 1L;
 
@@ -642,11 +646,11 @@ public class Modeler extends JFrame {
       };
   private DataflowBoundary dataflowBoundaryEditor = new DataflowBoundary();
   private DataflowBoundary dataflowBoundarySlideShow = new DataflowBoundary();
-  private ArrayList<DataflowLine> dataflowLineEditorArray = new ArrayList<>();
-  private ArrayList<DataflowLine> dataflowLineSlideShowArray = new ArrayList<>();
-  private ArrayList<DataflowNode> dataflowNodeEditorArray = new ArrayList<>();
-  private ArrayList<DataflowNode> dataflowNodeSlideShowArray = new ArrayList<>();
-  private JPanel jPanelSubjectAreaDataflowEditor2 =
+  private final ArrayList<DataflowLine> dataflowLineEditorArray = new ArrayList<>();
+  private final ArrayList<DataflowLine> dataflowLineSlideShowArray = new ArrayList<>();
+  private final ArrayList<DataflowNode> dataflowNodeEditorArray = new ArrayList<>();
+  private final ArrayList<DataflowNode> dataflowNodeSlideShowArray = new ArrayList<>();
+  private final JPanel jPanelSubjectAreaDataflowEditor2 =
       new JPanel() {
         private static final long serialVersionUID = 1L;
 
@@ -661,13 +665,13 @@ public class Modeler extends JFrame {
           g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_OFF);
         }
       };
-  private JLabel jLabelSlideShowEnd = new JLabel();
-  private JDialog jDialogDataflowSlideShow = new JDialog(this, true);
+  private final JLabel jLabelSlideShowEnd = new JLabel();
+  private final JDialog jDialogDataflowSlideShow = new JDialog(this, true);
   private int dataflowSlideNumber = 0;
   private int dataflowSlideTotalNumber = 0;
-  private JPanel jPanelSubjectAreaDataflowSlideShow = new JPanel();
-  private JPanel jPanelSubjectAreaDataflowSlideShow1 = new JPanel();
-  private JPanel jPanelSubjectAreaDataflowSlideShow2 =
+  private final JPanel jPanelSubjectAreaDataflowSlideShow = new JPanel();
+  private final JPanel jPanelSubjectAreaDataflowSlideShow1 = new JPanel();
+  private final JPanel jPanelSubjectAreaDataflowSlideShow2 =
       new JPanel() {
         private static final long serialVersionUID = 1L;
 
@@ -684,271 +688,275 @@ public class Modeler extends JFrame {
           g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_OFF);
         }
       };
-  private JLabel jLabelDataflowSlideShowPageGuide = new JLabel();
+  private final JLabel jLabelDataflowSlideShowPageGuide = new JLabel();
   private String dataflowPageTitle;
   private Point dataflowNodePosition;
-  private JPanel jPanelBoundaryResizeGuide = new JPanel();
-  private JPanel jPanelBoundaryMoveGuide = new JPanel();
+  private final JPanel jPanelBoundaryResizeGuide = new JPanel();
+  private final JPanel jPanelBoundaryMoveGuide = new JPanel();
   private String boundaryResizeMode = "";
   private Point boundaryResizeStartPoint;
   private Rectangle boundaryResizeGuideRec;
 
   /** Definition components on jPanelRoleList */
-  private JPanel jPanelRoleList = new JPanel();
+  private final JPanel jPanelRoleList = new JPanel();
 
-  private JScrollPane jScrollPaneRoleList = new JScrollPane();
-  private TableModelReadOnlyList tableModelRoleList = new TableModelReadOnlyList();
-  private JTable jTableRoleList = new JTable(tableModelRoleList);
+  private final JScrollPane jScrollPaneRoleList = new JScrollPane();
+  private final TableModelReadOnlyList tableModelRoleList = new TableModelReadOnlyList();
+  private final JTable jTableRoleList = new JTable(tableModelRoleList);
   private int selectedRow_jTableRoleList;
 
   /** Definition components on jPanelRole(with Task List) */
-  private JPanel jPanelRole = new JPanel();
+  private final JPanel jPanelRole = new JPanel();
 
-  private JSplitPane jSplitPaneRole = new JSplitPane();
-  private JScrollPane jScrollPaneTaskList = new JScrollPane();
-  private JViewport jViewportTaskList = new JViewport();
-  private JPanel jPanelRole5 = new JPanel();
-  private JPanel jPanelRole2 = new JPanel();
-  private JPanel jPanelRole4 = new JPanel();
-  private JLabel jLabelRoleDescriptions = new JLabel();
-  private JPanel jPanelRole3 = new JPanel();
-  private JLabel jLabelRoleName = new JLabel();
-  private KanjiTextField jTextFieldRoleName = new KanjiTextField();
-  private SortableXeadTreeNodeComboBoxModel sortableComboBoxModelDepartment =
+  private final JSplitPane jSplitPaneRole = new JSplitPane();
+  private final JScrollPane jScrollPaneTaskList = new JScrollPane();
+  private final JViewport jViewportTaskList = new JViewport();
+  private final JPanel jPanelRole5 = new JPanel();
+  private final JPanel jPanelRole2 = new JPanel();
+  private final JPanel jPanelRole4 = new JPanel();
+  private final JLabel jLabelRoleDescriptions = new JLabel();
+  private final JPanel jPanelRole3 = new JPanel();
+  private final JLabel jLabelRoleName = new JLabel();
+  private final KanjiTextField jTextFieldRoleName = new KanjiTextField();
+  private final SortableXeadTreeNodeComboBoxModel sortableComboBoxModelDepartment =
       new SortableXeadTreeNodeComboBoxModel();
-  private JComboBox jComboBoxDepartment = new JComboBox(sortableComboBoxModelDepartment);
-  private TableModelReadOnlyList tableModelTaskList = new TableModelReadOnlyList();
-  private JTable jTableTaskList = new JTable(tableModelTaskList);
+  private final JComboBox jComboBoxDepartment = new JComboBox(sortableComboBoxModelDepartment);
+  private final TableModelReadOnlyList tableModelTaskList = new TableModelReadOnlyList();
+  private final JTable jTableTaskList = new JTable(tableModelTaskList);
   private int selectedRow_jTableTaskList;
-  private JLabel jLabelRoleSortKey = new JLabel();
-  private JTextField jTextFieldRoleSortKey = new JTextField();
-  private JScrollPane jScrollPaneRoleDescriptions = new JScrollPane();
-  private KanjiTextArea jTextAreaRoleDescriptions = new KanjiTextArea();
-  private JLabel jLabelDepartment = new JLabel();
-  private JLabel jLabelTaskSortKey = new JLabel();
+  private final JLabel jLabelRoleSortKey = new JLabel();
+  private final JTextField jTextFieldRoleSortKey = new JTextField();
+  private final JScrollPane jScrollPaneRoleDescriptions = new JScrollPane();
+  private final KanjiTextArea jTextAreaRoleDescriptions = new KanjiTextArea();
+  private final JLabel jLabelDepartment = new JLabel();
+  private final JLabel jLabelTaskSortKey = new JLabel();
 
   /** Definition components on jPanelTask */
-  private JPanel jPanelTask = new JPanel();
+  private final JPanel jPanelTask = new JPanel();
 
-  private JSplitPane jSplitPaneTask = new JSplitPane();
-  private JScrollPane jScrollPaneTask1 = new JScrollPane();
-  private JPanel jPanelTask1 = new JPanel();
-  private JPanel jPanelTask2 = new JPanel();
-  private JPanel jPanelTask3 = new JPanel();
-  private JPanel jPanelTask4 = new JPanel();
-  private JPanel jPanelTask5 = new JPanel();
-  private JPanel jPanelTask6 = new JPanel();
-  private JLabel jLabelTaskEvent = new JLabel();
-  private KanjiTextField jTextFieldTaskEvent = new KanjiTextField();
-  private JLabel jLabelTaskType = new JLabel();
-  private SortableXeadTreeNodeComboBoxModel sortableComboBoxModelTaskType =
+  private final JSplitPane jSplitPaneTask = new JSplitPane();
+  private final JScrollPane jScrollPaneTask1 = new JScrollPane();
+  private final JPanel jPanelTask1 = new JPanel();
+  private final JPanel jPanelTask2 = new JPanel();
+  private final JPanel jPanelTask3 = new JPanel();
+  private final JPanel jPanelTask4 = new JPanel();
+  private final JPanel jPanelTask5 = new JPanel();
+  private final JPanel jPanelTask6 = new JPanel();
+  private final JLabel jLabelTaskEvent = new JLabel();
+  private final KanjiTextField jTextFieldTaskEvent = new KanjiTextField();
+  private final JLabel jLabelTaskType = new JLabel();
+  private final SortableXeadTreeNodeComboBoxModel sortableComboBoxModelTaskType =
       new SortableXeadTreeNodeComboBoxModel();
-  private JComboBox jComboBoxTaskType = new JComboBox(sortableComboBoxModelTaskType);
-  private JLabel jLabelTaskDescriptions = new JLabel();
-  private JLabel jLabelTaskName = new JLabel();
-  private KanjiTextField jTextFieldTaskName = new KanjiTextField();
-  private JTextField jTextFieldTaskSortKey = new JTextField();
-  private JLabel jLabelSubjectAreaWithThisTask = new JLabel();
-  private DefaultListModel listModelSubjectAreaWithThisTask = new DefaultListModel();
-  private JList jListSubjectAreaWithThisTask = new JList(listModelSubjectAreaWithThisTask);
-  private JScrollPane jScrollPaneSubjectAreaWithThisTask = new JScrollPane();
-  private ArrayList<String> subjectAreaIDList = new ArrayList<>();
-  private JScrollPane jScrollPaneTaskDescriptions = new JScrollPane();
-  private KanjiTextArea jTextAreaTaskDescriptions = new KanjiTextArea();
-  private JSplitPane jSplitPaneTask2 = new JSplitPane();
-  private JSplitPane jSplitPaneTask3 = new JSplitPane();
-  private JSplitPane jSplitPaneTask4 = new JSplitPane();
-  private JSplitPane jSplitPaneTask5 = new JSplitPane();
+  private final JComboBox jComboBoxTaskType = new JComboBox(sortableComboBoxModelTaskType);
+  private final JLabel jLabelTaskDescriptions = new JLabel();
+  private final JLabel jLabelTaskName = new JLabel();
+  private final KanjiTextField jTextFieldTaskName = new KanjiTextField();
+  private final JTextField jTextFieldTaskSortKey = new JTextField();
+  private final JLabel jLabelSubjectAreaWithThisTask = new JLabel();
+  private final DefaultListModel listModelSubjectAreaWithThisTask = new DefaultListModel();
+  private final JList jListSubjectAreaWithThisTask = new JList(listModelSubjectAreaWithThisTask);
+  private final JScrollPane jScrollPaneSubjectAreaWithThisTask = new JScrollPane();
+  private final ArrayList<String> subjectAreaIDList = new ArrayList<>();
+  private final JScrollPane jScrollPaneTaskDescriptions = new JScrollPane();
+  private final KanjiTextArea jTextAreaTaskDescriptions = new KanjiTextArea();
+  private final JSplitPane jSplitPaneTask2 = new JSplitPane();
+  private final JSplitPane jSplitPaneTask3 = new JSplitPane();
+  private final JSplitPane jSplitPaneTask4 = new JSplitPane();
+  private final JSplitPane jSplitPaneTask5 = new JSplitPane();
   private boolean isToCopySingleTaskAction = true;
-  private JScrollPane jScrollPaneTaskActions = new JScrollPane();
-  private JTree jTreeTaskActions = new JTree();
+  private final JScrollPane jScrollPaneTaskActions = new JScrollPane();
+  private final JTree jTreeTaskActions = new JTree();
   private DefaultTreeModel treeModelTaskActions;
-  private JLabel jLabelTaskActions = new JLabel();
-  private JTextPane jTextPaneTaskFunctionIOImage = new JTextPane();
-  private JLabel jLabelTaskFunctionIOImage = new JLabel();
-  private JScrollPane jScrollPaneTaskFunctionIOImage = new JScrollPane();
-  private JEditorPane jEditorPaneTaskFunctionIOImage = new JEditorPane();
-  private JPanel jPanelTaskFunctionIOImageSurface = new JPanel();
-  private JPanel jPanelTaskFunctionIOImage = new JPanel();
-  private JPanel jPanelTask15 = new JPanel();
-  private JPanel jPanelTask16 = new JPanel();
-  private JPanel jPanelTask17 = new JPanel();
-  private JPanel jPanelTask18 = new JPanel();
-  private JPanel jPanelTask19 = new JPanel();
-  private JScrollPane jScrollPaneTaskActionDescriptions = new JScrollPane();
-  private KanjiTextArea jTextAreaTaskActionDescriptions = new KanjiTextArea();
-  private JLabel jLabelTaskActionDescriptions = new JLabel();
-  private JLabel jLabelTaskActionExecuteIf = new JLabel();
-  private JLabel jLabelTaskActionLabel = new JLabel();
-  private KanjiTextField jTextFieldTaskActionExecuteIf = new KanjiTextField();
-  private KanjiTextField jTextFieldTaskActionLabel = new KanjiTextField();
-  private JPanel jPanelTask20 = new JPanel();
-  private JPanel jPanelTask21 = new JPanel();
-  private JPanel jPanelTask22 = new JPanel();
-  private JPanel jPanelTask23 = new JPanel();
-  private JLabel jLabelTaskFunctionIOSortKey = new JLabel();
-  private JLabel jLabelTaskFunctionIOOperations = new JLabel();
-  private JScrollPane jScrollPaneTaskFunctionIOOperations = new JScrollPane();
-  private KanjiTextArea jTextAreaTaskFunctionIOOperations = new KanjiTextArea();
-  private JLabel jLabelTaskFunctionIODescriptions = new JLabel();
-  private JScrollPane jScrollPaneTaskFunctionIODescriptions = new JScrollPane();
-  private JTextArea jTextAreaTaskFunctionIODescriptions = new JTextArea();
-  private JTabbedPane jTabbedPaneTaskFunctionIO = new JTabbedPane();
+  private final JLabel jLabelTaskActions = new JLabel();
+  private final JTextPane jTextPaneTaskFunctionIOImage = new JTextPane();
+  private final JLabel jLabelTaskFunctionIOImage = new JLabel();
+  private final JScrollPane jScrollPaneTaskFunctionIOImage = new JScrollPane();
+  private final JEditorPane jEditorPaneTaskFunctionIOImage = new JEditorPane();
+  private final JPanel jPanelTaskFunctionIOImageSurface = new JPanel();
+  private final JPanel jPanelTaskFunctionIOImage = new JPanel();
+  private final JPanel jPanelTask15 = new JPanel();
+  private final JPanel jPanelTask16 = new JPanel();
+  private final JPanel jPanelTask17 = new JPanel();
+  private final JPanel jPanelTask18 = new JPanel();
+  private final JPanel jPanelTask19 = new JPanel();
+  private final JScrollPane jScrollPaneTaskActionDescriptions = new JScrollPane();
+  private final KanjiTextArea jTextAreaTaskActionDescriptions = new KanjiTextArea();
+  private final JLabel jLabelTaskActionDescriptions = new JLabel();
+  private final JLabel jLabelTaskActionExecuteIf = new JLabel();
+  private final JLabel jLabelTaskActionLabel = new JLabel();
+  private final KanjiTextField jTextFieldTaskActionExecuteIf = new KanjiTextField();
+  private final KanjiTextField jTextFieldTaskActionLabel = new KanjiTextField();
+  private final JPanel jPanelTask20 = new JPanel();
+  private final JPanel jPanelTask21 = new JPanel();
+  private final JPanel jPanelTask22 = new JPanel();
+  private final JPanel jPanelTask23 = new JPanel();
+  private final JLabel jLabelTaskFunctionIOSortKey = new JLabel();
+  private final JLabel jLabelTaskFunctionIOOperations = new JLabel();
+  private final JScrollPane jScrollPaneTaskFunctionIOOperations = new JScrollPane();
+  private final KanjiTextArea jTextAreaTaskFunctionIOOperations = new KanjiTextArea();
+  private final JLabel jLabelTaskFunctionIODescriptions = new JLabel();
+  private final JScrollPane jScrollPaneTaskFunctionIODescriptions = new JScrollPane();
+  private final JTextArea jTextAreaTaskFunctionIODescriptions = new JTextArea();
+  private final JTabbedPane jTabbedPaneTaskFunctionIO = new JTabbedPane();
   private int selectedTab_jTabbedPaneTaskFunctionIO;
-  private JPanel jPanelTaskFunctionIODummy = new JPanel();
+  private final JPanel jPanelTaskFunctionIODummy = new JPanel();
   private String htmlFileNameForFunctionIO = "";
   private org.w3c.dom.Element elementOfTaskActionToBeFocused = null;
   private org.w3c.dom.Element elementOfFunctionIOToBeFocused = null;
-  private JLabel jLabelTaskFunctionIOImageFunction = new JLabel();
-  private JTextField jTextFieldTaskFunctionIOImageFunction = new JTextField();
-  private JLabel jLabelTaskFunctionIOImageFunctionRemarks = new JLabel();
-  private JTextField jTextFieldTaskFunctionIOImageFunctionSummary = new JTextField();
-  private JLabel jLabelTaskFunctionIOImageTable = new JLabel();
-  private JTextField jTextFieldTaskFunctionIOImageTable = new JTextField();
-  private JLabel jLabelTaskFunctionIOImageTableRemarks = new JLabel();
-  private JScrollPane jScrollPaneTaskFunctionIOImageTableRemarks = new JScrollPane();
-  private JTextArea jTextAreaTaskFunctionIOImageTableRemarks = new JTextArea();
-  private JLabel jLabelTaskFunctionIOImageFunctionParms = new JLabel();
-  private JTextField jTextFieldTaskFunctionIOImageFunctionParms = new JTextField();
-  private JLabel jLabelTaskFunctionIOImageFunctionReturn = new JLabel();
-  private JTextField jTextFieldTaskFunctionIOImageFunctionReturn = new JTextField();
-  private JScrollPane jScrollPaneFunctionIOImageIOList = new JScrollPane();
-  private TableModelReadOnlyList tableModelFunctionIOImageIOList = new TableModelReadOnlyList();
-  private JTable jTableFunctionIOImageIOList = new JTable(tableModelFunctionIOImageIOList);
+  private final JLabel jLabelTaskFunctionIOImageFunction = new JLabel();
+  private final JTextField jTextFieldTaskFunctionIOImageFunction = new JTextField();
+  private final JLabel jLabelTaskFunctionIOImageFunctionRemarks = new JLabel();
+  private final JTextField jTextFieldTaskFunctionIOImageFunctionSummary = new JTextField();
+  private final JLabel jLabelTaskFunctionIOImageTable = new JLabel();
+  private final JTextField jTextFieldTaskFunctionIOImageTable = new JTextField();
+  private final JLabel jLabelTaskFunctionIOImageTableRemarks = new JLabel();
+  private final JScrollPane jScrollPaneTaskFunctionIOImageTableRemarks = new JScrollPane();
+  private final JTextArea jTextAreaTaskFunctionIOImageTableRemarks = new JTextArea();
+  private final JLabel jLabelTaskFunctionIOImageFunctionParms = new JLabel();
+  private final JTextField jTextFieldTaskFunctionIOImageFunctionParms = new JTextField();
+  private final JLabel jLabelTaskFunctionIOImageFunctionReturn = new JLabel();
+  private final JTextField jTextFieldTaskFunctionIOImageFunctionReturn = new JTextField();
+  private final JScrollPane jScrollPaneFunctionIOImageIOList = new JScrollPane();
+  private final TableModelReadOnlyList tableModelFunctionIOImageIOList =
+      new TableModelReadOnlyList();
+  private final JTable jTableFunctionIOImageIOList = new JTable(tableModelFunctionIOImageIOList);
 
   /** Definition components on jPanelSubsystemList */
-  private JPanel jPanelSubsystemList = new JPanel();
+  private final JPanel jPanelSubsystemList = new JPanel();
 
-  private JTabbedPane jTabbedPaneSubsystemList = new JTabbedPane();
-  private JScrollPane jScrollPaneSubsystemList = new JScrollPane();
-  private TableModelReadOnlyList tableModelSubsystemList = new TableModelReadOnlyList();
-  private JTable jTableSubsystemList = new JTable(tableModelSubsystemList);
+  private final JTabbedPane jTabbedPaneSubsystemList = new JTabbedPane();
+  private final JScrollPane jScrollPaneSubsystemList = new JScrollPane();
+  private final TableModelReadOnlyList tableModelSubsystemList = new TableModelReadOnlyList();
+  private final JTable jTableSubsystemList = new JTable(tableModelSubsystemList);
   private int selectedRow_jTableSubsystemList;
   private int selectedRow_jTableFunctionsStructureTableIOList;
-  private JSplitPane jSplitPaneFunctionsStructure1 = new JSplitPane();
-  private JSplitPane jSplitPaneFunctionsStructure2 = new JSplitPane();
-  private JPanel jPanelFunctionsStructure = new JPanel();
-  private JTabbedPane jTabbedPaneFunctionsStructureIO = new JTabbedPane();
-  private JScrollPane jScrollPaneFunctionsStructure = new JScrollPane();
-  private JTree jTreeFunctionsStructure = new JTree();
+  private final JSplitPane jSplitPaneFunctionsStructure1 = new JSplitPane();
+  private final JSplitPane jSplitPaneFunctionsStructure2 = new JSplitPane();
+  private final JPanel jPanelFunctionsStructure = new JPanel();
+  private final JTabbedPane jTabbedPaneFunctionsStructureIO = new JTabbedPane();
+  private final JScrollPane jScrollPaneFunctionsStructure = new JScrollPane();
+  private final JTree jTreeFunctionsStructure = new JTree();
   private DefaultTreeModel treeModelFunctionsStructure;
   private boolean isRequiredToSetupFunctionsStructre;
-  private JLabel jLabelFunctionsStructure1 = new JLabel();
-  private JLabel jLabelFunctionsStructure2 = new JLabel();
-  private JLabel jLabelFunctionsStructure3 = new JLabel();
-  private JLabel jLabelFunctionsStructure4 = new JLabel();
-  private JLabel jLabelFunctionsStructure5 = new JLabel();
-  private JLabel jLabelFunctionsStructure6 = new JLabel();
-  private JTextField jTextFieldFunctionsStructureLaunchEvent = new JTextField();
-  private JTextField jTextFieldFunctionsStructureSubsystemName = new JTextField();
-  private JTextField jTextFieldFunctionsStructureFunctionName = new JTextField();
-  private JTextField jTextFieldFunctionsStructureFunctionType = new JTextField();
-  private JTextField jTextFieldFunctionsStructureFunctionSummary = new JTextField();
-  private JTextField jTextFieldFunctionsStructureFunctionParameters = new JTextField();
-  private JTextField jTextFieldFunctionsStructureFunctionReturn = new JTextField();
-  private JScrollPane[] jScrollPaneFunctionsStructureIOImageArray = new JScrollPane[10];
-  private JPanel[] jPanelFunctionsStructureIOImageArray = new JPanel[10];
-  private JTextPane[] jTextPaneFunctionsStructureIOImageArray = new JTextPane[10];
-  private JEditorPane[] jEditorPaneFunctionsStructureIOImageArray = new JEditorPane[10];
-  private String[] htmlFileNameForFunctionsStructureIOImageArray = new String[10];
-  private JLabel[] jLabelFunctionsStructureIOImageArray = new JLabel[10];
-  private JScrollPane jScrollPaneFunctionsStructureIOImage0 = new JScrollPane();
-  private JPanel jPanelFunctionsStructureIOImage0 = new JPanel();
-  private JTextPane jTextPaneFunctionsStructureIOImage0 = new JTextPane();
-  private JEditorPane jEditorPaneFunctionsStructureIOImage0 = new JEditorPane();
-  private JLabel jLabelFunctionsStructureIOImage0 = new JLabel();
-  private JScrollPane jScrollPaneFunctionsStructureIOImage1 = new JScrollPane();
-  private JPanel jPanelFunctionsStructureIOImage1 = new JPanel();
-  private JTextPane jTextPaneFunctionsStructureIOImage1 = new JTextPane();
-  private JEditorPane jEditorPaneFunctionsStructureIOImage1 = new JEditorPane();
-  private JLabel jLabelFunctionsStructureIOImage1 = new JLabel();
-  private JScrollPane jScrollPaneFunctionsStructureIOImage2 = new JScrollPane();
-  private JPanel jPanelFunctionsStructureIOImage2 = new JPanel();
-  private JTextPane jTextPaneFunctionsStructureIOImage2 = new JTextPane();
-  private JEditorPane jEditorPaneFunctionsStructureIOImage2 = new JEditorPane();
-  private JLabel jLabelFunctionsStructureIOImage2 = new JLabel();
-  private JScrollPane jScrollPaneFunctionsStructureIOImage3 = new JScrollPane();
-  private JPanel jPanelFunctionsStructureIOImage3 = new JPanel();
-  private JTextPane jTextPaneFunctionsStructureIOImage3 = new JTextPane();
-  private JEditorPane jEditorPaneFunctionsStructureIOImage3 = new JEditorPane();
-  private JLabel jLabelFunctionsStructureIOImage3 = new JLabel();
-  private JScrollPane jScrollPaneFunctionsStructureIOImage4 = new JScrollPane();
-  private JPanel jPanelFunctionsStructureIOImage4 = new JPanel();
-  private JTextPane jTextPaneFunctionsStructureIOImage4 = new JTextPane();
-  private JEditorPane jEditorPaneFunctionsStructureIOImage4 = new JEditorPane();
-  private JLabel jLabelFunctionsStructureIOImage4 = new JLabel();
-  private JScrollPane jScrollPaneFunctionsStructureIOImage5 = new JScrollPane();
-  private JPanel jPanelFunctionsStructureIOImage5 = new JPanel();
-  private JTextPane jTextPaneFunctionsStructureIOImage5 = new JTextPane();
-  private JEditorPane jEditorPaneFunctionsStructureIOImage5 = new JEditorPane();
-  private JLabel jLabelFunctionsStructureIOImage5 = new JLabel();
-  private JScrollPane jScrollPaneFunctionsStructureIOImage6 = new JScrollPane();
-  private JPanel jPanelFunctionsStructureIOImage6 = new JPanel();
-  private JTextPane jTextPaneFunctionsStructureIOImage6 = new JTextPane();
-  private JEditorPane jEditorPaneFunctionsStructureIOImage6 = new JEditorPane();
-  private JLabel jLabelFunctionsStructureIOImage6 = new JLabel();
-  private JScrollPane jScrollPaneFunctionsStructureIOImage7 = new JScrollPane();
-  private JPanel jPanelFunctionsStructureIOImage7 = new JPanel();
-  private JTextPane jTextPaneFunctionsStructureIOImage7 = new JTextPane();
-  private JEditorPane jEditorPaneFunctionsStructureIOImage7 = new JEditorPane();
-  private JLabel jLabelFunctionsStructureIOImage7 = new JLabel();
-  private JScrollPane jScrollPaneFunctionsStructureIOImage8 = new JScrollPane();
-  private JPanel jPanelFunctionsStructureIOImage8 = new JPanel();
-  private JTextPane jTextPaneFunctionsStructureIOImage8 = new JTextPane();
-  private JEditorPane jEditorPaneFunctionsStructureIOImage8 = new JEditorPane();
-  private JLabel jLabelFunctionsStructureIOImage8 = new JLabel();
-  private JScrollPane jScrollPaneFunctionsStructureIOImage9 = new JScrollPane();
-  private JPanel jPanelFunctionsStructureIOImage9 = new JPanel();
-  private JTextPane jTextPaneFunctionsStructureIOImage9 = new JTextPane();
-  private JEditorPane jEditorPaneFunctionsStructureIOImage9 = new JEditorPane();
-  private JLabel jLabelFunctionsStructureIOImage9 = new JLabel();
-  private JScrollPane jScrollPaneFunctionsStructureTableIOList = new JScrollPane();
-  private TableModelReadOnlyList tableModelFunctionsStructureTableIOList =
+  private final JLabel jLabelFunctionsStructure1 = new JLabel();
+  private final JLabel jLabelFunctionsStructure2 = new JLabel();
+  private final JLabel jLabelFunctionsStructure3 = new JLabel();
+  private final JLabel jLabelFunctionsStructure4 = new JLabel();
+  private final JLabel jLabelFunctionsStructure5 = new JLabel();
+  private final JLabel jLabelFunctionsStructure6 = new JLabel();
+  private final JTextField jTextFieldFunctionsStructureLaunchEvent = new JTextField();
+  private final JTextField jTextFieldFunctionsStructureSubsystemName = new JTextField();
+  private final JTextField jTextFieldFunctionsStructureFunctionName = new JTextField();
+  private final JTextField jTextFieldFunctionsStructureFunctionType = new JTextField();
+  private final JTextField jTextFieldFunctionsStructureFunctionSummary = new JTextField();
+  private final JTextField jTextFieldFunctionsStructureFunctionParameters = new JTextField();
+  private final JTextField jTextFieldFunctionsStructureFunctionReturn = new JTextField();
+  private final JScrollPane[] jScrollPaneFunctionsStructureIOImageArray = new JScrollPane[10];
+  private final JPanel[] jPanelFunctionsStructureIOImageArray = new JPanel[10];
+  private final JTextPane[] jTextPaneFunctionsStructureIOImageArray = new JTextPane[10];
+  private final JEditorPane[] jEditorPaneFunctionsStructureIOImageArray = new JEditorPane[10];
+  private final String[] htmlFileNameForFunctionsStructureIOImageArray = new String[10];
+  private final JLabel[] jLabelFunctionsStructureIOImageArray = new JLabel[10];
+  private final JScrollPane jScrollPaneFunctionsStructureIOImage0 = new JScrollPane();
+  private final JPanel jPanelFunctionsStructureIOImage0 = new JPanel();
+  private final JTextPane jTextPaneFunctionsStructureIOImage0 = new JTextPane();
+  private final JEditorPane jEditorPaneFunctionsStructureIOImage0 = new JEditorPane();
+  private final JLabel jLabelFunctionsStructureIOImage0 = new JLabel();
+  private final JScrollPane jScrollPaneFunctionsStructureIOImage1 = new JScrollPane();
+  private final JPanel jPanelFunctionsStructureIOImage1 = new JPanel();
+  private final JTextPane jTextPaneFunctionsStructureIOImage1 = new JTextPane();
+  private final JEditorPane jEditorPaneFunctionsStructureIOImage1 = new JEditorPane();
+  private final JLabel jLabelFunctionsStructureIOImage1 = new JLabel();
+  private final JScrollPane jScrollPaneFunctionsStructureIOImage2 = new JScrollPane();
+  private final JPanel jPanelFunctionsStructureIOImage2 = new JPanel();
+  private final JTextPane jTextPaneFunctionsStructureIOImage2 = new JTextPane();
+  private final JEditorPane jEditorPaneFunctionsStructureIOImage2 = new JEditorPane();
+  private final JLabel jLabelFunctionsStructureIOImage2 = new JLabel();
+  private final JScrollPane jScrollPaneFunctionsStructureIOImage3 = new JScrollPane();
+  private final JPanel jPanelFunctionsStructureIOImage3 = new JPanel();
+  private final JTextPane jTextPaneFunctionsStructureIOImage3 = new JTextPane();
+  private final JEditorPane jEditorPaneFunctionsStructureIOImage3 = new JEditorPane();
+  private final JLabel jLabelFunctionsStructureIOImage3 = new JLabel();
+  private final JScrollPane jScrollPaneFunctionsStructureIOImage4 = new JScrollPane();
+  private final JPanel jPanelFunctionsStructureIOImage4 = new JPanel();
+  private final JTextPane jTextPaneFunctionsStructureIOImage4 = new JTextPane();
+  private final JEditorPane jEditorPaneFunctionsStructureIOImage4 = new JEditorPane();
+  private final JLabel jLabelFunctionsStructureIOImage4 = new JLabel();
+  private final JScrollPane jScrollPaneFunctionsStructureIOImage5 = new JScrollPane();
+  private final JPanel jPanelFunctionsStructureIOImage5 = new JPanel();
+  private final JTextPane jTextPaneFunctionsStructureIOImage5 = new JTextPane();
+  private final JEditorPane jEditorPaneFunctionsStructureIOImage5 = new JEditorPane();
+  private final JLabel jLabelFunctionsStructureIOImage5 = new JLabel();
+  private final JScrollPane jScrollPaneFunctionsStructureIOImage6 = new JScrollPane();
+  private final JPanel jPanelFunctionsStructureIOImage6 = new JPanel();
+  private final JTextPane jTextPaneFunctionsStructureIOImage6 = new JTextPane();
+  private final JEditorPane jEditorPaneFunctionsStructureIOImage6 = new JEditorPane();
+  private final JLabel jLabelFunctionsStructureIOImage6 = new JLabel();
+  private final JScrollPane jScrollPaneFunctionsStructureIOImage7 = new JScrollPane();
+  private final JPanel jPanelFunctionsStructureIOImage7 = new JPanel();
+  private final JTextPane jTextPaneFunctionsStructureIOImage7 = new JTextPane();
+  private final JEditorPane jEditorPaneFunctionsStructureIOImage7 = new JEditorPane();
+  private final JLabel jLabelFunctionsStructureIOImage7 = new JLabel();
+  private final JScrollPane jScrollPaneFunctionsStructureIOImage8 = new JScrollPane();
+  private final JPanel jPanelFunctionsStructureIOImage8 = new JPanel();
+  private final JTextPane jTextPaneFunctionsStructureIOImage8 = new JTextPane();
+  private final JEditorPane jEditorPaneFunctionsStructureIOImage8 = new JEditorPane();
+  private final JLabel jLabelFunctionsStructureIOImage8 = new JLabel();
+  private final JScrollPane jScrollPaneFunctionsStructureIOImage9 = new JScrollPane();
+  private final JPanel jPanelFunctionsStructureIOImage9 = new JPanel();
+  private final JTextPane jTextPaneFunctionsStructureIOImage9 = new JTextPane();
+  private final JEditorPane jEditorPaneFunctionsStructureIOImage9 = new JEditorPane();
+  private final JLabel jLabelFunctionsStructureIOImage9 = new JLabel();
+  private final JScrollPane jScrollPaneFunctionsStructureTableIOList = new JScrollPane();
+  private final TableModelReadOnlyList tableModelFunctionsStructureTableIOList =
       new TableModelReadOnlyList();
-  private JTable jTableFunctionsStructureTableIOList =
+  private final JTable jTableFunctionsStructureTableIOList =
       new JTable(tableModelFunctionsStructureTableIOList);
   private boolean taskFunctionIOTabSelectChangeActivated = true;
 
   /** Definition components on jPanelSubsystem */
-  private JPanel jPanelSubsystem = new JPanel();
+  private final JPanel jPanelSubsystem = new JPanel();
 
-  private JPanel jPanelSubsystem1 = new JPanel();
-  private JPanel jPanelSubsystem2 = new JPanel();
-  private JPanel jPanelSubsystem3 = new JPanel();
-  private KanjiTextField jTextFieldSubsystemName = new KanjiTextField();
-  private JLabel jLabelSubsystemDescriptions1 = new JLabel();
-  private JLabel jLabelSubsystemName = new JLabel();
-  private JLabel jLabelSubsysytemSortKey = new JLabel();
-  private JTextField jTextFieldSubsystemSortKey = new JTextField();
-  private JScrollPane jScrollPaneSubsystemDescriptions = new JScrollPane();
-  private KanjiTextArea jTextAreaSubsystemDescriptions = new KanjiTextArea();
+  private final JPanel jPanelSubsystem1 = new JPanel();
+  private final JPanel jPanelSubsystem2 = new JPanel();
+  private final JPanel jPanelSubsystem3 = new JPanel();
+  private final KanjiTextField jTextFieldSubsystemName = new KanjiTextField();
+  private final JLabel jLabelSubsystemDescriptions1 = new JLabel();
+  private final JLabel jLabelSubsystemName = new JLabel();
+  private final JLabel jLabelSubsysytemSortKey = new JLabel();
+  private final JTextField jTextFieldSubsystemSortKey = new JTextField();
+  private final JScrollPane jScrollPaneSubsystemDescriptions = new JScrollPane();
+  private final KanjiTextArea jTextAreaSubsystemDescriptions = new KanjiTextArea();
 
   /** Definition components on jPanelTableList */
-  private JPanel jPanelTableList = new JPanel();
+  private final JPanel jPanelTableList = new JPanel();
 
-  private JScrollPane jScrollPaneNativeTableList = new JScrollPane();
-  private JViewport jViewportNativeTableList = new JViewport();
-  private JTabbedPane jTabbedPaneTableList = new JTabbedPane();
+  private final JScrollPane jScrollPaneNativeTableList = new JScrollPane();
+  private final JViewport jViewportNativeTableList = new JViewport();
+  private final JTabbedPane jTabbedPaneTableList = new JTabbedPane();
   private int previousSelectedIndex_jTabbedPaneTableList = 0;
-  private TableModelNativeTableList tableModelNativeTableList = new TableModelNativeTableList();
-  private JTable jTableNativeTableList = new JTable(tableModelNativeTableList);
+  private final TableModelNativeTableList tableModelNativeTableList =
+      new TableModelNativeTableList();
+  private final JTable jTableNativeTableList = new JTable(tableModelNativeTableList);
   private int selectedRow_jTableNativeTableList;
-  private JScrollPane jScrollPaneForeignTableList = new JScrollPane();
-  private JViewport jViewportForeignTableList = new JViewport();
-  private TableModelForeignTableList tableModelForeignTableList = new TableModelForeignTableList();
-  private JTable jTableForeignTableList = new JTable(tableModelForeignTableList);
+  private final JScrollPane jScrollPaneForeignTableList = new JScrollPane();
+  private final JViewport jViewportForeignTableList = new JViewport();
+  private final TableModelForeignTableList tableModelForeignTableList =
+      new TableModelForeignTableList();
+  private final JTable jTableForeignTableList = new JTable(tableModelForeignTableList);
   private int selectedRow_jTableForeignTableList;
-  private JSplitPane jSplitPaneDatamodel = new JSplitPane();
-  private JPanel jPanelDatamodelTop = new JPanel();
-  private JPanel jPanelDatamodelDescriptions = new JPanel();
-  private JLabel jLabelDatamodelDescriptions = new JLabel();
-  private JScrollPane jScrollPaneDatamodelDescriptions = new JScrollPane();
-  private KanjiTextArea jTextAreaDatamodelDescriptions = new KanjiTextArea();
-  private JScrollPane jScrollPaneDatamodel = new JScrollPane();
-  private ArrayList<DatamodelEntityBox> datamodelEntityBoxArray = new ArrayList<>();
-  private ArrayList<DatamodelRelationshipLine> datamodelRelationshipLineArray = new ArrayList<>();
-  private ArrayList<org.w3c.dom.Element> relationshipElementArray = new ArrayList<>();
-  private JPanel jPanelDatamodel =
+  private final JSplitPane jSplitPaneDatamodel = new JSplitPane();
+  private final JPanel jPanelDatamodelTop = new JPanel();
+  private final JPanel jPanelDatamodelDescriptions = new JPanel();
+  private final JLabel jLabelDatamodelDescriptions = new JLabel();
+  private final JScrollPane jScrollPaneDatamodelDescriptions = new JScrollPane();
+  private final KanjiTextArea jTextAreaDatamodelDescriptions = new KanjiTextArea();
+  private final JScrollPane jScrollPaneDatamodel = new JScrollPane();
+  private final ArrayList<DatamodelEntityBox> datamodelEntityBoxArray = new ArrayList<>();
+  private final ArrayList<DatamodelRelationshipLine> datamodelRelationshipLineArray =
+      new ArrayList<>();
+  private final ArrayList<org.w3c.dom.Element> relationshipElementArray = new ArrayList<>();
+  private final JPanel jPanelDatamodel =
       new JPanel() {
         private static final long serialVersionUID = 1L;
 
@@ -1049,19 +1057,19 @@ public class Modeler extends JFrame {
       };
   private boolean sizeOfTableOnModelChanged = false;
   private org.w3c.dom.Element draggingKeyElement = null;
-  private DialogAddRelationshipOnDatamodel dialogAddRelationshipOnDatamodel =
+  private final DialogAddRelationshipOnDatamodel dialogAddRelationshipOnDatamodel =
       new DialogAddRelationshipOnDatamodel(this);
-  private DialogEditInstanceOnDatamodel dialogEditInstanceOnDatamodel =
+  private final DialogEditInstanceOnDatamodel dialogEditInstanceOnDatamodel =
       new DialogEditInstanceOnDatamodel(this);
-  private ArrayList<DatamodelEntityBox> datamodelEntityBoxSlideShowArray = new ArrayList<>();
-  private ArrayList<DatamodelRelationshipLine> datamodelRelationshipLineSlideShowArray =
+  private final ArrayList<DatamodelEntityBox> datamodelEntityBoxSlideShowArray = new ArrayList<>();
+  private final ArrayList<DatamodelRelationshipLine> datamodelRelationshipLineSlideShowArray =
       new ArrayList<>();
-  private JDialog jDialogDatamodelSlideShow = new JDialog(this, true);
+  private final JDialog jDialogDatamodelSlideShow = new JDialog(this, true);
   private int datamodelSlideNumber = 0;
   private int datamodelSlideTotalNumber = 0;
   private boolean isShowingInstance = false;
-  private JPanel jPanelDatamodelSlideShow1 = new JPanel();
-  private JPanel jPanelDatamodelSlideShow2 =
+  private final JPanel jPanelDatamodelSlideShow1 = new JPanel();
+  private final JPanel jPanelDatamodelSlideShow2 =
       new JPanel() {
         private static final long serialVersionUID = 1L;
 
@@ -1094,273 +1102,275 @@ public class Modeler extends JFrame {
           }
         }
       };
-  private JLabel jLabelDatamodelSlideShowPageGuide = new JLabel();
+  private final JLabel jLabelDatamodelSlideShowPageGuide = new JLabel();
   private String datamodelPageTitle;
 
   /** Definition components on jPanelTable */
-  private JScrollPane jScrollPaneTable1 = new JScrollPane();
+  private final JScrollPane jScrollPaneTable1 = new JScrollPane();
 
-  private JPanel jPanelTable = new JPanel();
-  private JSplitPane jSplitPaneTable = new JSplitPane();
-  private SortableXeadTreeNodeComboBoxModel sortableComboBoxModelTableType =
+  private final JPanel jPanelTable = new JPanel();
+  private final JSplitPane jSplitPaneTable = new JSplitPane();
+  private final SortableXeadTreeNodeComboBoxModel sortableComboBoxModelTableType =
       new SortableXeadTreeNodeComboBoxModel();
-  private TableModelReadOnlyList tableModelTableUsageList = new TableModelReadOnlyList();
-  private TableModelReadOnlyList tableModelTableForeignUsageList = new TableModelReadOnlyList();
-  private TableModelReadOnlyList tableModelTableReferringFileList = new TableModelReadOnlyList();
-  private JLabel jLabelTableDescriptions = new JLabel();
-  private JPanel jPanelTable4 = new JPanel();
-  private JTextField jTextFieldTablePK = new JTextField();
-  private JLabel jLabelTableType = new JLabel();
-  private JLabel jLabelTableName = new JLabel();
-  private JLabel jLabelTableAlias = new JLabel();
-  private JPanel jPanelTable2 = new JPanel();
-  private JComboBox jComboBoxTableType = new JComboBox(sortableComboBoxModelTableType);
-  private JLabel jLabelTablePK = new JLabel();
-  private KanjiTextField jTextFieldTableName = new KanjiTextField();
-  private JTextField jTextFieldTableAlias = new JTextField();
-  private JLabel jLabelTableSynchronize = new JLabel();
-  private JTextField jTextFieldTableSynchronize = new JTextField();
-  private JButton jButtonTableSynchronize = new JButton();
-  private JPanel jPanelTable1 = new JPanel();
-  private JPanel jPanelTable3 = new JPanel();
-  private JTable jTableTableUsageList = new JTable(tableModelTableUsageList);
+  private final TableModelReadOnlyList tableModelTableUsageList = new TableModelReadOnlyList();
+  private final TableModelReadOnlyList tableModelTableForeignUsageList =
+      new TableModelReadOnlyList();
+  private final TableModelReadOnlyList tableModelTableReferringFileList =
+      new TableModelReadOnlyList();
+  private final JLabel jLabelTableDescriptions = new JLabel();
+  private final JPanel jPanelTable4 = new JPanel();
+  private final JTextField jTextFieldTablePK = new JTextField();
+  private final JLabel jLabelTableType = new JLabel();
+  private final JLabel jLabelTableName = new JLabel();
+  private final JLabel jLabelTableAlias = new JLabel();
+  private final JPanel jPanelTable2 = new JPanel();
+  private final JComboBox jComboBoxTableType = new JComboBox(sortableComboBoxModelTableType);
+  private final JLabel jLabelTablePK = new JLabel();
+  private final KanjiTextField jTextFieldTableName = new KanjiTextField();
+  private final JTextField jTextFieldTableAlias = new JTextField();
+  private final JLabel jLabelTableSynchronize = new JLabel();
+  private final JTextField jTextFieldTableSynchronize = new JTextField();
+  private final JButton jButtonTableSynchronize = new JButton();
+  private final JPanel jPanelTable1 = new JPanel();
+  private final JPanel jPanelTable3 = new JPanel();
+  private final JTable jTableTableUsageList = new JTable(tableModelTableUsageList);
   private int selectedRow_jTableTableUsageList;
-  private JScrollPane jScrollPaneTableForeignUsageList = new JScrollPane();
-  private JTable jTableTableReferringFileList = new JTable(tableModelTableReferringFileList);
-  private JScrollPane jScrollPaneTableReferringFileList = new JScrollPane();
-  private JTabbedPane jTabbedPaneTable = new JTabbedPane();
-  private JTable jTableTableForeignUsageList = new JTable(tableModelTableForeignUsageList);
+  private final JScrollPane jScrollPaneTableForeignUsageList = new JScrollPane();
+  private final JTable jTableTableReferringFileList = new JTable(tableModelTableReferringFileList);
+  private final JScrollPane jScrollPaneTableReferringFileList = new JScrollPane();
+  private final JTabbedPane jTabbedPaneTable = new JTabbedPane();
+  private final JTable jTableTableForeignUsageList = new JTable(tableModelTableForeignUsageList);
   private int selectedRow_jTableTableForeignUsageList;
-  private JScrollPane jScrollPaneTableUsageList = new JScrollPane();
-  private JScrollPane jScrollPaneTableDescriptions = new JScrollPane();
-  private KanjiTextArea jTextAreaTableDescriptions = new KanjiTextArea();
-  private JLabel jLabelTableSortKey = new JLabel();
-  private JTextField jTextFieldTableSortKey = new JTextField();
-  private JScrollPane jScrollPaneTableCreateStatement = new JScrollPane();
-  private JTextArea jTextAreaTableCreateStatement = new JTextArea();
+  private final JScrollPane jScrollPaneTableUsageList = new JScrollPane();
+  private final JScrollPane jScrollPaneTableDescriptions = new JScrollPane();
+  private final KanjiTextArea jTextAreaTableDescriptions = new KanjiTextArea();
+  private final JLabel jLabelTableSortKey = new JLabel();
+  private final JTextField jTextFieldTableSortKey = new JTextField();
+  private final JScrollPane jScrollPaneTableCreateStatement = new JScrollPane();
+  private final JTextArea jTextAreaTableCreateStatement = new JTextArea();
 
   /** Definition components on jPanelTableFieldList */
-  private JPanel jPanelTableFieldList = new JPanel();
+  private final JPanel jPanelTableFieldList = new JPanel();
 
-  private JScrollPane jScrollPaneTableFieldList = new JScrollPane();
-  private JViewport jViewportTableFieldList = new JViewport();
-  private TableModelTableFieldList tableModelTableFieldList = new TableModelTableFieldList();
-  private JTable jTableTableFieldList = new JTable(tableModelTableFieldList);
+  private final JScrollPane jScrollPaneTableFieldList = new JScrollPane();
+  private final JViewport jViewportTableFieldList = new JViewport();
+  private final TableModelTableFieldList tableModelTableFieldList = new TableModelTableFieldList();
+  private final JTable jTableTableFieldList = new JTable(tableModelTableFieldList);
   private int selectedRow_jTableTableFieldList;
   private int targetRow_jTableTableFieldList;
 
   /** Definition components on jPanelTableField */
-  private ArrayList<XeadTreeNode> fieldListNodeToBeRenumbered = new ArrayList<>();
+  private final ArrayList<XeadTreeNode> fieldListNodeToBeRenumbered = new ArrayList<>();
 
-  private JPanel jPanelTableField = new JPanel();
-  private JSplitPane jSplitPaneTableField1 = new JSplitPane();
-  private TableModelReadOnlyList tableModelTableFieldUsageList = new TableModelReadOnlyList();
-  private TableModelReadOnlyList tableModelTableFieldForeignUsageList =
+  private final JPanel jPanelTableField = new JPanel();
+  private final JSplitPane jSplitPaneTableField1 = new JSplitPane();
+  private final TableModelReadOnlyList tableModelTableFieldUsageList = new TableModelReadOnlyList();
+  private final TableModelReadOnlyList tableModelTableFieldForeignUsageList =
       new TableModelReadOnlyList();
-  private JTable jTableTableFieldUsageList = new JTable(tableModelTableFieldUsageList);
+  private final JTable jTableTableFieldUsageList = new JTable(tableModelTableFieldUsageList);
   private int selectedRow_jTableTableFieldUsageList;
-  private JScrollPane jScrollPaneTableFieldForeignUsageList = new JScrollPane();
-  private JTabbedPane jTabbedPaneTableField = new JTabbedPane();
-  private JTable jTableTableFieldForeignUsageList =
+  private final JScrollPane jScrollPaneTableFieldForeignUsageList = new JScrollPane();
+  private final JTabbedPane jTabbedPaneTableField = new JTabbedPane();
+  private final JTable jTableTableFieldForeignUsageList =
       new JTable(tableModelTableFieldForeignUsageList);
   private int selectedRow_jTableTableFieldForeignUsageList;
-  private JScrollPane jScrollPaneTableFieldUsageList = new JScrollPane();
-  private JLabel jLabelTableFieldDescriptions = new JLabel();
-  private JScrollPane jScrollPaneTableField1 = new JScrollPane();
-  private JPanel jPanelTableField1 = new JPanel();
-  private JPanel jPanelTableField2 = new JPanel();
-  private JPanel jPanelTableField3 = new JPanel();
-  private JPanel jPanelTableField4 = new JPanel();
-  private JPanel jPanelTableField5 = new JPanel();
-  private JPanel jPanelTableField6 = new JPanel();
-  private JLabel jLabelTableFieldName = new JLabel();
-  private KanjiTextField jTextFieldTableFieldName = new KanjiTextField();
-  private JScrollPane jScrollPaneTableFieldDescriptions = new JScrollPane();
-  private KanjiTextArea jTextAreaTableFieldDescriptions = new KanjiTextArea();
-  private ButtonGroup buttonGroupTableFieldAttributeType = new ButtonGroup();
-  private JLabel jLabelTableFieldAlias = new JLabel();
-  private JTextField jTextFieldTableFieldAlias = new JTextField();
-  private JLabel jLabelTableFieldAttributeType = new JLabel();
-  private JLabel jLabelTableFieldDataType = new JLabel();
-  private JRadioButton jRadioButtonTableFieldAttributeTypeINHERITED = new JRadioButton();
-  private JRadioButton jRadioButtonTableFieldAttributeTypeNATIVE = new JRadioButton();
-  private JRadioButton jRadioButtonTableFieldAttributeTypeDERIVABLE = new JRadioButton();
-  private JCheckBox jCheckBoxTableFieldNoUpdate = new JCheckBox();
-  private JCheckBox jCheckBoxTableFieldShowOnModel = new JCheckBox();
-  private JLabel jLabelTableFieldDefault = new JLabel();
-  private JTextField jTextFieldTableFieldDefault = new JTextField();
-  private JCheckBox jCheckBoxTableFieldNotNull = new JCheckBox();
-  private JButton jButtonTableFieldDataTypeChange = new JButton();
-  private DataTypePopupMenu dataTypePopupMenu = new DataTypePopupMenu();
-  private JTextField jTextFieldTableFieldDataType = new JTextField();
+  private final JScrollPane jScrollPaneTableFieldUsageList = new JScrollPane();
+  private final JLabel jLabelTableFieldDescriptions = new JLabel();
+  private final JScrollPane jScrollPaneTableField1 = new JScrollPane();
+  private final JPanel jPanelTableField1 = new JPanel();
+  private final JPanel jPanelTableField2 = new JPanel();
+  private final JPanel jPanelTableField3 = new JPanel();
+  private final JPanel jPanelTableField4 = new JPanel();
+  private final JPanel jPanelTableField5 = new JPanel();
+  private final JPanel jPanelTableField6 = new JPanel();
+  private final JLabel jLabelTableFieldName = new JLabel();
+  private final KanjiTextField jTextFieldTableFieldName = new KanjiTextField();
+  private final JScrollPane jScrollPaneTableFieldDescriptions = new JScrollPane();
+  private final KanjiTextArea jTextAreaTableFieldDescriptions = new KanjiTextArea();
+  private final ButtonGroup buttonGroupTableFieldAttributeType = new ButtonGroup();
+  private final JLabel jLabelTableFieldAlias = new JLabel();
+  private final JTextField jTextFieldTableFieldAlias = new JTextField();
+  private final JLabel jLabelTableFieldAttributeType = new JLabel();
+  private final JLabel jLabelTableFieldDataType = new JLabel();
+  private final JRadioButton jRadioButtonTableFieldAttributeTypeINHERITED = new JRadioButton();
+  private final JRadioButton jRadioButtonTableFieldAttributeTypeNATIVE = new JRadioButton();
+  private final JRadioButton jRadioButtonTableFieldAttributeTypeDERIVABLE = new JRadioButton();
+  private final JCheckBox jCheckBoxTableFieldNoUpdate = new JCheckBox();
+  private final JCheckBox jCheckBoxTableFieldShowOnModel = new JCheckBox();
+  private final JLabel jLabelTableFieldDefault = new JLabel();
+  private final JTextField jTextFieldTableFieldDefault = new JTextField();
+  private final JCheckBox jCheckBoxTableFieldNotNull = new JCheckBox();
+  private final JButton jButtonTableFieldDataTypeChange = new JButton();
+  private final DataTypePopupMenu dataTypePopupMenu = new DataTypePopupMenu();
+  private final JTextField jTextFieldTableFieldDataType = new JTextField();
   private String tableFieldDataTypeID = "";
-  private JMenuItem jMenuItemAddDataType = new JMenuItem();
-  private ArrayList<org.w3c.dom.Element> newlyAddedDataTypeElementList = new ArrayList<>();
+  private final JMenuItem jMenuItemAddDataType = new JMenuItem();
+  private final ArrayList<org.w3c.dom.Element> newlyAddedDataTypeElementList = new ArrayList<>();
 
   /** Definition components on jPanelTableKeyList */
-  private JPanel jPanelTableKeyList = new JPanel();
+  private final JPanel jPanelTableKeyList = new JPanel();
 
-  private JScrollPane jScrollPaneTableKeyList = new JScrollPane();
-  private TableModelReadOnlyList tableModelTableKeyList = new TableModelReadOnlyList();
-  private JTable jTableTableKeyList = new JTable(tableModelTableKeyList);
+  private final JScrollPane jScrollPaneTableKeyList = new JScrollPane();
+  private final TableModelReadOnlyList tableModelTableKeyList = new TableModelReadOnlyList();
+  private final JTable jTableTableKeyList = new JTable(tableModelTableKeyList);
   private int selectedRow_jTableTableKeyList;
 
   /** Definition components on jPanelTableKey */
-  private JPanel jPanelTableKey = new JPanel();
+  private final JPanel jPanelTableKey = new JPanel();
 
-  private JPanel jPanelTableKey1 = new JPanel();
-  private JLabel jLabelKeyType = new JLabel();
-  private JTextField jTextFieldTableKeyType = new JTextField();
-  private JLabel jLabelTableKeySortKey = new JLabel();
-  private JTextField jTextFieldTableKeySortKey = new JTextField();
-  private JPanel jPanelTableKey6 = new JPanel();
-  private JSplitPane jSplitPaneTableKey = new JSplitPane();
-  private JScrollPane jScrollPaneTableKeyFieldList = new JScrollPane();
-  private JViewport jViewportTableKeyFieldList = new JViewport();
-  private JPanel jPanelTableKey2 = new JPanel();
-  private TableModelReadOnlyList tableModelTableKeyFieldList = new TableModelReadOnlyList();
-  private JTable jTableTableKeyFieldList = new JTable(tableModelTableKeyFieldList);
+  private final JPanel jPanelTableKey1 = new JPanel();
+  private final JLabel jLabelKeyType = new JLabel();
+  private final JTextField jTextFieldTableKeyType = new JTextField();
+  private final JLabel jLabelTableKeySortKey = new JLabel();
+  private final JTextField jTextFieldTableKeySortKey = new JTextField();
+  private final JPanel jPanelTableKey6 = new JPanel();
+  private final JSplitPane jSplitPaneTableKey = new JSplitPane();
+  private final JScrollPane jScrollPaneTableKeyFieldList = new JScrollPane();
+  private final JViewport jViewportTableKeyFieldList = new JViewport();
+  private final JPanel jPanelTableKey2 = new JPanel();
+  private final TableModelReadOnlyList tableModelTableKeyFieldList = new TableModelReadOnlyList();
+  private final JTable jTableTableKeyFieldList = new JTable(tableModelTableKeyFieldList);
   private int selectedRow_jTableTableKeyFieldList;
   private int targetRow_jTableTableKeyFieldList;
-  private JLabel jLabelTableKeyFieldList = new JLabel();
-  private JPanel jPanelTableKey4 = new JPanel();
-  private JPanel jPanelTableKey5 = new JPanel();
-  private JLabel jLabelRelationshipList = new JLabel();
-  private JScrollPane jScrollPaneRelationshipList = new JScrollPane();
-  private JViewport jViewportRelationshipList = new JViewport();
+  private final JLabel jLabelTableKeyFieldList = new JLabel();
+  private final JPanel jPanelTableKey4 = new JPanel();
+  private final JPanel jPanelTableKey5 = new JPanel();
+  private final JLabel jLabelRelationshipList = new JLabel();
+  private final JScrollPane jScrollPaneRelationshipList = new JScrollPane();
+  private final JViewport jViewportRelationshipList = new JViewport();
   private TableModelRelationshipList tableModelRelationshipList = new TableModelRelationshipList();
-  private JTable jTableRelationshipList = new JTable(tableModelRelationshipList);
+  private final JTable jTableRelationshipList = new JTable(tableModelRelationshipList);
   private int selectedRow_jTableRelationshipList;
-  private JPanel jPanelTableKey3 = new JPanel();
+  private final JPanel jPanelTableKey3 = new JPanel();
   private XeadTreeNode tableKeyNode;
   private int lastIDOfRelationship;
 
   /** Definition components on jPanelFunctionList */
-  private JPanel jPanelFunctionList = new JPanel();
+  private final JPanel jPanelFunctionList = new JPanel();
 
-  private JTabbedPane jTabbedPaneFunctionList = new JTabbedPane();
-  private JScrollPane jScrollPaneFunctionList = new JScrollPane();
-  private JViewport jViewportFunctionList = new JViewport();
-  private TableModelReadOnlyList tableModelFunctionList = new TableModelReadOnlyList();
-  private JTable jTableFunctionList = new JTable(tableModelFunctionList);
+  private final JTabbedPane jTabbedPaneFunctionList = new JTabbedPane();
+  private final JScrollPane jScrollPaneFunctionList = new JScrollPane();
+  private final JViewport jViewportFunctionList = new JViewport();
+  private final TableModelReadOnlyList tableModelFunctionList = new TableModelReadOnlyList();
+  private final JTable jTableFunctionList = new JTable(tableModelFunctionList);
   private int selectedRow_jTableFunctionList;
-  private JScrollPane jScrollPaneForeignFunctionList = new JScrollPane();
-  private JViewport jViewportForeignFunctionList = new JViewport();
-  private TableModelReadOnlyList tableModelForeignFunctionList = new TableModelReadOnlyList();
-  private JTable jTableForeignFunctionList = new JTable(tableModelForeignFunctionList);
+  private final JScrollPane jScrollPaneForeignFunctionList = new JScrollPane();
+  private final JViewport jViewportForeignFunctionList = new JViewport();
+  private final TableModelReadOnlyList tableModelForeignFunctionList = new TableModelReadOnlyList();
+  private final JTable jTableForeignFunctionList = new JTable(tableModelForeignFunctionList);
   private int selectedRow_jTableForeignFunctionList;
 
   /** Definition components on jPanelFunction */
-  private JScrollPane jScrollPaneFunction1 = new JScrollPane();
+  private final JScrollPane jScrollPaneFunction1 = new JScrollPane();
 
-  private JPanel jPanelFunction = new JPanel();
-  private JPanel jPanelFunction1 = new JPanel();
-  private JPanel jPanelFunction2 = new JPanel();
-  private JPanel jPanelFunction3 = new JPanel();
-  private JPanel jPanelFunction4 = new JPanel();
-  private TableModelReadOnlyList tableModelFunctionIOList = new TableModelReadOnlyList();
+  private final JPanel jPanelFunction = new JPanel();
+  private final JPanel jPanelFunction1 = new JPanel();
+  private final JPanel jPanelFunction2 = new JPanel();
+  private final JPanel jPanelFunction3 = new JPanel();
+  private final JPanel jPanelFunction4 = new JPanel();
+  private final TableModelReadOnlyList tableModelFunctionIOList = new TableModelReadOnlyList();
   private TableModelFunctionsUsedByThis tableModelFunctionsUsedByThis =
       new TableModelFunctionsUsedByThis();
-  private TableModelReadOnlyList tableModelFunctionsUsingThis = new TableModelReadOnlyList();
-  private TableModelReadOnlyList tableModelTasksUsingThis = new TableModelReadOnlyList();
-  private JSplitPane jSplitPaneFunction = new JSplitPane();
-  private JTable jTableFunctionIOList = new JTable(tableModelFunctionIOList);
+  private final TableModelReadOnlyList tableModelFunctionsUsingThis = new TableModelReadOnlyList();
+  private final TableModelReadOnlyList tableModelTasksUsingThis = new TableModelReadOnlyList();
+  private final JSplitPane jSplitPaneFunction = new JSplitPane();
+  private final JTable jTableFunctionIOList = new JTable(tableModelFunctionIOList);
   private int selectedRow_jTableFunctionIOList;
-  private JTable jTableFunctionsUsingThis = new JTable(tableModelFunctionsUsingThis);
+  private final JTable jTableFunctionsUsingThis = new JTable(tableModelFunctionsUsingThis);
   private int selectedRow_jTableFunctionsUsingThis;
-  private JTable jTableTasksUsingThis = new JTable(tableModelTasksUsingThis);
+  private final JTable jTableTasksUsingThis = new JTable(tableModelTasksUsingThis);
   private int selectedRow_jTableTasksUsingThis;
-  private JScrollPane jScrollPaneTasksUsingThis = new JScrollPane();
-  private JTable jTableFunctionsUsedByThis = new JTable(tableModelFunctionsUsedByThis);
+  private final JScrollPane jScrollPaneTasksUsingThis = new JScrollPane();
+  private final JTable jTableFunctionsUsedByThis = new JTable(tableModelFunctionsUsedByThis);
   private int selectedRow_jTableFunctionsUsedByThis;
   private int targetRow_jTableFunctionsUsedByThis;
-  private JTabbedPane jTabbedPaneFunction = new JTabbedPane();
-  private JScrollPane jScrollPaneFunctionsUsedByThis = new JScrollPane();
-  private JViewport jViewportFunctionsUsedByThis = new JViewport();
-  private JScrollPane jScrollPaneFunctionsUsingThis = new JScrollPane();
-  private JScrollPane jScrollPaneFunctionIOList = new JScrollPane();
-  private JViewport jViewportFunctionIOList = new JViewport();
-  private JScrollPane jScrollPaneFunctionDescriptions = new JScrollPane();
-  private KanjiTextArea jTextAreaFunctionDescriptions = new KanjiTextArea();
-  private JLabel jLabelFunctionSortKey = new JLabel();
-  private KanjiTextField jTextFieldFunctionParameters = new KanjiTextField();
-  private KanjiTextField jTextFieldFunctionReturn = new KanjiTextField();
-  private JTextField jTextFieldFunctionSortKey = new JTextField();
-  private JComboBox jComboBoxFunctionDocFile = new JComboBox();
+  private final JTabbedPane jTabbedPaneFunction = new JTabbedPane();
+  private final JScrollPane jScrollPaneFunctionsUsedByThis = new JScrollPane();
+  private final JViewport jViewportFunctionsUsedByThis = new JViewport();
+  private final JScrollPane jScrollPaneFunctionsUsingThis = new JScrollPane();
+  private final JScrollPane jScrollPaneFunctionIOList = new JScrollPane();
+  private final JViewport jViewportFunctionIOList = new JViewport();
+  private final JScrollPane jScrollPaneFunctionDescriptions = new JScrollPane();
+  private final KanjiTextArea jTextAreaFunctionDescriptions = new KanjiTextArea();
+  private final JLabel jLabelFunctionSortKey = new JLabel();
+  private final KanjiTextField jTextFieldFunctionParameters = new KanjiTextField();
+  private final KanjiTextField jTextFieldFunctionReturn = new KanjiTextField();
+  private final JTextField jTextFieldFunctionSortKey = new JTextField();
+  private final JComboBox jComboBoxFunctionDocFile = new JComboBox();
   private String functionDocFile = "";
-  private ArrayList<String> functionDocFileList = new ArrayList<>();
-  private JButton jButtonFunctionDocFile = new JButton();
-  private SortableXeadTreeNodeComboBoxModel sortableComboBoxModelFunctionType =
+  private final ArrayList<String> functionDocFileList = new ArrayList<>();
+  private final JButton jButtonFunctionDocFile = new JButton();
+  private final SortableXeadTreeNodeComboBoxModel sortableComboBoxModelFunctionType =
       new SortableXeadTreeNodeComboBoxModel();
-  private JComboBox jComboBoxFunctionType = new JComboBox(sortableComboBoxModelFunctionType);
-  private KanjiTextField jTextFieldFunctionName = new KanjiTextField();
-  private KanjiTextField jTextFieldFunctionSummary = new KanjiTextField();
-  private JLabel jLabelFunctionType = new JLabel();
-  private JLabel jLabelFunctionName = new JLabel();
-  private JLabel jLabelFunctionParameters = new JLabel();
-  private JLabel jLabelFunctionSummary = new JLabel();
-  private JLabel jLabelFunctionDocFile = new JLabel();
-  private JLabel jLabelFunctionDescriptions = new JLabel();
+  private final JComboBox jComboBoxFunctionType = new JComboBox(sortableComboBoxModelFunctionType);
+  private final KanjiTextField jTextFieldFunctionName = new KanjiTextField();
+  private final KanjiTextField jTextFieldFunctionSummary = new KanjiTextField();
+  private final JLabel jLabelFunctionType = new JLabel();
+  private final JLabel jLabelFunctionName = new JLabel();
+  private final JLabel jLabelFunctionParameters = new JLabel();
+  private final JLabel jLabelFunctionSummary = new JLabel();
+  private final JLabel jLabelFunctionDocFile = new JLabel();
+  private final JLabel jLabelFunctionDescriptions = new JLabel();
 
   /** Definition components on jPanelIOPanel */
-  private JPanel jPanelIOPanel = new JPanel();
+  private final JPanel jPanelIOPanel = new JPanel();
 
-  private JSplitPane jSplitPaneIOPanel1 = new JSplitPane();
-  private JSplitPane jSplitPaneIOPanel2 = new JSplitPane();
-  private JLabel jLabelIOPanelName = new JLabel();
-  private JPanel jPanelIOPanel1 = new JPanel();
-  private JPanel jPanelIOPanel3 = new JPanel();
-  private JPanel jPanelIOPanel2 = new JPanel();
-  private JTextField jTextFieldIOPanelSortKey = new JTextField();
-  private JScrollPane jScrollPaneIOPanelDescriptions = new JScrollPane();
-  private JLabel jLabelIOPanelSortKey = new JLabel();
-  private KanjiTextField jTextFieldIOPanelName = new KanjiTextField();
-  private JPanel jPanelIOPanel4 = new JPanel();
-  private JLabel jLabelIOPanelDescriptions = new JLabel();
-  private KanjiTextArea jTextAreaIOPanelDescriptions = new KanjiTextArea();
+  private final JSplitPane jSplitPaneIOPanel1 = new JSplitPane();
+  private final JSplitPane jSplitPaneIOPanel2 = new JSplitPane();
+  private final JLabel jLabelIOPanelName = new JLabel();
+  private final JPanel jPanelIOPanel1 = new JPanel();
+  private final JPanel jPanelIOPanel3 = new JPanel();
+  private final JPanel jPanelIOPanel2 = new JPanel();
+  private final JTextField jTextFieldIOPanelSortKey = new JTextField();
+  private final JScrollPane jScrollPaneIOPanelDescriptions = new JScrollPane();
+  private final JLabel jLabelIOPanelSortKey = new JLabel();
+  private final KanjiTextField jTextFieldIOPanelName = new KanjiTextField();
+  private final JPanel jPanelIOPanel4 = new JPanel();
+  private final JLabel jLabelIOPanelDescriptions = new JLabel();
+  private final KanjiTextArea jTextAreaIOPanelDescriptions = new KanjiTextArea();
   private TableModelEditableList tableModelIOPanelFieldList = new TableModelEditableList();
-  private JTable jTableIOPanelFieldList = new JTable(tableModelIOPanelFieldList);
+  private final JTable jTableIOPanelFieldList = new JTable(tableModelIOPanelFieldList);
   private int selectedRow_jTableIOPanelFieldList;
-  private JScrollPane jScrollPaneIOPanelFieldList = new JScrollPane();
-  private JPanel jPanelIOPanel5 = new JPanel();
-  private JTextPane jTextPaneIOPanelImage = new JTextPane();
+  private final JScrollPane jScrollPaneIOPanelFieldList = new JScrollPane();
+  private final JPanel jPanelIOPanel5 = new JPanel();
+  private final JTextPane jTextPaneIOPanelImage = new JTextPane();
   private ImageIcon imageFunctionIO = null;
-  private JLabel jLabelIOImageIcon = new JLabel();
-  private JScrollPane jScrollPaneIOPanelImage1 = new JScrollPane();
-  private JScrollPane jScrollPaneIOPanelImage2 = new JScrollPane();
-  private JPanel jPanelIOPanelImage = new JPanel();
-  private JPanel jPanelIOPanel6 = new JPanel();
-  private JLabel jLabelIOPanelImage = new JLabel();
-  private JLabel jLabelIOPanelCaretPosition = new JLabel();
+  private final JLabel jLabelIOImageIcon = new JLabel();
+  private final JScrollPane jScrollPaneIOPanelImage1 = new JScrollPane();
+  private final JScrollPane jScrollPaneIOPanelImage2 = new JScrollPane();
+  private final JPanel jPanelIOPanelImage = new JPanel();
+  private final JPanel jPanelIOPanel6 = new JPanel();
+  private final JLabel jLabelIOPanelImage = new JLabel();
+  private final JLabel jLabelIOPanelCaretPosition = new JLabel();
   private int iOPanelCharLengthX, iOPanelCharLengthY;
 
   /** Definition components on jPanelIOSpool */
-  private JPanel jPanelIOSpool = new JPanel();
+  private final JPanel jPanelIOSpool = new JPanel();
 
-  private JSplitPane jSplitPaneIOSpool1 = new JSplitPane();
-  private JSplitPane jSplitPaneIOSpool2 = new JSplitPane();
-  private JLabel jLabelIOSpoolName = new JLabel();
-  private JPanel jPanelIOSpool1 = new JPanel();
-  private JPanel jPanelIOSpool3 = new JPanel();
-  private JTextField jTextFieldIOSpoolSortKey = new JTextField();
-  private JScrollPane jScrollPaneIOSpoolDescriptions = new JScrollPane();
-  private JPanel jPanelIOSpool2 = new JPanel();
-  private JLabel jLabelIOSpoolSortKey = new JLabel();
-  private KanjiTextField jTextFieldIOSpoolName = new KanjiTextField();
-  private JPanel jPanelIOSpool4 = new JPanel();
-  private KanjiTextArea jTextAreaIOSpoolDescriptions = new KanjiTextArea();
-  private JLabel jLabelIOSpoolDescriptions = new JLabel();
+  private final JSplitPane jSplitPaneIOSpool1 = new JSplitPane();
+  private final JSplitPane jSplitPaneIOSpool2 = new JSplitPane();
+  private final JLabel jLabelIOSpoolName = new JLabel();
+  private final JPanel jPanelIOSpool1 = new JPanel();
+  private final JPanel jPanelIOSpool3 = new JPanel();
+  private final JTextField jTextFieldIOSpoolSortKey = new JTextField();
+  private final JScrollPane jScrollPaneIOSpoolDescriptions = new JScrollPane();
+  private final JPanel jPanelIOSpool2 = new JPanel();
+  private final JLabel jLabelIOSpoolSortKey = new JLabel();
+  private final KanjiTextField jTextFieldIOSpoolName = new KanjiTextField();
+  private final JPanel jPanelIOSpool4 = new JPanel();
+  private final KanjiTextArea jTextAreaIOSpoolDescriptions = new KanjiTextArea();
+  private final JLabel jLabelIOSpoolDescriptions = new JLabel();
   private TableModelEditableList tableModelIOSpoolFieldList = new TableModelEditableList();
-  private JTable jTableIOSpoolFieldList = new JTable(tableModelIOSpoolFieldList);
+  private final JTable jTableIOSpoolFieldList = new JTable(tableModelIOSpoolFieldList);
   private int selectedRow_jTableIOSpoolFieldList;
-  private JScrollPane jScrollPaneIOSpoolFieldList = new JScrollPane();
-  private JPanel jPanelIOSpool6 = new JPanel();
-  private JScrollPane jScrollPaneIOSpoolImage1 = new JScrollPane();
-  private JScrollPane jScrollPaneIOSpoolImage2 = new JScrollPane();
-  private JLabel jLabelIOSpoolImage = new JLabel();
-  private JPanel jPanelIOSpool5 = new JPanel();
-  private JTextPane jTextPaneIOSpoolImage = new JTextPane();
-  private Action actionUnderlineIOPanelImage =
+  private final JScrollPane jScrollPaneIOSpoolFieldList = new JScrollPane();
+  private final JPanel jPanelIOSpool6 = new JPanel();
+  private final JScrollPane jScrollPaneIOSpoolImage1 = new JScrollPane();
+  private final JScrollPane jScrollPaneIOSpoolImage2 = new JScrollPane();
+  private final JLabel jLabelIOSpoolImage = new JLabel();
+  private final JPanel jPanelIOSpool5 = new JPanel();
+  private final JTextPane jTextPaneIOSpoolImage = new JTextPane();
+  private final Action actionUnderlineIOPanelImage =
       new AbstractAction() {
         private static final long serialVersionUID = 1L;
 
@@ -1368,7 +1378,7 @@ public class Modeler extends JFrame {
           jMenuItemIOImageUnderlineSelectedChar_actionPerformed(null);
         }
       };
-  private Action actionResetAttrIOPanelImage =
+  private final Action actionResetAttrIOPanelImage =
       new AbstractAction() {
         private static final long serialVersionUID = 1L;
 
@@ -1376,7 +1386,7 @@ public class Modeler extends JFrame {
           jMenuItemIOImageCancelSelectedCharStyle_actionPerformed(null);
         }
       };
-  private Action actionChangeBackgroundToWhite =
+  private final Action actionChangeBackgroundToWhite =
       new AbstractAction() {
         private static final long serialVersionUID = 1L;
 
@@ -1385,145 +1395,158 @@ public class Modeler extends JFrame {
         }
       };
   private Border borderOriginal4;
-  private JLabel jLabelIOSpoolCaretPosition = new JLabel();
-  private JPanel jPanelIOSpoolImage = new JPanel();
+  private final JLabel jLabelIOSpoolCaretPosition = new JLabel();
+  private final JPanel jPanelIOSpoolImage = new JPanel();
   private int iOSpoolCharLengthX, iOSpoolCharLengthY;
 
   /** Definition components on jPanelIOTable */
-  private JPanel jPanelIOTable = new JPanel();
+  private final JPanel jPanelIOTable = new JPanel();
 
-  private JSplitPane jSplitPaneIOTable = new JSplitPane();
-  private JScrollPane jScrollPaneIOTableDescriptions = new JScrollPane();
-  private JPanel jPanelIOTable2 = new JPanel();
-  private JTextField jTextFieldIOTableName = new JTextField();
-  private JPanel jPanelIOTable1 = new JPanel();
-  private JLabel jLabelIOTableSortKey = new JLabel();
-  private JTextField jTextFieldIOTableSortKey = new JTextField();
-  private JLabel jLabelIOTablePK = new JLabel();
-  private JTextField jTextFieldIOTablePK = new JTextField();
-  private JLabel jLabelIOTablePosition = new JLabel();
-  private JComboBox jComboBoxIOTablePosition = new JComboBox();
-  private JLabel jLabelIOTableDescriptions = new JLabel();
-  private KanjiTextArea jTextAreaIOTableDescriptions = new KanjiTextArea();
-  private JPanel jPanelIOTable3 = new JPanel();
-  private JPanel jPanelIOTable5 = new JPanel();
-  private JLabel jLabelIOTableName = new JLabel();
-  private JScrollPane jScrollPaneIOTableFieldList = new JScrollPane();
+  private final JSplitPane jSplitPaneIOTable = new JSplitPane();
+  private final JScrollPane jScrollPaneIOTableDescriptions = new JScrollPane();
+  private final JPanel jPanelIOTable2 = new JPanel();
+  private final JTextField jTextFieldIOTableName = new JTextField();
+  private final JPanel jPanelIOTable1 = new JPanel();
+  private final JLabel jLabelIOTableSortKey = new JLabel();
+  private final JTextField jTextFieldIOTableSortKey = new JTextField();
+  private final JLabel jLabelIOTablePK = new JLabel();
+  private final JTextField jTextFieldIOTablePK = new JTextField();
+  private final JLabel jLabelIOTablePosition = new JLabel();
+  private final JComboBox jComboBoxIOTablePosition = new JComboBox();
+  private final JLabel jLabelIOTableDescriptions = new JLabel();
+  private final KanjiTextArea jTextAreaIOTableDescriptions = new KanjiTextArea();
+  private final JPanel jPanelIOTable3 = new JPanel();
+  private final JPanel jPanelIOTable5 = new JPanel();
+  private final JLabel jLabelIOTableName = new JLabel();
+  private final JScrollPane jScrollPaneIOTableFieldList = new JScrollPane();
   private TableModelIOTableFieldList tableModelIOTableFieldList = new TableModelIOTableFieldList();
-  private JTable jTableIOTableFieldList = new JTable(tableModelIOTableFieldList);
-  private JLabel jLabelIOTableID = new JLabel();
-  private JTextField jTextFieldIOTableID = new JTextField();
-  private JLabel jLabelIOTableNameExtension = new JLabel();
-  private JTextField jTextFieldIOTableNameExtension = new JTextField();
-  private JLabel jLabelIOTableCRUD = new JLabel();
-  private JPanel jPanelIOTable4 = new JPanel();
-  private JCheckBox jCheckBoxIOTableC = new JCheckBox();
-  private JCheckBox jCheckBoxIOTableR = new JCheckBox();
-  private JCheckBox jCheckBoxIOTableU = new JCheckBox();
-  private JCheckBox jCheckBoxIOTableD = new JCheckBox();
-  private JButton jButtonIOTableJump = new JButton();
+  private final JTable jTableIOTableFieldList = new JTable(tableModelIOTableFieldList);
+  private final JLabel jLabelIOTableID = new JLabel();
+  private final JTextField jTextFieldIOTableID = new JTextField();
+  private final JLabel jLabelIOTableNameExtension = new JLabel();
+  private final JTextField jTextFieldIOTableNameExtension = new JTextField();
+  private final JLabel jLabelIOTableCRUD = new JLabel();
+  private final JPanel jPanelIOTable4 = new JPanel();
+  private final JCheckBox jCheckBoxIOTableC = new JCheckBox();
+  private final JCheckBox jCheckBoxIOTableR = new JCheckBox();
+  private final JCheckBox jCheckBoxIOTableU = new JCheckBox();
+  private final JCheckBox jCheckBoxIOTableD = new JCheckBox();
+  private final JButton jButtonIOTableJump = new JButton();
   private int selectedRow_jTableIOTableFieldList;
 
   /** PopUp-Menu for editing IO Image(IOPanel and IOSpool) */
-  private JPopupMenu jPopupMenuIOImage = new JPopupMenu();
+  private final JPopupMenu jPopupMenuIOImage = new JPopupMenu();
 
-  private JMenuItem jMenuItemIOImageUndo = new JMenuItem();
-  private JMenuItem jMenuItemIOImageRedo = new JMenuItem();
-  private JMenuItem jMenuItemIOImageCut = new JMenuItem();
-  private JMenuItem jMenuItemIOImageChangeFormSize = new JMenuItem();
-  private JMenuItem jMenuItemIOImageCopy = new JMenuItem();
-  private JMenuItem jMenuItemIOImagePaste = new JMenuItem();
-  private JMenuItem jMenuItemIOImageDelete = new JMenuItem();
-  private JMenuItem jMenuItemIOImageSelectAll = new JMenuItem();
-  private JMenuItem jMenuItemIOImageUnderlineSelectedChar = new JMenuItem();
-  private JMenuItem jMenuItemIOImageCancelUnderline = new JMenuItem();
-  private JMenuItem jMenuItemIOImageBlockSelect = new JMenuItem();
-  private JMenuItem jMenuItemIOImageCancelSelectedCharStyle = new JMenuItem();
-  private JMenu jMenuIOImageChangeBackgroundColor = new JMenu();
-  private JCheckBoxMenuItem jMenuItemIOImageChangeBackgroundColorToBlack = new JCheckBoxMenuItem();
-  private JCheckBoxMenuItem jMenuItemIOImageChangeBackgroundColorToWhite = new JCheckBoxMenuItem();
-  private JCheckBoxMenuItem jMenuItemIOImageChangeBackgroundColorToLightGray =
+  private final JMenuItem jMenuItemIOImageUndo = new JMenuItem();
+  private final JMenuItem jMenuItemIOImageRedo = new JMenuItem();
+  private final JMenuItem jMenuItemIOImageCut = new JMenuItem();
+  private final JMenuItem jMenuItemIOImageChangeFormSize = new JMenuItem();
+  private final JMenuItem jMenuItemIOImageCopy = new JMenuItem();
+  private final JMenuItem jMenuItemIOImagePaste = new JMenuItem();
+  private final JMenuItem jMenuItemIOImageDelete = new JMenuItem();
+  private final JMenuItem jMenuItemIOImageSelectAll = new JMenuItem();
+  private final JMenuItem jMenuItemIOImageUnderlineSelectedChar = new JMenuItem();
+  private final JMenuItem jMenuItemIOImageCancelUnderline = new JMenuItem();
+  private final JMenuItem jMenuItemIOImageBlockSelect = new JMenuItem();
+  private final JMenuItem jMenuItemIOImageCancelSelectedCharStyle = new JMenuItem();
+  private final JMenu jMenuIOImageChangeBackgroundColor = new JMenu();
+  private final JCheckBoxMenuItem jMenuItemIOImageChangeBackgroundColorToBlack =
       new JCheckBoxMenuItem();
-  private JCheckBoxMenuItem jMenuItemIOImageChangeBackgroundColorToGray = new JCheckBoxMenuItem();
-  private JCheckBoxMenuItem jMenuItemIOImageChangeBackgroundColorToControlColor =
+  private final JCheckBoxMenuItem jMenuItemIOImageChangeBackgroundColorToWhite =
       new JCheckBoxMenuItem();
-  private JCheckBoxMenuItem jMenuItemIOImageChangeBackgroundColorToRed = new JCheckBoxMenuItem();
-  private JCheckBoxMenuItem jMenuItemIOImageChangeBackgroundColorToPink = new JCheckBoxMenuItem();
-  private JCheckBoxMenuItem jMenuItemIOImageChangeBackgroundColorToOrange = new JCheckBoxMenuItem();
-  private JCheckBoxMenuItem jMenuItemIOImageChangeBackgroundColorToYellow = new JCheckBoxMenuItem();
-  private JCheckBoxMenuItem jMenuItemIOImageChangeBackgroundColorToGreen = new JCheckBoxMenuItem();
-  private JCheckBoxMenuItem jMenuItemIOImageChangeBackgroundColorToBlue = new JCheckBoxMenuItem();
-  private JCheckBoxMenuItem jMenuItemIOImageChangeBackgroundColorToCyan = new JCheckBoxMenuItem();
-  private JCheckBoxMenuItem jMenuItemIOImageChangeBackgroundColorToMagenta =
+  private final JCheckBoxMenuItem jMenuItemIOImageChangeBackgroundColorToLightGray =
       new JCheckBoxMenuItem();
-  private JMenu jMenuIOImageChangeSelectedBackgroundColor = new JMenu();
-  private JMenuItem jMenuItemIOImageChangeSelectedBackgroundColorToBlack = new JMenuItem();
-  private JMenuItem jMenuItemIOImageChangeSelectedBackgroundColorToWhite = new JMenuItem();
-  private JMenuItem jMenuItemIOImageChangeSelectedBackgroundColorToLightGray = new JMenuItem();
-  private JMenuItem jMenuItemIOImageChangeSelectedBackgroundColorToGray = new JMenuItem();
-  private JMenuItem jMenuItemIOImageChangeSelectedBackgroundColorToControlColor = new JMenuItem();
-  private JMenuItem jMenuItemIOImageChangeSelectedBackgroundColorToRed = new JMenuItem();
-  private JMenuItem jMenuItemIOImageChangeSelectedBackgroundColorToPink = new JMenuItem();
-  private JMenuItem jMenuItemIOImageChangeSelectedBackgroundColorToOrange = new JMenuItem();
-  private JMenuItem jMenuItemIOImageChangeSelectedBackgroundColorToYellow = new JMenuItem();
-  private JMenuItem jMenuItemIOImageChangeSelectedBackgroundColorToGreen = new JMenuItem();
-  private JMenuItem jMenuItemIOImageChangeSelectedBackgroundColorToBlue = new JMenuItem();
-  private JMenuItem jMenuItemIOImageChangeSelectedBackgroundColorToCyan = new JMenuItem();
-  private JMenuItem jMenuItemIOImageChangeSelectedBackgroundColorToMagenta = new JMenuItem();
-  private JMenu jMenuIOImageChangeSelectedCharColor = new JMenu();
-  private JMenuItem jMenuItemIOImageChangeSelectedCharColorToBlack = new JMenuItem();
-  private JMenuItem jMenuItemIOImageChangeSelectedCharColorToWhite = new JMenuItem();
-  private JMenuItem jMenuItemIOImageChangeSelectedCharColorToLightGray = new JMenuItem();
-  private JMenuItem jMenuItemIOImageChangeSelectedCharColorToGray = new JMenuItem();
-  private JMenuItem jMenuItemIOImageChangeSelectedCharColorToControlColor = new JMenuItem();
-  private JMenuItem jMenuItemIOImageChangeSelectedCharColorToRed = new JMenuItem();
-  private JMenuItem jMenuItemIOImageChangeSelectedCharColorToPink = new JMenuItem();
-  private JMenuItem jMenuItemIOImageChangeSelectedCharColorToOrange = new JMenuItem();
-  private JMenuItem jMenuItemIOImageChangeSelectedCharColorToYellow = new JMenuItem();
-  private JMenuItem jMenuItemIOImageChangeSelectedCharColorToGreen = new JMenuItem();
-  private JMenuItem jMenuItemIOImageChangeSelectedCharColorToBlue = new JMenuItem();
-  private JMenuItem jMenuItemIOImageChangeSelectedCharColorToCyan = new JMenuItem();
-  private JMenuItem jMenuItemIOImageChangeSelectedCharColorToMagenta = new JMenuItem();
-  private JCheckBoxMenuItem jMenuItemIOImageSearchImageFile = new JCheckBoxMenuItem();
-  private JMenuItem jMenuItemIOImageCaptureImage = new JMenuItem();
-  private JMenuItem jMenuItemIOImagePrintImage = new JMenuItem();
+  private final JCheckBoxMenuItem jMenuItemIOImageChangeBackgroundColorToGray =
+      new JCheckBoxMenuItem();
+  private final JCheckBoxMenuItem jMenuItemIOImageChangeBackgroundColorToControlColor =
+      new JCheckBoxMenuItem();
+  private final JCheckBoxMenuItem jMenuItemIOImageChangeBackgroundColorToRed =
+      new JCheckBoxMenuItem();
+  private final JCheckBoxMenuItem jMenuItemIOImageChangeBackgroundColorToPink =
+      new JCheckBoxMenuItem();
+  private final JCheckBoxMenuItem jMenuItemIOImageChangeBackgroundColorToOrange =
+      new JCheckBoxMenuItem();
+  private final JCheckBoxMenuItem jMenuItemIOImageChangeBackgroundColorToYellow =
+      new JCheckBoxMenuItem();
+  private final JCheckBoxMenuItem jMenuItemIOImageChangeBackgroundColorToGreen =
+      new JCheckBoxMenuItem();
+  private final JCheckBoxMenuItem jMenuItemIOImageChangeBackgroundColorToBlue =
+      new JCheckBoxMenuItem();
+  private final JCheckBoxMenuItem jMenuItemIOImageChangeBackgroundColorToCyan =
+      new JCheckBoxMenuItem();
+  private final JCheckBoxMenuItem jMenuItemIOImageChangeBackgroundColorToMagenta =
+      new JCheckBoxMenuItem();
+  private final JMenu jMenuIOImageChangeSelectedBackgroundColor = new JMenu();
+  private final JMenuItem jMenuItemIOImageChangeSelectedBackgroundColorToBlack = new JMenuItem();
+  private final JMenuItem jMenuItemIOImageChangeSelectedBackgroundColorToWhite = new JMenuItem();
+  private final JMenuItem jMenuItemIOImageChangeSelectedBackgroundColorToLightGray =
+      new JMenuItem();
+  private final JMenuItem jMenuItemIOImageChangeSelectedBackgroundColorToGray = new JMenuItem();
+  private final JMenuItem jMenuItemIOImageChangeSelectedBackgroundColorToControlColor =
+      new JMenuItem();
+  private final JMenuItem jMenuItemIOImageChangeSelectedBackgroundColorToRed = new JMenuItem();
+  private final JMenuItem jMenuItemIOImageChangeSelectedBackgroundColorToPink = new JMenuItem();
+  private final JMenuItem jMenuItemIOImageChangeSelectedBackgroundColorToOrange = new JMenuItem();
+  private final JMenuItem jMenuItemIOImageChangeSelectedBackgroundColorToYellow = new JMenuItem();
+  private final JMenuItem jMenuItemIOImageChangeSelectedBackgroundColorToGreen = new JMenuItem();
+  private final JMenuItem jMenuItemIOImageChangeSelectedBackgroundColorToBlue = new JMenuItem();
+  private final JMenuItem jMenuItemIOImageChangeSelectedBackgroundColorToCyan = new JMenuItem();
+  private final JMenuItem jMenuItemIOImageChangeSelectedBackgroundColorToMagenta = new JMenuItem();
+  private final JMenu jMenuIOImageChangeSelectedCharColor = new JMenu();
+  private final JMenuItem jMenuItemIOImageChangeSelectedCharColorToBlack = new JMenuItem();
+  private final JMenuItem jMenuItemIOImageChangeSelectedCharColorToWhite = new JMenuItem();
+  private final JMenuItem jMenuItemIOImageChangeSelectedCharColorToLightGray = new JMenuItem();
+  private final JMenuItem jMenuItemIOImageChangeSelectedCharColorToGray = new JMenuItem();
+  private final JMenuItem jMenuItemIOImageChangeSelectedCharColorToControlColor = new JMenuItem();
+  private final JMenuItem jMenuItemIOImageChangeSelectedCharColorToRed = new JMenuItem();
+  private final JMenuItem jMenuItemIOImageChangeSelectedCharColorToPink = new JMenuItem();
+  private final JMenuItem jMenuItemIOImageChangeSelectedCharColorToOrange = new JMenuItem();
+  private final JMenuItem jMenuItemIOImageChangeSelectedCharColorToYellow = new JMenuItem();
+  private final JMenuItem jMenuItemIOImageChangeSelectedCharColorToGreen = new JMenuItem();
+  private final JMenuItem jMenuItemIOImageChangeSelectedCharColorToBlue = new JMenuItem();
+  private final JMenuItem jMenuItemIOImageChangeSelectedCharColorToCyan = new JMenuItem();
+  private final JMenuItem jMenuItemIOImageChangeSelectedCharColorToMagenta = new JMenuItem();
+  private final JCheckBoxMenuItem jMenuItemIOImageSearchImageFile = new JCheckBoxMenuItem();
+  private final JMenuItem jMenuItemIOImageCaptureImage = new JMenuItem();
+  private final JMenuItem jMenuItemIOImagePrintImage = new JMenuItem();
 
   /** Definition components on jPanelIOWebPage */
-  private JPanel jPanelIOWebPage = new JPanel();
+  private final JPanel jPanelIOWebPage = new JPanel();
 
-  private JSplitPane jSplitPaneIOWebPage1 = new JSplitPane();
-  private JSplitPane jSplitPaneIOWebPage2 = new JSplitPane();
-  private JLabel jLabelIOWebPageName = new JLabel();
-  private JPanel jPanelIOWebPage1 = new JPanel();
-  private JPanel jPanelIOWebPage3 = new JPanel();
-  private JPanel jPanelIOWebPage2 = new JPanel();
-  private JTextField jTextFieldIOWebPageSortKey = new JTextField();
-  private JTextField jTextFieldIOWebPageFileName = new JTextField();
-  private JScrollPane jScrollPaneIOWebPageDescriptions = new JScrollPane();
-  private JLabel jLabelIOWebPageSortKey = new JLabel();
-  private JLabel jLabelIOWebPageFileName = new JLabel();
-  private KanjiTextField jTextFieldIOWebPageName = new KanjiTextField();
-  private JPanel jPanelIOWebPage4 = new JPanel();
-  private JLabel jLabelIOWebPageDescriptions = new JLabel();
-  private KanjiTextArea jTextAreaIOWebPageDescriptions = new KanjiTextArea();
+  private final JSplitPane jSplitPaneIOWebPage1 = new JSplitPane();
+  private final JSplitPane jSplitPaneIOWebPage2 = new JSplitPane();
+  private final JLabel jLabelIOWebPageName = new JLabel();
+  private final JPanel jPanelIOWebPage1 = new JPanel();
+  private final JPanel jPanelIOWebPage3 = new JPanel();
+  private final JPanel jPanelIOWebPage2 = new JPanel();
+  private final JTextField jTextFieldIOWebPageSortKey = new JTextField();
+  private final JTextField jTextFieldIOWebPageFileName = new JTextField();
+  private final JScrollPane jScrollPaneIOWebPageDescriptions = new JScrollPane();
+  private final JLabel jLabelIOWebPageSortKey = new JLabel();
+  private final JLabel jLabelIOWebPageFileName = new JLabel();
+  private final KanjiTextField jTextFieldIOWebPageName = new KanjiTextField();
+  private final JPanel jPanelIOWebPage4 = new JPanel();
+  private final JLabel jLabelIOWebPageDescriptions = new JLabel();
+  private final KanjiTextArea jTextAreaIOWebPageDescriptions = new KanjiTextArea();
   private TableModelEditableList tableModelIOWebPageFieldList = new TableModelEditableList();
-  private JTable jTableIOWebPageFieldList = new JTable(tableModelIOWebPageFieldList);
+  private final JTable jTableIOWebPageFieldList = new JTable(tableModelIOWebPageFieldList);
   private int selectedRow_jTableIOWebPageFieldList;
-  private JScrollPane jScrollPaneIOWebPageFieldList = new JScrollPane();
-  private JPanel jPanelIOWebPage5 = new JPanel();
-  private JEditorPane jEditorPaneIOWebPageImage = new JEditorPane();
-  private JScrollPane jScrollPaneIOWebPageImage = new JScrollPane();
-  private JPanel jPanelIOWebPage6 = new JPanel();
-  private JLabel jLabelIOWebPageImage = new JLabel();
+  private final JScrollPane jScrollPaneIOWebPageFieldList = new JScrollPane();
+  private final JPanel jPanelIOWebPage5 = new JPanel();
+  private final JEditorPane jEditorPaneIOWebPageImage = new JEditorPane();
+  private final JScrollPane jScrollPaneIOWebPageImage = new JScrollPane();
+  private final JPanel jPanelIOWebPage6 = new JPanel();
+  private final JLabel jLabelIOWebPageImage = new JLabel();
   private String htmlFileName = "";
 
   /** undo handler for JTextPane */
-  private UndoableEditListener textPaneUndoableEditListener = new CustomUndoableEditListener();
+  private final UndoableEditListener textPaneUndoableEditListener =
+      new CustomUndoableEditListener();
 
-  private UndoManager textPaneUndoManager = new UndoManager();
-  private TextPaneUndoAction undoAction = new TextPaneUndoAction();
-  private TextPaneRedoAction redoAction = new TextPaneRedoAction();
-  private Action actionUndoIOPanelImage =
+  private final UndoManager textPaneUndoManager = new UndoManager();
+  private final TextPaneUndoAction undoAction = new TextPaneUndoAction();
+  private final TextPaneRedoAction redoAction = new TextPaneRedoAction();
+  private final Action actionUndoIOPanelImage =
       new AbstractAction() {
         private static final long serialVersionUID = 1L;
 
@@ -1531,7 +1554,7 @@ public class Modeler extends JFrame {
           undoAction.actionPerformed(e);
         }
       };
-  private Action actionRedoIOPanelImage =
+  private final Action actionRedoIOPanelImage =
       new AbstractAction() {
         private static final long serialVersionUID = 1L;
 
@@ -1539,7 +1562,7 @@ public class Modeler extends JFrame {
           redoAction.actionPerformed(e);
         }
       };
-  private Action actionUndoIOSpoolImage =
+  private final Action actionUndoIOSpoolImage =
       new AbstractAction() {
         private static final long serialVersionUID = 1L;
 
@@ -1547,7 +1570,7 @@ public class Modeler extends JFrame {
           undoAction.actionPerformed(e);
         }
       };
-  private Action actionRedoIOSpoolImage =
+  private final Action actionRedoIOSpoolImage =
       new AbstractAction() {
         private static final long serialVersionUID = 1L;
 
@@ -1557,7 +1580,7 @@ public class Modeler extends JFrame {
       };
 
   /** HTML Editor Kit */
-  private HTMLEditorKit htmlEditorKit = new HTMLEditorKit();
+  private final HTMLEditorKit htmlEditorKit = new HTMLEditorKit();
 
   /** Application instance */
   private Application application;
@@ -14760,7 +14783,7 @@ public class Modeler extends JFrame {
       //
       // Delete node//
       String errorMessage = currentMainTreeNode.deleteNode();
-      if (errorMessage == "") {
+      if (errorMessage.equals("")) {
         currentMainTreeNode = null;
         TreePath tp = new TreePath(nextFocussingNode.getPath());
         jTreeMain.setSelectionPath(tp);
@@ -14798,7 +14821,7 @@ public class Modeler extends JFrame {
         nextFocussingNode = parentNode;
       }
       String errorMessage = currentMainTreeNode.deleteNode();
-      if (errorMessage == "") {
+      if (errorMessage.equals("")) {
         currentMainTreeNode = null;
         TreePath tp = new TreePath(nextFocussingNode.getPath());
         jTreeMain.setSelectionPath(tp);
@@ -18571,7 +18594,7 @@ public class Modeler extends JFrame {
       // Delete the node//
       if (targetNode != null) {
         String errorMessage = targetNode.deleteNode();
-        if (errorMessage == "") {
+        if (errorMessage.equals("")) {
           TreePath tp = new TreePath(currentMainTreeNode.getPath());
           jTreeMain.setSelectionPath(tp);
           setupContentsPaneForTreeNodeSelected(currentMainTreeNode, true);
@@ -19346,7 +19369,7 @@ public class Modeler extends JFrame {
               }
             }
 
-            if (imageFileType == "SVG") {
+            if (imageFileType.equals("SVG")) {
               DOMImplementation domImpl = GenericDOMImplementation.getDOMImplementation();
               org.w3c.dom.Document document = domImpl.createDocument(null, "svg", null);
               SVGGraphics2D svg2d = new SVGGraphics2D(document);
@@ -19417,7 +19440,7 @@ public class Modeler extends JFrame {
               }
             }
 
-            if (imageFileType == "SVG") {
+            if (imageFileType.equals("SVG")) {
               DOMImplementation domImpl = GenericDOMImplementation.getDOMImplementation();
               org.w3c.dom.Document document = domImpl.createDocument(null, "svg", null);
               SVGGraphics2D svg2d = new SVGGraphics2D(document);
@@ -19463,7 +19486,7 @@ public class Modeler extends JFrame {
           }
 
           if (currentMainTreeNode.getType().equals("IOPanel")) {
-            if (imageFileType == "SVG") {
+            if (imageFileType.equals("SVG")) {
               DOMImplementation domImpl = GenericDOMImplementation.getDOMImplementation();
               org.w3c.dom.Document document = domImpl.createDocument(null, "svg", null);
               SVGGraphics2D svg2d = new SVGGraphics2D(document);
@@ -19502,7 +19525,7 @@ public class Modeler extends JFrame {
           }
 
           if (currentMainTreeNode.getType().equals("IOSpool")) {
-            if (imageFileType == "SVG") {
+            if (imageFileType.equals("SVG")) {
               DOMImplementation domImpl = GenericDOMImplementation.getDOMImplementation();
               org.w3c.dom.Document document = domImpl.createDocument(null, "svg", null);
               SVGGraphics2D svg2d = new SVGGraphics2D(document);
@@ -22216,8 +22239,8 @@ public class Modeler extends JFrame {
 
   /** Class of Table Row Number */
   class CreateStatement {
-    private String statement_;
-    private boolean warningOccured_;
+    private final String statement_;
+    private final boolean warningOccured_;
 
     public CreateStatement(String str, boolean warn) {
       statement_ = str;
@@ -22324,7 +22347,7 @@ public class Modeler extends JFrame {
   /** Class of NodeJumpButton */
   class NodeJumpButton extends JButton {
     private static final long serialVersionUID = 1L;
-    private XeadTreeNode node_;
+    private final XeadTreeNode node_;
 
     //
     // Constructor//
@@ -22334,93 +22357,93 @@ public class Modeler extends JFrame {
       this.setFont(new java.awt.Font(mainFontName, 0, MAIN_FONT_SIZE - 2));
       String nodeType = node_.getType();
       this.addActionListener(new NodeJumpButton_actionAdapter(this));
-      if (nodeType == "System") {
+      if (nodeType.equals("System")) {
         this.setIcon(imageIconSystem);
         this.setText(node_.getName());
       }
-      if (nodeType == "SubjectAreaList") {
+      if (nodeType.equals("SubjectAreaList")) {
         this.setIcon(imageIconSubjectAreaList);
         this.setText(node_.getName());
       }
-      if (nodeType == "SubjectArea") {
+      if (nodeType.equals("SubjectArea")) {
         this.setIcon(imageIconSubjectArea);
         this.setText(node_.getName());
       }
-      if (nodeType == "RoleList") {
+      if (nodeType.equals("RoleList")) {
         this.setIcon(imageIconRoleList);
         this.setText(node_.getName());
       }
-      if (nodeType == "Role") {
+      if (nodeType.equals("Role")) {
         this.setIcon(imageIconRole);
         this.setText(node_.getName());
       }
-      if (nodeType == "Task") {
+      if (nodeType.equals("Task")) {
         this.setIcon(imageIconTask);
         XeadTreeNode parentNode = (XeadTreeNode) node_.getParent();
         this.setText(node_.getName() + "(" + parentNode.getName() + ")");
       }
-      if (nodeType == "SubsystemList") {
+      if (nodeType.equals("SubsystemList")) {
         this.setIcon(imageIconSubsystemList);
         this.setText(node_.getName());
       }
-      if (nodeType == "Subsystem") {
+      if (nodeType.equals("Subsystem")) {
         this.setIcon(imageIconSubsystem);
         this.setText(node_.getName());
       }
-      if (nodeType == "TableList") {
+      if (nodeType.equals("TableList")) {
         this.setIcon(imageIconTableList);
         XeadTreeNode parentNode = (XeadTreeNode) node_.getParent();
         this.setText(parentNode.getName() + " " + res.getString("S3407"));
       }
-      if (nodeType == "Table") {
+      if (nodeType.equals("Table")) {
         this.setIcon(imageIconTable);
         this.setText(node_.getName());
       }
-      if (nodeType == "TableFieldList") {
+      if (nodeType.equals("TableFieldList")) {
         this.setIcon(imageIconFieldList);
         XeadTreeNode parentNode = (XeadTreeNode) node_.getParent();
         this.setText(parentNode.getName() + " " + res.getString("S613"));
       }
-      if (nodeType == "TableField") {
+      if (nodeType.equals("TableField")) {
         this.setIcon(imageIconField);
         XeadTreeNode parentNode = (XeadTreeNode) node_.getParent().getParent();
         this.setText(node_.getName() + "(" + parentNode.getName() + ")");
       }
-      if (nodeType == "TableKeyList") {
+      if (nodeType.equals("TableKeyList")) {
         this.setIcon(imageIconKeyList);
         XeadTreeNode parentNode = (XeadTreeNode) node_.getParent();
         this.setText(parentNode.getName() + " " + res.getString("S3427"));
       }
-      if (nodeType == "TableKey") {
+      if (nodeType.equals("TableKey")) {
         this.setIcon(imageIconKey);
         XeadTreeNode parentNode = (XeadTreeNode) node_.getParent().getParent();
         this.setText(node_.getName() + "(" + parentNode.getName() + ")");
       }
-      if (nodeType == "FunctionList") {
+      if (nodeType.equals("FunctionList")) {
         this.setIcon(imageIconFunctionList);
         XeadTreeNode parentNode = (XeadTreeNode) node_.getParent();
         this.setText(parentNode.getName() + " " + res.getString("S3433"));
       }
-      if (nodeType == "Function") {
+      if (nodeType.equals("Function")) {
         this.setIcon(imageIconFunction);
         this.setText(node_.getName());
       }
-      if (nodeType == "IOPanel") {
+      if (nodeType.equals("IOPanel")) {
         this.setIcon(imageIconIOPanel);
         XeadTreeNode parentNode = (XeadTreeNode) node_.getParent();
         this.setText(node_.getName() + "(" + parentNode.getName() + ")");
       }
-      if (nodeType == "IOTable") {
+      if (nodeType.equals("IOTable")) {
         this.setIcon(imageIconIOTable);
         XeadTreeNode parentNode = (XeadTreeNode) node_.getParent();
         this.setText(node_.getName() + "(" + parentNode.getName() + ")");
       }
-      if (nodeType == "IOSpool") {
+      if (nodeType.equals("IOSpool")) {
         this.setIcon(imageIconIOSpool);
         XeadTreeNode parentNode = (XeadTreeNode) node_.getParent();
         this.setText(node_.getName() + "(" + parentNode.getName() + ")");
       }
-      if (nodeType == "IOWebPage") {
+      if (nodeType.equals("IOWebPage")) {
         this.setIcon(imageIconIOWebPage);
         XeadTreeNode parentNode = (XeadTreeNode) node_.getParent();
         this.setText(node_.getName() + "(" + parentNode.getName() + ")");
@@ -22457,18 +22480,18 @@ public class Modeler extends JFrame {
   /** Class of DataFlow Node */
   class DataflowNode extends JPanel {
     private static final long serialVersionUID = 1L;
-    private org.w3c.dom.Element dataflowNodeElement_;
-    private JLabel jLabelID = new JLabel();
-    private JLabel jTextFieldNodeName = new JLabel();
-    private JLabel jTextFieldNodeNameExt = new JLabel();
-    private JLabel[] jLabelEvent = new JLabel[3];
-    private JLabel jLabelRole = new JLabel();
-    private JLabel jLabelNumber = new JLabel();
-    private String nodeType;
-    private JPanel jPanelCanvas2;
-    private JPanel jPanelMoveGuide = new JPanel();
-    private JPanel jPanelMouseActionSensor = new JPanel();
-    private JSpinner jSpinnerSlideNumber = new JSpinner();
+    private final org.w3c.dom.Element dataflowNodeElement_;
+    private final JLabel jLabelID = new JLabel();
+    private final JLabel jTextFieldNodeName = new JLabel();
+    private final JLabel jTextFieldNodeNameExt = new JLabel();
+    private final JLabel[] jLabelEvent = new JLabel[3];
+    private final JLabel jLabelRole = new JLabel();
+    private final JLabel jLabelNumber = new JLabel();
+    private final String nodeType;
+    private final JPanel jPanelCanvas2;
+    private final JPanel jPanelMoveGuide = new JPanel();
+    private final JPanel jPanelMouseActionSensor = new JPanel();
+    private final JSpinner jSpinnerSlideNumber = new JSpinner();
     private int NODE_WIDTH;
     private int NODE_HEIGHT;
     private int mousePosX = 0;
@@ -22479,14 +22502,14 @@ public class Modeler extends JFrame {
     private int originalGuidePosY = 0;
     private int slideNumber = 0;
     private String taskID = "";
-    private JPopupMenu jPopupMenuDataflowNode = new JPopupMenu();
-    private JMenuItem jMenuItemDataflowNodeJump = new JMenuItem(res.getString("S2870"));
-    private JMenuItem jMenuItemDataflowNodeAddFlow = new JMenuItem(res.getString("S2871"));
-    private JMenuItem jMenuItemDataflowNodeChange = new JMenuItem(res.getString("S2872"));
-    private JMenuItem jMenuItemDataflowNodeCopy = new JMenuItem(res.getString("S2873"));
-    private JMenuItem jMenuItemDataflowNodeRemove = new JMenuItem();
+    private final JPopupMenu jPopupMenuDataflowNode = new JPopupMenu();
+    private final JMenuItem jMenuItemDataflowNodeJump = new JMenuItem(res.getString("S2870"));
+    private final JMenuItem jMenuItemDataflowNodeAddFlow = new JMenuItem(res.getString("S2871"));
+    private final JMenuItem jMenuItemDataflowNodeChange = new JMenuItem(res.getString("S2872"));
+    private final JMenuItem jMenuItemDataflowNodeCopy = new JMenuItem(res.getString("S2873"));
+    private final JMenuItem jMenuItemDataflowNodeRemove = new JMenuItem();
     private boolean slideNumberIsShown = false;
-    private boolean clickable_;
+    private final boolean clickable_;
     private String eventPos = "";
     private boolean isSelected_ = false;
 
@@ -24508,7 +24531,7 @@ public class Modeler extends JFrame {
     private static final long serialVersionUID = 1L;
     public int boundaryPosX, boundaryPosY, boundaryWidth, boundaryHeight;
     private org.w3c.dom.Element dataflowBoundaryElement_;
-    private JLabel jLabelName = new JLabel();
+    private final JLabel jLabelName = new JLabel();
 
     public DataflowBoundary(org.w3c.dom.Element element) {
       super();
@@ -24807,16 +24830,17 @@ public class Modeler extends JFrame {
   /** Class of Data-flow line */
   class DataflowLine extends Container {
     private static final long serialVersionUID = 1L;
-    private org.w3c.dom.Element dataflowLineElement_;
-    private DataflowNode dataflowNode1_, dataflowNode2_;
+    private final org.w3c.dom.Element dataflowLineElement_;
+    private final DataflowNode dataflowNode1_;
+    private final DataflowNode dataflowNode2_;
     private int terminalPosIndex, terminalPosIndex1, terminalPosIndex2;
-    private int slideNumber;
+    private final int slideNumber;
     private Shape shapeOfArrow1 = null;
     private Shape shapeOfArrow2 = null;
-    private JPanel jPanelCanvas_;
-    private JTextField jTextFieldFlowName = new JTextField();
-    private JTextField jTextFieldFlowNameExt = new JTextField();
-    private JLabel jLabelArrow1 =
+    private final JPanel jPanelCanvas_;
+    private final JTextField jTextFieldFlowName = new JTextField();
+    private final JTextField jTextFieldFlowNameExt = new JTextField();
+    private final JLabel jLabelArrow1 =
         new JLabel() {
           private static final long serialVersionUID = 1L;
 
@@ -24836,7 +24860,7 @@ public class Modeler extends JFrame {
             }
           }
         };
-    private JLabel jLabelArrow2 =
+    private final JLabel jLabelArrow2 =
         new JLabel() {
           private static final long serialVersionUID = 1L;
 
@@ -24856,9 +24880,9 @@ public class Modeler extends JFrame {
             }
           }
         };
-    private JLabel jLabelArrowMoveGuide = new JLabel();
+    private final JLabel jLabelArrowMoveGuide = new JLabel();
     private JLabel jLabelPressed;
-    private JSpinner jSpinnerSlideNumber = new JSpinner();
+    private final JSpinner jSpinnerSlideNumber = new JSpinner();
     private int arrowDirection1 = 0;
     private int arrowDirection2 = 0;
     private Point arrowLabelPoint1, arrowLabelPoint2;
@@ -24873,8 +24897,8 @@ public class Modeler extends JFrame {
     private boolean showArrow1 = false;
     private boolean showArrow2 = false;
     private boolean slideNumberShown = false;
-    private String imageType;
-    private JLabel jLabelFlowImage =
+    private final String imageType;
+    private final JLabel jLabelFlowImage =
         new JLabel() {
           private static final long serialVersionUID = 1L;
 
@@ -24885,10 +24909,10 @@ public class Modeler extends JFrame {
             drawImage(g2);
           }
         };
-    private JPopupMenu jPopupMenuDataflowLine = new JPopupMenu();
-    private JMenuItem jMenuItemDataflowLineChange = new JMenuItem(res.getString("S2872"));
-    private JMenuItem jMenuItemDataflowLineDelete = new JMenuItem(res.getString("S2874"));
-    private boolean clickable_;
+    private final JPopupMenu jPopupMenuDataflowLine = new JPopupMenu();
+    private final JMenuItem jMenuItemDataflowLineChange = new JMenuItem(res.getString("S2872"));
+    private final JMenuItem jMenuItemDataflowLineDelete = new JMenuItem(res.getString("S2874"));
+    private final boolean clickable_;
 
     public DataflowLine(
         org.w3c.dom.Element element,
@@ -25938,10 +25962,10 @@ public class Modeler extends JFrame {
   /** Class of Data-model Relationship Line */
   class DatamodelRelationshipLine {
     public Arc2D arc2D_A, arc2D_B;
-    private org.w3c.dom.Element subsystemRelationshipElement_;
-    private org.w3c.dom.Element relationshipElement_;
+    private final org.w3c.dom.Element subsystemRelationshipElement_;
+    private final org.w3c.dom.Element relationshipElement_;
     private DatamodelEntityBox entityBox1, entityBox2;
-    private JPanel jPanelCanvas;
+    private final JPanel jPanelCanvas;
     private int terminalIndex, terminalIndex1, terminalIndex2;
     private Line2D iconPart_11, iconPart_12, iconPart_13, iconPart_14;
     private Line2D iconPart_21, iconPart_22, iconPart_23, iconPart_24;
@@ -25952,7 +25976,7 @@ public class Modeler extends JFrame {
     private Point boxPoint, boxPoint1, boxPoint2;
     private Point iconPoint1, iconPoint2;
     private Point lineTerminalPoint1, lineTerminalPoint2;
-    private JLabel jLabelTerminal_1 =
+    private final JLabel jLabelTerminal_1 =
         new JLabel() {
           private static final long serialVersionUID = 1L;
 
@@ -25970,7 +25994,7 @@ public class Modeler extends JFrame {
             if (iconPart_14 != null) g2.draw(iconPart_14);
           }
         };
-    private JLabel jLabelTerminal_2 =
+    private final JLabel jLabelTerminal_2 =
         new JLabel() {
           private static final long serialVersionUID = 1L;
 
@@ -25995,8 +26019,8 @@ public class Modeler extends JFrame {
     private boolean terminal2Optional = false;
     private boolean positionChanged = false;
     private Point[] indexCordinates = new Point[41];
-    private JPopupMenu jPopupMenuRelationshipLine = new JPopupMenu();
-    private JMenuItem jMenuItemRelationshipLineHide = new JMenuItem(res.getString("S2875"));
+    private final JPopupMenu jPopupMenuRelationshipLine = new JPopupMenu();
+    private final JMenuItem jMenuItemRelationshipLineHide = new JMenuItem(res.getString("S2875"));
     private boolean showOnModel = true;
     private int terminalIconSize = 0;
     private int boxHeight = 0;
@@ -27887,25 +27911,25 @@ public class Modeler extends JFrame {
     private static final long serialVersionUID = 1L;
 
     // Internal fields//
-    private org.w3c.dom.Element subsystemTableElement_;
-    private String subsystemID_;
+    private final org.w3c.dom.Element subsystemTableElement_;
+    private final String subsystemID_;
     private String subsystemName = "";
-    private XeadTreeNode tableNode_;
+    private final XeadTreeNode tableNode_;
 
     // Internal components//
-    private JPanel jPanelCanvas;
-    private Border normalBorder;
-    private Border draggingBorder;
-    private Border printBorder;
-    private JPanel jPanel1 = new JPanel();
+    private final JPanel jPanelCanvas;
+    private final Border normalBorder;
+    private final Border draggingBorder;
+    private final Border printBorder;
+    private final JPanel jPanel1 = new JPanel();
     private DropAcceptablePanel jPanel2 = null;
-    private JPanel jPanelElements = new JPanel();
-    private JLabel jLabelName = new JLabel();
-    private JLabel jLabelSynchFile = new JLabel();
-    private JLabel jLabelID = new JLabel();
-    private JLabel jLabelNo = new JLabel();
-    private JLabel jLabelCRUD = new JLabel();
-    private JPanel jPanelMoveGuide = new JPanel();
+    private final JPanel jPanelElements = new JPanel();
+    private final JLabel jLabelName = new JLabel();
+    private final JLabel jLabelSynchFile = new JLabel();
+    private final JLabel jLabelID = new JLabel();
+    private final JLabel jLabelNo = new JLabel();
+    private final JLabel jLabelCRUD = new JLabel();
+    private final JPanel jPanelMoveGuide = new JPanel();
     private int mousePosX = 0;
     private int mousePosY = 0;
     private int boxPosX = 0;
@@ -27923,19 +27947,19 @@ public class Modeler extends JFrame {
     private int elementLabelPosY = 0;
     private int originalGuidePosX;
     private int originalGuidePosY;
-    private JPopupMenu jPopupMenuEntityBox = new JPopupMenu();
-    private JMenuItem jMenuItemEntityBoxJump = new JMenuItem(res.getString("S2870"));
-    private JMenuItem jMenuItemEntityBoxEditInstance = new JMenuItem(res.getString("S2876"));
-    private JMenuItem jMenuItemEntityBoxShowAllLines = new JMenuItem(res.getString("S2877"));
-    private JMenuItem jMenuItemEntityBoxHide = new JMenuItem(res.getString("S2875"));
-    private JTextArea jTextAreaShowInstance = new JTextArea();
+    private final JPopupMenu jPopupMenuEntityBox = new JPopupMenu();
+    private final JMenuItem jMenuItemEntityBoxJump = new JMenuItem(res.getString("S2870"));
+    private final JMenuItem jMenuItemEntityBoxEditInstance = new JMenuItem(res.getString("S2876"));
+    private final JMenuItem jMenuItemEntityBoxShowAllLines = new JMenuItem(res.getString("S2877"));
+    private final JMenuItem jMenuItemEntityBoxHide = new JMenuItem(res.getString("S2875"));
+    private final JTextArea jTextAreaShowInstance = new JTextArea();
     private boolean isVisibleOnModel = false;
     private boolean isSelected_ = false;
     private int heightOfInstanceArea;
-    private ArrayList<ElementLabel> elementLabelArray = new ArrayList<>();
+    private final ArrayList<ElementLabel> elementLabelArray = new ArrayList<>();
     private int rightMarginOfElementsPanel = 0;
-    private ArrayList<String> slideInstanceArray = new ArrayList<>();
-    private ArrayList<Integer> slideNumberArray = new ArrayList<>();
+    private final ArrayList<String> slideInstanceArray = new ArrayList<>();
+    private final ArrayList<Integer> slideNumberArray = new ArrayList<>();
     private int currentSlideArrayIndex = -1;
 
     // Visual components structure //
@@ -29359,7 +29383,7 @@ public class Modeler extends JFrame {
 
     class DropAcceptablePanel extends JPanel {
       private static final long serialVersionUID = 1L;
-      private XeadTreeNode tableNode_;
+      private final XeadTreeNode tableNode_;
 
       public DropAcceptablePanel(XeadTreeNode tableNode) {
         super();
@@ -29714,7 +29738,7 @@ public class Modeler extends JFrame {
 
   /** Class of Comparable Element (sorted by "SortKey") */
   class XeadElement implements Comparable<XeadElement> {
-    private org.w3c.dom.Element domNode_;
+    private final org.w3c.dom.Element domNode_;
 
     public XeadElement(org.w3c.dom.Element node) {
       super();
@@ -29735,7 +29759,7 @@ public class Modeler extends JFrame {
 
   /** Class of Comparable Field Element (sorted by "Alias") */
   class XeadFieldElement implements Comparable<XeadFieldElement> {
-    private org.w3c.dom.Element domNode_;
+    private final org.w3c.dom.Element domNode_;
 
     public XeadFieldElement(org.w3c.dom.Element node) {
       super();
@@ -29755,7 +29779,7 @@ public class Modeler extends JFrame {
   /** Class of XEAD Tree Node */
   class XeadTreeNode extends DefaultMutableTreeNode implements Comparable<XeadTreeNode> {
     private static final long serialVersionUID = 1L;
-    private String nodeType_;
+    private final String nodeType_;
     private org.w3c.dom.Element domNode_;
     private boolean isPending_ = false;
     private boolean isError_ = false;
@@ -30861,7 +30885,7 @@ public class Modeler extends JFrame {
             break;
           }
         }
-        if (errorMessage == "") {
+        if (errorMessage.equals("")) {
           //
           // Add Log of Remove//
           xeadUndoManager.addLogOfRemove(this);
@@ -30898,7 +30922,7 @@ public class Modeler extends JFrame {
                   + "\n"
                   + res.getString("S3814");
         }
-        if (errorMessage == "") {
+        if (errorMessage.equals("")) {
           //
           // Add Log of Remove//
           xeadUndoManager.addLogOfRemove(this);
@@ -30920,7 +30944,7 @@ public class Modeler extends JFrame {
             break;
           }
         }
-        if (errorMessage == "") {
+        if (errorMessage.equals("")) {
           nodeList1 = domDocument.getElementsByTagName("Function");
           for (int i = 0; i < nodeList1.getLength(); i++) {
             element1 = (org.w3c.dom.Element) nodeList1.item(i);
@@ -30930,7 +30954,7 @@ public class Modeler extends JFrame {
             }
           }
         }
-        if (errorMessage == "") {
+        if (errorMessage.equals("")) {
           //
           // Add Log of Remove//
           xeadUndoManager.addLogOfRemove(this);
@@ -30952,7 +30976,7 @@ public class Modeler extends JFrame {
             break;
           }
         }
-        if (errorMessage == "") {
+        if (errorMessage.equals("")) {
           nodeList1 = domDocument.getElementsByTagName("Relationship");
           for (int i = 0; i < nodeList1.getLength(); i++) {
             element1 = (org.w3c.dom.Element) nodeList1.item(i);
@@ -30963,7 +30987,7 @@ public class Modeler extends JFrame {
             }
           }
         }
-        if (errorMessage == "") {
+        if (errorMessage.equals("")) {
           nodeList1 = domDocument.getElementsByTagName("SubsystemTable");
           int numberOfSubsystemUsingThisTable = 0;
           String nameOfSubsystem = "";
@@ -30997,7 +31021,7 @@ public class Modeler extends JFrame {
                     + res.getString("S3851");
           }
         }
-        if (errorMessage == "") {
+        if (errorMessage.equals("")) {
           //
           // Add Log of Remove//
           xeadUndoManager.addLogOfRemove(this);
@@ -31032,7 +31056,7 @@ public class Modeler extends JFrame {
             break;
           }
         }
-        if (errorMessage == "") {
+        if (errorMessage.equals("")) {
           nodeList2 = domDocument.getElementsByTagName("IOTable");
           for (int i = 0; i < nodeList2.getLength(); i++) {
             element2 = (org.w3c.dom.Element) nodeList2.item(i);
@@ -31050,7 +31074,7 @@ public class Modeler extends JFrame {
             }
           }
         }
-        if (errorMessage == "") {
+        if (errorMessage.equals("")) {
           //
           addNodeToTheArrayOfFieldListNodeToBeRenumbered((XeadTreeNode) this.getParent());
           //
@@ -31111,7 +31135,7 @@ public class Modeler extends JFrame {
             }
           }
         }
-        if (errorMessage == "") {
+        if (errorMessage.equals("")) {
           //
           // Add Log of Remove//
           xeadUndoManager.addLogOfRemove(this);
@@ -31141,7 +31165,7 @@ public class Modeler extends JFrame {
             break;
           }
         }
-        if (errorMessage == "") {
+        if (errorMessage.equals("")) {
           nodeList1 = domDocument.getElementsByTagName("Function");
           for (int i = 0; i < nodeList1.getLength(); i++) {
             element1 = (org.w3c.dom.Element) nodeList1.item(i);
@@ -31157,7 +31181,7 @@ public class Modeler extends JFrame {
             }
           }
         }
-        if (errorMessage == "") {
+        if (errorMessage.equals("")) {
           //
           // Add Log of Remove//
           xeadUndoManager.addLogOfRemove(this);
@@ -31182,7 +31206,7 @@ public class Modeler extends JFrame {
             break;
           }
         }
-        if (errorMessage == "") {
+        if (errorMessage.equals("")) {
           //
           // Add Log of Remove//
           xeadUndoManager.addLogOfRemove(this);
@@ -31214,7 +31238,7 @@ public class Modeler extends JFrame {
             break;
           }
         }
-        if (errorMessage == "") {
+        if (errorMessage.equals("")) {
           //
           // Add Log of Remove//
           xeadUndoManager.addLogOfRemove(this);
@@ -31264,7 +31288,7 @@ public class Modeler extends JFrame {
             break;
           }
         }
-        if (errorMessage == "") {
+        if (errorMessage.equals("")) {
           //
           // Add Log of Remove//
           xeadUndoManager.addLogOfRemove(this);
@@ -31285,7 +31309,7 @@ public class Modeler extends JFrame {
       }
       //
       // Sort nodes and refresh view//
-      if (errorMessage == "") {
+      if (errorMessage.equals("")) {
         setupJumpButtons();
         jTreeMain.updateUI();
       }
@@ -34038,7 +34062,7 @@ public class Modeler extends JFrame {
           org.w3c.dom.Element functionElement = node3.getElement();
           for (int k = 0; k < node3.getChildCount(); k++) {
             node4 = (XeadTreeNode) node3.getChildAt(k); // Node of FunctionIO//
-            if (node4.getType() == "IOTable") {
+            if (node4.getType().equals("IOTable")) {
               org.w3c.dom.Element functionIOElement = node4.getElement();
               if (functionIOElement.getAttribute("TableID").equals(domNode_.getAttribute("ID"))) {
                 if (functionElement
@@ -34408,7 +34432,7 @@ public class Modeler extends JFrame {
           functionElement = node3.getElement();
           for (int k = 0; k < node3.getChildCount(); k++) {
             node4 = (XeadTreeNode) node3.getChildAt(k); // Node of FunctionIO//
-            if (node4.getType() == "IOTable") {
+            if (node4.getType().equals("IOTable")) {
               ioFieldDescriptions = "";
               functionIOElement = node4.getElement();
               ioFieldList = functionIOElement.getElementsByTagName("IOTableField");
@@ -35808,7 +35832,7 @@ public class Modeler extends JFrame {
       boolean notNull = true;
       XeadTreeNode node1, node2, node3;
       org.w3c.dom.Element keyFieldElement;
-      if (this.getType() == "TableKey") {
+      if (this.getType().equals("TableKey")) {
         node1 = (XeadTreeNode) this.getParent(); // node1:Node of KeyList//
         node2 = (XeadTreeNode) node1.getPreviousSibling(); // node2:Node of FieldList//
         NodeList keyFieldList = this.getElement().getElementsByTagName("TableKeyField");
@@ -35836,7 +35860,7 @@ public class Modeler extends JFrame {
       StringBuilder keyName = new StringBuilder();
       XeadTreeNode node1, node2, node3;
       org.w3c.dom.Element keyFieldElement;
-      if (this.getType() == "TableKey") {
+      if (this.getType().equals("TableKey")) {
         node1 = (XeadTreeNode) this.getParent(); // node1:Node of KeyList//
         if (node1 == null) {
           keyName.append("N/A");
@@ -40157,10 +40181,10 @@ public class Modeler extends JFrame {
 
   /** Class of Table Row Number */
   class TableRowNumber {
-    private org.w3c.dom.Element element_;
-    private org.w3c.dom.Element element_ext1;
-    private org.w3c.dom.Element element_ext2;
-    private int number_;
+    private final org.w3c.dom.Element element_;
+    private final org.w3c.dom.Element element_ext1;
+    private final org.w3c.dom.Element element_ext2;
+    private final int number_;
 
     public TableRowNumber(int num, org.w3c.dom.Element elm) {
       number_ = num;
@@ -40736,46 +40760,46 @@ public class Modeler extends JFrame {
       String nodeType = ((XeadTreeNode) treeNode).getType();
       boolean isError = ((XeadTreeNode) treeNode).isError();
       boolean isExtRefered = ((XeadTreeNode) treeNode).isExtRefered();
-      if (nodeType == "System") {
+      if (nodeType.equals("System")) {
         this.setIcon(imageIconSystem);
       }
-      if (nodeType == "SubjectAreaList") {
+      if (nodeType.equals("SubjectAreaList")) {
         this.setIcon(imageIconSubjectAreaList);
       }
-      if (nodeType == "SubjectArea") {
+      if (nodeType.equals("SubjectArea")) {
         this.setIcon(imageIconSubjectArea);
       }
-      if (nodeType == "RoleList") {
+      if (nodeType.equals("RoleList")) {
         this.setIcon(imageIconRoleList);
       }
-      if (nodeType == "Role") {
+      if (nodeType.equals("Role")) {
         this.setIcon(imageIconRole);
       }
-      if (nodeType == "Task") {
+      if (nodeType.equals("Task")) {
         this.setIcon(imageIconTask);
       }
-      if (nodeType == "SubsystemList") {
+      if (nodeType.equals("SubsystemList")) {
         if (isError) {
           this.setIcon(imageIconSubsystemListErr);
         } else {
           this.setIcon(imageIconSubsystemList);
         }
       }
-      if (nodeType == "Subsystem") {
+      if (nodeType.equals("Subsystem")) {
         if (isError) {
           this.setIcon(imageIconSubsystemErr);
         } else {
           this.setIcon(imageIconSubsystem);
         }
       }
-      if (nodeType == "TableList") {
+      if (nodeType.equals("TableList")) {
         if (isError) {
           this.setIcon(imageIconTableListErr);
         } else {
           this.setIcon(imageIconTableList);
         }
       }
-      if (nodeType == "Table") {
+      if (nodeType.equals("Table")) {
         if (isError) {
           this.setIcon(imageIconTableErr);
         } else {
@@ -40786,43 +40810,43 @@ public class Modeler extends JFrame {
           }
         }
       }
-      if (nodeType == "TableFieldList") {
+      if (nodeType.equals("TableFieldList")) {
         this.setIcon(imageIconFieldList);
       }
-      if (nodeType == "TableField") {
+      if (nodeType.equals("TableField")) {
         this.setIcon(imageIconField);
       }
-      if (nodeType == "TableKeyList") {
+      if (nodeType.equals("TableKeyList")) {
         this.setIcon(imageIconKeyList);
       }
-      if (nodeType == "TableKey") {
+      if (nodeType.equals("TableKey")) {
         this.setIcon(imageIconKey);
       }
-      if (nodeType == "FunctionList") {
+      if (nodeType.equals("FunctionList")) {
         this.setIcon(imageIconFunctionList);
       }
-      if (nodeType == "Function") {
+      if (nodeType.equals("Function")) {
         this.setIcon(imageIconFunction);
       }
-      if (nodeType == "ReccursiveFunction") {
+      if (nodeType.equals("ReccursiveFunction")) {
         this.setIcon(imageIconFunction);
       }
-      if (nodeType == "IOPanel") {
+      if (nodeType.equals("IOPanel")) {
         this.setIcon(imageIconIOPanel);
       }
-      if (nodeType == "IOTable") {
+      if (nodeType.equals("IOTable")) {
         this.setIcon(imageIconIOTable);
       }
-      if (nodeType == "IOSpool") {
+      if (nodeType.equals("IOSpool")) {
         this.setIcon(imageIconIOSpool);
       }
-      if (nodeType == "IOWebPage") {
+      if (nodeType.equals("IOWebPage")) {
         this.setIcon(imageIconIOWebPage);
       }
-      if (nodeType == "TaskActionFirst") {
+      if (nodeType.equals("TaskActionFirst")) {
         this.setIcon(imageIconActionFirst);
       }
-      if (nodeType == "TaskAction") {
+      if (nodeType.equals("TaskAction")) {
         if (((XeadTreeNode) treeNode).getElement().getAttribute("ExecuteIf").isEmpty()) {
           this.setIcon(imageIconAction);
         } else {
