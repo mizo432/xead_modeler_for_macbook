@@ -352,11 +352,7 @@ public class DialogImportSQL extends JDialog {
   }
 
   void jComboBoxSubsystem_actionPerformed(ActionEvent e) {
-    if (jComboBoxSubsystem.getSelectedIndex() != 0) {
-      jButtonStart.setEnabled(true);
-    } else {
-      jButtonStart.setEnabled(false);
-    }
+    jButtonStart.setEnabled(jComboBoxSubsystem.getSelectedIndex() != 0);
   }
 
   void jButtonStart_actionPerformed(ActionEvent e) {
@@ -394,7 +390,7 @@ public class DialogImportSQL extends JDialog {
       elementList = frame_.domDocument.getElementsByTagName("TableType");
       for (int i = 0; i < elementList.getLength(); i++) {
         workElement = (org.w3c.dom.Element) elementList.item(i);
-        if (wrkStr.equals("")) {
+        if (wrkStr.isEmpty()) {
           wrkStr = workElement.getAttribute("SortKey");
           defaultTableTypeID = workElement.getAttribute("ID");
         } else {
@@ -412,7 +408,7 @@ public class DialogImportSQL extends JDialog {
       elementList = frame_.domDocument.getElementsByTagName("DataType");
       for (int i = 0; i < elementList.getLength(); i++) {
         workElement = (org.w3c.dom.Element) elementList.item(i);
-        if (wrkStr.equals("")) {
+        if (wrkStr.isEmpty()) {
           wrkStr = workElement.getAttribute("SortKey");
           defaultDataTypeID = workElement.getAttribute("ID");
         } else {
@@ -642,7 +638,7 @@ public class DialogImportSQL extends JDialog {
     ////////////////////////////
     // Set Fields of PrimaryKey//
     ////////////////////////////
-    if (primaryKeyFieldID.equals("")) {
+    if (primaryKeyFieldID.isEmpty()) {
       for (i = 0; i <= itemsOfArray; i++) {
         if (fieldArray[i].contains("PRIMARY KEY")) {
           setKeyFieldOfTheKey(primaryKeyElement, tableElement, fieldArray[i]);
@@ -680,7 +676,7 @@ public class DialogImportSQL extends JDialog {
     int lastID = 0;
 
     fieldNameValue = trimBlankFromValue(fieldAttrString);
-    if (fieldNameValue.equals("")) {
+    if (fieldNameValue.isEmpty()) {
       return;
     }
 
@@ -988,7 +984,7 @@ public class DialogImportSQL extends JDialog {
     while (j >= 0) {
       j = tableAttributes.indexOf(",", i);
       if (j >= 0) {
-        wrkStr2.append(tableAttributes.substring(i, j + 1));
+        wrkStr2.append(tableAttributes, i, j + 1);
         //
         bracketOpen = 0;
         bracketClose = 0;
@@ -1085,7 +1081,7 @@ public class DialogImportSQL extends JDialog {
                     }
                   }
 
-                  if (!relationshipType.equals("")) {
+                  if (!relationshipType.isEmpty()) {
                     org.w3c.dom.Element newElement1 =
                         frame_.domDocument.createElement("Relationship");
                     org.w3c.dom.Element lastElement = getLastDomElementOfTheType("Relationship");
@@ -1393,7 +1389,7 @@ public class DialogImportSQL extends JDialog {
     }
 
     public int compareTo(XeadNode other) {
-      XeadNode otherNode = (XeadNode) other;
+      XeadNode otherNode = other;
       return domNode_
           .getAttribute("SortKey")
           .compareTo(otherNode.getElement().getAttribute("SortKey"));
@@ -1405,19 +1401,6 @@ public class DialogImportSQL extends JDialog {
     private static final long serialVersionUID = 1L;
 
     public void sortElements() {
-      //			TreeSet<XeadNode> treeSet = new TreeSet<XeadNode>(new NodeComparator());
-      //			int elementCount = this.getSize();
-      //			XeadNode node;
-      //			for (int i = 0; i < elementCount; i++) {
-      //				node = (XeadNode)this.getElementAt(i);
-      //				treeSet.add(node);
-      //			}
-      //			this.removeAllElements();
-      //			Iterator<XeadNode> it = treeSet.iterator();
-      //			while( it.hasNext() ){
-      //				node = (XeadNode)it.next();
-      //				this.addElement(node);
-      //			}
       ArrayList<XeadNode> list = new ArrayList<>();
       for (int i = 0; i < this.getSize(); i++) {
         list.add((XeadNode) this.getElementAt(i));
@@ -1429,27 +1412,6 @@ public class DialogImportSQL extends JDialog {
       }
     }
   }
-
-  //	/**
-  //	 * Class of Node Comparator
-  //	 */
-  //	class NodeComparator implements java.util.Comparator<XeadNode> {
-  //		public int compare(XeadNode node1, XeadNode node2) {
-  //			String value1, value2;
-  //			value1 = node1.getElement().getAttribute("SortKey");
-  //			value2 = node2.getElement().getAttribute("SortKey");
-  //			int compareResult = value1.compareTo(value2);
-  //			if (compareResult == 0) {
-  //				value1 = node1.getElement().getAttribute("ID");
-  //				value2 = node2.getElement().getAttribute("ID");
-  //				compareResult = value1.compareTo(value2);
-  //				if (compareResult == 0) {
-  //					compareResult = 1;
-  //				}
-  //			}
-  //			return(compareResult);
-  //		}
-  //	}
 }
 
 class DialogImportSQL_jCheckBoxShowControl_changeAdapter implements ChangeListener {

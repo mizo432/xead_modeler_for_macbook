@@ -311,9 +311,9 @@ public class DialogReorganizeDataTypes extends JDialog {
         Cell[1] = element.getAttribute("SortKey");
         Cell[2] = element.getAttribute("Name");
         Cell[3] = element.getAttribute("BasicType");
-        Integer length = Integer.valueOf(element.getAttribute("Length"));
+        int length = Integer.parseInt(element.getAttribute("Length"));
         Cell[4] = length;
-        Integer decimal = Integer.valueOf(element.getAttribute("Decimal"));
+        int decimal = Integer.parseInt(element.getAttribute("Decimal"));
         Cell[5] = decimal;
         Cell[6] = element.getAttribute("SQLExpression");
         tableModelDataTypeList.addRow(Cell);
@@ -366,7 +366,7 @@ public class DialogReorganizeDataTypes extends JDialog {
 
   void jTableFieldList_mouseClicked(MouseEvent e) {
     jButtonTransfer.setEnabled(false);
-    if (!targetDataTypeID.equals("")) {
+    if (!targetDataTypeID.isEmpty()) {
       for (int i = 0; i < tableModelFieldList.getRowCount(); i++) {
         if ((Boolean) tableModelFieldList.getValueAt(i, 1)) {
           jButtonTransfer.setEnabled(true);
@@ -391,7 +391,7 @@ public class DialogReorganizeDataTypes extends JDialog {
           (TableRowNumber)
               tableModelDataTypeList.getValueAt(jTableDataTypeList.getSelectedRow(), 0);
       org.w3c.dom.Element dataTypeElement = tableRowNumber.getElement();
-      if (dataTypeElement.getAttribute("Decimal").equals("")
+      if (dataTypeElement.getAttribute("Decimal").isEmpty()
           || dataTypeElement.getAttribute("Decimal").equals("0")) {
         wrkStr1 = dataTypeElement.getAttribute("Length");
       } else {
@@ -449,7 +449,7 @@ public class DialogReorganizeDataTypes extends JDialog {
   }
 
   void jButtonTransfer_actionPerformed(ActionEvent e) {
-    if (!targetDataTypeID.equals("")) {
+    if (!targetDataTypeID.isEmpty()) {
       for (int i = 0; i < tableModelFieldList.getRowCount(); i++) {
         if ((Boolean) tableModelFieldList.getValueAt(i, 1)) {
           TableRowNumber tableRowNumber = (TableRowNumber) tableModelFieldList.getValueAt(i, 0);
@@ -611,11 +611,7 @@ public class DialogReorganizeDataTypes extends JDialog {
     private static final long serialVersionUID = 1L;
 
     public boolean isCellEditable(int row, int col) {
-      if (col != 1) {
-        return false;
-      } else {
-        return true;
-      }
+      return col == 1;
     }
   }
 
@@ -641,19 +637,6 @@ public class DialogReorganizeDataTypes extends JDialog {
     private static final long serialVersionUID = 1L;
 
     public void sortElements() {
-      //			TreeSet<XeadNode> treeSet = new TreeSet<XeadNode>(new NodeComparator());
-      //			int elementCount = this.getSize();
-      //			XeadNode node;
-      //			for (int i = 0; i < elementCount; i++) {
-      //				node = (XeadNode)this.getElementAt(i);
-      //				treeSet.add(node);
-      //			}
-      //			this.removeAllElements();
-      //			Iterator<XeadNode> it = treeSet.iterator();
-      //			while( it.hasNext() ){
-      //				node = (XeadNode)it.next();
-      //				this.addElement(node);
-      //			}
       ArrayList<XeadNode> list = new ArrayList<>();
       for (int i = 0; i < this.getSize(); i++) {
         list.add((XeadNode) this.getElementAt(i));
@@ -665,24 +648,6 @@ public class DialogReorganizeDataTypes extends JDialog {
       }
     }
   }
-
-  //	class NodeComparator implements java.util.Comparator<XeadNode> {
-  //		public int compare(XeadNode node1, XeadNode node2) {
-  //			String value1, value2;
-  //			value1 = node1.getElement().getAttribute("SortKey");
-  //			value2 = node2.getElement().getAttribute("SortKey");
-  //			int compareResult = value1.compareTo(value2);
-  //			if (compareResult == 0) {
-  //				value1 = node1.getElement().getAttribute("ID");
-  //				value2 = node2.getElement().getAttribute("ID");
-  //				compareResult = value1.compareTo(value2);
-  //				if (compareResult == 0) {
-  //					compareResult = 1;
-  //				}
-  //			}
-  //			return(compareResult);
-  //		}
-  //	}
 
   class XeadNode implements Comparable<XeadNode> {
     private String nodeType_;
@@ -713,7 +678,7 @@ public class DialogReorganizeDataTypes extends JDialog {
     }
 
     public int compareTo(XeadNode other) {
-      XeadNode otherNode = (XeadNode) other;
+      XeadNode otherNode = other;
       return domNode_
           .getAttribute("SortKey")
           .compareTo(otherNode.getElement().getAttribute("SortKey"));
@@ -729,20 +694,6 @@ public class DialogReorganizeDataTypes extends JDialog {
     }
 
     public void sortElements() {
-      //			TreeSet<org.w3c.dom.Element> treeSet = new TreeSet<org.w3c.dom.Element>(new
-      // ElementFieldComparator());
-      //			int elementCount = this.getSize();
-      //			org.w3c.dom.Element domElement;
-      //			for (int i = 0; i < elementCount; i++) {
-      //				domElement = (org.w3c.dom.Element)this.getElementAt(i);
-      //				treeSet.add(domElement);
-      //			}
-      //			this.removeAllElements();
-      //			Iterator<org.w3c.dom.Element> it = treeSet.iterator();
-      //			while( it.hasNext() ){
-      //				domElement = (org.w3c.dom.Element)it.next();
-      //				this.addElement(domElement);
-      //			}
       ArrayList<XeadFieldElement> list = new ArrayList<>();
       for (int i = 0; i < this.getSize(); i++) {
         list.add((XeadFieldElement) super.getElementAt(i));
@@ -760,24 +711,6 @@ public class DialogReorganizeDataTypes extends JDialog {
     }
   }
 
-  //	class ElementFieldComparator implements java.util.Comparator<org.w3c.dom.Element> {
-  //		public int compare(org.w3c.dom.Element element1, org.w3c.dom.Element element2) {
-  //			String value1, value2;
-  //			value1 = element1.getAttribute("Alias");
-  //			value2 = element2.getAttribute("Alias");
-  //			int compareResult = value1.compareTo(value2);
-  //			if (compareResult == 0) {
-  //				value1 = element1.getAttribute("ID");
-  //				value2 = element2.getAttribute("ID");
-  //				compareResult = value1.compareTo(value2);
-  //				if (compareResult == 0) {
-  //					compareResult = 1;
-  //				}
-  //			}
-  //			return(compareResult);
-  //		}
-  //	}
-
   class XeadFieldElement implements Comparable<XeadFieldElement> {
     private org.w3c.dom.Element domNode_;
 
@@ -791,7 +724,7 @@ public class DialogReorganizeDataTypes extends JDialog {
     }
 
     public int compareTo(XeadFieldElement other) {
-      XeadFieldElement otherNode = (XeadFieldElement) other;
+      XeadFieldElement otherNode = other;
       return domNode_.getAttribute("Alias").compareTo(otherNode.getElement().getAttribute("Alias"));
     }
   }
@@ -839,7 +772,7 @@ public class DialogReorganizeDataTypes extends JDialog {
       String wrkStr2 = "";
       String zenkaku = "";
       dataTypeElement = element;
-      if (dataTypeElement.getAttribute("Decimal").equals("")
+      if (dataTypeElement.getAttribute("Decimal").isEmpty()
           || dataTypeElement.getAttribute("Decimal").equals("0")) {
         wrkStr1 = dataTypeElement.getAttribute("Length");
       } else {

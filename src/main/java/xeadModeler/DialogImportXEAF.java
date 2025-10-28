@@ -34,6 +34,8 @@ package xeadModeler;
 import java.awt.*;
 import java.awt.event.*;
 import java.io.*;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.*;
 import javax.swing.*;
 import org.apache.xerces.parsers.*;
@@ -80,8 +82,6 @@ public class DialogImportXEAF extends JDialog {
   private JComboBox jComboBoxBlockInto = new JComboBox(comboBoxModelBlockInto);
   private JTextArea jTextArea1 = new JTextArea();
   private JLabel jLabel4 = new JLabel();
-  // private SortableDomElementFieldListModel sortableDomElementFieldListModel = new
-  // SortableDomElementFieldListModel();
   private JTextField jTextFieldImportFileName = new JTextField();
   private JLabel jLabel5 = new JLabel();
   private JTextField jTextFieldImportSystemName = new JTextField();
@@ -211,7 +211,7 @@ public class DialogImportXEAF extends JDialog {
 
     try {
       DOMParser parser = new DOMParser();
-      parser.parse(new InputSource(new FileInputStream(fileName)));
+      parser.parse(new InputSource(Files.newInputStream(Paths.get(fileName))));
       domDocumentFrom = parser.getDocument();
     } catch (IOException | SAXException ignored) {
     }
@@ -275,11 +275,8 @@ public class DialogImportXEAF extends JDialog {
   }
 
   void jComboBoxBlockInto_actionPerformed(ActionEvent e) {
-    if (jComboBoxBlockFrom.getSelectedIndex() > 0 && jComboBoxBlockInto.getSelectedIndex() > 0) {
-      jButtonStart.setEnabled(true);
-    } else {
-      jButtonStart.setEnabled(false);
-    }
+    jButtonStart.setEnabled(
+        jComboBoxBlockFrom.getSelectedIndex() > 0 && jComboBoxBlockInto.getSelectedIndex() > 0);
   }
 
   void jButtonStart_actionPerformed(ActionEvent e) {
@@ -524,10 +521,6 @@ public class DialogImportXEAF extends JDialog {
       }
     }
 
-    //		try {
-    //			bufferedWriter.write("\n");
-    //		} catch (IOException ex) {}
-
     ////////////////////////////////////////////////////
     // Import Function definitions into target document//
     ////////////////////////////////////////////////////
@@ -625,10 +618,10 @@ public class DialogImportXEAF extends JDialog {
     String convertedID;
 
     if (elementFrom.getAttribute("Type").equals("XF100")) {
-      if (!elementFrom.getAttribute("DetailFunction").equals("")) {
+      if (!elementFrom.getAttribute("DetailFunction").isEmpty()) {
         convertedID =
             convertFunctionID(elementFrom.getAttribute("DetailFunction"), functionListInto);
-        if (convertedID.equals("")) {
+        if (convertedID.isEmpty()) {
           missingFunctionCounter++;
           try {
             bufferedWriter.write(
@@ -648,10 +641,10 @@ public class DialogImportXEAF extends JDialog {
     }
 
     if (elementFrom.getAttribute("Type").equals("XF110")) {
-      if (!elementFrom.getAttribute("BatchRecordFunction").equals("")) {
+      if (!elementFrom.getAttribute("BatchRecordFunction").isEmpty()) {
         convertedID =
             convertFunctionID(elementFrom.getAttribute("BatchRecordFunction"), functionListInto);
-        if (convertedID.equals("")) {
+        if (convertedID.isEmpty()) {
           missingFunctionCounter++;
           try {
             bufferedWriter.write(
@@ -671,10 +664,10 @@ public class DialogImportXEAF extends JDialog {
     }
 
     if (elementFrom.getAttribute("Type").equals("XF200")) {
-      if (!elementFrom.getAttribute("FunctionAfterInsert").equals("")) {
+      if (!elementFrom.getAttribute("FunctionAfterInsert").isEmpty()) {
         convertedID =
             convertFunctionID(elementFrom.getAttribute("FunctionAfterInsert"), functionListInto);
-        if (convertedID.equals("")) {
+        if (convertedID.isEmpty()) {
           missingFunctionCounter++;
           try {
             bufferedWriter.write(
@@ -694,10 +687,10 @@ public class DialogImportXEAF extends JDialog {
     }
 
     if (elementFrom.getAttribute("Type").equals("XF300")) {
-      if (!elementFrom.getAttribute("HeaderFunction").equals("")) {
+      if (!elementFrom.getAttribute("HeaderFunction").isEmpty()) {
         convertedID =
             convertFunctionID(elementFrom.getAttribute("HeaderFunction"), functionListInto);
-        if (convertedID.equals("")) {
+        if (convertedID.isEmpty()) {
           missingFunctionCounter++;
           try {
             bufferedWriter.write(
@@ -729,7 +722,7 @@ public class DialogImportXEAF extends JDialog {
         pos2 = action.indexOf(")");
         if (pos1 >= 0 && pos2 > pos1) {
           convertedID = convertFunctionID(action.substring(pos1 + 5, pos2), functionListInto);
-          if (convertedID.equals("")) {
+          if (convertedID.isEmpty()) {
             missingFunctionCounter++;
             try {
               bufferedWriter.write(
@@ -752,7 +745,7 @@ public class DialogImportXEAF extends JDialog {
   String convertFunctionID(String originalID, NodeList functionListInto) {
     org.w3c.dom.Element workElement;
     String convertedID = "";
-    if (!originalID.equals("")) {
+    if (!originalID.isEmpty()) {
       for (int i = 0; i < functionListInto.getLength(); i++) {
         workElement = (org.w3c.dom.Element) functionListInto.item(i);
         if (workElement.getAttribute("SortKey").equals(originalID)) {
@@ -858,12 +851,12 @@ public class DialogImportXEAF extends JDialog {
       } else {
         childElement.setAttribute("AttributeType", "NATIVE");
       }
-      if (workElement1.getAttribute("Size").equals("")) {
+      if (workElement1.getAttribute("Size").isEmpty()) {
         length = 0;
       } else {
         length = Integer.parseInt(workElement1.getAttribute("Size"));
       }
-      if (workElement1.getAttribute("Decimal").equals("")) {
+      if (workElement1.getAttribute("Decimal").isEmpty()) {
         decimal = 0;
       } else {
         decimal = Integer.parseInt(workElement1.getAttribute("Decimal"));
@@ -1112,7 +1105,7 @@ public class DialogImportXEAF extends JDialog {
       childElement.setAttribute("OpD", "");
       newElement.appendChild(childElement);
     }
-    if (!elementFrom.getAttribute("BatchTable").equals("")) {
+    if (!elementFrom.getAttribute("BatchTable").isEmpty()) {
       tableElementInto = convertTableID(elementFrom.getAttribute("BatchTable"));
       if (tableElementInto == null) {
         missingTableCounter++;
@@ -1364,7 +1357,7 @@ public class DialogImportXEAF extends JDialog {
           for (int k = 0; k < fieldList.getLength(); k++) {
             element = (Element) fieldList.item(k);
             if (element.getAttribute("ID").equals(s)) {
-              if (!bf.toString().equals("")) {
+              if (!bf.toString().isEmpty()) {
                 bf.append(", ");
               }
               bf.append(element.getAttribute("Name"));
@@ -1438,7 +1431,7 @@ public class DialogImportXEAF extends JDialog {
     org.w3c.dom.Element convertedElement = null;
     org.w3c.dom.Element element;
 
-    if (!tableIDFrom.equals("")) {
+    if (!tableIDFrom.isEmpty()) {
       NodeList nodeList = frame_.domDocument.getElementsByTagName("Table");
       for (int i = 0; i < nodeList.getLength(); i++) {
         element = (org.w3c.dom.Element) nodeList.item(i);
@@ -1492,7 +1485,7 @@ public class DialogImportXEAF extends JDialog {
     }
 
     public String getName() {
-      if (domNode_.getAttribute("SortKey").equals("")) {
+      if (domNode_.getAttribute("SortKey").isEmpty()) {
         return domNode_.getAttribute("ID") + " " + domNode_.getAttribute("Name");
       } else {
         return domNode_.getAttribute("SortKey") + " " + domNode_.getAttribute("Name");
@@ -1504,7 +1497,7 @@ public class DialogImportXEAF extends JDialog {
     }
 
     public int compareTo(XeadNode other) {
-      XeadNode otherNode = (XeadNode) other;
+      XeadNode otherNode = other;
       return domNode_
           .getAttribute("SortKey")
           .compareTo(otherNode.getElement().getAttribute("SortKey"));
@@ -1515,19 +1508,6 @@ public class DialogImportXEAF extends JDialog {
     private static final long serialVersionUID = 1L;
 
     public void sortElements() {
-      //			TreeSet<XeadNode> treeSet = new TreeSet<XeadNode>(new NodeComparator());
-      //			int elementCount = this.getSize();
-      //			XeadNode node;
-      //			for (int i = 0; i < elementCount; i++) {
-      //				node = (XeadNode)this.getElementAt(i);
-      //				treeSet.add(node);
-      //			}
-      //			this.removeAllElements();
-      //			Iterator<XeadNode> it = treeSet.iterator();
-      //			while( it.hasNext() ){
-      //				node = (XeadNode)it.next();
-      //				this.addElement(node);
-      //			}
       ArrayList<XeadNode> list = new ArrayList<>();
       for (int i = 0; i < this.getSize(); i++) {
         list.add((XeadNode) this.getElementAt(i));
@@ -1539,62 +1519,6 @@ public class DialogImportXEAF extends JDialog {
       }
     }
   }
-
-  //	class NodeComparator implements java.util.Comparator<XeadNode> {
-  //		public int compare(XeadNode node1, XeadNode node2) {
-  //			String value1, value2;
-  //			value1 = node1.getElement().getAttribute("SortKey");
-  //			value2 = node2.getElement().getAttribute("SortKey");
-  //			int compareResult = value1.compareTo(value2);
-  //			if (compareResult == 0) {
-  //				value1 = node1.getElement().getAttribute("ID");
-  //				value2 = node2.getElement().getAttribute("ID");
-  //				compareResult = value1.compareTo(value2);
-  //				if (compareResult == 0) {
-  //					compareResult = 1;
-  //				}
-  //			}
-  //			return(compareResult);
-  //		}
-  //	}
-
-  //	class ElementFieldComparator implements java.util.Comparator<org.w3c.dom.Element> {
-  //		public int compare(org.w3c.dom.Element element1, org.w3c.dom.Element element2) {
-  //			String value1, value2;
-  //			value1 = element1.getAttribute("Order");
-  //			value2 = element2.getAttribute("Order");
-  //			int compareResult = value1.compareTo(value2);
-  //			if (compareResult == 0) {
-  //				value1 = element1.getAttribute("ID");
-  //				value2 = element2.getAttribute("ID");
-  //				compareResult = value1.compareTo(value2);
-  //				if (compareResult == 0) {
-  //					compareResult = 1;
-  //				}
-  //			}
-  //			return(compareResult);
-  //		}
-  //	}
-
-  //	class SortableDomElementFieldListModel extends DefaultListModel {
-  //		private static final long serialVersionUID = 1L;
-  //		public void sortElements() {
-  //			TreeSet<org.w3c.dom.Element> treeSet = new TreeSet<org.w3c.dom.Element>(new
-  // ElementFieldComparator());
-  //			int elementCount = this.getSize();
-  //			org.w3c.dom.Element domElement;
-  //			for (int i = 0; i < elementCount; i++) {
-  //				domElement = (org.w3c.dom.Element)this.getElementAt(i);
-  //				treeSet.add(domElement);
-  //			}
-  //			this.removeAllElements();
-  //			Iterator<org.w3c.dom.Element> it = treeSet.iterator();
-  //			while( it.hasNext() ){
-  //				domElement = (org.w3c.dom.Element)it.next();
-  //				this.addElement(domElement);
-  //			}
-  //		}
-  //	}
 }
 
 class DialogImportXEAF_jComboBoxBlockFrom_actionAdapter implements java.awt.event.ActionListener {

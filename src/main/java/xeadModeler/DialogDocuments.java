@@ -299,7 +299,7 @@ public class DialogDocuments extends JDialog {
           for (int m = 0; m < tableList.getLength(); m++) {
             workElement = (org.w3c.dom.Element) tableList.item(m);
             if (workElement.getAttribute("SubsystemID").equals(subsystemID)) {
-              if (workElement.getAttribute("ID").equals(tableID) || tableID.equals("")) {
+              if (workElement.getAttribute("ID").equals(tableID) || tableID.isEmpty()) {
                 workNode = new XeadNode("Table", workElement);
                 definitionArray[countOfDefinitions] = workNode;
                 countOfDefinitions++;
@@ -328,7 +328,7 @@ public class DialogDocuments extends JDialog {
           for (int m = 0; m < functionList.getLength(); m++) {
             workElement = (org.w3c.dom.Element) functionList.item(m);
             if (workElement.getAttribute("SubsystemID").equals(subsystemID)) {
-              if (workElement.getAttribute("ID").equals(functionID) || functionID.equals("")) {
+              if (workElement.getAttribute("ID").equals(functionID) || functionID.isEmpty()) {
                 workNode = new XeadNode("Table", workElement);
                 definitionArray[countOfDefinitions] = workNode;
                 countOfDefinitions++;
@@ -356,7 +356,7 @@ public class DialogDocuments extends JDialog {
           for (int m = 0; m < countOfDefinitions; m++) {
             workElement = definitionArray[m].getElement();
             if (workElement.getAttribute("SubsystemID").equals(subsystemID)) {
-              if (workElement.getAttribute("ID").equals(tableID) || tableID.equals("")) {
+              if (workElement.getAttribute("ID").equals(tableID) || tableID.isEmpty()) {
                 jProgressBar.setValue(jProgressBar.getValue() + 1);
                 jProgressBar.paintImmediately(
                     0, 0, jProgressBar.getWidth(), jProgressBar.getHeight());
@@ -371,7 +371,7 @@ public class DialogDocuments extends JDialog {
           for (int m = 0; m < countOfDefinitions; m++) {
             workElement = definitionArray[m].getElement();
             if (workElement.getAttribute("SubsystemID").equals(subsystemID)) {
-              if (workElement.getAttribute("ID").equals(functionID) || functionID.equals("")) {
+              if (workElement.getAttribute("ID").equals(functionID) || functionID.isEmpty()) {
                 jProgressBar.setValue(jProgressBar.getValue() + 1);
                 jProgressBar.paintImmediately(
                     0, 0, jProgressBar.getWidth(), jProgressBar.getHeight());
@@ -1718,7 +1718,7 @@ public class DialogDocuments extends JDialog {
           int imageType = -1;
           File file = new File(fileName_);
           String imageFileName = "";
-          if (frame_.ioImageFolder.equals("") || frame_.ioImageFolder.equals("<CURRENT>")) {
+          if (frame_.ioImageFolder.isEmpty() || frame_.ioImageFolder.equals("<CURRENT>")) {
             imageFileName =
                 file.getParent()
                     + File.separator
@@ -2139,7 +2139,7 @@ public class DialogDocuments extends JDialog {
                   break;
                 }
               }
-              if (workElement3.getAttribute("Alias").equals("")) {
+              if (workElement3.getAttribute("Alias").isEmpty()) {
                 if (primaryKeyField) {
                   workString1 = "*" + workElement3.getAttribute("Name");
                 } else {
@@ -2171,7 +2171,7 @@ public class DialogDocuments extends JDialog {
                 if (workElement4
                     .getAttribute("ID")
                     .equals(workElement3.getAttribute("DataTypeID"))) {
-                  if (workElement4.getAttribute("Decimal").equals("")
+                  if (workElement4.getAttribute("Decimal").isEmpty()
                       || workElement4.getAttribute("Decimal").equals("0")) {
                     workString1 =
                         workElement4.getAttribute("Name")
@@ -2307,10 +2307,10 @@ public class DialogDocuments extends JDialog {
     cellD3.setCellStyle(styleValue);
     XSSFCell cellE3 = row3.createCell(4);
     cellE3.setCellStyle(styleValue);
-    if (element.getAttribute("SortKey").equals("")) {
+    if (element.getAttribute("SortKey").isEmpty()) {
       cellA3.setCellValue(new XSSFRichTextString(element.getAttribute("Name")));
     } else {
-      if (element.getAttribute("Alias").equals("")) {
+      if (element.getAttribute("Alias").isEmpty()) {
         cellA3.setCellValue(
             new XSSFRichTextString(
                 element.getAttribute("SortKey") + " / " + element.getAttribute("Name")));
@@ -2494,7 +2494,7 @@ public class DialogDocuments extends JDialog {
       } else {
         cellB.setCellStyle(styleValue);
       }
-      if (workElement1.getAttribute("Alias").equals("")) {
+      if (workElement1.getAttribute("Alias").isEmpty()) {
         if (workElement1.getAttribute("AttributeType").equals("NATIVE")) {
           workString1 = workElement1.getAttribute("Name");
         } else {
@@ -2523,15 +2523,6 @@ public class DialogDocuments extends JDialog {
       for (int m = 0; m < dataTypeList.getLength(); m++) {
         workElement2 = (org.w3c.dom.Element) dataTypeList.item(m);
         if (workElement2.getAttribute("ID").equals(workElement1.getAttribute("DataTypeID"))) {
-          //					if (workElement2.getAttribute("Decimal").equals("") ||
-          // workElement2.getAttribute("Decimal").equals("0")) {
-          //						workString1 = workElement2.getAttribute("Name") + "("  +
-          // workElement2.getAttribute("Length") + ")";
-          //					} else {
-          //						workString1 = workElement2.getAttribute("Name") + "(" +
-          // workElement2.getAttribute("Length") + "."
-          //						+ workElement2.getAttribute("Decimal") + ")";
-          //					}
           workString1 =
               workElement2.getAttribute("Name") + " " + workElement2.getAttribute("SQLExpression");
           break;
@@ -2728,7 +2719,7 @@ public class DialogDocuments extends JDialog {
         for (int k = 0; k < fieldList.getLength(); k++) {
           workElement3 = (org.w3c.dom.Element) fieldList.item(k);
           if (workElement2.getAttribute("FieldID").equals(workElement3.getAttribute("ID"))) {
-            if (workString1.toString().equals("")) {
+            if (workString1.toString().isEmpty()) {
               workString1 = new StringBuilder(workElement3.getAttribute("Name"));
             } else {
               if (workElement1.getAttribute("Type").equals("XK")) {
@@ -2744,7 +2735,7 @@ public class DialogDocuments extends JDialog {
           }
         }
       }
-      if (workString1.toString().equals("")) {
+      if (workString1.toString().isEmpty()) {
         workString1 = new StringBuilder("*None");
       }
       cellC.setCellValue(new XSSFRichTextString(workString1.toString()));
@@ -3052,7 +3043,7 @@ public class DialogDocuments extends JDialog {
           for (int k = 0; k < fieldList1.getLength(); k++) {
             workElement3 = (org.w3c.dom.Element) fieldList1.item(k);
             if (workElement2.getAttribute("FieldID").equals(workElement3.getAttribute("ID"))) {
-              if (workString.toString().equals("")) {
+              if (workString.toString().isEmpty()) {
                 workString = new StringBuilder(workElement3.getAttribute("Name"));
               } else {
                 workString.append(" + ").append(workElement3.getAttribute("Name"));
@@ -3061,7 +3052,7 @@ public class DialogDocuments extends JDialog {
             }
           }
         }
-        if (workString.toString().equals("")) {
+        if (workString.toString().isEmpty()) {
           workString = new StringBuilder("*None");
         }
         cellC2.setCellValue(new XSSFRichTextString(workString.toString()));
@@ -3208,7 +3199,7 @@ public class DialogDocuments extends JDialog {
                     if (workElement4
                         .getAttribute("FieldID")
                         .equals(workElement5.getAttribute("ID"))) {
-                      if (workString.toString().equals("")) {
+                      if (workString.toString().isEmpty()) {
                         workString =
                             new StringBuilder(
                                 "["
@@ -3416,7 +3407,7 @@ public class DialogDocuments extends JDialog {
     }
 
     public int compareTo(XeadNode other) {
-      XeadNode otherNode = (XeadNode) other;
+      XeadNode otherNode = other;
       return domNode_
           .getAttribute("SortKey")
           .compareTo(otherNode.getElement().getAttribute("SortKey"));
