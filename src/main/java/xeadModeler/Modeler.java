@@ -1658,7 +1658,7 @@ public class Modeler extends JFrame {
    * @return String :string value of processed string
    */
   static String concatLinesWithTokenOfEOL(String originalString) {
-    StringBuffer processedString = new StringBuffer();
+    StringBuilder processedString = new StringBuilder();
     int lastEnd = 0;
     for (int i = 0; i <= originalString.length(); i++) {
       if (i < originalString.length()) {
@@ -1682,7 +1682,7 @@ public class Modeler extends JFrame {
    * @return String :string value of processed string
    */
   static String substringLinesWithTokenOfEOL(String originalString, String stringToBeInserted) {
-    StringBuffer processedString = new StringBuffer();
+    StringBuilder processedString = new StringBuilder();
     int lastEnd = 0;
     for (int i = 0; i <= originalString.length(); i++) {
       if (i + 5 <= originalString.length()) {
@@ -1709,7 +1709,7 @@ public class Modeler extends JFrame {
    * @return String :string value of processed string
    */
   static String getLayoutedString(String originalString, int length, String stringToBeInserted) {
-    StringBuffer processedString = new StringBuffer();
+    StringBuilder processedString = new StringBuilder();
     int lastEnd = 0;
     int count = 0;
     for (int i = 0; i <= originalString.length(); i++) {
@@ -2103,7 +2103,7 @@ public class Modeler extends JFrame {
         }
         wrkStr = properties.getProperty("IOImageFontSize");
         if (wrkStr != null && !wrkStr.equals("")) {
-          ioImageFontSize = Integer.valueOf(wrkStr);
+          ioImageFontSize = Integer.parseInt(wrkStr);
         }
         wrkStr = properties.getProperty("IOImageFolder");
         if (wrkStr != null && !wrkStr.equals("")) {
@@ -11200,7 +11200,7 @@ public class Modeler extends JFrame {
     String dataLine;
     int seqNumber = 0;
     FileWriter fileWriter = null;
-    StringBuffer stringBuffer = new StringBuffer();
+    StringBuilder stringBuffer = new StringBuilder();
     BufferedWriter bufferedWriter = null;
     String csvFileName = "";
 
@@ -16990,7 +16990,7 @@ public class Modeler extends JFrame {
               if (componentType_jPopupMenuComponent.equals("NativeTableList")) {
                 if (j == 3) {
                   showOnModelFlag = (Boolean) tableModel.getValueAt(i, j);
-                  if (showOnModelFlag.booleanValue()) {
+                  if (showOnModelFlag) {
                     bufferedWriter.write(res.getString("S483"));
                   } else {
                     bufferedWriter.write("");
@@ -17002,7 +17002,7 @@ public class Modeler extends JFrame {
               if (componentType_jPopupMenuComponent.equals("ForeignTableList")) {
                 if (j == 4) {
                   showOnModelFlag = (Boolean) tableModel.getValueAt(i, j);
-                  if (showOnModelFlag.booleanValue()) {
+                  if (showOnModelFlag) {
                     bufferedWriter.write(res.getString("S483"));
                   } else {
                     bufferedWriter.write("");
@@ -22928,7 +22928,7 @@ public class Modeler extends JFrame {
       jTextFieldNodeNameExt.setOpaque(false);
       jTextFieldNodeNameExt.setName("jTextFieldNodeNameExt");
       Integer num = new Integer(dataflowNodeElement_.getAttribute("SlideNumber"));
-      slideNumber = num.intValue();
+      slideNumber = num;
       jSpinnerSlideNumber.setFont(new java.awt.Font(mainFontName, 0, 12));
       jSpinnerSlideNumber.addChangeListener(new jSpinnerSlideNumber_changeAdapter(this));
       SpinnerNumberModel spinnerNumberModel = new SpinnerNumberModel(slideNumber, 1, 30, 1);
@@ -25300,7 +25300,7 @@ public class Modeler extends JFrame {
 
       // Setup slide number//
       Integer num = new Integer(dataflowLineElement_.getAttribute("SlideNumber"));
-      slideNumber = num.intValue();
+      slideNumber = num;
       jSpinnerSlideNumber.setFont(new java.awt.Font(mainFontName, 0, 12));
       jSpinnerSlideNumber.addChangeListener(new jSpinnerSlideNumber_changeAdapter(this));
       SpinnerNumberModel spinnerNumberModel = new SpinnerNumberModel(slideNumber, 1, 30, 1);
@@ -25311,12 +25311,12 @@ public class Modeler extends JFrame {
 
       // Setup properties of jLabelArrow1&2//
       Integer work = new Integer(dataflowLineElement_.getAttribute("TerminalPosIndex1"));
-      terminalPosIndex1 = work.intValue();
+      terminalPosIndex1 = work;
       if (dataflowLineElement_.getAttribute("ShowArrow1").equals("true")) {
         showArrow1 = true;
       }
       work = new Integer(dataflowLineElement_.getAttribute("TerminalPosIndex2"));
-      terminalPosIndex2 = work.intValue();
+      terminalPosIndex2 = work;
       if (dataflowLineElement_.getAttribute("ShowArrow2").equals("true")) {
         showArrow2 = true;
       }
@@ -25531,9 +25531,9 @@ public class Modeler extends JFrame {
 
     public void setLinePositionIndex() {
       Integer work = new Integer(dataflowLineElement_.getAttribute("TerminalPosIndex1"));
-      terminalPosIndex1 = work.intValue();
+      terminalPosIndex1 = work;
       work = new Integer(dataflowLineElement_.getAttribute("TerminalPosIndex2"));
-      terminalPosIndex2 = work.intValue();
+      terminalPosIndex2 = work;
     }
 
     public void updatePosition() {
@@ -28581,7 +28581,7 @@ public class Modeler extends JFrame {
           }
         }
       }
-      StringBuffer bf = new StringBuffer();
+      StringBuilder bf = new StringBuilder();
       if (isC) {
         bf.append("C");
       }
@@ -29499,7 +29499,7 @@ public class Modeler extends JFrame {
 
         // Setup ToolTipText //
         String zenkaku;
-        StringBuffer strbf = new StringBuffer("<html>");
+        StringBuilder strbf = new StringBuilder("<html>");
         String strwork = elementNode_.getElement().getAttribute("Alias");
         if (!strwork.equals("")) {
           strbf.append(strwork);
@@ -30401,7 +30401,7 @@ public class Modeler extends JFrame {
     }
 
     public String getNameAsOwnerNode() {
-      StringBuffer bf = new StringBuffer();
+      StringBuilder bf = new StringBuilder();
       if (nodeType_.equals("TableList")
           || nodeType_.equals("TableFieldList")
           || nodeType_.equals("TableKeyList")
@@ -30435,7 +30435,7 @@ public class Modeler extends JFrame {
     }
 
     public String getNameAsLoggedNode() {
-      StringBuffer bf = new StringBuffer();
+      StringBuilder bf = new StringBuilder();
       if (nodeType_.equals("TableList")) {
         bf.append(res.getString("S466"));
       } else {
@@ -36358,7 +36358,7 @@ public class Modeler extends JFrame {
 
     // Get Name of Table-Key Specified with its ID//
     private String getNameOfTableKey() {
-      StringBuffer keyName = new StringBuffer();
+      StringBuilder keyName = new StringBuilder();
       XeadTreeNode node1, node2, node3;
       org.w3c.dom.Element keyFieldElement;
       if (this.getType() == "TableKey") {
@@ -38937,10 +38937,10 @@ public class Modeler extends JFrame {
                 3);
             element.setAttribute("Length", Integer.toString(length2));
             tableModelSystemDataTypeList.setValueAt(
-                new Integer(length2), selectedRow_jTableSystemDataTypeList, 4);
+                length2, selectedRow_jTableSystemDataTypeList, 4);
             element.setAttribute("Decimal", Integer.toString(decimal2));
             tableModelSystemDataTypeList.setValueAt(
-                new Integer(decimal2), selectedRow_jTableSystemDataTypeList, 5);
+                decimal2, selectedRow_jTableSystemDataTypeList, 5);
           }
         }
       }
@@ -39416,7 +39416,7 @@ public class Modeler extends JFrame {
           for (int j = 0; j < subsystemTableList.getLength(); j++) {
             org.w3c.dom.Element element = (org.w3c.dom.Element) subsystemTableList.item(j);
             if (number.getElement().getAttribute("ID").equals(element.getAttribute("TableID"))) {
-              if (showOnModelFlag.booleanValue()) {
+              if (showOnModelFlag) {
                 if (element.getAttribute("ShowOnModel").equals("false")) {
                   valueOfFieldsChanged = true;
                   element.setAttribute("ShowOnModel", "true");
@@ -39447,7 +39447,7 @@ public class Modeler extends JFrame {
                 .getElement()
                 .getAttribute("TableID")
                 .equals(element.getAttribute("TableID"))) {
-              if (showOnModelFlag.booleanValue()) {
+              if (showOnModelFlag) {
                 if (element.getAttribute("ShowOnModel").equals("false")) {
                   valueOfFieldsChanged = true;
                   element.setAttribute("ShowOnModel", "true");
@@ -39596,7 +39596,7 @@ public class Modeler extends JFrame {
         for (int j = 0; j < tableFieldList.getLength(); j++) {
           org.w3c.dom.Element element = (org.w3c.dom.Element) tableFieldList.item(j);
           if (number.getElement().getAttribute("ID").equals(element.getAttribute("ID"))) {
-            if (showOnModelFlag.booleanValue()) {
+            if (showOnModelFlag) {
               if (element.getAttribute("ShowOnModel").equals("false")) {
                 valueOfFieldsChanged = true;
                 element.setAttribute("ShowOnModel", "true");
@@ -40996,7 +40996,7 @@ public class Modeler extends JFrame {
         setForeground(table.getForeground());
         setBackground(table.getBackground());
       }
-      setSelected((value != null && ((Boolean) value).booleanValue()));
+      setSelected((value != null && (Boolean) value));
       return this;
     }
   }
@@ -41165,10 +41165,10 @@ public class Modeler extends JFrame {
 
     String getText() {
       ArrayList<String> logList = new ArrayList<String>();
-      StringBuffer bf;
+      StringBuilder bf;
 
       for (int i = 0; i < indexOfLastElement; i++) {
-        bf = new StringBuffer();
+        bf = new StringBuilder();
         bf.append(res.getString("S3319"));
         if (nodeArray.get(i).getNodeType().equals("System")) {
           int selectedIndex =
@@ -41218,7 +41218,7 @@ public class Modeler extends JFrame {
         }
       }
 
-      bf = new StringBuffer();
+      bf = new StringBuilder();
       for (String s : logList) {
         bf.append(s);
       }
@@ -41246,7 +41246,7 @@ public class Modeler extends JFrame {
     }
 
     private String getTextOfElementOfIndex(int index) {
-      StringBuffer bf = new StringBuffer();
+      StringBuilder bf = new StringBuilder();
       bf.append(res.getString("S3326"));
       bf.append(nodeArray.get(index).getName());
       bf.append(res.getString("S3327"));
