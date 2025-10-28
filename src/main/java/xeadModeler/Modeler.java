@@ -2077,7 +2077,6 @@ public class Modeler extends JFrame {
   /** Initialize main components and variants */
   void jbInitComponentsAndVariants() {
 
-    /** Read xteamdl.properties */
     InputStream inputStream = null;
     try {
       File file = new File("xteamdl.properties");
@@ -2114,10 +2113,9 @@ public class Modeler extends JFrame {
           backupFolder = wrkStr;
         }
       }
-    } catch (Exception e) {
+    } catch (Exception ignored) {
     }
 
-    /** Construct Dialogs */
     dialogDataflowNode = new DialogDataflowNode(this);
     dialogDataflowLine = new DialogDataflowLine(this);
     dialogScan = new DialogScan(this);
@@ -2132,7 +2130,6 @@ public class Modeler extends JFrame {
     dialogTableSynchronize = new DialogTableSynchronize(this);
     dialogToListChangesOfFiles = new DialogToListChangesOfFiles(this);
 
-    /** table-cell property controller */
     rendererAlignmentCenter.setHorizontalAlignment(0); // CENTER//
     rendererAlignmentRight.setHorizontalAlignment(4); // RIGHT//
     rendererAlignmentLeft.setHorizontalAlignment(2); // LEFT//
@@ -2143,7 +2140,6 @@ public class Modeler extends JFrame {
     rendererAlignmentLeftControlColor.setHorizontalAlignment(2); // LEFT//
     rendererAlignmentLeftControlColor.setBackground(SystemColor.control);
 
-    /** set image resource to icons */
     imageIconSystem = new ImageIcon(xeadModeler.Modeler.class.getResource("isys.png"));
     imageIconSubjectAreaList = new ImageIcon(xeadModeler.Modeler.class.getResource("iblklist.png"));
     imageIconSubjectArea = new ImageIcon(xeadModeler.Modeler.class.getResource("iblk.png"));
@@ -2180,7 +2176,6 @@ public class Modeler extends JFrame {
     imageIconText = new ImageIcon(xeadModeler.Modeler.class.getResource("itext.png"));
     imageIconBook = new ImageIcon(xeadModeler.Modeler.class.getResource("ibook.png"));
 
-    /** Title Name and Title Icon */
     imageTitle =
         Toolkit.getDefaultToolkit()
             .createImage(xeadModeler.Modeler.class.getResource("title32.png"));
@@ -2192,7 +2187,6 @@ public class Modeler extends JFrame {
     this.setSize(new Dimension(screenWidth - 120, screenHeight - 80));
     this.setExtendedState(JFrame.MAXIMIZED_BOTH);
 
-    /** main panels */
     jPanelMain = (JPanel) this.getContentPane();
     jPanelMain.setLayout(new BorderLayout());
     jPanelJumpButtons.setPreferredSize(new Dimension(10, 25));
@@ -2233,7 +2227,6 @@ public class Modeler extends JFrame {
     jSplitPaneMain.add(jPanelContentsPane, JSplitPane.RIGHT);
     jSplitPaneMain.setDividerLocation(350);
 
-    /** main menu */
     jMenuFile.setText(res.getString("S50"));
     jMenuFile.addMenuListener(new Modeler_jMenuFile_menuAdapter(this));
     jMenuItemFileNew.setText(res.getString("S51"));
@@ -2478,7 +2471,6 @@ public class Modeler extends JFrame {
     jMenuBar.add(jMenuHelp);
     this.setJMenuBar(jMenuBar);
 
-    /** general purposed context menu */
     jMenuItemComponentToAdd.setText(res.getString("S860"));
     jMenuItemComponentToAddIOPanel.setText(res.getString("S861"));
     jMenuItemComponentToAddIOSpool.setText(res.getString("S862"));
@@ -2508,7 +2500,6 @@ public class Modeler extends JFrame {
     jMenuItemComponentToSetIOWebPage.setText(res.getString("S881"));
     jMenuItemComponentToPrintImage.setText(res.getString("S55"));
 
-    /** access key for MainMenu if Platform is not Mac OS */
     if (System.getProperty("mrj.version") == null) {
       jMenuFile.setText(res.getString("S94"));
       jMenuFile.setMnemonic('F');
@@ -2522,12 +2513,10 @@ public class Modeler extends JFrame {
       jMenuHelp.setMnemonic('H');
     }
 
-    /** Printer Controller */
     printerJob = PrinterJob.getPrinterJob();
     pageFormat = printerJob.defaultPage();
     pageFormat.setOrientation(PageFormat.LANDSCAPE);
 
-    /** components for TreeView */
     jScrollPaneTreeView.setMinimumSize(new Dimension(0, 0));
     jPanelContentsPane.setLayout(cardLayoutContentsPane);
     jTreeMain.setFont(new java.awt.Font(mainFontName, 0, MAIN_FONT_SIZE));
@@ -2539,7 +2528,6 @@ public class Modeler extends JFrame {
     jTreeMain.getSelectionModel().setSelectionMode(TreeSelectionModel.SINGLE_TREE_SELECTION);
     jScrollPaneTreeView.getViewport().add(jTreeMain, null);
 
-    /** PopupMenu for jTreeMain */
     jMenuItemXeadTreeNodeAdd.setText(res.getString("S100"));
     jMenuItemXeadTreeNodeAdd.addActionListener(
         new Modeler_jMenuItemXeadTreeNodeAdd_actionAdapter(this));
@@ -2578,7 +2566,6 @@ public class Modeler extends JFrame {
     jMenuItemXeadTreeNodeAddIndex.addActionListener(
         new Modeler_jMenuItemXeadTreeNodeAddIndex_actionAdapter(this));
 
-    /** PopupMenu for Contents Pane Processing */
     jMenuItemComponentToAdd.addActionListener(
         new Modeler_jMenuItemComponentToAdd_actionAdapter(this));
     jMenuItemComponentToAddIOPanel.addActionListener(
@@ -2634,7 +2621,6 @@ public class Modeler extends JFrame {
     jMenuItemComponentToSetIOWebPage.addActionListener(
         new Modeler_jMenuItemComponentToSetIOWebPage_actionAdapter(this));
 
-    /** components on Contents Pane */
     jPanelContentsPane.add(jPanelSystem, "jPanelSystem");
     jPanelContentsPane.add(jPanelSubjectAreaList, "jPanelSubjectAreaList");
     jPanelContentsPane.add(jPanelSubjectArea, "jPanelSubjectArea");
@@ -2656,7 +2642,6 @@ public class Modeler extends JFrame {
     jPanelContentsPane.add(jPanelIOTable, "jPanelIOTable");
     jPanelContentsPane.add(jPanelIOWebPage, "jPanelIOWebPage");
 
-    /** components on PopUp-Menu for editing IOImage */
     jMenuItemIOImageBlockSelect.addActionListener(
         new Modeler_jMenuItemIOImageBlockSelect_actionAdapter(this));
     jMenuItemIOImageCopy.addActionListener(new Modeler_jMenuItemIOImageCopy_actionAdapter(this));
@@ -6686,7 +6671,6 @@ public class Modeler extends JFrame {
    * Process specific file
    *
    * @param nameOfFile :name of file to be processed
-   * @throws Exception
    */
   void processContentsFile(String nameOfFile) throws Exception {
     currentFileName = nameOfFile;
@@ -7007,7 +6991,6 @@ public class Modeler extends JFrame {
   /**
    * Setup main tree model with selected file
    *
-   * @throws Exception
    */
   void setupMainTreeModelWithCurrentFileName() throws Exception {
     NodeList xmlnodelist1, xmlnodelist2;
@@ -9107,7 +9090,7 @@ public class Modeler extends JFrame {
         try {
           createtNewXeadFileWithCurrentFileName();
           setupMainTreeModelWithCurrentFileName();
-        } catch (Exception ex) {
+        } catch (Exception ignored) {
         }
       }
     }
@@ -9147,7 +9130,7 @@ public class Modeler extends JFrame {
         xeadUndoManager.resetLog();
         try {
           setupMainTreeModelWithCurrentFileName();
-        } catch (Exception ex) {
+        } catch (Exception ignored) {
         }
       }
     }
@@ -10584,7 +10567,7 @@ public class Modeler extends JFrame {
     } catch (Exception ex1) {
       try {
         bufferedWriter.close();
-      } catch (Exception ex2) {
+      } catch (Exception ignored) {
       }
     } finally {
       setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
@@ -10601,7 +10584,7 @@ public class Modeler extends JFrame {
         try {
           setCursor(new Cursor(Cursor.WAIT_CURSOR));
           desktop.open(workCsvFile);
-        } catch (Exception ex) {
+        } catch (Exception ignored) {
         } finally {
           setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
         }
@@ -10609,7 +10592,7 @@ public class Modeler extends JFrame {
     } catch (Exception ex3) {
       try {
         bufferedWriter.close();
-      } catch (Exception ex4) {
+      } catch (Exception ignored) {
       }
     }
   }
@@ -10755,7 +10738,7 @@ public class Modeler extends JFrame {
     } catch (Exception ex1) {
       try {
         bufferedWriter.close();
-      } catch (Exception ex2) {
+      } catch (Exception ignored) {
       }
     } finally {
       setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
@@ -10772,7 +10755,7 @@ public class Modeler extends JFrame {
         try {
           setCursor(new Cursor(Cursor.WAIT_CURSOR));
           desktop.open(workCsvFile);
-        } catch (Exception ex) {
+        } catch (Exception ignored) {
         } finally {
           setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
         }
@@ -10780,7 +10763,7 @@ public class Modeler extends JFrame {
     } catch (Exception ex3) {
       try {
         bufferedWriter.close();
-      } catch (Exception ex4) {
+      } catch (Exception ignored) {
       }
     }
   }
@@ -10841,7 +10824,7 @@ public class Modeler extends JFrame {
     } catch (Exception ex1) {
       try {
         bufferedWriter.close();
-      } catch (Exception ex2) {
+      } catch (Exception ignored) {
       }
     } finally {
       setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
@@ -10859,7 +10842,7 @@ public class Modeler extends JFrame {
     } catch (Exception ex3) {
       try {
         bufferedWriter.close();
-      } catch (Exception ex4) {
+      } catch (Exception ignored) {
       }
     }
     jProgressBar.setValue(0);
@@ -11016,7 +10999,7 @@ public class Modeler extends JFrame {
     } catch (Exception ex1) {
       try {
         bufferedWriter.close();
-      } catch (Exception ex2) {
+      } catch (Exception ignored) {
       }
     } finally {
       setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
@@ -11034,7 +11017,7 @@ public class Modeler extends JFrame {
         try {
           setCursor(new Cursor(Cursor.WAIT_CURSOR));
           desktop.open(workCsvFile);
-        } catch (Exception ex) {
+        } catch (Exception ignored) {
         } finally {
           setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
         }
@@ -11042,7 +11025,7 @@ public class Modeler extends JFrame {
     } catch (Exception ex3) {
       try {
         bufferedWriter.close();
-      } catch (Exception ex4) {
+      } catch (Exception ignored) {
       }
     }
   }
@@ -11157,7 +11140,7 @@ public class Modeler extends JFrame {
     } catch (Exception ex1) {
       try {
         bufferedWriter.close();
-      } catch (Exception ex2) {
+      } catch (Exception ignored) {
       }
     } finally {
       setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
@@ -11175,7 +11158,7 @@ public class Modeler extends JFrame {
         try {
           setCursor(new Cursor(Cursor.WAIT_CURSOR));
           desktop.open(workCsvFile);
-        } catch (Exception ex) {
+        } catch (Exception ignored) {
         } finally {
           setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
         }
@@ -11183,7 +11166,7 @@ public class Modeler extends JFrame {
     } catch (Exception ex3) {
       try {
         bufferedWriter.close();
-      } catch (Exception ex4) {
+      } catch (Exception ignored) {
       }
     }
   }
@@ -11441,7 +11424,7 @@ public class Modeler extends JFrame {
         try {
           setCursor(new Cursor(Cursor.WAIT_CURSOR));
           desktop.open(workCsvFile);
-        } catch (Exception ex) {
+        } catch (Exception ignored) {
         } finally {
           setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
         }
@@ -11449,7 +11432,7 @@ public class Modeler extends JFrame {
     } catch (Exception ex3) {
       try {
         bufferedWriter.close();
-      } catch (Exception ex4) {
+      } catch (Exception ignored) {
       }
     }
   }
@@ -12260,7 +12243,7 @@ public class Modeler extends JFrame {
         try {
           setCursor(new Cursor(Cursor.WAIT_CURSOR));
           desktop.browse(new URI(urlString));
-        } catch (Exception ex) {
+        } catch (Exception ignored) {
         } finally {
           setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
         }
@@ -12298,7 +12281,7 @@ public class Modeler extends JFrame {
       try {
         setCursor(new Cursor(Cursor.WAIT_CURSOR));
         desktop.open(helpFile);
-      } catch (Exception ex) {
+      } catch (Exception ignored) {
       } finally {
         setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
       }
@@ -12929,7 +12912,6 @@ public class Modeler extends JFrame {
    * Method to adjust font size in text-field
    *
    * @param textfield :text-field to be processed
-   * @return int :max size of font
    */
   void adjustFontSizeOfTextField(Object textfield, int maxSize) {
     FontMetrics metrics;
@@ -14317,7 +14299,7 @@ public class Modeler extends JFrame {
         StyledDocument styledDocument = textPane.getStyledDocument();
         try {
           styledDocument.remove(textPane.getCaretPosition(), 1);
-        } catch (BadLocationException ex) {
+        } catch (BadLocationException ignored) {
         }
       }
     }
@@ -14382,7 +14364,7 @@ public class Modeler extends JFrame {
               styledDocumentCopiedSegmentList
                   .get(styledDocumentCopiedTextList.size() - 1)
                   .insertString(j, textElementString, textElement.getAttributes());
-            } catch (BadLocationException ex) {
+            } catch (BadLocationException ignored) {
             }
           }
         }
@@ -14438,7 +14420,7 @@ public class Modeler extends JFrame {
             styledDocumentCopiedSegmentList
                 .get(0)
                 .insertString(i, textElementString, textElement.getAttributes());
-          } catch (BadLocationException ex) {
+          } catch (BadLocationException ignored) {
           }
         }
         //
@@ -14477,7 +14459,7 @@ public class Modeler extends JFrame {
       if (contentsReceived.isDataFlavorSupported(DataFlavor.stringFlavor)) {
         try {
           clipboardData = (String) contentsReceived.getTransferData(DataFlavor.stringFlavor);
-        } catch (Exception ex) {
+        } catch (Exception ignored) {
         }
       }
     }
@@ -14530,7 +14512,7 @@ public class Modeler extends JFrame {
           try {
             String textElementString = styledDocumentCopiedTextList.get(j).substring(i, i + 1);
             styledDocument.insertString(pastingPos, textElementString, textElement.getAttributes());
-          } catch (BadLocationException ex) {
+          } catch (BadLocationException ignored) {
           }
           pastingPos++;
         }
@@ -14800,7 +14782,7 @@ public class Modeler extends JFrame {
             try {
               String textElementString = styleCanceledDocumentCopiedText.substring(j, j + 1);
               styledDocument.insertString(j + selectionStartPos, textElementString, null);
-            } catch (BadLocationException ex) {
+            } catch (BadLocationException ignored) {
             }
           }
         }
@@ -14821,7 +14803,7 @@ public class Modeler extends JFrame {
           try {
             String textElementString = styleCanceledDocumentCopiedText.substring(i, i + 1);
             styledDocument.insertString(i + selectionStart, textElementString, null);
-          } catch (BadLocationException ex) {
+          } catch (BadLocationException ignored) {
           }
         }
       }
@@ -14896,7 +14878,7 @@ public class Modeler extends JFrame {
           }
         }
         br.close();
-      } catch (IOException ex) {
+      } catch (IOException ignored) {
       }
 
       if (validLineNumber == 0) {
@@ -15128,7 +15110,7 @@ public class Modeler extends JFrame {
           StringTokenizer workTokenizer = new StringTokenizer(answer, ",");
           workX = Integer.parseInt(workTokenizer.nextToken());
           workY = Integer.parseInt(workTokenizer.nextToken());
-        } catch (Exception ex1) {
+        } catch (Exception ignored) {
         }
         iOPanelCharLengthX = workX;
         iOPanelCharLengthY = workY;
@@ -15155,7 +15137,7 @@ public class Modeler extends JFrame {
           StringTokenizer workTokenizer = new StringTokenizer(answer, ",");
           workX = Integer.parseInt(workTokenizer.nextToken());
           workY = Integer.parseInt(workTokenizer.nextToken());
-        } catch (Exception ex) {
+        } catch (Exception ignored) {
         }
         iOSpoolCharLengthX = workX;
         iOSpoolCharLengthY = workY;
@@ -15463,7 +15445,7 @@ public class Modeler extends JFrame {
                     jEditorPaneFunctionsStructureIOImageArray[k].setText(
                         res.getString("S1829") + fileName);
                     jEditorPaneFunctionsStructureIOImageArray[k].setPage(fileName);
-                  } catch (Exception ex) {
+                  } catch (Exception ignored) {
                   }
                 }
               }
@@ -16500,7 +16482,7 @@ public class Modeler extends JFrame {
               }
             }
             jEditorPaneSystemTermsDescriptions.setPage(fileName);
-          } catch (Exception ex) {
+          } catch (Exception ignored) {
           }
         }
       }
@@ -17023,7 +17005,7 @@ public class Modeler extends JFrame {
       } catch (Exception ex1) {
         try {
           bufferedWriter.close();
-        } catch (Exception ex2) {
+        } catch (Exception ignored) {
         }
       }
       try {
@@ -17034,14 +17016,14 @@ public class Modeler extends JFrame {
         try {
           setCursor(new Cursor(Cursor.WAIT_CURSOR));
           desktop.open(workCsvFile);
-        } catch (Exception ex) {
+        } catch (Exception ignored) {
         } finally {
           setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
         }
       } catch (Exception ex3) {
         try {
           bufferedWriter.close();
-        } catch (Exception ex4) {
+        } catch (Exception ignored) {
         }
       }
     }
@@ -17393,7 +17375,7 @@ public class Modeler extends JFrame {
         sortKey = workTokenizer.nextToken();
         length = Integer.parseInt(workTokenizer.nextToken());
         name = workTokenizer.nextToken();
-      } catch (Exception ex1) {
+      } catch (Exception ignored) {
       }
       if (!sortKey.equals("") && !name.equals("")) {
         //
@@ -19422,7 +19404,7 @@ public class Modeler extends JFrame {
                   jPanelDatamodelSlideShow2,
                   relationshipElement);
           datamodelRelationshipLineSlideShowArray.add(relationshipLine);
-        } catch (Exception e) {
+        } catch (Exception ignored) {
         }
       }
     }
@@ -19856,7 +19838,7 @@ public class Modeler extends JFrame {
             }
           }
           desktop.browse(file.toURI());
-        } catch (Exception ex) {
+        } catch (Exception ignored) {
         }
       }
     }
@@ -22553,7 +22535,7 @@ public class Modeler extends JFrame {
             reply = true;
           }
         }
-      } catch (BadLocationException ex) {
+      } catch (BadLocationException ignored) {
       }
     }
     return reply;
@@ -32235,7 +32217,7 @@ public class Modeler extends JFrame {
       if (printerJob.printDialog()) {
         try {
           printerJob.print();
-        } catch (PrinterException ex) {
+        } catch (PrinterException ignored) {
         }
       }
     }
@@ -33716,7 +33698,7 @@ public class Modeler extends JFrame {
                       }
                       jEditorPaneTaskFunctionIOImage.setText(res.getString("S1829") + fileName);
                       jEditorPaneTaskFunctionIOImage.setPage(fileName);
-                    } catch (Exception ex) {
+                    } catch (Exception ignored) {
                     }
                   }
                 }
@@ -38899,7 +38881,7 @@ public class Modeler extends JFrame {
           int length2 = 0;
           try {
             length2 = Integer.parseInt(jTextFieldSystemDataTypeLength.getText());
-          } catch (NumberFormatException ex) {
+          } catch (NumberFormatException ignored) {
           }
           if (length1 != length2) {
             valueOfFieldsChangedByTabbedPane = true;
@@ -38909,7 +38891,7 @@ public class Modeler extends JFrame {
           int decimal2 = 0;
           try {
             decimal2 = Integer.parseInt(jTextFieldSystemDataTypeDecimal.getText());
-          } catch (NumberFormatException ex1) {
+          } catch (NumberFormatException ignored) {
           }
           if (decimal1 != decimal2) {
             valueOfFieldsChangedByTabbedPane = true;
@@ -41436,7 +41418,7 @@ public class Modeler extends JFrame {
     public void actionPerformed(ActionEvent e) {
       try {
         textPaneUndoManager.undo();
-      } catch (CannotUndoException ex) {
+      } catch (CannotUndoException ignored) {
       }
       update();
       redoAction.update();
@@ -41465,7 +41447,7 @@ public class Modeler extends JFrame {
     public void actionPerformed(ActionEvent e) {
       try {
         textPaneUndoManager.redo();
-      } catch (CannotRedoException ex) {
+      } catch (CannotRedoException ignored) {
       }
       update();
       undoAction.update();

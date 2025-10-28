@@ -32,7 +32,10 @@ package xeadModeler;
  */
 
 import java.awt.*;
-
+import java.awt.event.*;
+import java.io.*;
+import java.net.URI;
+import java.util.*;
 import javax.swing.*;
 import javax.swing.event.*;
 import javax.swing.table.*;
@@ -40,10 +43,6 @@ import javax.swing.text.SimpleAttributeSet;
 import javax.swing.text.Style;
 import javax.swing.text.StyleConstants;
 import javax.swing.text.StyledDocument;
-
-import java.awt.event.*;
-import java.util.ResourceBundle;
-
 import org.apache.poi.hssf.usermodel.HSSFCell;
 import org.apache.poi.hssf.usermodel.HSSFCellStyle;
 import org.apache.poi.hssf.usermodel.HSSFDataFormat;
@@ -55,10 +54,6 @@ import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.hssf.util.HSSFColor;
 import org.w3c.dom.*;
-
-import java.io.*;
-import java.net.URI;
-import java.util.*;
 
 public class DialogScan extends JDialog {
 	private static final long serialVersionUID = 1L;

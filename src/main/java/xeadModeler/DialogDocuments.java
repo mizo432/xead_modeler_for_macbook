@@ -1683,7 +1683,7 @@ public class DialogDocuments extends JDialog {
               } catch (Exception ex) {
                 ex.printStackTrace();
               }
-            } catch (IOException ex1) {
+            } catch (IOException ignored) {
             }
 					} else {
 						workString1 = substringLinesWithTokenOfEOL(workElement1.

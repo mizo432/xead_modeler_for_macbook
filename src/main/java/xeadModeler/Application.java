@@ -31,81 +31,77 @@ package xeadModeler;
  * POSSIBILITY OF SUCH DAMAGE.
  */
 
-import javax.swing.UIManager;
-
 import java.awt.*;
-
+import java.util.ResourceBundle;
 import javax.swing.*;
 
-import java.util.ResourceBundle;
-
 public class Application {
-	private static final ResourceBundle res = ResourceBundle.getBundle("xeadModeler.Res");
-	private final boolean packFrame = false;
-	private JWindow splashScreen;
-	private final JLabel  splashIcon;
-	private JLabel  splashLabel;
+  private static final ResourceBundle res = ResourceBundle.getBundle("xeadModeler.Res");
+  private final boolean packFrame = false;
+  private JWindow splashScreen;
+  private final JLabel splashIcon;
+  private JLabel splashLabel;
 
-	public Application(String[] args) {
-		ImageIcon image = new ImageIcon(xeadModeler.Application.class.getResource("splash.png"));
-		splashIcon = new JLabel(image);
-		splashIcon.setLayout(null);
-		splashLabel = new JLabel();
-		splashLabel.setFont(new java.awt.Font("Dialog", 0, 16));
-		splashLabel.setOpaque(false);
-		splashLabel.setBounds(280, 205, 220, 20);
-		splashLabel.setText(res.getString("SplashMessage0"));
-		splashIcon.add(splashLabel);
-		splashScreen = new JWindow();
-		splashScreen.getContentPane().add(splashIcon);
-		splashScreen.pack();
-		splashScreen.setLocationRelativeTo(null);
-		EventQueue.invokeLater(this::showSplash);
-		//
-		Modeler frame = new Modeler(args, this);
-		if (packFrame) {
-			frame.pack();
-		} else {
-			frame.validate();
-		}
-		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
-		Dimension frameSize = frame.getSize();
-		if (frameSize.height > screenSize.height) {
-			frameSize.height = screenSize.height;
-		}
-		if (frameSize.width > screenSize.width) {
-			frameSize.width = screenSize.width;
-		}
-		frame.setLocation((screenSize.width - frameSize.width) / 2, (screenSize.height - frameSize.height) / 2);
-		frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
-		frame.setVisible(true);
-	}
+  public Application(String[] args) {
+    ImageIcon image = new ImageIcon(xeadModeler.Application.class.getResource("splash.png"));
+    splashIcon = new JLabel(image);
+    splashIcon.setLayout(null);
+    splashLabel = new JLabel();
+    splashLabel.setFont(new java.awt.Font("Dialog", 0, 16));
+    splashLabel.setOpaque(false);
+    splashLabel.setBounds(280, 205, 220, 20);
+    splashLabel.setText(res.getString("SplashMessage0"));
+    splashIcon.add(splashLabel);
+    splashScreen = new JWindow();
+    splashScreen.getContentPane().add(splashIcon);
+    splashScreen.pack();
+    splashScreen.setLocationRelativeTo(null);
+    EventQueue.invokeLater(this::showSplash);
+    //
+    Modeler frame = new Modeler(args, this);
+    if (packFrame) {
+      frame.pack();
+    } else {
+      frame.validate();
+    }
+    Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+    Dimension frameSize = frame.getSize();
+    if (frameSize.height > screenSize.height) {
+      frameSize.height = screenSize.height;
+    }
+    if (frameSize.width > screenSize.width) {
+      frameSize.width = screenSize.width;
+    }
+    frame.setLocation(
+        (screenSize.width - frameSize.width) / 2, (screenSize.height - frameSize.height) / 2);
+    frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
+    frame.setVisible(true);
+  }
 
-	public static void main(String[] args) {
-		try {
-			UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-		}
-		catch(Exception e) {
-			e.printStackTrace();
-		}
-		new Application(args);
-	}
-	
-	public void showSplash() {
-		splashScreen.setVisible(true);
-	}
-	
-	public void setTextOnSplash(String text) {
-		if (splashLabel != null) {
-			splashLabel.setText(text);
-		}
-	}
+  public static void main(String[] args) {
+    try {
+      UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+    } catch (Exception e) {
+      e.printStackTrace();
+    }
+    new Application(args);
+  }
 
-	public void hideSplash() {
-		if (splashScreen != null) {
-			splashScreen.setVisible(false);
-			splashScreen = null;
-			splashLabel  = null;
-		}
-	}
+  public void showSplash() {
+    splashScreen.setVisible(true);
+  }
+
+  public void setTextOnSplash(String text) {
+    if (splashLabel != null) {
+      splashLabel.setText(text);
+    }
+  }
+
+  public void hideSplash() {
+    if (splashScreen != null) {
+      splashScreen.setVisible(false);
+      splashScreen = null;
+      splashLabel = null;
+    }
+  }
 }
