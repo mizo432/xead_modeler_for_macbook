@@ -41,6 +41,7 @@ import java.awt.print.*;
 import java.io.*;
 import java.net.URI;
 import java.nio.charset.StandardCharsets;
+import java.nio.file.FileSystems;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.*;
@@ -126,9 +127,6 @@ public class Modeler extends JFrame {
   /** change status controller for general use */
   boolean informationOnThisPageChanged;
 
-  /** Main panels and labels */
-  private JPanel jPanelMain;
-
   private final JPanel jPanelJumpButtons = new JPanel();
   private final GridLayout gridLayoutJumpButtons = new GridLayout();
   private final NodeJumpButton[] nodeJumpButton = new NodeJumpButton[8];
@@ -138,14 +136,11 @@ public class Modeler extends JFrame {
   private final JLabel jLabelSubtitle = new JLabel();
   private final JLabel jLabelChangeState = new JLabel();
   private final JProgressBar jProgressBar = new JProgressBar();
-  private Border borderOriginal1;
   private final JPanel jPanelContentsPane = new JPanel();
   private final CardLayout cardLayoutContentsPane = new CardLayout();
   private long lastModifyTime = 0;
   private String applicationFolder;
   private String urlString = "";
-  private int screenWidth = 800;
-  private int screenHeight = 600;
 
   /** Main Menu */
   private final JMenuBar jMenuBar = new JMenuBar();
@@ -269,9 +264,6 @@ public class Modeler extends JFrame {
   /** Last focused KanjiTextArea */
   private KanjiTextArea lastFocusedTextArea = null;
 
-  /** Icons */
-  private Image imageTitle;
-
   private ImageIcon imageIconSystem;
   private ImageIcon imageIconSubjectAreaList;
   private ImageIcon imageIconSubjectArea;
@@ -312,7 +304,6 @@ public class Modeler extends JFrame {
 
   private final CustomTreeRenderer customTreeRenderer = new CustomTreeRenderer();
   private final JTree jTreeMain = new JTree();
-  private DefaultTreeModel treeModel;
   private XeadTreeNode previousMainTreeNode, dragSourceMainTreeNode;
   private XeadTreeNode bookmarkedNode1,
       bookmarkedNode2,
@@ -323,8 +314,10 @@ public class Modeler extends JFrame {
   private Component dropTargetComponent;
   private int dragStartPointX = 0;
   private int dragStartPointY = 0;
-  private XeadTreeNode systemNode, SubjectAreaListNode, roleListNode, subsystemListNode;
-  private XeadTreeNode currentTaskActionTreeNode, previousTaskActionTreeNode;
+  private XeadTreeNode systemNode;
+  private XeadTreeNode roleListNode;
+  private XeadTreeNode subsystemListNode;
+  private XeadTreeNode currentTaskActionTreeNode;
 
   /** PopupMenu for editing XeadTreeNode */
   private final JPopupMenu jPopupMenuXeadTreeNode = new JPopupMenu();
@@ -387,21 +380,17 @@ public class Modeler extends JFrame {
   private final DefaultTableCellRenderer rendererAlignmentLeftControlColor =
       new DefaultTableCellRenderer();
   private DefaultTableCellRenderer rendererTableHeader = null;
-  private TableColumn column0,
-      column1,
-      column2,
-      column3,
-      column4,
-      column5,
-      column6,
-      column7,
-      column8,
-      column9,
-      columnA,
-      columnB,
-      columnC,
-      columnD,
-      columnE;
+  private TableColumn column0;
+  private TableColumn column1;
+  private TableColumn column2;
+  private TableColumn column3;
+  private TableColumn column4;
+  private TableColumn column5;
+  private TableColumn column6;
+  private TableColumn column7;
+  private TableColumn column8;
+  private TableColumn column9;
+  private TableColumn columnA;
 
   /** customized key-map for text component */
   private final JTextComponent.KeyBinding[] customBindings = {
@@ -836,7 +825,6 @@ public class Modeler extends JFrame {
   private final JTabbedPane jTabbedPaneFunctionsStructureIO = new JTabbedPane();
   private final JScrollPane jScrollPaneFunctionsStructure = new JScrollPane();
   private final JTree jTreeFunctionsStructure = new JTree();
-  private DefaultTreeModel treeModelFunctionsStructure;
   private boolean isRequiredToSetupFunctionsStructre;
   private final JLabel jLabelFunctionsStructure1 = new JLabel();
   private final JLabel jLabelFunctionsStructure2 = new JLabel();
@@ -1394,7 +1382,6 @@ public class Modeler extends JFrame {
           jMenuItemIOImageChangeSelectedBackgroundColorToWhite();
         }
       };
-  private Border borderOriginal4;
   private final JLabel jLabelIOSpoolCaretPosition = new JLabel();
   private final JPanel jPanelIOSpoolImage = new JPanel();
   private int iOSpoolCharLengthX, iOSpoolCharLengthY;
@@ -2174,24 +2161,25 @@ public class Modeler extends JFrame {
     imageIconText = new ImageIcon(xeadModeler.Modeler.class.getResource("itext.png"));
     imageIconBook = new ImageIcon(xeadModeler.Modeler.class.getResource("ibook.png"));
 
-    imageTitle =
-        Toolkit.getDefaultToolkit()
-            .createImage(xeadModeler.Modeler.class.getResource("title32.png"));
+    /** Icons */
+    Image imageTitle =
+        Toolkit.getDefaultToolkit().createImage(Modeler.class.getResource("title32.png"));
     this.setIconImage(imageTitle);
     Rectangle screenRect =
         GraphicsEnvironment.getLocalGraphicsEnvironment().getMaximumWindowBounds();
-    screenWidth = (int) screenRect.getWidth();
-    screenHeight = (int) screenRect.getHeight();
+    int screenWidth = (int) screenRect.getWidth();
+    int screenHeight = (int) screenRect.getHeight();
     this.setSize(new Dimension(screenWidth - 120, screenHeight - 80));
     this.setExtendedState(JFrame.MAXIMIZED_BOTH);
 
-    jPanelMain = (JPanel) this.getContentPane();
+    /** Main panels and labels */
+    JPanel jPanelMain = (JPanel) this.getContentPane();
     jPanelMain.setLayout(new BorderLayout());
     jPanelJumpButtons.setPreferredSize(new Dimension(10, 25));
     jPanelJumpButtons.setLayout(gridLayoutJumpButtons);
     gridLayoutJumpButtons.setColumns(8);
     gridLayoutJumpButtons.setRows(0);
-    borderOriginal1 =
+    Border borderOriginal1 =
         BorderFactory.createBevelBorder(
             BevelBorder.LOWERED,
             Color.white,
@@ -4928,10 +4916,10 @@ public class Modeler extends JFrame {
     column8 = jTableNativeTableList.getColumnModel().getColumn(8);
     column9 = jTableNativeTableList.getColumnModel().getColumn(9);
     columnA = jTableNativeTableList.getColumnModel().getColumn(10);
-    columnB = jTableNativeTableList.getColumnModel().getColumn(11);
-    columnC = jTableNativeTableList.getColumnModel().getColumn(12);
-    columnD = jTableNativeTableList.getColumnModel().getColumn(13);
-    columnE = jTableNativeTableList.getColumnModel().getColumn(14);
+    TableColumn columnB = jTableNativeTableList.getColumnModel().getColumn(11);
+    TableColumn columnC = jTableNativeTableList.getColumnModel().getColumn(12);
+    TableColumn columnD = jTableNativeTableList.getColumnModel().getColumn(13);
+    TableColumn columnE = jTableNativeTableList.getColumnModel().getColumn(14);
     column0.setPreferredWidth(40);
     column1.setPreferredWidth(150);
     column2.setPreferredWidth(250);
@@ -6398,7 +6386,7 @@ public class Modeler extends JFrame {
     jPanelIOSpool6.add(jLabelIOSpoolImage, BorderLayout.CENTER);
     jPanelIOSpool6.add(jLabelIOSpoolCaretPosition, BorderLayout.EAST);
     jSplitPaneIOSpool1.setDividerLocation(750);
-    borderOriginal4 =
+    Border borderOriginal4 =
         BorderFactory.createBevelBorder(
             BevelBorder.LOWERED,
             Color.white,
@@ -6672,7 +6660,7 @@ public class Modeler extends JFrame {
     currentFileName = nameOfFile;
 
     applicationFolder = System.getProperty("java.class.path");
-    int pos = applicationFolder.lastIndexOf(System.getProperty("file.separator"));
+    int pos = applicationFolder.lastIndexOf(FileSystems.getDefault().getSeparator());
     applicationFolder = applicationFolder.substring(0, pos);
 
     if (!backupFolder.isEmpty()) {
@@ -7042,7 +7030,7 @@ public class Modeler extends JFrame {
 
       // Setup node of "System"//
       systemNode = new XeadTreeNode("System", element1);
-      treeModel = new DefaultTreeModel(systemNode);
+      DefaultTreeModel treeModel = new DefaultTreeModel(systemNode);
       systemName = systemNode.getElement().getAttribute("Name");
       setupReferringFileList(systemNode.getElement().getAttribute("RefFiles"));
 
@@ -7072,17 +7060,17 @@ public class Modeler extends JFrame {
       }
 
       // Add Node of "SubjectAreaList"//
-      SubjectAreaListNode = new XeadTreeNode("SubjectAreaList", null);
-      systemNode.add(SubjectAreaListNode);
+      XeadTreeNode subjectAreaListNode = new XeadTreeNode("SubjectAreaList", null);
+      systemNode.add(subjectAreaListNode);
 
       // Add Node of "SubjectArea"//
       xmlnodelist1 = domDocument.getElementsByTagName("SubjectArea");
       for (int i = 0; i < xmlnodelist1.getLength(); i++) {
         element1 = (org.w3c.dom.Element) xmlnodelist1.item(i);
         xeadTreeNode1 = new XeadTreeNode("SubjectArea", element1);
-        SubjectAreaListNode.add(xeadTreeNode1);
+        subjectAreaListNode.add(xeadTreeNode1);
       }
-      SubjectAreaListNode.sortChildNodes();
+      subjectAreaListNode.sortChildNodes();
       if (this.isVisible()) {
         jProgressBar.setValue(jProgressBar.getValue() + 1);
         jProgressBar.paintImmediately(0, 0, jProgressBar.getWidth(), jProgressBar.getHeight());
@@ -7501,7 +7489,7 @@ public class Modeler extends JFrame {
 
   /** Setup components for taskActionNode */
   void setupComponentForTaskActionNodeSelected() {
-    previousTaskActionTreeNode = currentTaskActionTreeNode;
+    XeadTreeNode previousTaskActionTreeNode = currentTaskActionTreeNode;
     TreePath tp = jTreeTaskActions.getSelectionPath();
     currentTaskActionTreeNode = (XeadTreeNode) tp.getLastPathComponent();
     if (taskFunctionIOTabSelectChangeActivated) {
@@ -12147,7 +12135,7 @@ public class Modeler extends JFrame {
    * @param e :Action Event
    */
   void jMenuItemHelpHelp_actionPerformed(ActionEvent e) {
-    String fileSeparator = System.getProperty("file.separator");
+    String fileSeparator = FileSystems.getDefault().getSeparator();
     String applicationFolder = System.getProperty("java.class.path");
     int pos = applicationFolder.lastIndexOf(fileSeparator);
     applicationFolder = applicationFolder.substring(0, pos);
@@ -14783,7 +14771,7 @@ public class Modeler extends JFrame {
       //
       // Delete node//
       String errorMessage = currentMainTreeNode.deleteNode();
-      if (errorMessage.equals("")) {
+      if (errorMessage.isEmpty()) {
         currentMainTreeNode = null;
         TreePath tp = new TreePath(nextFocussingNode.getPath());
         jTreeMain.setSelectionPath(tp);
@@ -14821,7 +14809,7 @@ public class Modeler extends JFrame {
         nextFocussingNode = parentNode;
       }
       String errorMessage = currentMainTreeNode.deleteNode();
-      if (errorMessage.equals("")) {
+      if (errorMessage.isEmpty()) {
         currentMainTreeNode = null;
         TreePath tp = new TreePath(nextFocussingNode.getPath());
         jTreeMain.setSelectionPath(tp);
@@ -17325,9 +17313,9 @@ public class Modeler extends JFrame {
       Cell[1] = newElement.getAttribute("SortKey");
       Cell[2] = newElement.getAttribute("Name");
       Cell[3] = newElement.getAttribute("BasicType");
-      Integer length = Integer.valueOf(newElement.getAttribute("Length"));
+      int length = Integer.parseInt(newElement.getAttribute("Length"));
       Cell[4] = length;
-      Integer decimal = Integer.valueOf(newElement.getAttribute("Decimal"));
+      int decimal = Integer.parseInt(newElement.getAttribute("Decimal"));
       Cell[5] = decimal;
       Cell[6] = newElement.getAttribute("SQLExpression");
       tableModelSystemDataTypeList.addRow(Cell);
@@ -17778,9 +17766,9 @@ public class Modeler extends JFrame {
       Cell[1] = newElement.getAttribute("SortKey");
       Cell[2] = newElement.getAttribute("Name");
       Cell[3] = newElement.getAttribute("BasicType");
-      Integer length = Integer.valueOf(newElement.getAttribute("Length"));
+      int length = Integer.parseInt(newElement.getAttribute("Length"));
       Cell[4] = length;
-      Integer decimal = Integer.valueOf(newElement.getAttribute("Decimal"));
+      int decimal = Integer.parseInt(newElement.getAttribute("Decimal"));
       Cell[5] = decimal;
       Cell[6] = newElement.getAttribute("SQLExpression");
       tableModelSystemDataTypeList.addRow(Cell);
@@ -18594,7 +18582,7 @@ public class Modeler extends JFrame {
       // Delete the node//
       if (targetNode != null) {
         String errorMessage = targetNode.deleteNode();
-        if (errorMessage.equals("")) {
+        if (errorMessage.isEmpty()) {
           TreePath tp = new TreePath(currentMainTreeNode.getPath());
           jTreeMain.setSelectionPath(tp);
           setupContentsPaneForTreeNodeSelected(currentMainTreeNode, true);
@@ -19282,11 +19270,7 @@ public class Modeler extends JFrame {
       }
 
       intWork = datamodelEntityBoxArray.get(i).getWidthOfShownFields();
-      if (intWork < maxSize) {
-        datamodelEntityBoxArray.get(i).setElementsPanelWidth(intWork);
-      } else {
-        datamodelEntityBoxArray.get(i).setElementsPanelWidth(maxSize);
-      }
+      datamodelEntityBoxArray.get(i).setElementsPanelWidth(Math.min(intWork, maxSize));
     }
 
     jPanelDatamodel.updateUI();
@@ -22238,7 +22222,7 @@ public class Modeler extends JFrame {
   }
 
   /** Class of Table Row Number */
-  class CreateStatement {
+  static class CreateStatement {
     private final String statement_;
     private final boolean warningOccured_;
 
@@ -22477,6 +22461,277 @@ public class Modeler extends JFrame {
     }
   } // End of Class NodeJumpButton//
 
+  /** Class of Comparable Element (sorted by "SortKey") */
+  static class XeadElement implements Comparable<XeadElement> {
+    private final org.w3c.dom.Element domNode_;
+
+    public XeadElement(org.w3c.dom.Element node) {
+      super();
+      domNode_ = node;
+    }
+
+    public org.w3c.dom.Element getElement() {
+      return domNode_;
+    }
+
+    public int compareTo(XeadElement other) {
+      return domNode_.getAttribute("SortKey").compareTo(other.getElement().getAttribute("SortKey"));
+    }
+  }
+
+  /** Class of Comparable Field Element (sorted by "Alias") */
+  static class XeadFieldElement implements Comparable<XeadFieldElement> {
+    private final org.w3c.dom.Element domNode_;
+
+    public XeadFieldElement(org.w3c.dom.Element node) {
+      super();
+      domNode_ = node;
+    }
+
+    public org.w3c.dom.Element getElement() {
+      return domNode_;
+    }
+
+    public int compareTo(XeadFieldElement other) {
+      return domNode_.getAttribute("Alias").compareTo(other.getElement().getAttribute("Alias"));
+    }
+  }
+
+  /** Class of Table Row Number */
+  static class TableRowNumber {
+    private final org.w3c.dom.Element element_;
+    private final org.w3c.dom.Element element_ext1;
+    private final org.w3c.dom.Element element_ext2;
+    private final int number_;
+
+    public TableRowNumber(int num, org.w3c.dom.Element elm) {
+      number_ = num;
+      element_ = elm;
+      element_ext1 = null;
+      element_ext2 = null;
+    }
+
+    public TableRowNumber(
+        int num,
+        org.w3c.dom.Element elm,
+        org.w3c.dom.Element elmExt1,
+        org.w3c.dom.Element elmExt2) {
+      number_ = num;
+      element_ = elm;
+      element_ext1 = elmExt1;
+      element_ext2 = elmExt2;
+    }
+
+    public String toString() {
+      return Integer.toString(number_);
+    }
+
+    public org.w3c.dom.Element getElement() {
+      return element_;
+    }
+
+    public org.w3c.dom.Element getElementExt1() {
+      return element_ext1;
+    }
+
+    public org.w3c.dom.Element getElementExt2() {
+      return element_ext2;
+    }
+  }
+
+  /** Class of Table Model(Read Only) */
+  static class TableModelReadOnlyList extends DefaultTableModel {
+    private static final long serialVersionUID = 1L;
+
+    public boolean isCellEditable(int row, int col) {
+      return false;
+    }
+  }
+
+  /** Class of Table Model(EditableModel) */
+  static class TableModelEditableList extends DefaultTableModel {
+    private static final long serialVersionUID = 1L;
+
+    public boolean isCellEditable(int row, int col) {
+      return col != 0;
+    }
+  }
+
+  /** Class of XEAD Page Painter */
+  class XeadPagePainter implements Printable {
+    public int print(Graphics g, PageFormat fmt, int pageindex) {
+      Graphics2D g2 = (Graphics2D) g;
+      int returnValue = Printable.NO_SUCH_PAGE;
+
+      // Print first page for each node//
+      if (pageindex == 0) {
+
+        if (currentMainTreeNode.getType().equals("SubjectArea")) {
+          printPanel(g2, fmt, jPanelSubjectAreaDataflowEditor1, "");
+          returnValue = Printable.PAGE_EXISTS;
+        }
+
+        if (currentMainTreeNode.getType().equals("TableList")) {
+          if (jTabbedPaneTableList.getSelectedIndex() == 2) {
+            if (jDialogDatamodelSlideShow.isVisible()) {
+              printPanel(g2, fmt, jPanelDatamodelSlideShow2, res.getString("S466"));
+            } else {
+              printPanel(g2, fmt, jPanelDatamodel, res.getString("S466"));
+            }
+          }
+          returnValue = Printable.PAGE_EXISTS;
+        }
+
+        if (currentMainTreeNode.getType().equals("IOPanel")) {
+          if (imageFunctionIO != null) {
+            printPanel(g2, fmt, jLabelIOImageIcon, res.getString("S3305"));
+          } else {
+            if (jTextPaneIOPanelImage.getBackground().equals(Color.BLACK)) {
+              currentMainTreeNode.updateFields();
+              jTextPaneIOPanelImage.setBackground(Color.WHITE);
+              jTextPaneIOPanelImage.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+              jTextPaneIOPanelImage.updateUI();
+              StyledDocument styledDocument = jTextPaneIOPanelImage.getStyledDocument();
+              Style style = styledDocument.addStyle("style1", null);
+              StyleConstants.setForeground(style, Color.BLACK);
+              styledDocument.setCharacterAttributes(0, 9999, style, false);
+              printPanel(g2, fmt, jTextPaneIOPanelImage, res.getString("S3305"));
+              jTextPaneIOPanelImage.setBorder(BorderFactory.createRaisedBevelBorder());
+              currentMainTreeNode.activateContentsPane();
+            } else {
+              printPanel(g2, fmt, jTextPaneIOPanelImage, res.getString("S3305"));
+            }
+          }
+          returnValue = Printable.PAGE_EXISTS;
+        }
+
+        if (currentMainTreeNode.getType().equals("IOSpool")) {
+          printPanel(g2, fmt, jTextPaneIOSpoolImage, res.getString("S3305"));
+          returnValue = Printable.PAGE_EXISTS;
+        }
+
+        if (currentMainTreeNode.getType().equals("IOWebPage")) {
+          printPanel(g2, fmt, jEditorPaneIOWebPageImage, res.getString("S3305"));
+          returnValue = Printable.PAGE_EXISTS;
+        }
+      }
+
+      return returnValue;
+    }
+
+    private void printPanel(Graphics2D g2, PageFormat fmt, JComponent jPanel, String name) {
+      double panelWidth;
+      double panelHeight;
+      double scaleRateWidth;
+      double scaleRateHeight;
+      Border borderSaved;
+      Color colorSaved;
+      Font fontSaved;
+
+      g2.translate(fmt.getImageableX(), fmt.getImageableY());
+      borderSaved = jLabelSubtitle.getBorder();
+      colorSaved = jLabelSubtitle.getBackground();
+      fontSaved = jLabelSubtitle.getFont();
+      jLabelSubtitle.setBorder(null);
+      jLabelSubtitle.setBackground(Color.white);
+      jLabelSubtitle.setFont(new java.awt.Font(mainFontName, 0, MAIN_FONT_SIZE));
+      jLabelSubtitle.print(g2);
+      jLabelSubtitle.setBorder(borderSaved);
+      jLabelSubtitle.setBackground(colorSaved);
+      jLabelSubtitle.setFont(fontSaved);
+
+      g2.translate(0, jLabelSubtitle.getHeight() + 3);
+
+      panelWidth = jPanel.getWidth();
+      scaleRateWidth = fmt.getImageableWidth() / panelWidth;
+      panelHeight = jPanel.getHeight() + (jLabelSubtitle.getHeight() + 5);
+      scaleRateHeight = (fmt.getImageableHeight() - 18) / panelHeight;
+      if (scaleRateWidth < scaleRateHeight && scaleRateWidth < 1.0) {
+        AffineTransform at = new AffineTransform();
+        at.setToScale(scaleRateWidth, scaleRateWidth);
+        g2.transform(at);
+      }
+      if (scaleRateWidth > scaleRateHeight && scaleRateHeight < 1.0) {
+        AffineTransform at = new AffineTransform();
+        at.setToScale(scaleRateHeight, scaleRateHeight);
+        g2.transform(at);
+      }
+
+      if (jPanel.equals(jPanelSubjectAreaDataflowEditor1)) {
+        borderSaved = jPanel.getBorder();
+        jPanel.setBorder(null);
+        jPanel.print(g2);
+        jPanel.setBorder(borderSaved);
+      }
+
+      if (jPanel.equals(jPanelDatamodel)) {
+        borderSaved = jPanel.getBorder();
+        jPanel.setBorder(null);
+        jPanel.print(g2);
+        jPanel.setBorder(borderSaved);
+      }
+
+      if (jPanel.equals(jPanelDatamodelSlideShow2)) {
+        borderSaved = jPanel.getBorder();
+        jPanel.setBorder(null);
+        jPanel.print(g2);
+        jPanel.setBorder(borderSaved);
+      }
+
+      if (!jPanel.equals(jPanelDatamodel) && !jPanel.equals(jPanelSubjectAreaDataflowEditor1)) {
+        borderSaved = jPanel.getBorder();
+        jPanel.setBorder(BorderFactory.createLineBorder(Color.black));
+        jPanel.print(g2);
+        jPanel.setBorder(borderSaved);
+      }
+    }
+  } // End of Class XeadPagePrinter//
+
+  /** Class of Table Model for FunctionsUsedByThis */
+  static class TableModelFunctionsUsedByThis extends DefaultTableModel {
+    private static final long serialVersionUID = 1L;
+
+    public boolean isCellEditable(int row, int col) {
+      return col == 5;
+    }
+  }
+
+  /** Class of Table Model for IOTableFieldList */
+  static class TableModelIOTableFieldList extends DefaultTableModel {
+    private static final long serialVersionUID = 1L;
+
+    public boolean isCellEditable(int row, int col) {
+      return col > 3;
+    }
+  }
+
+  /** Class of Table Model for NativeTableList */
+  static class TableModelNativeTableList extends DefaultTableModel {
+    private static final long serialVersionUID = 1L;
+
+    public boolean isCellEditable(int row, int col) {
+      return col == 3;
+    }
+  }
+
+  /** Class of Table Model for ForeignTableList */
+  static class TableModelForeignTableList extends DefaultTableModel {
+    private static final long serialVersionUID = 1L;
+
+    public boolean isCellEditable(int row, int col) {
+      return col == 4;
+    }
+  }
+
+  /** Class of Table Model for TableFieldList */
+  static class TableModelTableFieldList extends DefaultTableModel {
+    private static final long serialVersionUID = 1L;
+
+    public boolean isCellEditable(int row, int col) {
+      return col == 3;
+    }
+  }
+
   /** Class of DataFlow Node */
   class DataflowNode extends JPanel {
     private static final long serialVersionUID = 1L;
@@ -22490,7 +22745,6 @@ public class Modeler extends JFrame {
     private final String nodeType;
     private final JPanel jPanelCanvas2;
     private final JPanel jPanelMoveGuide = new JPanel();
-    private final JPanel jPanelMouseActionSensor = new JPanel();
     private final JSpinner jSpinnerSlideNumber = new JSpinner();
     private int NODE_WIDTH;
     private int NODE_HEIGHT;
@@ -22501,13 +22755,7 @@ public class Modeler extends JFrame {
     private int originalGuidePosX = 0;
     private int originalGuidePosY = 0;
     private int slideNumber = 0;
-    private String taskID = "";
     private final JPopupMenu jPopupMenuDataflowNode = new JPopupMenu();
-    private final JMenuItem jMenuItemDataflowNodeJump = new JMenuItem(res.getString("S2870"));
-    private final JMenuItem jMenuItemDataflowNodeAddFlow = new JMenuItem(res.getString("S2871"));
-    private final JMenuItem jMenuItemDataflowNodeChange = new JMenuItem(res.getString("S2872"));
-    private final JMenuItem jMenuItemDataflowNodeCopy = new JMenuItem(res.getString("S2873"));
-    private final JMenuItem jMenuItemDataflowNodeRemove = new JMenuItem();
     private boolean slideNumberIsShown = false;
     private final boolean clickable_;
     private String eventPos = "";
@@ -22525,6 +22773,7 @@ public class Modeler extends JFrame {
       jPanelMoveGuide.setLayout(null);
       jPanelMoveGuide.setBorder(BorderFactory.createLineBorder(SELECT_COLOR));
       jPanelMoveGuide.setOpaque(false);
+      JPanel jPanelMouseActionSensor = new JPanel();
       jPanelMouseActionSensor.setOpaque(false);
       jPanelMouseActionSensor.addMouseListener(new jPanel_mouseAdapter(this));
       jPanelMouseActionSensor.addMouseMotionListener(new jPanel_mouseMotionAdapter(this));
@@ -22551,8 +22800,7 @@ public class Modeler extends JFrame {
       jTextFieldNodeNameExt.setBorder(null);
       jTextFieldNodeNameExt.setOpaque(false);
       jTextFieldNodeNameExt.setName("jTextFieldNodeNameExt");
-      Integer num = Integer.valueOf(dataflowNodeElement_.getAttribute("SlideNumber"));
-      slideNumber = num;
+      slideNumber = Integer.parseInt(dataflowNodeElement_.getAttribute("SlideNumber"));
       jSpinnerSlideNumber.setFont(new java.awt.Font(mainFontName, 0, 12));
       jSpinnerSlideNumber.addChangeListener(new jSpinnerSlideNumber_changeAdapter(this));
       SpinnerNumberModel spinnerNumberModel = new SpinnerNumberModel(slideNumber, 1, 30, 1);
@@ -22578,7 +22826,7 @@ public class Modeler extends JFrame {
         NODE_WIDTH = 145;
         NODE_HEIGHT = 128;
         this.setBounds(new Rectangle(nodePosX, nodePosY, NODE_WIDTH, NODE_HEIGHT));
-        taskID = dataflowNodeElement_.getAttribute("TaskID");
+        String taskID = dataflowNodeElement_.getAttribute("TaskID");
         XeadTreeNode taskNode = getSpecificXeadTreeNode("Task", taskID, null);
         XeadTreeNode roleNode =
             getSpecificXeadTreeNode("Role", taskNode.getElement().getAttribute("RoleID"), null);
@@ -22963,14 +23211,19 @@ public class Modeler extends JFrame {
       ///////////////////////////////////
       // Setup listeners of components //
       ///////////////////////////////////
+      JMenuItem jMenuItemDataflowNodeChange = new JMenuItem(res.getString("S2872"));
       jMenuItemDataflowNodeChange.addActionListener(
           new jMenuItemDataflowNodeChange_actionAdapter(this));
+      JMenuItem jMenuItemDataflowNodeJump = new JMenuItem(res.getString("S2870"));
       jMenuItemDataflowNodeJump.addActionListener(
           new jMenuItemDataflowNodeJump_actionAdapter(this));
+      JMenuItem jMenuItemDataflowNodeCopy = new JMenuItem(res.getString("S2873"));
       jMenuItemDataflowNodeCopy.addActionListener(
           new jMenuItemDataflowNodeCopy_actionAdapter(this));
+      JMenuItem jMenuItemDataflowNodeAddFlow = new JMenuItem(res.getString("S2871"));
       jMenuItemDataflowNodeAddFlow.addActionListener(
           new jMenuItemDataflowNodeAddFlow_actionAdapter(this));
+      JMenuItem jMenuItemDataflowNodeRemove = new JMenuItem();
       jMenuItemDataflowNodeRemove.addActionListener(
           new jMenuItemDataflowNodeRemove_actionAdapter(this));
       if (nodeType.equals("Process")) {
@@ -24526,6 +24779,41 @@ public class Modeler extends JFrame {
     }
   } // End of Class DataflowNode//
 
+  /** Class of Table Model for RelationshipList */
+  class TableModelRelationshipList extends DefaultTableModel {
+    private static final long serialVersionUID = 1L;
+
+    public boolean isCellEditable(int row, int col) {
+      boolean editable = false;
+      if (col == 6) {
+        XeadTreeNode tableNode = (XeadTreeNode) tableKeyNode.getParent().getParent();
+        String tableID = tableNode.getElement().getAttribute("ID");
+        String tableKeyID = tableKeyNode.getElement().getAttribute("ID");
+        TableRowNumber tableRowNumber =
+            (TableRowNumber) tableModelRelationshipList.getValueAt(row, 0);
+        if (tableRowNumber.getElement().getAttribute("Type").equals("SUBTYPE")) {
+          editable = true;
+          informationOnThisPageChanged = true;
+        }
+        if (tableRowNumber.getElement().getAttribute("Type").equals("REFFER")) {
+          if (tableRowNumber.getElement().getAttribute("Table1ID").equals(tableID)
+              && tableRowNumber.getElement().getAttribute("TableKey1ID").equals(tableKeyID)) {
+            editable = false;
+          }
+          if (tableRowNumber.getElement().getAttribute("Table2ID").equals(tableID)
+              && tableRowNumber.getElement().getAttribute("TableKey2ID").equals(tableKeyID)) {
+            editable = true;
+            informationOnThisPageChanged = true;
+          }
+        }
+        if (tableRowNumber.getElement().getAttribute("Type").equals("FAMILY")) {
+          editable = false;
+        }
+      }
+      return editable;
+    }
+  }
+
   /** Class of Data-flow boundary */
   class DataflowBoundary extends JPanel {
     private static final long serialVersionUID = 1L;
@@ -24561,16 +24849,8 @@ public class Modeler extends JFrame {
     }
 
     public void setBounds(int x, int y, int w, int h) {
-      if (x > 0) {
-        boundaryPosX = x;
-      } else {
-        boundaryPosX = 0;
-      }
-      if (y > 0) {
-        boundaryPosY = y;
-      } else {
-        boundaryPosY = 0;
-      }
+      boundaryPosX = Math.max(x, 0);
+      boundaryPosY = Math.max(y, 0);
       if (w > 51) {
         boundaryWidth = w - 1;
       } else {
@@ -24588,16 +24868,8 @@ public class Modeler extends JFrame {
     }
 
     public void setBounds(Rectangle rect) {
-      if (rect.x > 0) {
-        boundaryPosX = rect.x;
-      } else {
-        boundaryPosX = 0;
-      }
-      if (rect.y > 0) {
-        boundaryPosY = rect.y;
-      } else {
-        boundaryPosY = 0;
-      }
+      boundaryPosX = Math.max(rect.x, 0);
+      boundaryPosY = Math.max(rect.y, 0);
       if (rect.width > 51) {
         boundaryWidth = rect.width - 1;
       } else {
@@ -24887,11 +25159,7 @@ public class Modeler extends JFrame {
     private int arrowDirection2 = 0;
     private Point arrowLabelPoint1, arrowLabelPoint2;
     private Point[] arrowCordinateArray = new Point[10];
-    private Point[] arrowCordinateArray1 = new Point[10];
-    private Point[] arrowCordinateArray2 = new Point[10];
     private int[] arrowDirectionArray = new int[10];
-    private int[] arrowDirectionArray1 = new int[10];
-    private int[] arrowDirectionArray2 = new int[10];
     private Point[] lineCordinates1 = new Point[2];
     private Point[] lineCordinates2 = new Point[2];
     private boolean showArrow1 = false;
@@ -24910,8 +25178,6 @@ public class Modeler extends JFrame {
           }
         };
     private final JPopupMenu jPopupMenuDataflowLine = new JPopupMenu();
-    private final JMenuItem jMenuItemDataflowLineChange = new JMenuItem(res.getString("S2872"));
-    private final JMenuItem jMenuItemDataflowLineDelete = new JMenuItem(res.getString("S2874"));
     private final boolean clickable_;
 
     public DataflowLine(
@@ -24938,8 +25204,7 @@ public class Modeler extends JFrame {
       jTextFieldFlowNameExt.setFocusable(true);
 
       // Setup slide number//
-      Integer num = Integer.valueOf(dataflowLineElement_.getAttribute("SlideNumber"));
-      slideNumber = num;
+      slideNumber = Integer.parseInt(dataflowLineElement_.getAttribute("SlideNumber"));
       jSpinnerSlideNumber.setFont(new java.awt.Font(mainFontName, 0, 12));
       jSpinnerSlideNumber.addChangeListener(new jSpinnerSlideNumber_changeAdapter(this));
       SpinnerNumberModel spinnerNumberModel = new SpinnerNumberModel(slideNumber, 1, 30, 1);
@@ -24949,12 +25214,12 @@ public class Modeler extends JFrame {
       imageType = dataflowLineElement_.getAttribute("ImageType");
 
       // Setup properties of jLabelArrow1&2//
-      Integer work = Integer.valueOf(dataflowLineElement_.getAttribute("TerminalPosIndex1"));
+      int work = Integer.parseInt(dataflowLineElement_.getAttribute("TerminalPosIndex1"));
       terminalPosIndex1 = work;
       if (dataflowLineElement_.getAttribute("ShowArrow1").equals("true")) {
         showArrow1 = true;
       }
-      work = Integer.valueOf(dataflowLineElement_.getAttribute("TerminalPosIndex2"));
+      work = Integer.parseInt(dataflowLineElement_.getAttribute("TerminalPosIndex2"));
       terminalPosIndex2 = work;
       if (dataflowLineElement_.getAttribute("ShowArrow2").equals("true")) {
         showArrow2 = true;
@@ -24986,8 +25251,10 @@ public class Modeler extends JFrame {
       updateColors();
 
       // Setup Popup-Menu//
+      JMenuItem jMenuItemDataflowLineChange = new JMenuItem(res.getString("S2872"));
       jMenuItemDataflowLineChange.addActionListener(
           new jMenuItemDataflowLineChange_actionAdapter(this));
+      JMenuItem jMenuItemDataflowLineDelete = new JMenuItem(res.getString("S2874"));
       jMenuItemDataflowLineDelete.addActionListener(
           new jMenuItemDataflowLineDelete_actionAdapter(this));
       jPopupMenuDataflowLine.add(jMenuItemDataflowLineChange);
@@ -25024,10 +25291,10 @@ public class Modeler extends JFrame {
 
     // Drawing terminals//
     public void addArrows() {
-      arrowCordinateArray1 = dataflowNode1_.getArrowCordinates();
-      arrowDirectionArray1 = dataflowNode1_.getArrowDirections();
-      arrowCordinateArray2 = dataflowNode2_.getArrowCordinates();
-      arrowDirectionArray2 = dataflowNode2_.getArrowDirections();
+      Point[] arrowCordinateArray1 = dataflowNode1_.getArrowCordinates();
+      int[] arrowDirectionArray1 = dataflowNode1_.getArrowDirections();
+      Point[] arrowCordinateArray2 = dataflowNode2_.getArrowCordinates();
+      int[] arrowDirectionArray2 = dataflowNode2_.getArrowDirections();
       arrowLabelPoint1 = arrowCordinateArray1[terminalPosIndex1];
       arrowDirection1 = arrowDirectionArray1[terminalPosIndex1];
       arrowLabelPoint2 = arrowCordinateArray2[terminalPosIndex2];
@@ -25169,9 +25436,9 @@ public class Modeler extends JFrame {
     }
 
     public void setLinePositionIndex() {
-      Integer work = Integer.valueOf(dataflowLineElement_.getAttribute("TerminalPosIndex1"));
+      int work = Integer.parseInt(dataflowLineElement_.getAttribute("TerminalPosIndex1"));
       terminalPosIndex1 = work;
-      work = Integer.valueOf(dataflowLineElement_.getAttribute("TerminalPosIndex2"));
+      work = Integer.parseInt(dataflowLineElement_.getAttribute("TerminalPosIndex2"));
       terminalPosIndex2 = work;
     }
 
@@ -25970,9 +26237,7 @@ public class Modeler extends JFrame {
     private Line2D iconPart_11, iconPart_12, iconPart_13, iconPart_14;
     private Line2D iconPart_21, iconPart_22, iconPart_23, iconPart_24;
     private RoundRectangle2D iconPart_2R;
-    private int arc2D_x, arc2D_y, arc2D_w, arc2D_h;
     private Line2D line2D_A, line2D_B;
-    private int line2D_1x, line2D_1y, line2D_2x, line2D_2y;
     private Point boxPoint, boxPoint1, boxPoint2;
     private Point iconPoint1, iconPoint2;
     private Point lineTerminalPoint1, lineTerminalPoint2;
@@ -26020,7 +26285,6 @@ public class Modeler extends JFrame {
     private boolean positionChanged = false;
     private Point[] indexCordinates = new Point[41];
     private final JPopupMenu jPopupMenuRelationshipLine = new JPopupMenu();
-    private final JMenuItem jMenuItemRelationshipLineHide = new JMenuItem(res.getString("S2875"));
     private boolean showOnModel = true;
     private int terminalIconSize = 0;
     private int boxHeight = 0;
@@ -26066,7 +26330,7 @@ public class Modeler extends JFrame {
         }
       }
       if (!relationshipElement.getAttribute("ExistWhen2").isEmpty()
-          || !keyNode.getNotNullOfTableKey()) {
+          || keyNode.getNotNullOfTableKey()) {
         terminal2Optional = true;
       }
 
@@ -26085,7 +26349,7 @@ public class Modeler extends JFrame {
         }
       }
       if (!relationshipElement.getAttribute("ExistWhen1").isEmpty()
-          || !keyNode.getNotNullOfTableKey()) {
+          || keyNode.getNotNullOfTableKey()) {
         terminal1Optional = true;
       }
 
@@ -26205,6 +26469,7 @@ public class Modeler extends JFrame {
       setupRelationLine();
 
       // Setup PopUp Menu//
+      JMenuItem jMenuItemRelationshipLineHide = new JMenuItem(res.getString("S2875"));
       jMenuItemRelationshipLineHide.addActionListener(
           new jMenuItemRelationshipLineHide_actionAdapter(this));
       jPopupMenuRelationshipLine.add(jMenuItemRelationshipLineHide);
@@ -26747,6 +27012,10 @@ public class Modeler extends JFrame {
       }
 
       // 1:TOP 2:LEFT//
+      int arc2D_h;
+      int arc2D_w;
+      int arc2D_y;
+      int arc2D_x;
       if (terminalIndex1 >= 23 && terminalIndex2 >= 18 && terminalIndex2 <= 22) {
         if (relationshipElement_.getAttribute("Type").equals("SUBTYPE")) {
           line2D_A =
@@ -26807,6 +27076,10 @@ public class Modeler extends JFrame {
       }
 
       // 1:TOP 2:BOTTOM//
+      int line2D_2y;
+      int line2D_2x;
+      int line2D_1y;
+      int line2D_1x;
       if (terminalIndex1 >= 23 && terminalIndex2 <= 17) {
         if (relationshipElement_.getAttribute("Type").equals("SUBTYPE")) {
           // 1:left-above 2:right-below//
@@ -27913,7 +28186,6 @@ public class Modeler extends JFrame {
     // Internal fields//
     private final org.w3c.dom.Element subsystemTableElement_;
     private final String subsystemID_;
-    private String subsystemName = "";
     private final XeadTreeNode tableNode_;
 
     // Internal components//
@@ -27934,7 +28206,6 @@ public class Modeler extends JFrame {
     private int mousePosY = 0;
     private int boxPosX = 0;
     private int boxPosY = 0;
-    private int boxWidth = 0;
     private int boxHeight = 0;
     private int jPanel2Width = 0;
     private int idFontSize = 0;
@@ -27948,10 +28219,7 @@ public class Modeler extends JFrame {
     private int originalGuidePosX;
     private int originalGuidePosY;
     private final JPopupMenu jPopupMenuEntityBox = new JPopupMenu();
-    private final JMenuItem jMenuItemEntityBoxJump = new JMenuItem(res.getString("S2870"));
-    private final JMenuItem jMenuItemEntityBoxEditInstance = new JMenuItem(res.getString("S2876"));
     private final JMenuItem jMenuItemEntityBoxShowAllLines = new JMenuItem(res.getString("S2877"));
-    private final JMenuItem jMenuItemEntityBoxHide = new JMenuItem(res.getString("S2875"));
     private final JTextArea jTextAreaShowInstance = new JTextArea();
     private boolean isVisibleOnModel = false;
     private boolean isSelected_ = false;
@@ -28145,6 +28413,7 @@ public class Modeler extends JFrame {
       }
 
       jPanel2 = new DropAcceptablePanel(tableNode_);
+      String subsystemName = "";
       if (subsystemID_.equals(tableNode_.getElement().getAttribute("SubsystemID"))) {
       } else {
         XeadTreeNode ownerSubsystemNode =
@@ -28313,8 +28582,10 @@ public class Modeler extends JFrame {
       jPanelMoveGuide.setLayout(null);
       jPanelMoveGuide.setBorder(BorderFactory.createLineBorder(SELECT_COLOR));
       jPanelMoveGuide.setOpaque(false);
+      JMenuItem jMenuItemEntityBoxJump = new JMenuItem(res.getString("S2870"));
       jMenuItemEntityBoxJump.addActionListener(new jMenuItemEntityBoxJump_actionAdapter(this));
       jPopupMenuEntityBox.add(jMenuItemEntityBoxJump);
+      JMenuItem jMenuItemEntityBoxEditInstance = new JMenuItem(res.getString("S2876"));
       jMenuItemEntityBoxEditInstance.addActionListener(
           new jMenuItemEntityBoxEditInstance_actionAdapter(this));
       jPopupMenuEntityBox.add(jMenuItemEntityBoxEditInstance);
@@ -28322,6 +28593,7 @@ public class Modeler extends JFrame {
           new jMenuItemEntityBoxShowAllLines_actionAdapter(this));
       jPopupMenuEntityBox.add(jMenuItemEntityBoxShowAllLines);
       jPopupMenuEntityBox.addSeparator();
+      JMenuItem jMenuItemEntityBoxHide = new JMenuItem(res.getString("S2875"));
       jMenuItemEntityBoxHide.addActionListener(new jMenuItemEntityBoxHide_actionAdapter(this));
       jPopupMenuEntityBox.add(jMenuItemEntityBoxHide);
 
@@ -28454,7 +28726,7 @@ public class Modeler extends JFrame {
           new StringTokenizer(subsystemTableElement_.getAttribute("BoxPosition"), ",");
       boxPosX = Integer.parseInt(workTokenizer.nextToken());
       boxPosY = Integer.parseInt(workTokenizer.nextToken());
-      boxWidth = Integer.parseInt(subsystemTableElement_.getAttribute("ExtDivLoc"));
+      int boxWidth = Integer.parseInt(subsystemTableElement_.getAttribute("ExtDivLoc"));
 
       if (datamodelSize.equals("S")) {
         boxPosX = boxPosX / 2;
@@ -29606,176 +29878,6 @@ public class Modeler extends JFrame {
     }
   } // End of Class DatamodelEntityBox//
 
-  /** Class of XEAD Page Painter */
-  class XeadPagePainter implements Printable {
-    public int print(Graphics g, PageFormat fmt, int pageindex) {
-      Graphics2D g2 = (Graphics2D) g;
-      int returnValue = Printable.NO_SUCH_PAGE;
-
-      // Print first page for each node//
-      if (pageindex == 0) {
-
-        if (currentMainTreeNode.getType().equals("SubjectArea")) {
-          printPanel(g2, fmt, jPanelSubjectAreaDataflowEditor1, "");
-          returnValue = Printable.PAGE_EXISTS;
-        }
-
-        if (currentMainTreeNode.getType().equals("TableList")) {
-          if (jTabbedPaneTableList.getSelectedIndex() == 2) {
-            if (jDialogDatamodelSlideShow.isVisible()) {
-              printPanel(g2, fmt, jPanelDatamodelSlideShow2, res.getString("S466"));
-            } else {
-              printPanel(g2, fmt, jPanelDatamodel, res.getString("S466"));
-            }
-          }
-          returnValue = Printable.PAGE_EXISTS;
-        }
-
-        if (currentMainTreeNode.getType().equals("IOPanel")) {
-          if (imageFunctionIO != null) {
-            printPanel(g2, fmt, jLabelIOImageIcon, res.getString("S3305"));
-          } else {
-            if (jTextPaneIOPanelImage.getBackground().equals(Color.BLACK)) {
-              currentMainTreeNode.updateFields();
-              jTextPaneIOPanelImage.setBackground(Color.WHITE);
-              jTextPaneIOPanelImage.setBorder(BorderFactory.createLineBorder(Color.BLACK));
-              jTextPaneIOPanelImage.updateUI();
-              StyledDocument styledDocument = jTextPaneIOPanelImage.getStyledDocument();
-              Style style = styledDocument.addStyle("style1", null);
-              StyleConstants.setForeground(style, Color.BLACK);
-              styledDocument.setCharacterAttributes(0, 9999, style, false);
-              printPanel(g2, fmt, jTextPaneIOPanelImage, res.getString("S3305"));
-              jTextPaneIOPanelImage.setBorder(BorderFactory.createRaisedBevelBorder());
-              currentMainTreeNode.activateContentsPane();
-            } else {
-              printPanel(g2, fmt, jTextPaneIOPanelImage, res.getString("S3305"));
-            }
-          }
-          returnValue = Printable.PAGE_EXISTS;
-        }
-
-        if (currentMainTreeNode.getType().equals("IOSpool")) {
-          printPanel(g2, fmt, jTextPaneIOSpoolImage, res.getString("S3305"));
-          returnValue = Printable.PAGE_EXISTS;
-        }
-
-        if (currentMainTreeNode.getType().equals("IOWebPage")) {
-          printPanel(g2, fmt, jEditorPaneIOWebPageImage, res.getString("S3305"));
-          returnValue = Printable.PAGE_EXISTS;
-        }
-      }
-
-      return returnValue;
-    }
-
-    private void printPanel(Graphics2D g2, PageFormat fmt, JComponent jPanel, String name) {
-      double panelWidth;
-      double panelHeight;
-      double scaleRateWidth;
-      double scaleRateHeight;
-      Border borderSaved;
-      Color colorSaved;
-      Font fontSaved;
-
-      g2.translate(fmt.getImageableX(), fmt.getImageableY());
-      borderSaved = jLabelSubtitle.getBorder();
-      colorSaved = jLabelSubtitle.getBackground();
-      fontSaved = jLabelSubtitle.getFont();
-      jLabelSubtitle.setBorder(null);
-      jLabelSubtitle.setBackground(Color.white);
-      jLabelSubtitle.setFont(new java.awt.Font(mainFontName, 0, MAIN_FONT_SIZE));
-      jLabelSubtitle.print(g2);
-      jLabelSubtitle.setBorder(borderSaved);
-      jLabelSubtitle.setBackground(colorSaved);
-      jLabelSubtitle.setFont(fontSaved);
-
-      g2.translate(0, jLabelSubtitle.getHeight() + 3);
-
-      panelWidth = jPanel.getWidth();
-      scaleRateWidth = fmt.getImageableWidth() / panelWidth;
-      panelHeight = jPanel.getHeight() + (jLabelSubtitle.getHeight() + 5);
-      scaleRateHeight = (fmt.getImageableHeight() - 18) / panelHeight;
-      if (scaleRateWidth < scaleRateHeight && scaleRateWidth < 1.0) {
-        AffineTransform at = new AffineTransform();
-        at.setToScale(scaleRateWidth, scaleRateWidth);
-        g2.transform(at);
-      }
-      if (scaleRateWidth > scaleRateHeight && scaleRateHeight < 1.0) {
-        AffineTransform at = new AffineTransform();
-        at.setToScale(scaleRateHeight, scaleRateHeight);
-        g2.transform(at);
-      }
-
-      if (jPanel.equals(jPanelSubjectAreaDataflowEditor1)) {
-        borderSaved = jPanel.getBorder();
-        jPanel.setBorder(null);
-        jPanel.print(g2);
-        jPanel.setBorder(borderSaved);
-      }
-
-      if (jPanel.equals(jPanelDatamodel)) {
-        borderSaved = jPanel.getBorder();
-        jPanel.setBorder(null);
-        jPanel.print(g2);
-        jPanel.setBorder(borderSaved);
-      }
-
-      if (jPanel.equals(jPanelDatamodelSlideShow2)) {
-        borderSaved = jPanel.getBorder();
-        jPanel.setBorder(null);
-        jPanel.print(g2);
-        jPanel.setBorder(borderSaved);
-      }
-
-      if (!jPanel.equals(jPanelDatamodel) && !jPanel.equals(jPanelSubjectAreaDataflowEditor1)) {
-        borderSaved = jPanel.getBorder();
-        jPanel.setBorder(BorderFactory.createLineBorder(Color.black));
-        jPanel.print(g2);
-        jPanel.setBorder(borderSaved);
-      }
-    }
-  } // End of Class XeadPagePrinter//
-
-  /** Class of Comparable Element (sorted by "SortKey") */
-  class XeadElement implements Comparable<XeadElement> {
-    private final org.w3c.dom.Element domNode_;
-
-    public XeadElement(org.w3c.dom.Element node) {
-      super();
-      domNode_ = node;
-    }
-
-    public org.w3c.dom.Element getElement() {
-      return domNode_;
-    }
-
-    public int compareTo(XeadElement other) {
-      XeadElement otherNode = other;
-      return domNode_
-          .getAttribute("SortKey")
-          .compareTo(otherNode.getElement().getAttribute("SortKey"));
-    }
-  }
-
-  /** Class of Comparable Field Element (sorted by "Alias") */
-  class XeadFieldElement implements Comparable<XeadFieldElement> {
-    private final org.w3c.dom.Element domNode_;
-
-    public XeadFieldElement(org.w3c.dom.Element node) {
-      super();
-      domNode_ = node;
-    }
-
-    public org.w3c.dom.Element getElement() {
-      return domNode_;
-    }
-
-    public int compareTo(XeadFieldElement other) {
-      XeadFieldElement otherNode = other;
-      return domNode_.getAttribute("Alias").compareTo(otherNode.getElement().getAttribute("Alias"));
-    }
-  }
-
   /** Class of XEAD Tree Node */
   class XeadTreeNode extends DefaultMutableTreeNode implements Comparable<XeadTreeNode> {
     private static final long serialVersionUID = 1L;
@@ -29798,10 +29900,7 @@ public class Modeler extends JFrame {
     }
 
     public int compareTo(XeadTreeNode other) {
-      XeadTreeNode otherNode = other;
-      return domNode_
-          .getAttribute("SortKey")
-          .compareTo(otherNode.getElement().getAttribute("SortKey"));
+      return domNode_.getAttribute("SortKey").compareTo(other.getElement().getAttribute("SortKey"));
     }
 
     public void setSearchImageFileValid() {
@@ -30146,12 +30245,6 @@ public class Modeler extends JFrame {
         jMenuXeadTreeNodeAdd.add(jMenuItemXeadTreeNodeAddIOWebPage);
         jMenuXeadTreeNodeAdd.add(jMenuItemXeadTreeNodeAddIOSpool);
         jPopupMenuXeadTreeNode.add(jMenuXeadTreeNodeAdd);
-        jPopupMenuXeadTreeNode.add(jMenuItemXeadTreeNodePaste);
-        jPopupMenuXeadTreeNode.addSeparator();
-        jPopupMenuXeadTreeNode.add(jMenuItemXeadTreeNodeCopy);
-        jPopupMenuXeadTreeNode.add(jMenuItemXeadTreeNodeCut);
-        jPopupMenuXeadTreeNode.addSeparator();
-        jPopupMenuXeadTreeNode.add(jMenuItemXeadTreeNodeDelete);
       } else {
         if (nodeType_.equals("TableKeyList")) {
           jMenuXeadTreeNodeAdd.add(jMenuItemXeadTreeNodeAddFK);
@@ -30165,13 +30258,13 @@ public class Modeler extends JFrame {
           jPopupMenuXeadTreeNode.add(jMenuItemXeadTreeNodeAdd);
           jPopupMenuXeadTreeNode.add(jMenuItemXeadTreeNodeAddList);
         }
-        jPopupMenuXeadTreeNode.add(jMenuItemXeadTreeNodePaste);
-        jPopupMenuXeadTreeNode.addSeparator();
-        jPopupMenuXeadTreeNode.add(jMenuItemXeadTreeNodeCopy);
-        jPopupMenuXeadTreeNode.add(jMenuItemXeadTreeNodeCut);
-        jPopupMenuXeadTreeNode.addSeparator();
-        jPopupMenuXeadTreeNode.add(jMenuItemXeadTreeNodeDelete);
       }
+      jPopupMenuXeadTreeNode.add(jMenuItemXeadTreeNodePaste);
+      jPopupMenuXeadTreeNode.addSeparator();
+      jPopupMenuXeadTreeNode.add(jMenuItemXeadTreeNodeCopy);
+      jPopupMenuXeadTreeNode.add(jMenuItemXeadTreeNodeCut);
+      jPopupMenuXeadTreeNode.addSeparator();
+      jPopupMenuXeadTreeNode.add(jMenuItemXeadTreeNodeDelete);
       //
       jMenuItemXeadTreeNodeAdd.setEnabled(false);
       jMenuItemXeadTreeNodeAddList.setEnabled(false);
@@ -30885,7 +30978,7 @@ public class Modeler extends JFrame {
             break;
           }
         }
-        if (errorMessage.equals("")) {
+        if (errorMessage.isEmpty()) {
           //
           // Add Log of Remove//
           xeadUndoManager.addLogOfRemove(this);
@@ -30922,7 +31015,7 @@ public class Modeler extends JFrame {
                   + "\n"
                   + res.getString("S3814");
         }
-        if (errorMessage.equals("")) {
+        if (errorMessage.isEmpty()) {
           //
           // Add Log of Remove//
           xeadUndoManager.addLogOfRemove(this);
@@ -30944,7 +31037,7 @@ public class Modeler extends JFrame {
             break;
           }
         }
-        if (errorMessage.equals("")) {
+        if (errorMessage.isEmpty()) {
           nodeList1 = domDocument.getElementsByTagName("Function");
           for (int i = 0; i < nodeList1.getLength(); i++) {
             element1 = (org.w3c.dom.Element) nodeList1.item(i);
@@ -30954,7 +31047,7 @@ public class Modeler extends JFrame {
             }
           }
         }
-        if (errorMessage.equals("")) {
+        if (errorMessage.isEmpty()) {
           //
           // Add Log of Remove//
           xeadUndoManager.addLogOfRemove(this);
@@ -30976,7 +31069,7 @@ public class Modeler extends JFrame {
             break;
           }
         }
-        if (errorMessage.equals("")) {
+        if (errorMessage.isEmpty()) {
           nodeList1 = domDocument.getElementsByTagName("Relationship");
           for (int i = 0; i < nodeList1.getLength(); i++) {
             element1 = (org.w3c.dom.Element) nodeList1.item(i);
@@ -30987,7 +31080,7 @@ public class Modeler extends JFrame {
             }
           }
         }
-        if (errorMessage.equals("")) {
+        if (errorMessage.isEmpty()) {
           nodeList1 = domDocument.getElementsByTagName("SubsystemTable");
           int numberOfSubsystemUsingThisTable = 0;
           String nameOfSubsystem = "";
@@ -31021,7 +31114,7 @@ public class Modeler extends JFrame {
                     + res.getString("S3851");
           }
         }
-        if (errorMessage.equals("")) {
+        if (errorMessage.isEmpty()) {
           //
           // Add Log of Remove//
           xeadUndoManager.addLogOfRemove(this);
@@ -31056,7 +31149,7 @@ public class Modeler extends JFrame {
             break;
           }
         }
-        if (errorMessage.equals("")) {
+        if (errorMessage.isEmpty()) {
           nodeList2 = domDocument.getElementsByTagName("IOTable");
           for (int i = 0; i < nodeList2.getLength(); i++) {
             element2 = (org.w3c.dom.Element) nodeList2.item(i);
@@ -31074,7 +31167,7 @@ public class Modeler extends JFrame {
             }
           }
         }
-        if (errorMessage.equals("")) {
+        if (errorMessage.isEmpty()) {
           //
           addNodeToTheArrayOfFieldListNodeToBeRenumbered((XeadTreeNode) this.getParent());
           //
@@ -31135,7 +31228,7 @@ public class Modeler extends JFrame {
             }
           }
         }
-        if (errorMessage.equals("")) {
+        if (errorMessage.isEmpty()) {
           //
           // Add Log of Remove//
           xeadUndoManager.addLogOfRemove(this);
@@ -31165,7 +31258,7 @@ public class Modeler extends JFrame {
             break;
           }
         }
-        if (errorMessage.equals("")) {
+        if (errorMessage.isEmpty()) {
           nodeList1 = domDocument.getElementsByTagName("Function");
           for (int i = 0; i < nodeList1.getLength(); i++) {
             element1 = (org.w3c.dom.Element) nodeList1.item(i);
@@ -31181,7 +31274,7 @@ public class Modeler extends JFrame {
             }
           }
         }
-        if (errorMessage.equals("")) {
+        if (errorMessage.isEmpty()) {
           //
           // Add Log of Remove//
           xeadUndoManager.addLogOfRemove(this);
@@ -31206,7 +31299,7 @@ public class Modeler extends JFrame {
             break;
           }
         }
-        if (errorMessage.equals("")) {
+        if (errorMessage.isEmpty()) {
           //
           // Add Log of Remove//
           xeadUndoManager.addLogOfRemove(this);
@@ -31238,7 +31331,7 @@ public class Modeler extends JFrame {
             break;
           }
         }
-        if (errorMessage.equals("")) {
+        if (errorMessage.isEmpty()) {
           //
           // Add Log of Remove//
           xeadUndoManager.addLogOfRemove(this);
@@ -31288,7 +31381,7 @@ public class Modeler extends JFrame {
             break;
           }
         }
-        if (errorMessage.equals("")) {
+        if (errorMessage.isEmpty()) {
           //
           // Add Log of Remove//
           xeadUndoManager.addLogOfRemove(this);
@@ -31309,7 +31402,7 @@ public class Modeler extends JFrame {
       }
       //
       // Sort nodes and refresh view//
-      if (errorMessage.equals("")) {
+      if (errorMessage.isEmpty()) {
         setupJumpButtons();
         jTreeMain.updateUI();
       }
@@ -32445,9 +32538,9 @@ public class Modeler extends JFrame {
           Cell[1] = element.getAttribute("SortKey");
           Cell[2] = element.getAttribute("Name");
           Cell[3] = element.getAttribute("BasicType");
-          Integer length = Integer.valueOf(element.getAttribute("Length"));
+          int length = Integer.parseInt(element.getAttribute("Length"));
           Cell[4] = length;
-          Integer decimal = Integer.valueOf(element.getAttribute("Decimal"));
+          int decimal = Integer.parseInt(element.getAttribute("Decimal"));
           Cell[5] = decimal;
           Cell[6] = element.getAttribute("SQLExpression");
           tableModelSystemDataTypeList.addRow(Cell);
@@ -32657,8 +32750,7 @@ public class Modeler extends JFrame {
       }
       //
       // Return name of the page to be shown//
-      String panelName = "jPanelSystem";
-      return panelName;
+      return "jPanelSystem";
     }
 
     private String activateContentsPaneForSubjectAreaList() {
@@ -32683,8 +32775,7 @@ public class Modeler extends JFrame {
       }
       //
       // Return name of the page to be shown//
-      String panelName = "jPanelSubjectAreaList";
-      return panelName;
+      return "jPanelSubjectAreaList";
     }
 
     private String activateContentsPaneForSubjectArea() {
@@ -32804,8 +32895,7 @@ public class Modeler extends JFrame {
       jPanelSubjectAreaDataflowEditor1.repaint();
       //
       // Return name of the page to be shown//
-      String panelName = "jPanelSubjectArea";
-      return panelName;
+      return "jPanelSubjectArea";
     }
 
     private String activateContentsPaneForRoleList() {
@@ -32835,8 +32925,7 @@ public class Modeler extends JFrame {
       }
       //
       // Return name of the page to be shown//
-      String panelName = "jPanelRoleList";
-      return panelName;
+      return "jPanelRoleList";
     }
 
     private String activateContentsPaneForRole() {
@@ -32896,8 +32985,7 @@ public class Modeler extends JFrame {
       }
       //
       // Return name of the page to be shown//
-      String panelName = "jPanelRole";
-      return panelName;
+      return "jPanelRole";
     }
 
     private String activateContentsPaneForTask() {
@@ -33042,8 +33130,7 @@ public class Modeler extends JFrame {
       jProgressBar.setValue(0);
       //
       // Return name of the page to be shown//
-      String panelName = "jPanelTask";
-      return panelName;
+      return "jPanelTask";
     }
 
     private void activateContentsPaneForTaskAction(
@@ -33501,7 +33588,7 @@ public class Modeler extends JFrame {
         NodeList functionsUsedByAny = domDocument.getElementsByTagName("FunctionUsedByThis");
         boolean usedByAnyFunction;
         XeadTreeNode rootNode = new XeadTreeNode("FunctionStructureRoot", null);
-        treeModelFunctionsStructure = new DefaultTreeModel(rootNode);
+        DefaultTreeModel treeModelFunctionsStructure = new DefaultTreeModel(rootNode);
         //
         sortableDomElementListModel.removeAllElements();
         //
@@ -33550,8 +33637,7 @@ public class Modeler extends JFrame {
       }
       //
       // Return name of the page to be shown//
-      String panelName = "jPanelSubsystemList";
-      return panelName;
+      return "jPanelSubsystemList";
     }
 
     private String activateContentsPaneForSubsystem() {
@@ -33561,8 +33647,7 @@ public class Modeler extends JFrame {
       jTextAreaSubsystemDescriptions.setText(
           substringLinesWithTokenOfEOL(domNode_.getAttribute("Descriptions"), "\n"));
       jTextAreaSubsystemDescriptions.setCaretPosition(0);
-      String panelName = "jPanelSubsystem";
-      return panelName;
+      return "jPanelSubsystem";
     }
 
     private String activateContentsPaneForTableList() {
@@ -33961,8 +34046,7 @@ public class Modeler extends JFrame {
       ///////////////////////////////////
       // Return name of page to be shown//
       ///////////////////////////////////
-      String panelName = "jPanelTableList";
-      return panelName;
+      return "jPanelTableList";
     }
 
     private String activateContentsPaneForTable() {
@@ -34217,8 +34301,7 @@ public class Modeler extends JFrame {
       }
 
       // Return name of the page to be shown//
-      String panelName = "jPanelTable";
-      return panelName;
+      return "jPanelTable";
     }
 
     private String activateContentsPaneForTableFieldList() {
@@ -34319,8 +34402,7 @@ public class Modeler extends JFrame {
       jProgressBar.setValue(0);
       //
       // Return name of the page to be shown//
-      String panelName = "jPanelTableFieldList";
-      return panelName;
+      return "jPanelTableFieldList";
     }
 
     private String activateContentsPaneForTableField() {
@@ -34501,8 +34583,7 @@ public class Modeler extends JFrame {
       }
       //
       // Return name of the page to be shown//
-      String panelName = "jPanelTableField";
-      return panelName;
+      return "jPanelTableField";
     }
 
     private String activateContentsPaneForTableKeyList() {
@@ -34538,8 +34619,7 @@ public class Modeler extends JFrame {
       }
       //
       // Return name of the page to be shown//
-      String panelName = "jPanelTableKeyList";
-      return panelName;
+      return "jPanelTableKeyList";
     }
 
     private String activateContentsPaneForTableKey() {
@@ -34786,8 +34866,7 @@ public class Modeler extends JFrame {
       jProgressBar.setValue(0);
       //
       // Return name of the page to be shown//
-      String panelName = "jPanelTableKey";
-      return panelName;
+      return "jPanelTableKey";
     }
 
     private String activateContentsPaneForFunctionList() {
@@ -34901,8 +34980,7 @@ public class Modeler extends JFrame {
       jProgressBar.setValue(0);
       //
       // Return name of the page to be shown
-      String panelName = "jPanelFunctionList";
-      return panelName;
+      return "jPanelFunctionList";
     }
 
     private String activateContentsPaneForFunction() {
@@ -35166,8 +35244,7 @@ public class Modeler extends JFrame {
       jProgressBar.setValue(0);
       //
       // Return name of the page to be shown
-      String panelName = "jPanelFunction";
-      return panelName;
+      return "jPanelFunction";
     }
 
     private String activateContentsPaneForIOPanel() {
@@ -35345,8 +35422,7 @@ public class Modeler extends JFrame {
       }
       //
       // Return name of the page to be shown//
-      String panelName = "jPanelIOPanel";
-      return panelName;
+      return "jPanelIOPanel";
     }
 
     private String activateContentsPaneForIOSpool() {
@@ -35487,8 +35563,7 @@ public class Modeler extends JFrame {
       }
       //
       // Return name of the page to be shown//
-      String panelName = "jPanelIOSpool";
-      return panelName;
+      return "jPanelIOSpool";
     }
 
     private String activateContentsPaneForIOTable() {
@@ -35646,8 +35721,7 @@ public class Modeler extends JFrame {
       jProgressBar.setValue(0);
       //
       // Return name of the page to be shown//
-      String panelName = "jPanelIOTable";
-      return panelName;
+      return "jPanelIOTable";
     }
 
     private String activateContentsPaneForIOWebPage() {
@@ -35777,8 +35851,7 @@ public class Modeler extends JFrame {
       }
       //
       // Return name of the page to be shown //
-      String panelName = "jPanelIOWebPage";
-      return panelName;
+      return "jPanelIOWebPage";
     }
 
     // Calculate and set TextPane preferredSize //
@@ -35852,7 +35925,7 @@ public class Modeler extends JFrame {
           }
         }
       }
-      return notNull;
+      return !notNull;
     }
 
     // Get Name of Table-Key Specified with its ID//
@@ -38572,8 +38645,7 @@ public class Modeler extends JFrame {
       }
       //
       // Return Update Status//
-      boolean[] updateStatusFlag = {valueOfFieldsChanged, valueOfSortKeyChanged};
-      return updateStatusFlag;
+      return new boolean[] {valueOfFieldsChanged, valueOfSortKeyChanged};
     }
 
     private boolean[] updateFieldsForSubjectArea() {
@@ -38611,8 +38683,7 @@ public class Modeler extends JFrame {
       }
       //
       // Return Update Status//
-      boolean[] updateStatusFlag = {valueOfFieldsChanged, valueOfSortKeyChanged};
-      return updateStatusFlag;
+      return new boolean[] {valueOfFieldsChanged, valueOfSortKeyChanged};
     }
 
     private boolean[] updateFieldsForRole() {
@@ -38648,8 +38719,7 @@ public class Modeler extends JFrame {
       }
       //
       // Return Update Status//
-      boolean[] updateStatusFlag = {valueOfFieldsChanged, valueOfSortKeyChanged};
-      return updateStatusFlag;
+      return new boolean[] {valueOfFieldsChanged, valueOfSortKeyChanged};
     }
 
     public void updateIndentLevelOfTaskActions(
@@ -38774,8 +38844,7 @@ public class Modeler extends JFrame {
       }
       //
       // Return Update Status//
-      boolean[] updateStatusFlag = {valueOfFieldsChanged, valueOfSortKeyChanged};
-      return updateStatusFlag;
+      return new boolean[] {valueOfFieldsChanged, valueOfSortKeyChanged};
     }
 
     private boolean[] updateFieldsForTaskAction(XeadTreeNode mainTreeNode) {
@@ -38805,8 +38874,7 @@ public class Modeler extends JFrame {
       }
       //
       // Return Update Status//
-      boolean[] updateStatusFlag = {valueOfFieldsChanged, valueOfSortKeyChanged};
-      return updateStatusFlag;
+      return new boolean[] {valueOfFieldsChanged, valueOfSortKeyChanged};
     }
 
     private boolean[] updateFieldsForTaskFunctionIO(XeadTreeNode mainTreeNode) {
@@ -38842,8 +38910,7 @@ public class Modeler extends JFrame {
       }
       //
       // Return Update Status//
-      boolean[] updateStatusFlag = {valueOfFieldsChanged, valueOfSortKeyChanged};
-      return updateStatusFlag;
+      return new boolean[] {valueOfFieldsChanged, valueOfSortKeyChanged};
     }
 
     private boolean[] updateFieldsForSubsystem() {
@@ -38872,8 +38939,7 @@ public class Modeler extends JFrame {
         // Log node after modified//
         xeadUndoManager.addLogAfterModified(this);
       }
-      boolean[] updateStatusFlag = {valueOfFieldsChanged, valueOfSortKeyChanged};
-      return updateStatusFlag;
+      return new boolean[] {valueOfFieldsChanged, valueOfSortKeyChanged};
     }
 
     private boolean[] updateFieldsForTableList() {
@@ -38970,8 +39036,7 @@ public class Modeler extends JFrame {
       }
       //
       // Return Update status//
-      boolean[] updateStatusFlag = {valueOfFieldsChanged, valueOfSortKeyChanged};
-      return updateStatusFlag;
+      return new boolean[] {valueOfFieldsChanged, valueOfSortKeyChanged};
     }
 
     private boolean[] updateFieldsForTable() {
@@ -39054,8 +39119,7 @@ public class Modeler extends JFrame {
       }
       //
       // Return Update status//
-      boolean[] updateStatusFlag = {valueOfFieldsChanged, valueOfSortKeyChanged};
-      return updateStatusFlag;
+      return new boolean[] {valueOfFieldsChanged, valueOfSortKeyChanged};
     }
 
     private boolean[] updateFieldsForTableFieldList() {
@@ -39094,8 +39158,7 @@ public class Modeler extends JFrame {
       }
       //
       // Return Update status//
-      boolean[] updateStatusFlag = {valueOfFieldsChanged, valueOfSortKeyChanged};
-      return updateStatusFlag;
+      return new boolean[] {valueOfFieldsChanged, valueOfSortKeyChanged};
     }
 
     private boolean[] updateFieldsForTableField() {
@@ -39202,8 +39265,7 @@ public class Modeler extends JFrame {
       }
       //
       // Return Update status//
-      boolean[] updateStatusFlag = {valueOfFieldsChanged, valueOfSortKeyChanged};
-      return updateStatusFlag;
+      return new boolean[] {valueOfFieldsChanged, valueOfSortKeyChanged};
     }
 
     private boolean[] updateFieldsForTableKey() {
@@ -39259,8 +39321,7 @@ public class Modeler extends JFrame {
       }
       //
       // Return Update status//
-      boolean[] updateStatusFlag = {valueOfFieldsChanged, valueOfSortKeyChanged};
-      return updateStatusFlag;
+      return new boolean[] {valueOfFieldsChanged, valueOfSortKeyChanged};
     }
 
     private boolean[] updateFieldsForFunction() {
@@ -39343,8 +39404,7 @@ public class Modeler extends JFrame {
       }
       //
       // Return Update status//
-      boolean[] updateStatusFlag = {valueOfFieldsChanged, valueOfSortKeyChanged};
-      return updateStatusFlag;
+      return new boolean[] {valueOfFieldsChanged, valueOfSortKeyChanged};
     }
 
     private boolean[] updateFieldsForIOPanel() {
@@ -39454,7 +39514,7 @@ public class Modeler extends JFrame {
                       + "BG"
                       + ","
                       + colorToString(currentBackgroundColor));
-              if (!isDuplicatedStyle(
+              if (isDuplicatedStyle(
                   elementTextStyle, this.getElement().getElementsByTagName("IOPanelStyle"))) {
                 this.getElement().appendChild(elementTextStyle);
               }
@@ -39506,7 +39566,7 @@ public class Modeler extends JFrame {
                       + "FG"
                       + ","
                       + colorToString(currentForegroundColor));
-              if (!isDuplicatedStyle(
+              if (isDuplicatedStyle(
                   elementTextStyle, this.getElement().getElementsByTagName("IOPanelStyle"))) {
                 this.getElement().appendChild(elementTextStyle);
               }
@@ -39524,7 +39584,7 @@ public class Modeler extends JFrame {
               org.w3c.dom.Element elementTextStyle = domDocument.createElement("IOPanelStyle");
               elementTextStyle.setAttribute(
                   "Value", PositionFromUnderline + "," + PositionThruUnderline + "," + "UL");
-              if (!isDuplicatedStyle(
+              if (isDuplicatedStyle(
                   elementTextStyle, this.getElement().getElementsByTagName("IOPanelStyle"))) {
                 this.getElement().appendChild(elementTextStyle);
               }
@@ -39613,8 +39673,7 @@ public class Modeler extends JFrame {
       }
       //
       // Return Update status//
-      boolean[] updateStatusFlag = {valueOfFieldsChanged, valueOfSortKeyChanged};
-      return updateStatusFlag;
+      return new boolean[] {valueOfFieldsChanged, valueOfSortKeyChanged};
     }
 
     private boolean isDuplicatedStyle(org.w3c.dom.Element newElement, NodeList existingStyleList) {
@@ -39656,7 +39715,7 @@ public class Modeler extends JFrame {
         }
       }
       //
-      return result;
+      return !result;
     }
 
     private boolean[] updateFieldsForIOSpool() {
@@ -39765,7 +39824,7 @@ public class Modeler extends JFrame {
                       + "BG"
                       + ","
                       + colorToString(currentBackgroundColor));
-              if (!isDuplicatedStyle(
+              if (isDuplicatedStyle(
                   elementTextStyle, this.getElement().getElementsByTagName("IOSpoolStyle"))) {
                 this.getElement().appendChild(elementTextStyle);
               }
@@ -39817,7 +39876,7 @@ public class Modeler extends JFrame {
                       + "FG"
                       + ","
                       + colorToString(currentForegroundColor));
-              if (!isDuplicatedStyle(
+              if (isDuplicatedStyle(
                   elementTextStyle, this.getElement().getElementsByTagName("IOSpoolStyle"))) {
                 this.getElement().appendChild(elementTextStyle);
               }
@@ -39835,7 +39894,7 @@ public class Modeler extends JFrame {
               org.w3c.dom.Element elementTextStyle = domDocument.createElement("IOSpoolStyle");
               elementTextStyle.setAttribute(
                   "Value", PositionFromUnderline + "," + PositionThruUnderline + "," + "UL");
-              if (!isDuplicatedStyle(
+              if (isDuplicatedStyle(
                   elementTextStyle, this.getElement().getElementsByTagName("IOSpoolStyle"))) {
                 this.getElement().appendChild(elementTextStyle);
               }
@@ -39895,8 +39954,7 @@ public class Modeler extends JFrame {
       }
       //
       // Return Update status//
-      boolean[] updateStatusFlag = {valueOfFieldsChanged, valueOfSortKeyChanged};
-      return updateStatusFlag;
+      return new boolean[] {valueOfFieldsChanged, valueOfSortKeyChanged};
     }
 
     private boolean[] updateFieldsForIOWebPage() {
@@ -40008,8 +40066,7 @@ public class Modeler extends JFrame {
       }
       //
       // Return Update status//
-      boolean[] updateStatusFlag = {valueOfFieldsChanged, valueOfSortKeyChanged};
-      return updateStatusFlag;
+      return new boolean[] {valueOfFieldsChanged, valueOfSortKeyChanged};
     }
 
     private boolean[] updateFieldsForIOTable() {
@@ -40174,150 +40231,9 @@ public class Modeler extends JFrame {
       }
       //
       // Return Update status//
-      boolean[] updateStatusFlag = {valueOfFieldsChanged, valueOfSortKeyChanged};
-      return updateStatusFlag;
+      return new boolean[] {valueOfFieldsChanged, valueOfSortKeyChanged};
     }
   } // End of Class Definition of XeadTreeNode//
-
-  /** Class of Table Row Number */
-  class TableRowNumber {
-    private final org.w3c.dom.Element element_;
-    private final org.w3c.dom.Element element_ext1;
-    private final org.w3c.dom.Element element_ext2;
-    private final int number_;
-
-    public TableRowNumber(int num, org.w3c.dom.Element elm) {
-      number_ = num;
-      element_ = elm;
-      element_ext1 = null;
-      element_ext2 = null;
-    }
-
-    public TableRowNumber(
-        int num,
-        org.w3c.dom.Element elm,
-        org.w3c.dom.Element elmExt1,
-        org.w3c.dom.Element elmExt2) {
-      number_ = num;
-      element_ = elm;
-      element_ext1 = elmExt1;
-      element_ext2 = elmExt2;
-    }
-
-    public String toString() {
-      return Integer.toString(number_);
-    }
-
-    public org.w3c.dom.Element getElement() {
-      return element_;
-    }
-
-    public org.w3c.dom.Element getElementExt1() {
-      return element_ext1;
-    }
-
-    public org.w3c.dom.Element getElementExt2() {
-      return element_ext2;
-    }
-  }
-
-  /** Class of Table Model(Read Only) */
-  class TableModelReadOnlyList extends DefaultTableModel {
-    private static final long serialVersionUID = 1L;
-
-    public boolean isCellEditable(int row, int col) {
-      return false;
-    }
-  }
-
-  /** Class of Table Model(EditableModel) */
-  class TableModelEditableList extends DefaultTableModel {
-    private static final long serialVersionUID = 1L;
-
-    public boolean isCellEditable(int row, int col) {
-      return col != 0;
-    }
-  }
-
-  /** Class of Table Model for RelationshipList */
-  class TableModelRelationshipList extends DefaultTableModel {
-    private static final long serialVersionUID = 1L;
-
-    public boolean isCellEditable(int row, int col) {
-      boolean editable = false;
-      if (col == 6) {
-        XeadTreeNode tableNode = (XeadTreeNode) tableKeyNode.getParent().getParent();
-        String tableID = tableNode.getElement().getAttribute("ID");
-        String tableKeyID = tableKeyNode.getElement().getAttribute("ID");
-        TableRowNumber tableRowNumber =
-            (TableRowNumber) tableModelRelationshipList.getValueAt(row, 0);
-        if (tableRowNumber.getElement().getAttribute("Type").equals("SUBTYPE")) {
-          editable = true;
-          informationOnThisPageChanged = true;
-        }
-        if (tableRowNumber.getElement().getAttribute("Type").equals("REFFER")) {
-          if (tableRowNumber.getElement().getAttribute("Table1ID").equals(tableID)
-              && tableRowNumber.getElement().getAttribute("TableKey1ID").equals(tableKeyID)) {
-            editable = false;
-          }
-          if (tableRowNumber.getElement().getAttribute("Table2ID").equals(tableID)
-              && tableRowNumber.getElement().getAttribute("TableKey2ID").equals(tableKeyID)) {
-            editable = true;
-            informationOnThisPageChanged = true;
-          }
-        }
-        if (tableRowNumber.getElement().getAttribute("Type").equals("FAMILY")) {
-          editable = false;
-        }
-      }
-      return editable;
-    }
-  }
-
-  /** Class of Table Model for FunctionsUsedByThis */
-  class TableModelFunctionsUsedByThis extends DefaultTableModel {
-    private static final long serialVersionUID = 1L;
-
-    public boolean isCellEditable(int row, int col) {
-      return col == 5;
-    }
-  }
-
-  /** Class of Table Model for IOTableFieldList */
-  class TableModelIOTableFieldList extends DefaultTableModel {
-    private static final long serialVersionUID = 1L;
-
-    public boolean isCellEditable(int row, int col) {
-      return col > 3;
-    }
-  }
-
-  /** Class of Table Model for NativeTableList */
-  class TableModelNativeTableList extends DefaultTableModel {
-    private static final long serialVersionUID = 1L;
-
-    public boolean isCellEditable(int row, int col) {
-      return col == 3;
-    }
-  }
-
-  /** Class of Table Model for ForeignTableList */
-  class TableModelForeignTableList extends DefaultTableModel {
-    private static final long serialVersionUID = 1L;
-
-    public boolean isCellEditable(int row, int col) {
-      return col == 4;
-    }
-  }
-
-  /** Class of Table Model for TableFieldList */
-  class TableModelTableFieldList extends DefaultTableModel {
-    private static final long serialVersionUID = 1L;
-
-    public boolean isCellEditable(int row, int col) {
-      return col == 3;
-    }
-  }
 
   /** Class of Listener for TabbedPane */
   class TabbedPaneChangeListener implements javax.swing.event.ChangeListener {
