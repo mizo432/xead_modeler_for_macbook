@@ -28784,9 +28784,6 @@ public class Modeler extends JFrame {
         rightMarginOfElementsPanel = 22;
       }
       if (datamodelSize.equals("M")) {
-        boxPosX = boxPosX;
-        boxPosY = boxPosY;
-        boxWidth = boxWidth;
         boxHeight = 40;
         jPanel2Width = 184;
         idFontSize = 11;
