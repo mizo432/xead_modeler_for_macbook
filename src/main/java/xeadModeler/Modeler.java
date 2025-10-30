@@ -602,6 +602,7 @@ public class Modeler extends JFrame {
   private final JLabel jLabelSystemMaintenanceLogDescriptions = new JLabel();
   private final JScrollPane jScrollPaneSystemMaintenanceLogDescriptions = new JScrollPane();
   private final KanjiTextArea jTextAreaSystemMaintenanceLogDescriptions = new KanjiTextArea();
+
   /** この変数はブロック選択モードの状態を表します。 trueの場合、ブロック選択モードが有効であることを意味し、 falseの場合は無効であることを意味します。 */
   private boolean inBlockSelectMode = false;
 
@@ -2181,7 +2182,6 @@ public class Modeler extends JFrame {
     imageIconText = new ImageIcon(xeadModeler.Modeler.class.getResource("itext.png"));
     imageIconBook = new ImageIcon(xeadModeler.Modeler.class.getResource("ibook.png"));
 
-    /** Icons */
     Image imageTitle =
         Toolkit.getDefaultToolkit().createImage(Modeler.class.getResource("title32.png"));
     this.setIconImage(imageTitle);
@@ -2192,7 +2192,6 @@ public class Modeler extends JFrame {
     this.setSize(new Dimension(screenWidth - 120, screenHeight - 80));
     this.setExtendedState(JFrame.MAXIMIZED_BOTH);
 
-    /** Main panels and labels */
     JPanel jPanelMain = (JPanel) this.getContentPane();
     jPanelMain.setLayout(new BorderLayout());
     jPanelJumpButtons.setPreferredSize(new Dimension(10, 25));
