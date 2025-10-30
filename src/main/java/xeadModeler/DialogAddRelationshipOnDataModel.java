@@ -474,8 +474,6 @@ public class DialogAddRelationshipOnDataModel extends JDialog {
     // Add Relationship attributes to each Subsystem if necessary//
     NodeList subsystemNodeList = frame_.getDomDocument().getElementsByTagName("Subsystem");
     for (int i = 0; i < subsystemNodeList.getLength(); i++) {
-      // sourceTableNode_.createSubsystemAttributesForRelationship(newElement,
-      // (org.w3c.dom.Element)subsystemNodeList.item(i));
       frame_.createSubsystemAttributesForRelationship(
           newElement, (org.w3c.dom.Element) subsystemNodeList.item(i));
     }
@@ -660,8 +658,6 @@ public class DialogAddRelationshipOnDataModel extends JDialog {
       // Add Relationship attributes to each Subsystem if necessary//
       NodeList subsystemNodeList = frame_.getDomDocument().getElementsByTagName("Subsystem");
       for (int i = 0; i < subsystemNodeList.getLength(); i++) {
-        // sourceTableNode_.createSubsystemAttributesForRelationship(newElement,
-        // (org.w3c.dom.Element)subsystemNodeList.item(i));
         frame_.createSubsystemAttributesForRelationship(
             newElement, (org.w3c.dom.Element) subsystemNodeList.item(i));
       }
