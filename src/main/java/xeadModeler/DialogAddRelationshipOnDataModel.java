@@ -42,7 +42,7 @@ import javax.swing.event.ChangeListener;
 import org.w3c.dom.NodeList;
 import xeadModeler.Modeler.*;
 
-public class DialogAddRelationshipOnDatamodel extends JDialog {
+public class DialogAddRelationshipOnDataModel extends JDialog {
   private static final long serialVersionUID = 1L;
   private static ResourceBundle res = ResourceBundle.getBundle("xeadModeler.Res");
   private JPanel jPanelMain = new JPanel();
@@ -68,7 +68,7 @@ public class DialogAddRelationshipOnDatamodel extends JDialog {
   private ArrayList<String> keyFieldNameListChanged = new ArrayList<>();
   private ArrayList<String> keyFieldAliasListChanged = new ArrayList<>();
 
-  public DialogAddRelationshipOnDatamodel(Modeler frame) {
+  public DialogAddRelationshipOnDataModel(Modeler frame) {
     super(frame, res.getString("DialogAddRelationshipOnDatamodel1"), true);
     try {
       frame_ = frame;
@@ -684,10 +684,10 @@ public class DialogAddRelationshipOnDatamodel extends JDialog {
 }
 
 class DialogAddRelationshipOnDatamodel_jRadioButton_changeAdapter implements ChangeListener {
-  DialogAddRelationshipOnDatamodel adaptee;
+  DialogAddRelationshipOnDataModel adaptee;
 
   DialogAddRelationshipOnDatamodel_jRadioButton_changeAdapter(
-      DialogAddRelationshipOnDatamodel adaptee) {
+      DialogAddRelationshipOnDataModel adaptee) {
     this.adaptee = adaptee;
   }
 
@@ -698,10 +698,10 @@ class DialogAddRelationshipOnDatamodel_jRadioButton_changeAdapter implements Cha
 
 class DialogAddRelationshipOnDatamodel_jButtonOK_actionAdapter
     implements java.awt.event.ActionListener {
-  DialogAddRelationshipOnDatamodel adaptee;
+  DialogAddRelationshipOnDataModel adaptee;
 
   DialogAddRelationshipOnDatamodel_jButtonOK_actionAdapter(
-      DialogAddRelationshipOnDatamodel adaptee) {
+      DialogAddRelationshipOnDataModel adaptee) {
     this.adaptee = adaptee;
   }
 
@@ -712,10 +712,10 @@ class DialogAddRelationshipOnDatamodel_jButtonOK_actionAdapter
 
 class DialogAddRelationshipOnDatamodel_jButtonCancel_actionAdapter
     implements java.awt.event.ActionListener {
-  DialogAddRelationshipOnDatamodel adaptee;
+  DialogAddRelationshipOnDataModel adaptee;
 
   DialogAddRelationshipOnDatamodel_jButtonCancel_actionAdapter(
-      DialogAddRelationshipOnDatamodel adaptee) {
+      DialogAddRelationshipOnDataModel adaptee) {
     this.adaptee = adaptee;
   }
 

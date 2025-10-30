@@ -1066,8 +1066,8 @@ public class Modeler extends JFrame {
       };
   private boolean sizeOfTableOnModelChanged = false;
   private org.w3c.dom.Element draggingKeyElement = null;
-  private final DialogAddRelationshipOnDatamodel dialogAddRelationshipOnDatamodel =
-      new DialogAddRelationshipOnDatamodel(this);
+  private final DialogAddRelationshipOnDataModel dialogAddRelationshipOnDatamodel =
+      new DialogAddRelationshipOnDataModel(this);
   private final DialogEditInstanceOnDatamodel dialogEditInstanceOnDatamodel =
       new DialogEditInstanceOnDatamodel(this);
   private final ArrayList<DatamodelEntityBox> datamodelEntityBoxSlideShowArray = new ArrayList<>();
