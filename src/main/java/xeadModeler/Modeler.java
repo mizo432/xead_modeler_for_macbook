@@ -602,6 +602,7 @@ public class Modeler extends JFrame {
   private final JLabel jLabelSystemMaintenanceLogDescriptions = new JLabel();
   private final JScrollPane jScrollPaneSystemMaintenanceLogDescriptions = new JScrollPane();
   private final KanjiTextArea jTextAreaSystemMaintenanceLogDescriptions = new KanjiTextArea();
+
   /** この変数はブロック選択モードの状態を表します。 trueの場合、ブロック選択モードが有効であることを意味し、 falseの場合は無効であることを意味します。 */
   private boolean inBlockSelectMode = false;
 
@@ -845,7 +846,7 @@ public class Modeler extends JFrame {
   private final JTabbedPane jTabbedPaneFunctionsStructureIO = new JTabbedPane();
   private final JScrollPane jScrollPaneFunctionsStructure = new JScrollPane();
   private final JTree jTreeFunctionsStructure = new JTree();
-  private boolean isRequiredToSetupFunctionsStructre;
+  private boolean isRequiredToSetupFunctionsStructure;
   private final JLabel jLabelFunctionsStructure1 = new JLabel();
   private final JLabel jLabelFunctionsStructure2 = new JLabel();
   private final JLabel jLabelFunctionsStructure3 = new JLabel();
@@ -1065,8 +1066,8 @@ public class Modeler extends JFrame {
       };
   private boolean sizeOfTableOnModelChanged = false;
   private org.w3c.dom.Element draggingKeyElement = null;
-  private final DialogAddRelationshipOnDatamodel dialogAddRelationshipOnDatamodel =
-      new DialogAddRelationshipOnDatamodel(this);
+  private final DialogAddRelationshipOnDataModel dialogAddRelationshipOnDatamodel =
+      new DialogAddRelationshipOnDataModel(this);
   private final DialogEditInstanceOnDatamodel dialogEditInstanceOnDatamodel =
       new DialogEditInstanceOnDatamodel(this);
   private final ArrayList<DatamodelEntityBox> datamodelEntityBoxSlideShowArray = new ArrayList<>();
@@ -2181,7 +2182,6 @@ public class Modeler extends JFrame {
     imageIconText = new ImageIcon(xeadModeler.Modeler.class.getResource("itext.png"));
     imageIconBook = new ImageIcon(xeadModeler.Modeler.class.getResource("ibook.png"));
 
-    /** Icons */
     Image imageTitle =
         Toolkit.getDefaultToolkit().createImage(Modeler.class.getResource("title32.png"));
     this.setIconImage(imageTitle);
@@ -2192,7 +2192,6 @@ public class Modeler extends JFrame {
     this.setSize(new Dimension(screenWidth - 120, screenHeight - 80));
     this.setExtendedState(JFrame.MAXIMIZED_BOTH);
 
-    /** Main panels and labels */
     JPanel jPanelMain = (JPanel) this.getContentPane();
     jPanelMain.setLayout(new BorderLayout());
     jPanelJumpButtons.setPreferredSize(new Dimension(10, 25));
@@ -4561,7 +4560,7 @@ public class Modeler extends JFrame {
     jTabbedPaneSubsystemList.addTab(
         res.getString("S408"), imageIconTree, jSplitPaneFunctionsStructure1);
     jTabbedPaneSubsystemList.setFont(new java.awt.Font(mainFontName, 0, MAIN_FONT_SIZE));
-    isRequiredToSetupFunctionsStructre = true;
+    isRequiredToSetupFunctionsStructure = true;
     jPanelFunctionsStructure.setLayout(null);
     jLabelFunctionsStructure1.setFont(new java.awt.Font(mainFontName, 0, MAIN_FONT_SIZE));
     jLabelFunctionsStructure1.setText(res.getString("S411"));
@@ -7139,7 +7138,7 @@ public class Modeler extends JFrame {
       systemNode.add(subsystemListNode);
 
       // Initialize status flags related to subsystems//
-      isRequiredToSetupFunctionsStructre = true;
+      isRequiredToSetupFunctionsStructure = true;
       isRequiredToPurgeInvalidSubsystemTable = false;
       isRequiredToPurgeInvalidSubsystemRelationship = false;
 
@@ -15085,7 +15084,7 @@ public class Modeler extends JFrame {
     org.w3c.dom.Element elementFunctionUsed, elementFunctionType, elementFunctionIO;
     //
     // Processing should be skipped in case the treeModel is being setup//
-    if (!isRequiredToSetupFunctionsStructre) {
+    if (!isRequiredToSetupFunctionsStructure) {
       //
       TreePath tp = e.getPath();
       XeadTreeNode node = (XeadTreeNode) tp.getLastPathComponent();
@@ -18346,7 +18345,7 @@ public class Modeler extends JFrame {
     if (componentType_jPopupMenuComponent.equals("FunctionsUsedByThis")) {
       //
       informationOnThisPageChanged = true;
-      isRequiredToSetupFunctionsStructre = true;
+      isRequiredToSetupFunctionsStructure = true;
       //
       // Remove DomElement of FunctionsUsedByThis//
       tableRowNumber =
@@ -28785,9 +28784,6 @@ public class Modeler extends JFrame {
         rightMarginOfElementsPanel = 22;
       }
       if (datamodelSize.equals("M")) {
-        boxPosX = boxPosX;
-        boxPosY = boxPosY;
-        boxWidth = boxWidth;
         boxHeight = 40;
         jPanel2Width = 184;
         idFontSize = 11;
@@ -30313,7 +30309,6 @@ public class Modeler extends JFrame {
       jMenuItemXeadTreeNodeCopy.setEnabled(false);
       jMenuItemXeadTreeNodeDelete.setEnabled(false);
       //
-      if (nodeType_.equals("System")) {}
       if (nodeType_.equals("SubjectAreaList")) {
         jMenuItemXeadTreeNodeAdd.setEnabled(true);
         jMenuItemXeadTreeNodeAddList.setEnabled(true);
@@ -30817,7 +30812,7 @@ public class Modeler extends JFrame {
         systemNode.getElement().appendChild(newElement);
         this.add(childNode);
 
-        isRequiredToSetupFunctionsStructre = true;
+        isRequiredToSetupFunctionsStructure = true;
       }
 
       // Add IOPanel, IOSpool, IOWebPage to Function node//
@@ -30916,7 +30911,7 @@ public class Modeler extends JFrame {
         domNode_.appendChild(newElement);
         this.add(childNode);
         //
-        isRequiredToSetupFunctionsStructre = true;
+        isRequiredToSetupFunctionsStructure = true;
       }
 
       // Add Log of Add//
@@ -31323,7 +31318,7 @@ public class Modeler extends JFrame {
           systemNode.getElement().removeChild(domNode_);
           parentNode.remove(this);
           //
-          isRequiredToSetupFunctionsStructre = true;
+          isRequiredToSetupFunctionsStructure = true;
         }
       }
       //
@@ -31355,7 +31350,7 @@ public class Modeler extends JFrame {
           }
           parentNode.remove(this);
           //
-          isRequiredToSetupFunctionsStructre = true;
+          isRequiredToSetupFunctionsStructure = true;
         }
       }
       //
@@ -31387,7 +31382,7 @@ public class Modeler extends JFrame {
           }
           parentNode.remove(this);
           //
-          isRequiredToSetupFunctionsStructre = true;
+          isRequiredToSetupFunctionsStructure = true;
         }
       }
       //
@@ -31437,7 +31432,7 @@ public class Modeler extends JFrame {
           }
           parentNode.remove(this);
           //
-          isRequiredToSetupFunctionsStructre = true;
+          isRequiredToSetupFunctionsStructure = true;
         }
       }
       //
@@ -31764,7 +31759,7 @@ public class Modeler extends JFrame {
         newElement.setAttribute("Summary", pastingElement.getAttribute("Summary"));
         childNode = new XeadTreeNode("Function", newElement);
         //
-        isRequiredToSetupFunctionsStructre = true;
+        isRequiredToSetupFunctionsStructure = true;
         //
         // Add IOPanel//
         XeadTreeNode ioPanelNode;
@@ -33622,7 +33617,7 @@ public class Modeler extends JFrame {
       }
       //
       // Setup functions structure view//
-      if (isRequiredToSetupFunctionsStructre) {
+      if (isRequiredToSetupFunctionsStructure) {
         org.w3c.dom.Element elementFunction, elementFunctionUsedByAny;
         NodeList functionList = domDocument.getElementsByTagName("Function");
         NodeList functionsUsedByAny = domDocument.getElementsByTagName("FunctionUsedByThis");
@@ -33661,7 +33656,7 @@ public class Modeler extends JFrame {
         jTreeFunctionsStructure.setCellRenderer(customTreeRenderer);
         jTreeFunctionsStructure.setModel(treeModelFunctionsStructure);
         //
-        isRequiredToSetupFunctionsStructre = false;
+        isRequiredToSetupFunctionsStructure = false;
         //
         if (jTreeFunctionsStructure.getRowCount() > 0) {
           jTreeFunctionsStructure.setSelectionRow(0);
@@ -36154,7 +36149,7 @@ public class Modeler extends JFrame {
           //
           informationOnThisPageChanged = true;
           refreshRequired = true;
-          isRequiredToSetupFunctionsStructre = true;
+          isRequiredToSetupFunctionsStructure = true;
         }
       }
       //
@@ -37031,7 +37026,7 @@ public class Modeler extends JFrame {
         currentMainTreeNode.add(this);
         currentMainTreeNode.sortChildNodes();
         //
-        isRequiredToSetupFunctionsStructre = true;
+        isRequiredToSetupFunctionsStructure = true;
         //
         // Log node after modified//
         xeadUndoManager.addLogAfterModified(this);
@@ -39440,7 +39435,7 @@ public class Modeler extends JFrame {
         // Log node after modified//
         xeadUndoManager.addLogAfterModified(this);
         //
-        isRequiredToSetupFunctionsStructre = true;
+        isRequiredToSetupFunctionsStructure = true;
       }
       //
       // Return Update status//
@@ -39472,7 +39467,7 @@ public class Modeler extends JFrame {
       }
       if (valueOfFieldsChanged) {
         //
-        isRequiredToSetupFunctionsStructre = true;
+        isRequiredToSetupFunctionsStructure = true;
         //
         // Update DOM element//
         domNode_.setAttribute("Name", jTextFieldIOPanelName.getText());
@@ -39783,7 +39778,7 @@ public class Modeler extends JFrame {
       }
       if (valueOfFieldsChanged) {
         //
-        isRequiredToSetupFunctionsStructre = true;
+        isRequiredToSetupFunctionsStructure = true;
         //
         // Update DOM element//
         domNode_.setAttribute("Name", jTextFieldIOSpoolName.getText());
@@ -40017,7 +40012,7 @@ public class Modeler extends JFrame {
       }
       if (valueOfFieldsChanged) {
         //
-        isRequiredToSetupFunctionsStructre = true;
+        isRequiredToSetupFunctionsStructure = true;
         //
         // Update DOM element//
         domNode_.setAttribute("Name", jTextFieldIOWebPageName.getText());
@@ -40173,7 +40168,7 @@ public class Modeler extends JFrame {
       }
       if (valueOfFieldsChanged) {
         //
-        isRequiredToSetupFunctionsStructre = true;
+        isRequiredToSetupFunctionsStructure = true;
         //
         // Update DOM element//
         if (jComboBoxIOTablePosition.getSelectedIndex() == 0) {

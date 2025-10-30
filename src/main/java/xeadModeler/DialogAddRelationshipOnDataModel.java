@@ -42,7 +42,7 @@ import javax.swing.event.ChangeListener;
 import org.w3c.dom.NodeList;
 import xeadModeler.Modeler.*;
 
-public class DialogAddRelationshipOnDatamodel extends JDialog {
+public class DialogAddRelationshipOnDataModel extends JDialog {
   private static final long serialVersionUID = 1L;
   private static ResourceBundle res = ResourceBundle.getBundle("xeadModeler.Res");
   private JPanel jPanelMain = new JPanel();
@@ -68,7 +68,7 @@ public class DialogAddRelationshipOnDatamodel extends JDialog {
   private ArrayList<String> keyFieldNameListChanged = new ArrayList<>();
   private ArrayList<String> keyFieldAliasListChanged = new ArrayList<>();
 
-  public DialogAddRelationshipOnDatamodel(Modeler frame) {
+  public DialogAddRelationshipOnDataModel(Modeler frame) {
     super(frame, res.getString("DialogAddRelationshipOnDatamodel1"), true);
     try {
       frame_ = frame;
@@ -352,7 +352,7 @@ public class DialogAddRelationshipOnDatamodel extends JDialog {
     NodeList nodeList1, nodeList2;
     org.w3c.dom.Element newElement, element, element1, newElementChild;
     org.w3c.dom.Element lastElement = null;
-    int intFieldID = 0;
+    int intFieldID;
     int lastID = 0;
     ArrayList<String> keyFieldIDList = new ArrayList<>();
     //
@@ -419,7 +419,6 @@ public class DialogAddRelationshipOnDatamodel extends JDialog {
     }
     //
     // Add node of Foreign Key //
-    lastID = 0;
     int elementID;
     int lastSortKey = 0;
     NodeList nodeListToGetLastNumber =
@@ -475,8 +474,6 @@ public class DialogAddRelationshipOnDatamodel extends JDialog {
     // Add Relationship attributes to each Subsystem if necessary//
     NodeList subsystemNodeList = frame_.getDomDocument().getElementsByTagName("Subsystem");
     for (int i = 0; i < subsystemNodeList.getLength(); i++) {
-      // sourceTableNode_.createSubsystemAttributesForRelationship(newElement,
-      // (org.w3c.dom.Element)subsystemNodeList.item(i));
       frame_.createSubsystemAttributesForRelationship(
           newElement, (org.w3c.dom.Element) subsystemNodeList.item(i));
     }
@@ -487,14 +484,14 @@ public class DialogAddRelationshipOnDatamodel extends JDialog {
   public void reuseCurrentFieldsAsForeignKey() {
     org.w3c.dom.Element newElement, element, element1, element2, newElementChild;
     org.w3c.dom.Element lastElement = null;
-    int lastID = 0;
+    int lastID;
     int wrkCnt;
     boolean eachFieldSpecified;
     ArrayList<String> keyFieldIDList = new ArrayList<>();
     NodeList fieldListOnTargetTable =
         targetTableNode_.getElement().getElementsByTagName("TableField");
     NodeList keyListOnTargetTable = targetTableNode_.getElement().getElementsByTagName("TableKey");
-    XeadTreeNode availableTableKeyNode = null;
+    XeadTreeNode availableTableKeyNode;
     //
     frame_.getCurrentMainTreenode().updateFields();
     //
@@ -602,7 +599,6 @@ public class DialogAddRelationshipOnDatamodel extends JDialog {
       //
       // Add node of Foreign Key if without available key //
       if (availableTableKeyNode == null) {
-        lastID = 0;
         int elementID;
         int lastSortKey = 0;
         relationshipType = "REFFER";
@@ -662,8 +658,6 @@ public class DialogAddRelationshipOnDatamodel extends JDialog {
       // Add Relationship attributes to each Subsystem if necessary//
       NodeList subsystemNodeList = frame_.getDomDocument().getElementsByTagName("Subsystem");
       for (int i = 0; i < subsystemNodeList.getLength(); i++) {
-        // sourceTableNode_.createSubsystemAttributesForRelationship(newElement,
-        // (org.w3c.dom.Element)subsystemNodeList.item(i));
         frame_.createSubsystemAttributesForRelationship(
             newElement, (org.w3c.dom.Element) subsystemNodeList.item(i));
       }
@@ -684,10 +678,10 @@ public class DialogAddRelationshipOnDatamodel extends JDialog {
 }
 
 class DialogAddRelationshipOnDatamodel_jRadioButton_changeAdapter implements ChangeListener {
-  DialogAddRelationshipOnDatamodel adaptee;
+  DialogAddRelationshipOnDataModel adaptee;
 
   DialogAddRelationshipOnDatamodel_jRadioButton_changeAdapter(
-      DialogAddRelationshipOnDatamodel adaptee) {
+      DialogAddRelationshipOnDataModel adaptee) {
     this.adaptee = adaptee;
   }
 
@@ -698,10 +692,10 @@ class DialogAddRelationshipOnDatamodel_jRadioButton_changeAdapter implements Cha
 
 class DialogAddRelationshipOnDatamodel_jButtonOK_actionAdapter
     implements java.awt.event.ActionListener {
-  DialogAddRelationshipOnDatamodel adaptee;
+  DialogAddRelationshipOnDataModel adaptee;
 
   DialogAddRelationshipOnDatamodel_jButtonOK_actionAdapter(
-      DialogAddRelationshipOnDatamodel adaptee) {
+      DialogAddRelationshipOnDataModel adaptee) {
     this.adaptee = adaptee;
   }
 
@@ -712,10 +706,10 @@ class DialogAddRelationshipOnDatamodel_jButtonOK_actionAdapter
 
 class DialogAddRelationshipOnDatamodel_jButtonCancel_actionAdapter
     implements java.awt.event.ActionListener {
-  DialogAddRelationshipOnDatamodel adaptee;
+  DialogAddRelationshipOnDataModel adaptee;
 
   DialogAddRelationshipOnDatamodel_jButtonCancel_actionAdapter(
-      DialogAddRelationshipOnDatamodel adaptee) {
+      DialogAddRelationshipOnDataModel adaptee) {
     this.adaptee = adaptee;
   }
 
