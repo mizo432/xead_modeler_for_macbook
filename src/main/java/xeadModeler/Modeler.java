@@ -30312,7 +30312,6 @@ public class Modeler extends JFrame {
       jMenuItemXeadTreeNodeCopy.setEnabled(false);
       jMenuItemXeadTreeNodeDelete.setEnabled(false);
       //
-      if (nodeType_.equals("System")) {}
       if (nodeType_.equals("SubjectAreaList")) {
         jMenuItemXeadTreeNodeAdd.setEnabled(true);
         jMenuItemXeadTreeNodeAddList.setEnabled(true);

@@ -352,7 +352,7 @@ public class DialogAddRelationshipOnDataModel extends JDialog {
     NodeList nodeList1, nodeList2;
     org.w3c.dom.Element newElement, element, element1, newElementChild;
     org.w3c.dom.Element lastElement = null;
-    int intFieldID = 0;
+    int intFieldID;
     int lastID = 0;
     ArrayList<String> keyFieldIDList = new ArrayList<>();
     //
@@ -419,7 +419,6 @@ public class DialogAddRelationshipOnDataModel extends JDialog {
     }
     //
     // Add node of Foreign Key //
-    lastID = 0;
     int elementID;
     int lastSortKey = 0;
     NodeList nodeListToGetLastNumber =
@@ -487,14 +486,14 @@ public class DialogAddRelationshipOnDataModel extends JDialog {
   public void reuseCurrentFieldsAsForeignKey() {
     org.w3c.dom.Element newElement, element, element1, element2, newElementChild;
     org.w3c.dom.Element lastElement = null;
-    int lastID = 0;
+    int lastID;
     int wrkCnt;
     boolean eachFieldSpecified;
     ArrayList<String> keyFieldIDList = new ArrayList<>();
     NodeList fieldListOnTargetTable =
         targetTableNode_.getElement().getElementsByTagName("TableField");
     NodeList keyListOnTargetTable = targetTableNode_.getElement().getElementsByTagName("TableKey");
-    XeadTreeNode availableTableKeyNode = null;
+    XeadTreeNode availableTableKeyNode;
     //
     frame_.getCurrentMainTreenode().updateFields();
     //
@@ -602,7 +601,6 @@ public class DialogAddRelationshipOnDataModel extends JDialog {
       //
       // Add node of Foreign Key if without available key //
       if (availableTableKeyNode == null) {
-        lastID = 0;
         int elementID;
         int lastSortKey = 0;
         relationshipType = "REFFER";
