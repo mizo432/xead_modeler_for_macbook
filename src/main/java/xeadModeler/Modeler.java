@@ -64,6 +64,24 @@ import org.apache.xml.serialize.XMLSerializer;
 import org.w3c.dom.*;
 import org.xml.sax.*;
 
+/**
+ * Modelerクラスは、データベースモデリングアプリケーションのメインGUIを提供するクラスです。
+ * JFrameを拡張しており、XML文書の解析やデザインパネル、メニュー、ショートカットボタンなど 複数の機能を統合しています。
+ *
+ * <p>このクラスは、データベースモデルの視覚的な表現、設定、編集を行うためのツールを提供します。 また、データモデル構成に関連する設定やエクスポート、インポート機能も含みます。
+ *
+ * <p>主な機能は以下の通りです: 1. プロジェクトファイルの作成、読み込み、保存、バックアップ 2. XMLベースのデータモデル解析とその内容の保存 3.
+ * メニューやツールバーを利用した多機能な操作 4. カスタムジャンプボタンによる迅速なナビゲーション 5. グリッドパネルやデザインパネルにおける柔軟なカスタマイズ 6.
+ * 抽出可能なDDL文や文書作成機能
+ *
+ * <p>このクラスは、XeadModelerアプリケーションのメインエントリポイントであり、 JTreeやJTableのような主要なSwingコンポーネントを基盤として、
+ * デスクトップアプリケーションの統合的な操作を可能とします。
+ *
+ * <p>主な変数および設定: - 現在のプロジェクトのファイル名、フォルダ名 - システム名称およびフォント設定 - 色、レイアウトおよびデザイン構成に関連する静的定数 -
+ * 各種DOMパーサおよびプロパティ管理 - メニュー項目、ツール、ブックマークナビゲーション機能
+ *
+ * <p>注意: - このクラスの内部では、多くのプライベート変数および設定が存在しており、 状態管理やイベント処理に利用されています。 - 必要に応じて設定値のカスタマイズが可能です。
+ */
 public class Modeler extends JFrame {
   public static final int MAIN_FONT_SIZE = 16;
   public static final int TREE_ROW_HEIGHT = 20;
@@ -229,8 +247,11 @@ public class Modeler extends JFrame {
   /** Dialog box and fileChooser for general use */
   private final JFileChooser jFileChooser = new JFileChooser();
 
-  /** common used storage for copy/paste operation */
-  private boolean inBlockSelectMode = false;
+  /**
+   * jPanelSubjectAreaListはSubject Areaのリストを表示または管理するためのJPanelコンポーネントです。
+   * このパネルはユーザーインターフェース内で特定の機能やデータの表示領域として使用されます。
+   */
+  private final JPanel jPanelSubjectAreaList = new JPanel();
 
   private Point blockSelectPointFrom = new Point();
   private Point blockSelectPointThru = new Point();
@@ -581,9 +602,8 @@ public class Modeler extends JFrame {
   private final JLabel jLabelSystemMaintenanceLogDescriptions = new JLabel();
   private final JScrollPane jScrollPaneSystemMaintenanceLogDescriptions = new JScrollPane();
   private final KanjiTextArea jTextAreaSystemMaintenanceLogDescriptions = new KanjiTextArea();
-
-  /** Definition components on jPanelSubjectAreaList */
-  private final JPanel jPanelSubjectAreaList = new JPanel();
+  /** この変数はブロック選択モードの状態を表します。 trueの場合、ブロック選択モードが有効であることを意味し、 falseの場合は無効であることを意味します。 */
+  private boolean inBlockSelectMode = false;
 
   private final JScrollPane jScrollPaneSubjectAreaList = new JScrollPane();
   private final TableModelReadOnlyList tableModelSubjectAreaList = new TableModelReadOnlyList();
@@ -9886,7 +9906,19 @@ public class Modeler extends JFrame {
     fieldListNodeToBeRenumbered.clear();
   }
 
-  /** arrange order of DOM elements according to the XEAD-format specifications */
+  /**
+   * DOM要素の順序を特定の基準に基づいて並び替えます。
+   *
+   * <p>このメソッドは、DOMドキュメント内の特定の要素を検索し、その要素に対して 依存関係やタイプ順序に基づいて子要素をソートする処理を行います。
+   * 検索対象とする要素は、優先順序に従って以下のタグを持つ要素です:
+   *
+   * <p>- Function - Relationship - Table - Subsystem - Task - Role - SubjectArea - MaintenanceLog
+   *
+   * <p>検索対象の最上位要素を見つけた後、その要素に含まれる子要素を特定のタイプ順序に従い ソートします。より高い階層で目的の要素が見つからない場合、順次低い優先順位の要素に
+   * 対して処理を試みます。
+   *
+   * <p>各要素は `sortElementsByType` メソッドを利用してソートされます。
+   */
   void arrangeOrderOfDomElement() {
     org.w3c.dom.Element topElement;
     NodeList nodeList;
@@ -10109,9 +10141,9 @@ public class Modeler extends JFrame {
   }
 
   /**
-   * add node to the list of FieldListNodeToBeRenumbered
+   * 指定されたノードをフィールドリストノードの配列に追加します。 既に配列内に同じノードが存在する場合は重複して追加されません。
    *
-   * @param node :XeadTreeNode of tableFieldList
+   * @param node 配列に追加される対象のXeadTreeNodeオブジェクト
    */
   void addNodeToTheArrayOfFieldListNodeToBeRenumbered(XeadTreeNode node) {
     boolean alreadyExist = false;
@@ -10126,6 +10158,13 @@ public class Modeler extends JFrame {
     }
   }
 
+  /**
+   * 指定されたリレーションシップ要素に関連するサブシステムの属性を作成し、 必要に応じてサブシステム要素へ追加します。
+   *
+   * @param relationshipElement リレーションシップの情報を保持するDOM要素
+   * @param subsystemElement 対応するサブシステムの情報を保持するDOM要素
+   * @return サブシステムの属性が更新された場合はtrue、それ以外はfalse
+   */
   public boolean createSubsystemAttributesForRelationship(
       org.w3c.dom.Element relationshipElement, org.w3c.dom.Element subsystemElement) {
     org.w3c.dom.Element elementSubsystemTable, elementSubsystemRelationship, newElement;
@@ -12764,24 +12803,25 @@ public class Modeler extends JFrame {
   }
 
   /**
-   * Method to adjust font size in text-field
+   * テキストフィールドのフォントサイズを調整します。
    *
-   * @param textfield :text-field to be processed
+   * @param textfield フォントサイズを調整する対象のテキストフィールドオブジェクト
    */
   void adjustFontSizeOfTextField(Object textfield) {
     adjustFontSizeOfTextField(textfield, 16);
   }
 
   /**
-   * Method to adjust font size in text-field
+   * テキストフィールドまたはラベルの文字サイズを調整します。 テキストがフィールドの幅に収まるように最大文字サイズから順にチェックし、 最適な文字サイズを設定します。
    *
-   * @param textfield :text-field to be processed
+   * @param textField サイズ調整対象のテキストフィールド（JTextFieldまたはJLabel）
+   * @param maxSize 設定可能な最大文字サイズ
    */
-  void adjustFontSizeOfTextField(Object textfield, int maxSize) {
+  void adjustFontSizeOfTextField(Object textField, int maxSize) {
     FontMetrics metrics;
     Font font;
-    if (textfield instanceof JTextField) {
-      JTextField field = (JTextField) textfield;
+    if (textField instanceof JTextField) {
+      JTextField field = (JTextField) textField;
       for (int i = maxSize; i >= 10; i = i - 2) {
         font = new java.awt.Font(mainFontName, 0, i);
         metrics = field.getFontMetrics(font);
@@ -12792,8 +12832,8 @@ public class Modeler extends JFrame {
         }
       }
     }
-    if (textfield instanceof JLabel) {
-      JLabel field = (JLabel) textfield;
+    if (textField instanceof JLabel) {
+      JLabel field = (JLabel) textField;
       for (int i = maxSize; i >= 10; i = i - 2) {
         font = new java.awt.Font(mainFontName, 0, i);
         metrics = field.getFontMetrics(font);
@@ -44109,11 +44149,24 @@ class Modeler_jTableTableForeignUsageList_mouseAdapter extends java.awt.event.Mo
   }
 }
 
+/**
+ * Modeler_FocusListenerクラスは、FocusListenerインターフェースを実装し、 コンポーネントのフォーカス状態に応じて視覚的な変化を提供するクラスです。
+ *
+ * <p>このクラスでは特に javax.swing.JTable コンポーネントに対して、 フォーカスの獲得および喪失時に選択背景色および選択前景色を変更する処理を行います。
+ *
+ * <p>フォーカスが得られた場合、選択背景色を強調表示色に、 フォーカスが失われた場合、選択背景色を非アクティブ色に設定します。
+ */
 class Modeler_FocusListener implements FocusListener {
   String className;
   Color ACTIVE_COLOR = new Color(49, 106, 197);
   Color INACTIVE_COLOR = new Color(186, 186, 186);
 
+  /**
+   * コンポーネントがフォーカスを失った際に呼び出されるメソッドです。 特に javax.swing.JTable コンポーネントに対して、フォーカスが失われた時に
+   * 選択背景色を非アクティブ色に、選択前景色を黒に設定します。
+   *
+   * @param e フォーカスイベントを表す FocusEvent オブジェクト
+   */
   public void focusLost(FocusEvent e) {
     className = e.getComponent().getClass().getName();
     if (className.equals("javax.swing.JTable")) {
@@ -44123,6 +44176,12 @@ class Modeler_FocusListener implements FocusListener {
     }
   }
 
+  /**
+   * コンポーネントがフォーカスを得た際に呼び出されるメソッドです。 特に javax.swing.JTable コンポーネントに対して、フォーカスが得られた時に
+   * 選択背景色を強調表示色に、選択前景色を白に設定します。
+   *
+   * @param e フォーカスイベントを表す FocusEvent オブジェクト
+   */
   public void focusGained(FocusEvent e) {
     className = e.getComponent().getClass().getName();
     if (className.equals("javax.swing.JTable")) {
